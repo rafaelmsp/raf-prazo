@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" id="themeColor" content="#f5f7fb">
+<meta name="description" content="Raf-Prazo: calculadora auxiliar de prazos judiciais com feriados locais gratuitos, calendário e memória de cálculo.">
+<title>Raf-Prazo | Atualizações do Calendário Judicial</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('raf-prazo:theme')==='dark'?'dark':'light'}catch(_){}</script>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color-scheme:light;--bg:#f4f6fa;--paper:#fff;--paper2:#f8fafc;--nav:#fff;--text:#12243d;--muted:#64748b;--soft:#8794a7;--line:#e1e7ef;--line2:#d1dbe8;--accent:#1d4e80;--accent2:#113c69;--accentbg:#edf4fc;--accentline:#b9d2ec;--ok:#18705f;--okbg:#e8f6f1;--warn:#8d5a11;--warnbg:#fff5df;--error:#a34046;--badbg:#fff0ef;--count:#dfeefa;--countink:#245c89;--weekend:#f8eded;--weekendink:#ab5252;--result:#f3f7fc;--shadow:0 7px 30px rgba(29,54,83,.055);--shade:rgba(11,25,42,.50)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b1625;--paper:#132438;--paper2:#182b42;--nav:#101f32;--text:#eaf2fd;--muted:#b1c2d5;--soft:#869eb8;--line:#2a415a;--line2:#365372;--accent:#a6cbff;--accent2:#90bcf4;--accentbg:#183852;--accentline:#3d6185;--ok:#91dfc9;--okbg:#1a413e;--warn:#f6ca81;--warnbg:#433523;--error:#ffb2b7;--badbg:#402f39;--count:#1f4058;--countink:#b9ddfb;--weekend:#402e3a;--weekendink:#ffc0c3;--result:#192f49;--shadow:0 10px 35px rgba(0,0,0,.10);--shade:rgba(0,5,14,.72)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;}body{background:var(--bg);color:var(--text);font-size:13px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}a{color:var(--accent)}h1,h2,h3,p{margin-top:0}h1{font-size:19px;letter-spacing:-.045em;margin-bottom:4px}h2{font-size:16px;letter-spacing:-.02em;margin-bottom:4px}p{line-height:1.45}.app{min-height:100dvh;display:grid;grid-template-columns:185px minmax(0,1fr);grid-template-rows:68px minmax(0,1fr) 36px}.header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--paper);border-bottom:1px solid var(--line);gap:10px}.brand{display:flex;gap:12px;align-items:center;min-width:0}.logo{width:37px;height:37px;display:grid;place-items:center;background:var(--accentbg);border:1px solid var(--accentline);border-radius:11px;color:var(--accent);font-size:21px;font-weight:800}.brand strong{display:block;font-size:22px;letter-spacing:-.055em;line-height:1.05}.brand small{font-size:11px;color:var(--muted)}.header-actions{display:flex;align-items:center;gap:11px}.tiny-action{border:0;background:transparent;color:var(--muted);font-size:12px;font-weight:600;padding:8px;white-space:nowrap}.tiny-action:hover{color:var(--accent)}.theme{border:1px solid var(--line2);background:var(--paper2);border-radius:11px;padding:8px 12px;display:flex;align-items:center;gap:9px;color:var(--text);font-size:12px;font-weight:680}.switch{width:30px;height:17px;padding:2px;border-radius:12px;background:var(--line2)}.knob{display:block;height:13px;width:13px;border-radius:50%;background:var(--accent);transition:transform .2s}[data-theme="dark"] .knob{transform:translateX(13px)}.sidebar{background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:17px 10px;gap:6px}.nav-label{font-size:10px;color:var(--soft);font-weight:750;letter-spacing:.11em;padding:12px 12px 5px}.nav-link{width:100%;display:flex;align-items:center;gap:11px;border:0;background:transparent;color:var(--muted);border-radius:10px;padding:12px;text-align:left;font-size:12px;font-weight:650}.nav-link.active{background:var(--accent);color:#fff}.nav-link:not(.active):hover{background:var(--accentbg);color:var(--accent)}.nav-icon{font-size:17px;width:19px;text-align:center}.sidebar-bottom{margin-top:auto;padding:10px 9px;color:var(--muted);font-size:10px;line-height:1.6}.sidebar-bottom strong{display:block;color:var(--accent);margin-bottom:5px}.content{min-width:0;min-height:0;padding:15px 16px 13px;display:flex;flex-direction:column;gap:11px}.intro{display:flex;align-items:center;justify-content:space-between;min-height:31px;gap:12px}.intro h1{margin:0;font-size:17px}.intro .hint{font-size:11px;color:var(--muted)}.workspace{flex:1;min-height:0;display:grid;grid-template-columns:minmax(252px,.88fr) minmax(342px,1.27fr) minmax(255px,.95fr);gap:12px}.panel{min-height:0;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:12px}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.icon-head{font-size:23px;color:var(--accent);line-height:1}.subtitle{font-size:11px;color:var(--muted);margin:0;line-height:1.4}.label{font-weight:700;color:var(--text);font-size:11px;display:block;margin-bottom:6px}.field{min-width:0}.field-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}.input,.select{height:39px;width:100%;border:1px solid var(--line2);border-radius:9px;background:var(--paper2);color:var(--text);padding:0 10px;min-width:0}.input[type=date]{font-size:12px}.select{font-size:12px}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.pill{background:var(--paper2);border:1px solid var(--line2);color:var(--muted);font-weight:650;border-radius:8px;padding:8px 5px;min-width:0}.pill.active{color:var(--accent);background:var(--accentbg);border-color:var(--accentline)}.section-divider{height:1px;background:var(--line);flex:none}.subhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.subhead strong{font-size:12px}.select-grid{display:grid;grid-template-columns:75px minmax(0,1fr);gap:9px}.sync{width:100%;border:1px solid var(--accentline);color:var(--accent);background:var(--accentbg);border-radius:8px;min-height:35px;font-weight:720;font-size:12px}.sync:hover{filter:brightness(.98)}.status{padding:10px 11px;border-radius:9px;background:var(--paper2);border:1px solid var(--line);font-size:11px;line-height:1.48;color:var(--muted)}.status strong{color:var(--text)}.status[data-tone="good"]{background:var(--okbg);border-color:transparent}.status[data-tone="warn"]{background:var(--warnbg);border-color:transparent}.checks{display:grid;gap:10px}.check{display:flex;align-items:flex-start;gap:9px;color:var(--text);font-size:11px;line-height:1.35}.check input{accent-color:var(--accent);margin:0;flex:none;width:15px;height:15px}.settings-button{border:0;background:transparent;color:var(--accent);font-size:11px;font-weight:750;text-align:left;padding:4px 0}.panel-grow{margin-top:auto}.cal-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px}.cal-toolbar h2{font-size:17px;text-transform:capitalize;margin:0}.cal-nav{display:flex;gap:5px}.cal-nav button{width:29px;height:29px;border:1px solid var(--line);background:var(--paper2);color:var(--text);border-radius:8px;font-size:16px}.weekdays,.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.weekdays span{text-align:center;font-size:10px;color:var(--muted);font-weight:750}.calendar{min-height:260px;flex:1;grid-template-rows:repeat(6,minmax(0,1fr))}.day{background:var(--paper2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:1px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-weight:670;font-size:12px;min-width:0;min-height:0}.day.other{opacity:.34}.day.blocked{background:var(--weekend);border-color:transparent;color:var(--weekendink)}.day.counted{background:var(--count);border-color:transparent;color:var(--countink)}.day.origin{outline:2px solid var(--accent);outline-offset:-2px}.day.due{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:800}.day small{font-size:8px;font-weight:750;letter-spacing:.02em;white-space:nowrap}.day:hover{border-color:var(--accent)}.legend{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--muted);font-size:10px}.marker{width:8px;height:8px;display:inline-block;border-radius:3px;background:var(--countink);margin-right:4px}.marker.due{background:var(--accent)}.marker.off{background:var(--weekendink)}.marker.init{border:2px solid var(--accent);background:transparent}.cal-note{margin:0;font-size:10px;color:var(--muted)}.result-block{border:1px solid var(--line);border-radius:12px;background:var(--result);padding:17px 12px;text-align:center}.eyebrow{text-transform:uppercase;letter-spacing:.10em;font-size:9px;font-weight:760;color:var(--muted)}.due-date{color:var(--accent2);font-size:clamp(21px,2.1vw,32px);font-weight:800;letter-spacing:-.055em;line-height:1.2;margin:9px 0 3px;white-space:nowrap}.weekday{font-size:13px;color:var(--text);text-transform:capitalize}.pill-info{font-size:11px;font-weight:700;padding:8px 0;margin-top:12px;border-top:1px solid var(--line)}.insights{display:grid;grid-template-columns:1fr 1fr;gap:8px}.insight{border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--paper2)}.insight label{font-size:9px;color:var(--muted);display:block;margin-bottom:5px}.insight strong{font-size:13px;white-space:nowrap}.notice{background:var(--accentbg);border:1px solid var(--accentline);border-radius:10px;padding:10px;font-size:11px;color:var(--text);line-height:1.45}.notice.warn{background:var(--warnbg);border:0}.notice b{display:block;margin-bottom:4px;font-size:11px}.result-actions{display:grid;gap:8px}.btn{min-height:38px;border-radius:9px;border:1px solid var(--line2);color:var(--text);font-weight:720;background:var(--paper2);padding:9px 12px;font-size:12px}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn.primary:hover{filter:brightness(1.09)}.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.footer{grid-column:1/-1;border-top:1px solid var(--line);background:var(--paper);display:flex;align-items:center;justify-content:space-between;padding:0 21px;font-size:10px;color:var(--muted);gap:10px}.footer strong{color:var(--text)}dialog{background:var(--paper);color:var(--text);border:1px solid var(--line);border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.26);padding:18px;width:min(670px,calc(100vw - 26px));max-height:86dvh}dialog::backdrop{background:var(--shade)}.dialog-body{display:flex;flex-direction:column;gap:12px;max-height:calc(86dvh - 38px)}.dialog-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.dialog-top p{font-size:11px;color:var(--muted);margin:3px 0 0}.close{border:1px solid var(--line);background:var(--paper2);color:var(--text);width:29px;height:29px;border-radius:8px}.dialog-scroll{overflow:auto;min-height:50px;border:1px solid var(--line);border-radius:10px}.mem-header,.mem-row{display:grid;grid-template-columns:52px 105px minmax(0,1fr);padding:8px 10px;gap:9px;font-size:11px;border-bottom:1px solid var(--line)}.mem-header{background:var(--paper2);font-weight:800;color:var(--muted);position:sticky;top:0}.mem-row:last-child{border-bottom:0}.mem-row span:first-child{color:var(--accent);font-weight:760}.muted{font-size:11px;color:var(--muted);line-height:1.5}.dialog-end{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.textarea{width:100%;min-height:100px;background:var(--paper2);color:var(--text);border:1px solid var(--line2);border-radius:9px;padding:11px;font-size:12px;resize:vertical}.history-entry{padding:11px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}.history-entry:last-child{border:0}.history-entry strong{display:block}.history-entry small{color:var(--muted)}.error{color:var(--error);font-size:11px}.source-list{display:grid;gap:8px}.source-item{border:1px solid var(--line);border-radius:9px;padding:11px;font-size:12px}.source-item small{display:block;color:var(--muted);margin-top:4px}.code-input{display:grid;grid-template-columns:1fr auto;gap:8px}.info-strip{font-size:10px;color:var(--muted);text-align:center}@media(max-height:780px) and (min-width:1061px){.app{grid-template-rows:58px minmax(0,1fr) 31px}.header{padding:0 18px}.content{padding:11px 13px;gap:8px}.panel{padding:13px;gap:9px}.calendar{min-height:200px}.input,.select{height:34px}.sync{min-height:31px}.quick .pill{padding:5px 4px}.result-block{padding:12px 10px}.result-actions .btn{min-height:34px}.notice{padding:8px}.checks{gap:7px}.insight{padding:7px}.sidebar{padding-top:10px}.nav-link{padding:10px}.brand strong{font-size:20px}}@media(max-width:1250px) and (min-width:1061px){.app{grid-template-columns:155px minmax(0,1fr)}.workspace{grid-template-columns:minmax(230px,.9fr) minmax(310px,1.25fr) minmax(230px,.95fr);gap:9px}.panel{padding:12px}.content{padding:11px}.due-date{font-size:23px}}@media(max-width:1060px){.app{grid-template-columns:1fr;grid-template-rows:60px auto 38px}.sidebar{display:none}.header{grid-column:1}.content{padding:13px}.workspace{grid-template-columns:repeat(2,minmax(0,1fr))}.panel:last-child{grid-column:1/-1}.calendar{height:315px;flex:none}.footer{grid-column:1}.intro h1{font-size:16px}}@media(max-width:650px){.app{grid-template-rows:62px auto auto}.header{padding:0 12px}.brand strong{font-size:19px}.brand small{font-size:9px}.tiny-action{display:none}.header-actions{gap:5px}.theme{padding:7px 8px}.theme .theme-text{display:none}.content{padding:11px}.workspace{display:flex;flex-direction:column}.panel{padding:14px}.calendar{height:310px}.intro .hint{display:none}.footer{flex-wrap:wrap;padding:9px 15px;gap:4px}.panel:last-child{grid-column:auto}}@media(prefers-reduced-motion:reduce){.knob{transition:none}}@media print{body{background:#fff;color:#000}.header,.sidebar,.content,.footer{display:none!important}dialog:not([open]){display:none!important}dialog[open]{position:static;width:100%;max-height:none;border:0;box-shadow:none}dialog::backdrop{display:none}.dialog-body,.dialog-scroll{max-height:none;overflow:visible}.close,.dialog-end{display:none}}
+.calendar-due-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--accentbg);border:1px solid var(--accentline);border-left:5px solid var(--accent);border-radius:11px;padding:10px 13px;flex:none}.calendar-due-banner>div{display:flex;flex-direction:column;gap:2px;min-width:0}.calendar-due-label{font-size:10px;font-weight:800;letter-spacing:.07em;color:var(--accent)}#calendarDue{font-size:clamp(20px,2.2vw,30px);font-weight:850;line-height:1.13;letter-spacing:-.04em;color:var(--text);white-space:nowrap}.calendar-due-weekday{font-size:11px;color:var(--muted)}.calendar-due-tag{font-size:9px;font-weight:800;color:var(--accent);border:1px solid var(--accentline);border-radius:20px;padding:5px 7px}@media(max-width:1250px){.calendar-due-tag{display:none}}@media(max-height:780px) and (min-width:1061px){.calendar-due-banner{padding:7px 10px}#calendarDue{font-size:22px}.calendar-due-label{font-size:9px}}
+
+/* Menu retrátil: inicia fechado; expande sem cobrir o calendário no desktop. */
+.app{grid-template-columns:60px minmax(0,1fr);transition:grid-template-columns .2s ease}
+.app.menu-open{grid-template-columns:185px minmax(0,1fr)}
+.menu-toggle{display:grid;place-items:center;width:36px;height:36px;flex:none;border:1px solid var(--line2);background:var(--paper2);color:var(--text);border-radius:9px;font-size:19px;line-height:1}
+.menu-toggle:hover{background:var(--accentbg);color:var(--accent)}
+.sidebar{overflow:hidden}
+.sidebar .nav-label,.sidebar .sidebar-bottom,.sidebar .nav-text{display:none}
+.sidebar .nav-link{justify-content:center;padding:11px 7px}
+.sidebar .nav-icon{flex:none}
+.app.menu-open .sidebar .nav-label,.app.menu-open .sidebar .sidebar-bottom,.app.menu-open .sidebar .nav-text{display:block}
+.app.menu-open .sidebar .nav-link{justify-content:flex-start;padding:11px 12px}
+@media (max-width:1250px) and (min-width:1061px){.app{grid-template-columns:60px minmax(0,1fr)}.app.menu-open{grid-template-columns:155px minmax(0,1fr)}}
+@media (max-width:1060px){
+ .app,.app.menu-open{grid-template-columns:minmax(0,1fr)}
+ .sidebar{display:flex;position:fixed;top:60px;bottom:0;left:0;width:240px;z-index:40;box-shadow:var(--shadow);transform:translateX(-105%);transition:transform .2s ease}
+ .app.menu-open .sidebar{transform:translateX(0)}
+ .app.menu-open .sidebar .nav-label,.app.menu-open .sidebar .sidebar-bottom,.app.menu-open .sidebar .nav-text{display:block}
+ .app.menu-open .sidebar .nav-link{justify-content:flex-start}
+ .app.menu-open .content:before{content:"";position:fixed;inset:60px 0 0;background:var(--shade);z-index:35}
+}
+@media (max-width:650px){.sidebar{top:62px}.app.menu-open .content:before{top:62px}}
+@media (prefers-reduced-motion:reduce){.app,.sidebar{transition:none}}
+@media print{.menu-toggle{display:none!important}}
+
+/* Judicial Light: dias indisponíveis com preenchimento visível. */
+:root:not([data-theme="dark"]) .calendar .day.blocked {
+  background: #f4dadd;
+  border: 1px solid #dfadb5;
+  color: #873743;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.32);
+}
+:root:not([data-theme="dark"]) .calendar .day.blocked:hover {
+  background: #edc9ce;
+  border-color: #b96370;
+}
+:root:not([data-theme="dark"]) .calendar .day.blocked.other {
+  opacity: .58;
+}
+:root:not([data-theme="dark"]) .legend .marker.off {
+  background: #e4b7be;
+  border: 1px solid #bd737e;
+}
+
+/* RAF-PRAZO — PREVIA VISUAL: MODAIS INSTITUCIONAL E NOVIDADES */
+.news-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:38px;height:36px;padding:0 10px;border:1px solid var(--line2);border-radius:10px;background:var(--paper2);color:var(--text);transition:background .16s,border-color .16s}
+.news-trigger:hover,.news-trigger:focus-visible{background:var(--accentbg);border-color:var(--accentline)}
+.news-trigger svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.news-dot{position:absolute;top:-6px;right:-6px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 4px;background:#b4484b;border:2px solid var(--paper);border-radius:20px;color:white;font-size:10px;font-weight:800}
+.news-dot[hidden]{display:none}
+.news-label{font-size:11px;font-weight:700;color:var(--muted)}
+.raf-modal{width:min(570px,calc(100vw - 24px));padding:0;max-height:min(86dvh,720px);overflow:hidden;border-radius:17px}
+.raf-modal-inner{display:flex;flex-direction:column;min-height:0;max-height:min(86dvh,720px)}
+.raf-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 22px 16px;border-bottom:1px solid var(--line)}
+.raf-modal-heading{display:flex;align-items:center;gap:11px;min-width:0}
+.raf-modal-emblem{display:grid;place-items:center;flex:none;width:38px;height:38px;border:1px solid var(--accentline);border-radius:11px;background:var(--accentbg);color:var(--accent);font-size:19px}
+.raf-modal-heading h2{font-size:16px;line-height:1.25;margin:0 0 3px;letter-spacing:-.025em}
+.raf-modal-heading p{margin:0;font-size:11px;color:var(--muted)}
+.raf-modal-content{overflow:auto;padding:19px 22px;min-height:0}
+.raf-modal-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 22px;border-top:1px solid var(--line);background:var(--paper2)}
+.raf-modal-footer small{color:var(--muted);font-size:10px;line-height:1.45}
+.raf-modal-close{display:grid;place-items:center;width:32px;height:32px;flex:none;border:1px solid var(--line);border-radius:9px;background:var(--paper2);color:var(--text);font-size:21px;line-height:1}
+.raf-modal-kicker{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--accent);margin:0 0 10px}
+.raf-legal-quote{border-left:3px solid var(--accent);background:var(--accentbg);padding:13px 15px;border-radius:0 9px 9px 0;margin:0 0 16px;line-height:1.6;font-size:12px}
+.raf-modal-content p{font-size:12px;line-height:1.65;margin:0 0 13px}
+.raf-legal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0 16px}
+.raf-legal-card{border:1px solid var(--line);border-radius:10px;padding:11px;background:var(--paper2)}
+.raf-legal-card b{display:block;font-size:11px;margin-bottom:4px}.raf-legal-card span{font-size:11px;color:var(--muted);line-height:1.45}
+.raf-disclaimer{padding:11px 12px;background:var(--warnbg);border-radius:9px;color:var(--text);font-size:11px;line-height:1.55;margin-top:10px}
+.raf-meta{padding-top:12px;margin-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.7}
+.raf-meta strong{color:var(--text)}
+.raf-tabs{display:flex;gap:5px;padding:12px 22px 0;border-bottom:1px solid var(--line);flex:none}
+.raf-tab{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-weight:750;padding:9px 12px;white-space:nowrap}
+.raf-tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.raf-tab-panel[hidden]{display:none}
+.raf-demo-ribbon{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--accentline);background:var(--accentbg);border-radius:9px;padding:11px 12px;margin-bottom:14px;font-size:11px;line-height:1.5}
+.raf-demo-ribbon b{color:var(--accent)}
+.raf-event{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.raf-event-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 14px;border-bottom:1px solid var(--line)}
+.raf-event-top b{font-size:12px}
+.raf-state{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:99px;padding:4px 9px;font-size:10px;font-weight:750;white-space:nowrap}
+.raf-event-body{padding:13px 14px}
+.raf-event-body p{margin:0 0 10px;font-size:12px}
+.raf-event-meta{display:grid;grid-template-columns:115px minmax(0,1fr);gap:7px 9px;font-size:11px;line-height:1.5}
+.raf-event-meta span:nth-child(odd){color:var(--muted)}
+.raf-sync-row{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}
+.raf-sync-row:last-child{border-bottom:0}.raf-sync-row span{color:var(--muted)}.raf-sync-row strong{text-align:right;font-size:11px}
+.raf-small-note{font-size:11px!important;color:var(--muted);margin:12px 0 0!important}
+.raf-plain-link{font-size:11px;font-weight:700;color:var(--accent);text-decoration:none}.raf-plain-link:hover{text-decoration:underline}
+@media(max-width:650px){.news-label{display:none}.news-trigger{padding:0 8px}.raf-modal-head{padding:15px}.raf-modal-content{padding:15px}.raf-modal-footer{padding:12px 15px}.raf-tabs{padding-left:12px;padding-right:12px}.raf-legal-grid{grid-template-columns:1fr}.raf-event-meta{grid-template-columns:92px minmax(0,1fr)}}
+@media print{.raf-modal:not([open]){display:none!important}}
+
+
+/* Integração jurídica — versão 1.0 */
+.raf-inline-legal{display:flex;align-items:flex-start;gap:7px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:10px;line-height:1.4;background:var(--paper2)}
+.raf-inline-legal span:first-child{font-weight:800;color:var(--accent)}
+.raf-inline-legal button{border:0;background:transparent;color:var(--accent);text-decoration:underline;font:inherit;font-weight:750;cursor:pointer;padding:0}
+.raf-terms-dialog{width:min(760px,calc(100vw - 26px))}
+.raf-terms-dialog .raf-modal-inner{max-height:calc(88dvh - 36px)}
+.raf-term-section{margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.raf-term-section h3{font-size:12px;color:var(--text);margin:0 0 8px;letter-spacing:0}
+.raf-term-section p{font-size:11px;line-height:1.62;margin:0 0 7px}
+.raf-terms-footer{flex-wrap:wrap;align-items:center}
+.raf-consent{flex:1 1 280px;min-width:0}
+.raf-consent-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:650;line-height:1.4}
+.raf-consent-label input{accent-color:var(--accent);width:16px;height:16px;flex:none}
+.raf-consent-note{display:block;color:var(--muted);font-size:9px;margin:5px 0 0 24px;line-height:1.4}
+.raf-terms-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.raf-terms-actions .btn{min-height:35px}
+.raf-access-gate{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;background:var(--bg);padding:20px}
+.raf-access-gate[hidden]{display:none}
+.raf-access-card{width:min(410px,100%);padding:30px;border:1px solid var(--line);background:var(--paper);border-radius:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.raf-access-card h2{margin:0}.raf-access-card p{margin:0;color:var(--muted)}
+@media(max-width:650px){.raf-terms-footer{display:block}.raf-terms-actions{margin-top:12px;justify-content:stretch}.raf-terms-actions .btn{flex:1}}
+
+
+/* Central de Atualizações — visual premium compacto, sem integração fictícia */
+.raf-update-modal{width:min(650px,calc(100vw - 24px))}
+.raf-update-modal .raf-modal-inner{max-height:min(88dvh,760px)}
+.raf-section-kicker{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.095em;color:var(--muted);margin:15px 0 9px}
+.raf-update-history{margin-top:16px;border-top:1px solid var(--line);padding-top:3px}
+.raf-update-history p{font-size:11px;line-height:1.6;color:var(--muted);margin:0}
+.raf-source-card{border:1px solid var(--line);border-radius:11px;padding:13px 14px;margin:0 0 10px;background:var(--paper2)}
+.raf-source-title{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+.raf-source-title strong{font-size:12px;display:block;line-height:1.35}
+.raf-source-title small{font-size:10px;color:var(--muted);display:block;margin-top:4px;line-height:1.5}
+.raf-source-icon{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:8px;background:var(--accentbg);color:var(--accent);font-size:16px}
+.raf-source-detail{display:grid;grid-template-columns:75px minmax(0,1fr);gap:6px 12px;font-size:10px;line-height:1.5}
+.raf-source-detail span{color:var(--muted)}
+.raf-source-detail b{font-weight:650}
+.raf-source-detail a{color:var(--accent);font-weight:750;text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+.raf-sync-banner{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--paper2);padding:12px;border-radius:10px;margin-bottom:8px}
+.raf-sync-banner strong{font-size:12px;display:block}
+.raf-sync-banner small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.raf-sync-led{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none}
+@media(max-width:650px){.raf-source-card{padding:11px}.raf-source-detail{grid-template-columns:66px minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<header class="header"><div class="brand"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainSidebar" title="Abrir menu">☰</button><div class="logo" aria-hidden="true">⚖</div><div><strong>Raf-Prazo</strong><small>Inteligência em prazos judiciais</small></div></div><div class="header-actions"><button class="tiny-action" type="button" id="sourcesTop">ⓘ Fontes</button><button class="tiny-action" type="button" id="historyTop">↶ Histórico</button><button type="button" class="news-trigger" id="rafNewsOpen" aria-label="Abrir atualizações do calendário judicial" title="Atualizações do calendário judicial"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="news-label">Atualizações</span><span class="news-dot" id="rafNewsDot" aria-label="Alterações não lidas" hidden>0</span></button><button class="theme" id="themeToggle" type="button" aria-label="Alternar modo claro e escuro" aria-pressed="false"><span id="themeEmoji">☀</span><span class="theme-text" id="themeLabel">Modo claro</span><span class="switch" aria-hidden="true"><span class="knob"></span></span></button></div></header>
+<aside class="sidebar" id="mainSidebar" aria-label="Menu principal"><span class="nav-label">ESPAÇO JURÍDICO</span><button class="nav-link active" id="navCalc" type="button" aria-label="Calculadora" title="Calculadora"><span class="nav-icon">▦</span><span class="nav-text">Calculadora</span></button><button class="nav-link" id="navCalendar" type="button" aria-label="Calendário" title="Calendário"><span class="nav-icon">▣</span><span class="nav-text">Calendário</span></button><button class="nav-link" id="navHistory" type="button" aria-label="Histórico" title="Histórico"><span class="nav-icon">↶</span><span class="nav-text">Histórico</span></button><button class="nav-link" id="navSettings" type="button" aria-label="Configurações" title="Configurações"><span class="nav-icon">⚙</span><span class="nav-text">Configurações</span></button><button class="nav-link" id="navAbout" type="button" aria-label="Sobre o Raf-Prazo" title="Sobre o Raf-Prazo"><span class="nav-icon">ⓘ</span><span class="nav-text">Sobre o Raf-Prazo</span></button><button class="nav-link" id="navTerms" type="button" aria-label="Termos de Uso e Aviso Legal" title="Termos de Uso"><span class="nav-icon">§</span><span class="nav-text">Termos de Uso</span></button><div class="sidebar-bottom"><strong>Raf-Prazo · v2.0</strong>Motor de cálculo local<br>Base municipal gratuita<br>Cálculo local · fontes sujeitas à conferência</div></aside>
+<main class="content" id="mainContent"><div class="intro"><h1>Calculadora de prazos</h1><span class="hint">CPC · dias úteis · marco inicial informado e excluído da contagem</span></div>
+<div class="workspace">
+<section class="panel" aria-label="Parâmetros do prazo"><div class="panel-head"><div><h2>▤ &nbsp;Parâmetros do prazo</h2><p class="subtitle">Informe o marco legal já definido no processo.</p></div></div>
+<div class="field-grid"><div class="field"><label class="label" for="start">Marco inicial (excluído)</label><input class="input" id="start" type="date"></div><div class="field"><label class="label" for="days">Prazo · dias úteis</label><input class="input" id="days" type="number" min="1" max="365" step="1" value="15"></div></div>
+<div class="quick" id="quick"><button type="button" class="pill" data-days="5">5 dias</button><button type="button" class="pill" data-days="10">10 dias</button><button type="button" class="pill" data-days="15">15 dias</button><button type="button" class="pill" data-days="30">30 dias</button></div>
+<div class="section-divider"></div>
+<div class="subhead"><strong>⌖ &nbsp;Localização do calendário</strong><button type="button" class="settings-button" id="manualCityOpen">Código IBGE ↗</button></div>
+<div class="select-grid"><div class="field"><label class="label" for="uf">Estado</label><select class="select" id="uf"></select></div><div class="field"><label class="label" for="city">Município</label><select class="select" id="city"><option value="3301702">Duque de Caxias</option></select></div></div>
+<button class="sync" type="button" id="sync">↻ &nbsp;Atualizar feriados gratuitos</button>
+<div class="status" role="status" aria-live="polite" id="status" data-tone="warn"><strong>Preparando o calendário…</strong><div>Os feriados locais são consultados na base aberta.</div></div>
+<div class="section-divider"></div>
+<div class="checks"><label class="check"><input type="checkbox" id="useLocal" checked><span>Considerar feriados estaduais e municipais da base aberta</span></label><label class="check"><input type="checkbox" id="recess" checked><span>Suspender contagem de 20/12 até 20/01 (CPC, art. 220)</span></label><label class="check"><input type="checkbox" id="tjrj" checked><span>Considerar atos do TJRJ cadastrados e conferidos</span></label></div>
+<div class="panel-grow"><button type="button" class="settings-button" id="customOpen">+ Cadastrar feriados ou suspensões locais</button></div>
+</section>
+<section class="panel" aria-label="Calendário visual"><div class="calendar-due-banner" aria-label="Vencimento em destaque"><div><span class="calendar-due-label">⚑ DATA FINAL DO PRAZO</span><strong id="calendarDue">—</strong><span id="calendarWeekday" class="calendar-due-weekday">Aguardando cálculo</span></div><span class="calendar-due-tag">VENCIMENTO</span></div><div class="panel-head"><div><h2>▦ &nbsp;Calendário judicial</h2><p class="subtitle">Dias contabilizados, feriados e vencimento.</p></div></div><div class="cal-toolbar"><h2 id="month">—</h2><div class="cal-nav"><button id="prev" title="Mês anterior" aria-label="Mês anterior">‹</button><button id="today" title="Ir ao início" aria-label="Mês do marco inicial">◎</button><button id="dueNav" title="Ir ao vencimento" aria-label="Mês do vencimento">↗</button><button id="next" title="Mês seguinte" aria-label="Mês seguinte">›</button></div></div><div class="weekdays" aria-hidden="true"><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span></div><div class="calendar" id="calendar" aria-label="Calendário interativo; clique para mudar o marco inicial"></div><div class="legend"><span><i class="marker init"></i>Marco</span><span><i class="marker"></i>Dia contado</span><span><i class="marker off"></i>Não útil</span><span><i class="marker due"></i>Vencimento</span></div><p class="cal-note" id="calendarTip">Clique em um dia para definir novo marco. Posicione o cursor para visualizar o motivo das exclusões.</p></section>
+<section class="panel" aria-label="Resultado"><div class="panel-head"><div><h2>⚑ &nbsp;Vencimento calculado</h2><p class="subtitle">Resultado conforme as fontes disponíveis.</p></div></div><div class="result-block" aria-live="polite"><span class="eyebrow" id="resultStatus">PRAZO CALCULADO · CONFERIR</span><div class="due-date" id="due">—</div><div class="weekday" id="weekday">Informe um prazo válido</div><div class="pill-info" id="countTitle">15 dias úteis</div></div><div class="raf-inline-legal"><span aria-hidden="true">ⓘ</span><div>Cálculo auxiliar. Confirme o vencimento nos sistemas e atos oficiais aplicáveis. <button type="button" id="rafLegalOpen">Termos de Uso</button></div></div><div class="insights"><div class="insight"><label>1º DIA CONTADO</label><strong id="first">—</strong></div><div class="insight"><label>DIAS EXCLUÍDOS</label><strong id="excluded">—</strong></div></div><div class="notice warn" id="warning"><b>Validação necessária</b>Confirme o marco de intimação e os atos oficiais do tribunal. Calendários civis não substituem o calendário forense.</div><div class="result-actions panel-grow"><button class="btn primary" type="button" id="memoryOpen">▤ &nbsp;Ver memória de cálculo</button><div class="btn-row"><button class="btn" type="button" id="copy">⧉ Copiar</button><button class="btn" type="button" id="save">↧ Salvar</button></div><button class="btn" type="button" id="csv">↓ Exportar CSV da memória</button></div><div class="info-strip" id="sourceFoot">Fonte legal: CPC, arts. 219, 220 e 224</div></section>
+</div></main>
+<footer class="footer"><span><strong>Raf-Prazo</strong> © 2026 Rafael Moraes da Silva Passos — Todos os direitos reservados.</span><span>Ferramenta auxiliar · Dados locais sujeitos à conferência oficial</span></footer>
+</div>
+<dialog id="memoryDialog" aria-labelledby="memoryHeading"><div class="dialog-body"><div class="dialog-top"><div><h2 id="memoryHeading">Memória de cálculo</h2><p id="memorySummary">Detalhamento cronológico do prazo.</p></div><button class="close" type="button" data-close="memoryDialog" aria-label="Fechar">×</button></div><div class="dialog-scroll" id="memRows"></div><p class="muted" id="memorySource"></p><div class="dialog-end"><button class="btn" id="printMem" type="button">Imprimir / PDF</button><button class="btn" id="copyMem" type="button">Copiar memória</button></div></div></dialog>
+<dialog id="customDialog" aria-labelledby="customHeading"><div class="dialog-body"><div class="dialog-top"><div><h2 id="customHeading">Feriados e suspensões adicionais</h2><p>Datas do município selecionado, salvas neste navegador.</p></div><button type="button" class="close" data-close="customDialog">×</button></div><p class="muted">Informe uma data por linha no formato <strong>AAAA-MM-DD | motivo</strong> (o motivo é opcional). Use apenas datas com aplicação confirmada ao processo. Pode adicionar atos do tribunal que não constam na base civil.</p><textarea class="textarea" id="customText" spellcheck="false" placeholder="2026-10-30 | Suspensão de prazos — TJRJ&#10;2026-12-08 | Feriado local confirmado"></textarea><div class="error" id="customError" role="alert"></div><div class="dialog-end"><button class="btn primary" type="button" id="customSave">Aplicar datas</button></div></div></dialog>
+<dialog id="historyDialog" aria-labelledby="historyHeading"><div class="dialog-body"><div class="dialog-top"><div><h2 id="historyHeading">Histórico local</h2><p>Últimos cálculos salvos somente neste navegador.</p></div><button class="close" type="button" data-close="historyDialog">×</button></div><div id="historyList" class="dialog-scroll"></div><div class="dialog-end"><button type="button" class="btn" id="clearHistory">Limpar histórico</button></div></div></dialog>
+<dialog id="sourcesDialog" aria-labelledby="sourcesHeading"><div class="dialog-body"><div class="dialog-top"><div><h2 id="sourcesHeading">Fontes e segurança jurídica</h2><p>Origem dos dados, limites e escopo de uso.</p></div><button class="close" type="button" data-close="sourcesDialog">×</button></div><div class="source-list"><div class="source-item"><b>Brasil: normas de contagem</b><small>Arts. 219, 220 e 224 do CPC. Marco inicial informado pelo usuário, excluído da contagem.</small><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm" target="_blank" rel="noopener noreferrer">Consultar o CPC ↗</a></div><div class="source-item"><b>IBGE: identificação de municípios</b><small>Consulta gratuita dos códigos oficiais de municípios por UF.</small><a href="https://servicodados.ibge.gov.br/api/docs/localidades" target="_blank" rel="noopener noreferrer">Serviço de Localidades do IBGE ↗</a></div><div class="source-item"><b>Feriados Brasil: base comunitária aberta (MIT)</b><small>Arquivos públicos de feriados nacionais, estaduais e municipais organizados por ano e código IBGE; podem conter erros ou lacunas. Não equivalem a uma certidão oficial.</small><a href="https://github.com/joaopbini/feriados-brasil" target="_blank" rel="noopener noreferrer">Repositório e licença ↗</a></div><div class="source-item"><b>TJRJ: suspensões oficiais e feriados forenses</b><small>Há um registro pontual de 30/10/2026, conforme Aviso nº 290/2026. Não há sincronização automática das demais publicações do TJRJ.</small><a href="https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295" target="_blank" rel="noopener noreferrer">Notícia oficial do TJRJ ↗</a></div></div><p class="muted">Sem API paga, sem conta e sem envio dos seus cálculos. A consulta online exige conexão; dados previamente sincronizados ficam em cache local. Caso o navegador limite acesso a arquivos remotos ou armazenamento em arquivos locais, abra a página por HTTPS ou localhost.</p></div></dialog>
+<dialog id="ibgeDialog" aria-labelledby="ibgeHeading"><div class="dialog-body"><div class="dialog-top"><div><h2 id="ibgeHeading">Localização por código IBGE</h2><p>Alternativa quando a lista do IBGE não estiver disponível.</p></div><button type="button" class="close" data-close="ibgeDialog">×</button></div><label class="label" for="ibgeInput">Código municipal IBGE (7 dígitos)</label><div class="code-input"><input class="input" type="text" inputmode="numeric" id="ibgeInput" maxlength="7" placeholder="Ex.: 3301702"><button class="btn primary" type="button" id="ibgeApply">Usar código</button></div><p class="muted">O código deve corresponder ao município da UF selecionada. Na ausência da lista oficial carregada, a identificação será exibida como código até que seja confirmada.</p><p class="error" id="ibgeError"></p></div></dialog>
+
+<!-- PREVIA VISUAL: modal institucional, sem dependencias externas -->
+<dialog class="raf-modal" id="rafAboutDialog" aria-labelledby="rafAboutHeading">
+ <div class="raf-modal-inner">
+  <div class="raf-modal-head"><div class="raf-modal-heading"><div class="raf-modal-emblem" aria-hidden="true">⚖</div><div><h2 id="rafAboutHeading">Sobre o Raf-Prazo</h2><p>Fundamentação constitucional e finalidade</p></div></div><button type="button" class="raf-modal-close" data-raf-close="rafAboutDialog" aria-label="Fechar modal">×</button></div>
+  <div class="raf-modal-content">
+   <div class="raf-modal-kicker">Constituição Federal de 1988 · Art. 37, caput</div>
+   <div class="raf-legal-quote">O princípio constitucional da <strong>eficiência administrativa</strong> orienta a Administração Pública à melhoria de procedimentos e à utilização racional dos recursos, em conjunto com a legalidade, a impessoalidade, a moralidade e a publicidade.</div>
+   <p>O <strong>Raf-Prazo</strong> é uma ferramenta independente de apoio à conferência de prazos processuais. Sua proposta é facilitar a identificação de dias não úteis, organizar a memória de cálculo e tornar mais transparente a consulta aos feriados e às suspensões aplicáveis.</p>
+   <div class="raf-legal-grid">
+    <div class="raf-legal-card"><b>Eficiência operacional</b><span>Reduzir verificações repetitivas e organizar as rotinas de contagem.</span></div>
+    <div class="raf-legal-card"><b>Segurança e conferência</b><span>Destacar datas excluídas e incentivar a verificação dos atos oficiais.</span></div>
+    <div class="raf-legal-card"><b>Rastreabilidade</b><span>Documentar critérios, fontes consultadas e memória de cálculo.</span></div>
+    <div class="raf-legal-card"><b>Economicidade</b><span>Oferecer uma solução acessível, sem infraestrutura própria ou serviços pagos.</span></div>
+   </div>
+   <p>Também dialoga com o <strong>art. 5º, LXXVIII, da Constituição Federal</strong>, relativo à razoável duração do processo, e com as regras de contagem previstas nos <strong>arts. 219, 220 e 224 do CPC</strong>.</p>
+   <div class="raf-disclaimer"><strong>Importante:</strong> ferramenta auxiliar e <strong>não oficial</strong>. Não substitui os sistemas do tribunal, a legislação, os atos normativos, as decisões judiciais ou a conferência do profissional responsável. A eventual utilização institucional depende de avaliação e autorização competentes.</div>
+   <div class="raf-meta"><strong>Desenvolvimento:</strong> Rafael Moraes da Silva Passos<br><strong>Projeto:</strong> Raf-Prazo · 2026<br><a class="raf-plain-link" href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener noreferrer">Consultar a Constituição Federal ↗</a></div>
+  </div>
+  <div class="raf-modal-footer"><small>Fundamentação institucional do projeto · Material não oficial</small><button class="btn primary" type="button" data-raf-close="rafAboutDialog">Entendi</button></div>
+ </div>
+</dialog>
+
+<dialog class="raf-modal raf-terms-dialog" id="rafTermsDialog" aria-labelledby="rafTermsHeading" aria-describedby="rafTermsIntro">
+ <div class="raf-modal-inner">
+  <div class="raf-modal-head">
+   <div class="raf-modal-heading"><div class="raf-modal-emblem" aria-hidden="true">§</div>
+    <div><h2 id="rafTermsHeading">Termos de Uso e Aviso Legal</h2><p>Raf-Prazo · Versão 1.0 · 16/10/2026</p></div>
+   </div>
+   <button type="button" class="raf-modal-close" id="rafTermsClose" aria-label="Fechar termos" hidden>×</button>
+  </div>
+  <div class="raf-modal-content" id="rafTermsContent">
+   <div class="raf-demo-ribbon" id="rafTermsIntro"><span aria-hidden="true">ⓘ</span><div><b>Leia antes de utilizar.</b><br>O Raf-Prazo é uma ferramenta auxiliar e não oficial. Confira sempre os prazos nos sistemas, atos e fontes oficiais.</div></div>
+   <div class="raf-modal-kicker">Termo integral</div>
+   <section class="raf-term-section"><h3>1. Objeto e finalidade</h3><p>O Raf-Prazo é uma aplicação tecnológica gratuita e independente destinada ao apoio informativo e operacional na contagem, conferência e organização de prazos processuais, conforme parâmetros fornecidos pelo usuário e bases de calendário disponíveis.</p><p>O software não presta consultoria jurídica, não emite certificação oficial de tempestividade e não substitui a análise de profissional habilitado ou agente público competente.</p></section>
+<section class="raf-term-section"><h3>2. Independência institucional</h3><p>O Raf-Prazo não é desenvolvido, mantido, homologado, certificado, patrocinado ou oficialmente reconhecido pelo Tribunal de Justiça do Estado do Rio de Janeiro (TJRJ), Conselho Nacional de Justiça (CNJ), Ordem dos Advogados do Brasil (OAB) ou qualquer outro órgão público.</p><p>Referências a órgãos e tribunais indicam apenas a abrangência dos calendários consultados, sem vínculo institucional. O uso em ambiente de trabalho deve observar autorizações, normas internas e políticas de segurança aplicáveis.</p></section>
+<section class="raf-term-section"><h3>3. Fundamentação constitucional</h3><p>O projeto inspira-se no princípio da eficiência administrativa, previsto no art. 37, caput, da Constituição Federal de 1988, visando racionalização de tarefas, padronização e maior transparência na conferência de prazos.</p><p>Essa fundamentação não equivale a autorização administrativa, chancela institucional ou garantia de adequação a procedimentos oficiais.</p></section>
+<section class="raf-term-section"><h3>4. Regras de cálculo e conferência</h3><p>Os resultados decorrem de processamento automatizado baseado nas datas informadas, regras implementadas e dados disponíveis. A contagem pode depender da natureza do procedimento, termo inicial, modalidade de comunicação, feriados, suspensões, indisponibilidades de sistemas, decisões judiciais e atos normativos.</p><p>O usuário deve conferir o termo inicial, a legislação processual, os calendários e as determinações aplicáveis antes de usar qualquer resultado, especialmente diante de risco de intempestividade, preclusão ou perda de prazo.</p><p>Em caso de divergência, prevalecem as normas, decisões e informações oficiais juridicamente aplicáveis. O programa não certifica a tempestividade de atos.</p></section>
+<section class="raf-term-section"><h3>5. Feriados, suspensões e atualizações</h3><p>Feriados e suspensões poderão ser obtidos de fontes públicas e registros locais. A existência de sincronização não assegura cobertura integral, imediata ou ininterrupta de todos os tribunais, comarcas, sistemas e publicações.</p><p>Registros identificados automaticamente podem depender de validação antes de serem aplicados. Em falhas de rede ou atualização, a aplicação poderá utilizar dados locais anteriores, com indicação de suas limitações.</p><p>Compete ao usuário verificar a abrangência territorial, temporal e processual dos eventos considerados.</p></section>
+<section class="raf-term-section"><h3>6. Deveres do usuário</h3><p>O usuário deve inserir corretamente os parâmetros, conferir os resultados, consultar fontes oficiais quando necessário, respeitar as regras de sua instituição, não apresentar o software como oficial e não utilizá-lo para finalidades ilícitas.</p><p>A disponibilização da aplicação não transfere ao desenvolvedor as atribuições legais, funcionais ou profissionais de conferência e prática de atos processuais.</p></section>
+<section class="raf-term-section"><h3>7. Limitações técnicas e garantias</h3><p>A ferramenta é oferecida gratuitamente nas condições técnicas existentes em cada versão. Podem ocorrer erros, incompatibilidades, falhas de processamento, indisponibilidades e desatualizações.</p><p>Não há garantia de funcionamento ininterrupto, atualização em tempo real, ausência absoluta de erros ou adequação automática a todas as hipóteses processuais.</p></section>
+<section class="raf-term-section"><h3>8. Responsabilidade</h3><p>Eventual responsabilidade decorrente do desenvolvimento, da disponibilização ou da utilização do Raf-Prazo será apurada conforme a legislação brasileira e as circunstâncias do caso concreto.</p><p>O desenvolvedor não assume obrigação de acompanhar processos individualmente, monitorar vencimentos, emitir alertas oficiais ou prestar assessoria jurídica.</p><p>Nenhuma cláusula pretende afastar responsabilidades legalmente irrenunciáveis, excluir direitos assegurados por normas de ordem pública ou restringir indevidamente direitos previstos na legislação de proteção do consumidor. Este termo não impede o exercício do direito de ação.</p></section>
+<section class="raf-term-section"><h3>9. Privacidade e proteção de dados</h3><p>Os cálculos são concebidos para execução no navegador. Preferências, históricos e registros de concordância podem ser armazenados localmente, inclusive por localStorage.</p><p>O navegador poderá consultar serviços externos para obter calendários e informações públicas. A hospedagem e os provedores externos poderão processar dados técnicos de acesso conforme suas próprias políticas.</p><p>Esta descrição deverá ser revisada antes da publicação para refletir precisamente as operações efetivas de coleta, armazenamento e transmissão, em conformidade com a Lei nº 13.709/2018 (LGPD), quando aplicável.</p></section>
+<section class="raf-term-section"><h3>10. Propriedade intelectual</h3><p>O Raf-Prazo é um projeto de desenvolvimento independente de Rafael Moraes da Silva Passos, ressalvados os direitos de terceiros sobre bibliotecas, dados e componentes utilizados.</p><p>A disponibilização gratuita não implica cessão automática de direitos autorais ou autorização irrestrita de reprodução, modificação, redistribuição ou exploração comercial. Licenças específicas, quando houver, serão divulgadas separadamente.</p></section>
+<section class="raf-term-section"><h3>11. Atualização do termo</h3><p>Este documento poderá ser alterado para refletir mudanças técnicas, operacionais ou jurídicas. A versão e a data de vigência serão identificadas e alterações relevantes serão comunicadas de forma clara, conforme a legislação aplicável.</p></section>
+<section class="raf-term-section"><h3>12. Aceitação e disposições finais</h3><p>Na primeira utilização, poderá ser solicitada manifestação afirmativa de ciência e concordância. O registro local tem finalidade operacional e não constitui, isoladamente, prova conclusiva de identidade ou de aceitação juridicamente válida.</p><p>A invalidade de uma cláusula não invalida necessariamente as demais. O documento será interpretado conforme o ordenamento jurídico brasileiro, preservados os direitos legalmente assegurados.</p></section>
+   <div class="raf-meta"><strong>Desenvolvedor:</strong> Rafael Moraes da Silva Passos<br>
+    <strong>Natureza:</strong> projeto independente e gratuito · material não oficial<br>
+    <strong>Versão do termo:</strong> 1.0 · <strong>Data:</strong> 16 de outubro de 2026</div>
+  </div>
+  <div class="raf-modal-footer raf-terms-footer">
+   <div class="raf-consent" id="rafConsentControls">
+    <label class="raf-consent-label"><input type="checkbox" id="rafTermsCheckbox">
+    <span>Li o Termo de Uso e concordo com suas condições.</span></label>
+    <span class="raf-consent-note">A concordância será registrada apenas neste navegador. Não substitui prova formal de aceite.</span>
+   </div>
+   <div class="raf-terms-actions">
+    <button type="button" class="btn" id="rafTermsDecline">Não concordo</button>
+    <button type="button" class="btn primary" id="rafTermsAccept" disabled>Li e concordo</button>
+    <button type="button" class="btn primary" id="rafTermsDone" hidden>Fechar</button>
+   </div>
+  </div>
+ </div>
+</dialog>
+<div class="raf-access-gate" id="rafAccessGate" hidden role="region" aria-labelledby="rafGateHeading">
+ <div class="raf-access-card">
+  <div class="raf-modal-emblem" aria-hidden="true">§</div>
+  <h2 id="rafGateHeading">Termos não aceitos</h2>
+  <p>Para utilizar esta demonstração do Raf-Prazo, é necessário ler e concordar com o Termo de Uso.</p>
+  <button type="button" class="btn primary" id="rafGateReview">Ler termos novamente</button>
+ </div>
+</div>
+
+<!-- PRÉVIA: Central de Atualizações; fontes exibidas para transparência, ainda sem GitHub Sync -->
+<dialog class="raf-modal raf-update-modal" id="rafNewsDialog" aria-labelledby="rafNewsHeading">
+ <div class="raf-modal-inner">
+  <div class="raf-modal-head"><div class="raf-modal-heading"><div class="raf-modal-emblem" aria-hidden="true">↻</div><div><h2 id="rafNewsHeading">Atualizações do Calendário Judicial</h2><p>Raf-Prazo Sync · Rastreabilidade de alterações</p></div></div><button type="button" class="raf-modal-close" data-raf-close="rafNewsDialog" aria-label="Fechar atualizações">×</button></div>
+  <div class="raf-tabs" role="tablist" aria-label="Informações das atualizações"><button type="button" class="raf-tab" role="tab" aria-selected="true" aria-controls="rafPanelNews" id="rafTabNews" data-raf-tab="news">Alterações</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSources" id="rafTabSources" data-raf-tab="sources">Fontes</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSync" id="rafTabSync" data-raf-tab="sync">Sincronização</button></div>
+  <div class="raf-modal-content">
+   <section class="raf-tab-panel" id="rafPanelNews" role="tabpanel" aria-labelledby="rafTabNews">
+    <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Prévia da central de atualizações</b><br>Esta versão não monitora publicações automaticamente. O registro abaixo é um exemplo visual, não uma suspensão real.</div></div>
+    <div class="raf-section-kicker">Como serão apresentadas as alterações</div>
+    <div class="raf-event"><div class="raf-event-top"><b>Suspensão de prazo — exemplo de registro</b><span class="raf-state">Não aplicado</span></div><div class="raf-event-body"><p>Uma alteração identificada deverá informar exatamente o evento, o território afetado e o ato que lhe deu origem.</p><div class="raf-event-meta"><span>Data afetada</span><strong>Somente após confirmação</strong><span>Tipo</span><strong>Feriado, suspensão, retificação ou revogação</strong><span>Abrangência</span><strong>Estado, município, comarca ou unidade</strong><span>Ato oficial</span><strong>Número, data e link da publicação</strong><span>Validação</span><strong>Confirmado / pendente / revogado</strong><span>Impacto</span><strong>Aplicado ao cálculo somente se validado</strong></div></div></div>
+    <div class="raf-update-history"><div class="raf-section-kicker">Histórico de alterações</div><p>Nenhuma atualização automática registrada. Quando a sincronização estiver ativa, novas alterações e correções aparecerão aqui em ordem cronológica, com origem e situação.</p></div>
+   </section>
+   <section class="raf-tab-panel" id="rafPanelSources" role="tabpanel" aria-labelledby="rafTabSources" hidden>
+    <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Fontes previstas — não conectadas ao Raf-Prazo Sync</b><br>Os links abaixo identificam fontes de consulta. Eles não comprovam que algum evento específico tenha sido incorporado ao cálculo.</div></div>
+    <div class="raf-source-card"><div class="raf-source-title"><span class="raf-source-icon">⚖</span><div><strong>Tribunal de Justiça do Estado do Rio de Janeiro</strong><small>Atos e calendários oficiais · abrangência a conferir</small></div></div><div class="raf-source-detail"><span>Tipo</span><b>Fonte oficial primária</b><span>Situação</span><b>Consulta automatizada não implementada</b><span>Origem</span><a href="https://www.tjrj.jus.br/" target="_blank" rel="noopener noreferrer">Portal oficial do TJRJ ↗</a></div></div>
+    <div class="raf-source-card"><div class="raf-source-title"><span class="raf-source-icon">▦</span><div><strong>BrasilAPI — feriados nacionais</strong><small>Base complementar estruturada · sujeita a validação</small></div></div><div class="raf-source-detail"><span>Tipo</span><b>API pública complementar</b><span>Situação</span><b>Integração GitHub não implementada</b><span>Origem</span><a href="https://brasilapi.com.br/" target="_blank" rel="noopener noreferrer">Site da BrasilAPI ↗</a></div></div>
+    <div class="raf-source-card"><div class="raf-source-title"><span class="raf-source-icon">⌖</span><div><strong>Legislação estadual e municipal</strong><small>Feriados locais e atos específicos de abrangência territorial</small></div></div><div class="raf-source-detail"><span>Tipo</span><b>Fontes oficiais a identificar por localidade</b><span>Situação</span><b>Validação manual necessária</b><span>Origem</span><b>Referência individual em cada evento confirmado</b></div></div>
+    <p class="raf-small-note">Um evento somente deverá afetar o prazo após confirmação de sua fonte, data, vigência e abrangência. A calculadora atual mantém suas rotinas preexistentes, separadas deste módulo demonstrativo.</p>
+   </section>
+   <section class="raf-tab-panel" id="rafPanelSync" role="tabpanel" aria-labelledby="rafTabSync" hidden>
+    <div class="raf-sync-banner"><span class="raf-sync-led" aria-hidden="true"></span><div><strong>Sincronização do GitHub não ativada</strong><small>Esta tela informa o estado real da integração planejada.</small></div></div>
+    <div class="raf-sync-row"><span>Última consulta automática</span><strong>Não realizada</strong></div>
+    <div class="raf-sync-row"><span>Última alteração recebida</span><strong>Não disponível</strong></div>
+    <div class="raf-sync-row"><span>Versão da base sincronizada</span><strong>Não disponível</strong></div>
+    <div class="raf-sync-row"><span>GitHub Actions</span><strong>Não configurado</strong></div>
+    <div class="raf-sync-row"><span>Arquivo feriados.json</span><strong>Não conectado</strong></div>
+    <div class="raf-sync-row"><span>Atualização automática TJRJ</span><strong>Não implementada</strong></div>
+    <p class="raf-small-note">A sincronização planejada deverá informar a data da verificação, o estado da conexão, a versão da base e eventuais falhas, sem confundir consulta realizada com alteração confirmada.</p>
+   </section>
+  </div>
+  <div class="raf-modal-footer"><small>Alterações não verificadas não devem ser aplicadas aos prazos.</small><button class="btn primary" type="button" data-raf-close="rafNewsDialog">Fechar</button></div>
+ </div>
+</dialog>
+
+<script>
+'use strict';
+(()=>{
+const $=id=>document.getElementById(id), MS=86400000, RAW='https://raw.githubusercontent.com/joaopbini/feriados-brasil/master/dados/feriados/', IBGE='https://servicodados.ibge.gov.br/api/v1/localidades/estados/';
+const UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+const fixed={'01-01':'Confraternização Universal','04-21':'Tiradentes','05-01':'Dia do Trabalho','09-07':'Independência do Brasil','10-12':'Nossa Senhora Aparecida','11-02':'Finados','11-15':'Proclamação da República','11-20':'Dia Nacional de Zumbi e da Consciência Negra','12-25':'Natal'};
+const actRJ={iso:'2026-10-30',name:'TJRJ — suspensão de prazos (Aviso nº 290/2026)',type:'ATO TJRJ',source:'TJRJ / Aviso nº 290/2026'};
+const weekdays=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const p=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s))return null;let d=new Date(s+'T00:00:00Z');return !isNaN(+d)&&d.toISOString().slice(0,10)===s?Math.floor(+d/MS):null};
+const iso=n=>new Date(n*MS).toISOString().slice(0,10);const f=(n,o)=>new Intl.DateTimeFormat('pt-BR',{timeZone:'UTC',...o}).format(new Date(n*MS));
+const volatileStore=new Map();
+const safeGet=(key,fallback=null)=>{if(volatileStore.has(key))return volatileStore.get(key);try{let v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch(_){return fallback}};
+const safeSet=(key,value)=>{volatileStore.set(key,value);try{localStorage.setItem(key,JSON.stringify(value));return true}catch(_){return false}};
+const sel=()=>({uf:$('uf').value,city:$('city').value,cityName:$('city').selectedOptions[0]?.textContent||'Município não identificado'});
+let cityOptions={RJ:[{id:3301702,nome:'Duque de Caxias'},{id:3304557,nome:'Rio de Janeiro'},{id:3303500,nome:'Nova Iguaçu'}]};
+let selectedCity=safeGet('raf-prazo:place',{uf:'RJ',city:'3301702',cityName:'Duque de Caxias'});
+if(!UFS.includes(selectedCity.uf)||!/^\d{7}$/.test(String(selectedCity.city))){selectedCity={uf:'RJ',city:'3301702',cityName:'Duque de Caxias'}};
+let viewed=null,calc=null,loadToken=0,yearData=new Map(),currentYearStates={},cacheSignature='',noticeTimeout;
+const manualKey=()=>`raf-prazo:manual:${sel().uf}:${sel().city}`;
+const manual=()=>safeGet(manualKey(),{});
+const isRecess=n=>{if(!$('recess').checked)return false;let d=new Date(n*MS),m=d.getUTCMonth()+1,day=d.getUTCDate();return(m===12&&day>=20)||(m===1&&day<=20)};
+const keyYear=(yr)=>`raf-prazo:holidays:${sel().uf}:${sel().city}:${yr}:v2`;
+const reason=n=>{
+  let date=new Date(n*MS),s=iso(n),w=date.getUTCDay();
+  if(w===0||w===6)return {name:'Fim de semana',type:'FINAL DE SEMANA'};
+  if(isRecess(n))return {name:'Suspensão de 20/12 a 20/01 (CPC, art. 220)',type:'RECESSO'};
+  if(manual()[s])return {name:manual()[s],type:'MANUAL'};
+  if($('tjrj').checked&&sel().uf==='RJ'&&s===actRJ.iso)return {name:actRJ.name,type:actRJ.type};
+  if(fixed[s.slice(5)])return {name:fixed[s.slice(5)],type:'NACIONAL'};
+  if($('useLocal').checked){const ev=yearData.get(date.getUTCFullYear())?.events?.find(e=>e.iso===s);if(ev)return {name:ev.name,type:ev.type};}
+  return null;
+};
+function spanYears(start,days){if(start===null||!Number.isInteger(days)||days<1||days>365)return [];let n=start,count=0,guard=0;while(count<days&&guard<1100){n++;guard++;let d=new Date(n*MS),w=d.getUTCDay(),mo=d.getUTCMonth()+1,day=d.getUTCDate();let recess=$('recess').checked&&((mo===12&&day>=20)||(mo===1&&day<=20));if(w!==0&&w!==6&&!recess)count++}let last=n+10,years=[];for(let yr=new Date(start*MS).getUTCFullYear();yr<=new Date(last*MS).getUTCFullYear();yr++){years.push(yr);if(years.length>=5)break}return years;}
+function coverage(start,days){let years=spanYears(start,days);let missing=years.filter(y=>currentYearStates[y]!=='ok');return {years,missing,loaded:years.filter(y=>currentYearStates[y]==='ok')}};
+function showStatus(){let st=p($('start').value),days=+$('days').value,c=coverage(st,days);let el=$('status');let live=Object.values(currentYearStates).some(x=>x==='loading');let localName=sel().cityName;
+  if(!/^\d{7}$/.test(sel().city)){el.dataset.tone='warn';el.textContent='Selecione um município ou informe seu código IBGE para consultar feriados locais.';return;}
+  if(live){el.dataset.tone='warn';el.replaceChildren();let strong=document.createElement('strong');strong.textContent='↻ Consultando base gratuita…';let div=document.createElement('div');div.textContent=`${localName} · carregamento online em andamento.`;el.append(strong,div);return}
+  if(!c.years.length){el.dataset.tone='warn';el.textContent='Informe a data inicial para buscar os calendários.';return}
+  let latest=c.loaded.map(y=>yearData.get(y)?.updatedAt).filter(Boolean).sort().pop();
+  el.dataset.tone=c.missing.length?'warn':'good';el.replaceChildren();let b=document.createElement('strong');b.textContent=c.missing.length?'◌ Cobertura local parcial':'✓ Calendário local carregado';let d=document.createElement('div');d.textContent=`${localName} · ${c.loaded.length?c.loaded.join(', '):'sem anos completos em cache'}${c.missing.length?' · faltam: '+c.missing.join(', '):''}${latest?' · salvo em '+new Date(latest).toLocaleDateString('pt-BR'):''}`;el.append(b,d);
+}
+function updateTheme(){const t=document.documentElement.dataset.theme;$('themeLabel').textContent=t==='dark'?'Modo escuro':'Modo claro';$('themeEmoji').textContent=t==='dark'?'☾':'☀';$('themeToggle').setAttribute('aria-pressed',t==='dark'?'true':'false');$('themeColor').content=t==='dark'?'#0b1625':'#f4f6fa'}
+function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem('raf-prazo:theme',theme)}catch(_){}updateTheme()}
+function calculate(keepMonth=false){let start=p($('start').value),days=Number($('days').value);let invalid=start===null||!Number.isSafeInteger(days)||days<1||days>365;if(invalid){calc=null;$('due').textContent='—';$('weekday').textContent='Data inválida ou prazo fora de 1–365 dias';$('first').textContent='—';$('excluded').textContent='—';showStatus();renderCalendar();return}
+ let rows=[],num=0,n=start;while(num<days&&rows.length<1400){n++;let block=reason(n);if(!block)num++;rows.push({n,count:block?null:num,name:block?.name||'Dia útil contabilizado',type:block?.type||'CONTADO'})}
+ if(num!==days){calc=null;$('due').textContent='—';$('weekday').textContent='Não foi possível concluir o cálculo';return}
+ let cov=coverage(start,days);calc={start,days,due:n,rows,cov,place:sel(),savedAt:new Date().toISOString(),recess:$('recess').checked,local:$('useLocal').checked,tjrj:$('tjrj').checked};
+ $('due').textContent=f(n,{day:'2-digit',month:'short',year:'numeric'}).replace(/\./g,'').toUpperCase();$('weekday').textContent=weekdays[new Date(n*MS).getUTCDay()];$('first').textContent=f(rows.find(r=>r.count===1).n,{day:'2-digit',month:'2-digit',year:'numeric'});$('excluded').textContent=String(rows.length-days);$('countTitle').textContent=days+' dia'+(days!==1?'s':'')+' útil'+(days!==1?'eis':'');
+ document.querySelectorAll('[data-days]').forEach(b=>b.classList.toggle('active',Number(b.dataset.days)===days));
+ $('resultStatus').textContent=cov.missing.length?'PRÉVIA · COBERTURA PARCIAL':'PRAZO CALCULADO · CONFERIR';
+ $('warning').className='notice'+(cov.missing.length?' warn':'');$('warning').replaceChildren();let b=document.createElement('b');b.textContent=cov.missing.length?'Base incompleta — cálculo provisório':'Validação judicial necessária';let startAlert=reason(start)?' Atenção: o marco informado coincide com dia não útil; confirme eventual prorrogação do termo inicial (art. 224, § 1º, CPC).':'';let tx=document.createTextNode((cov.missing.length?`Não há dados locais completos para ${cov.missing.join(', ')}. O vencimento pode mudar após a sincronização. Confira também o calendário do tribunal.`:'Feriados civis não substituem atos oficiais sobre suspensão de expediente e prazos. Confira o marco legal e o tribunal competente.')+startAlert);$('warning').append(b,tx);
+ if(!keepMonth||!viewed){let d=new Date(start*MS);viewed={y:d.getUTCFullYear(),m:d.getUTCMonth()}}
+ showStatus();renderCalendar();}
+function renderCalendar(){let now=new Date(),month=viewed||{y:now.getFullYear(),m:now.getMonth()};$('month').textContent=new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(month.y,month.m,1)));
+ let base=Math.floor(Date.UTC(month.y,month.m,1)/MS),offset=(new Date(base*MS).getUTCDay()+6)%7,calendar=$('calendar'),counted=new Set(calc?.rows.filter(r=>r.count!==null).map(r=>r.n)||[]);calendar.replaceChildren();let fragment=document.createDocumentFragment();
+ for(let i=0;i<42;i++){let n=base-offset+i,d=new Date(n*MS),block=reason(n),btn=document.createElement('button');btn.type='button';btn.className='day';if(d.getUTCMonth()!==month.m)btn.classList.add('other');if(block)btn.classList.add('blocked');if(counted.has(n))btn.classList.add('counted');if(n===calc?.start)btn.classList.add('origin');if(n===calc?.due)btn.classList.add('due');btn.append(document.createTextNode(String(d.getUTCDate())));if(n===calc?.start||n===calc?.due){let small=document.createElement('small');small.textContent=n===calc?.due?'FIM':'BASE';btn.append(small)}let what=n===calc?.due?'Vencimento':n===calc?.start?'Marco informado':block?`${block.name} (${block.type})`:counted.has(n)?'Dia computado':'Dia sem impedimento conhecido';btn.title=`${f(n,{day:'2-digit',month:'2-digit',year:'numeric'})}: ${what}`;btn.setAttribute('aria-label',btn.title+'; selecionar como marco inicial');btn.addEventListener('click',()=>{$('start').value=iso(n);calculate(true);syncCalendar(false)});fragment.append(btn)}calendar.append(fragment);
+}
+function parseCommunityDate(x){if(typeof x!=='string')return null;let m=x.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);return m?p(`${m[3]}-${m[2]}-${m[1]}`):p(x)}
+function mapEvents(replies,yr){let out=[];for(let i=0;i<replies.length;i++){let type=['NACIONAL','ESTADUAL','MUNICIPAL'][i];for(let e of replies[i]){let n=parseCommunityDate(e.data);if(n===null||new Date(n*MS).getUTCFullYear()!==yr)continue;let et=String(e.tipo||type).toUpperCase(),uf=String(e.uf||'').toUpperCase(),city=String(e.codigo_ibge||'');if(et==='FACULTATIVO'||et==='COMEMORATIVA')continue;if(type==='ESTADUAL'&&uf!==sel().uf)continue;if(type==='MUNICIPAL'&&city!==sel().city)continue;if(type==='NACIONAL'&&fixed[iso(n).slice(5)])continue;if(!['NACIONAL','ESTADUAL','MUNICIPAL'].includes(et))continue;out.push({iso:iso(n),name:String(e.nome||'Feriado na base aberta').slice(0,135),type:et})}}
+ return [...new Map(out.map(e=>[e.iso,e])).values()].sort((a,b)=>a.iso.localeCompare(b.iso));}
+const rawUrl=(type,yr)=>RAW+type+'/json/'+yr+'.json';
+async function fetchJson(url){let controller=new AbortController();let tm=setTimeout(()=>controller.abort(),18000);try{let r=await fetch(url,{signal:controller.signal,cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);let data=await r.json();if(!Array.isArray(data))throw Error('Formato inesperado');return data}finally{clearTimeout(tm)}}
+async function loadYear(year,force,token,place){let key=`raf-prazo:holidays:${place.uf}:${place.city}:${year}:v2`,cache=safeGet(key);if(!force&&cache&&cache.complete&&Array.isArray(cache.events)){if(token===loadToken){yearData.set(year,cache);currentYearStates[year]='ok';calculate(true)}return}
+ if(token!==loadToken)return;currentYearStates[year]='loading';showStatus();try{let [n,e,m]=await Promise.all(['nacional','estadual','municipal'].map(type=>fetchJson(rawUrl(type,year))));if(token!==loadToken)return;
+ let events=mapEvents([n,e,m],year),data={events,complete:true,updatedAt:new Date().toISOString(),source:'joaopbini/feriados-brasil',year};yearData.set(year,data);safeSet(key,data);currentYearStates[year]='ok';calculate(true);
+ }catch(err){if(token!==loadToken)return;currentYearStates[year]='missing';if(cache?.complete&&Array.isArray(cache.events)){yearData.set(year,cache);currentYearStates[year]='ok'}calculate(true)}
+}
+async function syncCalendar(force=false){let start=p($('start').value),days=Number($('days').value);if(start===null||!Number.isInteger(days)||days<1||days>365||!/^\d{7}$/.test(sel().city)){showStatus();return;}let years=spanYears(start,days),place=sel(),token=++loadToken;yearData.clear();currentYearStates={};$('sync').disabled=true;
+ let promises=years.map(y=>loadYear(y,force,token,place));await Promise.all(promises);if(token===loadToken){$('sync').disabled=false;calculate(true)}}
+function syncMaybe(){let place=sel();if(cacheSignature!==`${place.uf}:${place.city}`){cacheSignature=`${place.uf}:${place.city}`;syncCalendar(false);return}let years=spanYears(p($('start').value),Number($('days').value));if(years.some(y=>!yearData.has(y)&&currentYearStates[y]!=='loading'))syncCalendar(false)}
+function setUfs(){for(let u of UFS){let op=document.createElement('option');op.value=u;op.textContent=u;$('uf').append(op)}$('uf').value=selectedCity.uf;setCities(selectedCity.uf,selectedCity)}
+function setCities(uf,choice){let arr=cityOptions[uf]||[];$('city').replaceChildren();for(let m of arr){let op=document.createElement('option');op.value=String(m.id);op.textContent=m.nome;$('city').append(op)}if(choice?.city&&!arr.some(x=>String(x.id)===String(choice.city))){let op=document.createElement('option');op.value=String(choice.city);op.textContent=choice.cityName||'Município '+choice.city;$('city').append(op)}if(choice?.city)$('city').value=choice.city;if(!$('city').options.length){let op=document.createElement('option');op.textContent='Selecione o município';op.value='';$('city').append(op)}}
+async function loadCities(uf){try{let response=await fetch(IBGE+encodeURIComponent(uf)+'/municipios?orderBy=nome');if(!response.ok)throw Error('IBGE indisponível');let items=await response.json();if(!Array.isArray(items))throw Error('Lista incorreta');cityOptions[uf]=items.map(x=>({id:x.id,nome:x.nome})).filter(x=>Number.isInteger(x.id)&&x.nome).sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));if($('uf').value!==uf)return;let saved=sel();setCities(uf,saved);if(!Array.from($('city').options).some(o=>o.value===saved.city)&&cityOptions[uf].length)$('city').value=String(cityOptions[uf][0].id);}
+ catch(_){if($('uf').value===uf&&!cityOptions[uf])setCities(uf,null)}}
+function onPlaceChanged(){selectedCity=sel();safeSet('raf-prazo:place',selectedCity);loadToken++;yearData.clear();currentYearStates={};cacheSignature='';$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').checked=selectedCity.uf==='RJ';calculate();syncMaybe()}
+function dialog(id){$(id).showModal()}
+function dismiss(id){$(id).close()}
+function getMem(){if(!calc)return 'Sem cálculo disponível.';let c=calc;return [`Raf-Prazo — memória de cálculo`,`Local: ${c.place.cityName} / ${c.place.uf} (IBGE ${c.place.city})`,`Marco inicial informado (excluído): ${iso(c.start)}`,`Prazo: ${c.days} dias úteis`,`Vencimento preliminar calculado: ${iso(c.due)}`,`Recesso CPC: ${c.recess?'SIM':'NÃO'}; feriados locais: ${c.local?'SIM':'NÃO'}; atos TJRJ conhecidos: ${c.tjrj?'SIM':'NÃO'}`,`Cobertura da base comunitária: ${c.cov.loaded.join(', ')||'nenhuma'}; sem confirmação: ${c.cov.missing.join(', ')||'nenhuma'}`,'',...c.rows.map(r=>`${iso(r.n)} | ${r.count===null?'—':String(r.count).padStart(3,'0')} | ${r.name} (${r.type})`),'','ATENÇÃO: resultado auxiliar. Confirme data de publicação/ciência, atos e calendário forense oficiais.'].join('\n')}
+function showMemory(){if(!calc)return;let c=calc;$('memorySummary').textContent=`${c.days} dias úteis · ${c.place.cityName}/${c.place.uf} · ${iso(c.start)} → ${iso(c.due)}`;let rows=$('memRows');rows.replaceChildren();let h=document.createElement('div');h.className='mem-header';for(let t of ['Nº','Data','Contagem / causa']){let s=document.createElement('span');s.textContent=t;h.append(s)}rows.append(h);let frag=document.createDocumentFragment();for(let r of c.rows){let node=document.createElement('div');node.className='mem-row';for(let v of [r.count===null?'—':String(r.count),f(r.n,{day:'2-digit',month:'2-digit',year:'numeric'}),r.name]){let s=document.createElement('span');s.textContent=v;node.append(s)}frag.append(node)}rows.append(frag);$('memorySource').textContent=`Fonte de feriados locais: base comunitária aberta, quando carregada; atos do TJRJ cadastrados pontualmente. ${c.cov.missing.length?'Cobertura incompleta: '+c.cov.missing.join(', ')+'.':''} Confira publicação, ciência, feriados forenses e outros atos.`;dialog('memoryDialog')}
+async function copy(txt){try{await navigator.clipboard.writeText(txt);flash('Conteúdo copiado.')}catch(_){let t=document.createElement('textarea');t.value=txt;t.style.position='fixed';t.style.top='-1000px';document.body.append(t);t.select();let ok=document.execCommand('copy');t.remove();flash(ok?'Conteúdo copiado.':'Não foi possível copiar.')}}
+function flash(message){clearTimeout(noticeTimeout);let old=$('calendarTip').textContent;$('calendarTip').textContent=message;noticeTimeout=setTimeout(()=>{$('calendarTip').textContent=old},2800)}
+function quoteCSV(s){return '"'+String(s).replace(/"/g,'""')+'"'}
+function csv(){if(!calc)return;let header=['Sequência','Data','Situação','Origem'];let table=[header,...calc.rows.map(r=>[r.count===null?'':r.count,iso(r.n),r.name,r.type])];let content='\ufeff'+table.map(r=>r.map(quoteCSV).join(';')).join('\r\n');let url=URL.createObjectURL(new Blob([content],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=`Raf-Prazo_${iso(calc.start)}_${iso(calc.due)}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function history(){return safeGet('raf-prazo:history',[])}
+function saveHistory(){if(!calc)return;let list=history();list.unshift({start:iso(calc.start),days:calc.days,due:iso(calc.due),uf:calc.place.uf,city:calc.place.city,cityName:calc.place.cityName,savedAt:new Date().toISOString(),coverage:calc.cov.missing.length?'parcial':'carregada'});safeSet('raf-prazo:history',list.slice(0,30));flash('Cálculo salvo no histórico local.')}
+function showHistory(){let rows=$('historyList');rows.replaceChildren();let list=history();if(!list.length){let p=document.createElement('p');p.className='muted';p.style.padding='15px';p.textContent='Nenhum cálculo salvo. Use “Salvar” no painel de resultado.';rows.append(p)}for(let e of list){let r=document.createElement('div');r.className='history-entry';let info=document.createElement('div'),b=document.createElement('strong'),sm=document.createElement('small'),btn=document.createElement('button');b.textContent=`${e.days} dias · vencimento ${e.due}`;sm.textContent=`${e.start} · ${e.cityName}/${e.uf} · ${e.coverage}`;btn.className='btn';btn.textContent='Reabrir';btn.addEventListener('click',async()=>{dismiss('historyDialog');$('start').value=e.start;$('days').value=e.days;$('uf').value=e.uf;let choice={uf:e.uf,city:e.city,cityName:e.cityName};setCities(e.uf,choice);onPlaceChanged();await loadCities(e.uf)});info.append(b,sm);r.append(info,btn);rows.append(r)}dialog('historyDialog')}
+function showCustom(){let entries=manual();$('customText').value=Object.keys(entries).sort().map(k=>`${k} | ${entries[k]}`).join('\n');$('customError').textContent='';dialog('customDialog')}
+function saveCustom(){let result={},bad=[];for(let raw of $('customText').value.split(/\r?\n/)){let line=raw.trim();if(!line)continue;let [date,...description]=line.split('|'),n=p(date.trim());if(n===null){bad.push(line);continue}result[iso(n)]=description.join('|').trim().slice(0,120)||'Feriado ou suspensão informada manualmente'}if(bad.length){$('customError').textContent='Data inválida: '+bad.slice(0,3).join(', ')+' (use AAAA-MM-DD).';return}safeSet(manualKey(),result);dismiss('customDialog');calculate(true)}
+function nextMonth(inc){let d=new Date(Date.UTC(viewed.y,viewed.m+inc,1));viewed={y:d.getUTCFullYear(),m:d.getUTCMonth()};renderCalendar()}
+$('themeToggle').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+$('start').addEventListener('change',()=>{calculate();syncMaybe()});$('days').addEventListener('input',()=>{calculate();syncMaybe()});
+document.querySelectorAll('[data-days]').forEach(b=>b.addEventListener('click',()=>{$('days').value=b.dataset.days;calculate();syncMaybe()}));
+$('uf').addEventListener('change',async()=>{let uf=$('uf').value;setCities(uf,null);calculate();await loadCities(uf);if(!$('city').value&&cityOptions[uf]?.length){setCities(uf,{city:String(cityOptions[uf][0].id)})}onPlaceChanged()});
+$('city').addEventListener('change',onPlaceChanged);
+$('useLocal').addEventListener('change',()=>calculate(true));$('recess').addEventListener('change',()=>calculate(true));$('tjrj').addEventListener('change',()=>calculate(true));
+$('sync').addEventListener('click',()=>syncCalendar(true));$('prev').addEventListener('click',()=>nextMonth(-1));$('next').addEventListener('click',()=>nextMonth(1));
+$('today').addEventListener('click',()=>{let d=new Date(p($('start').value)*MS);viewed={y:d.getUTCFullYear(),m:d.getUTCMonth()};renderCalendar()});
+$('dueNav').addEventListener('click',()=>{if(!calc)return;let d=new Date(calc.due*MS);viewed={y:d.getUTCFullYear(),m:d.getUTCMonth()};renderCalendar()});
+$('memoryOpen').addEventListener('click',showMemory);$('copy').addEventListener('click',()=>copy(`Raf-Prazo · ${calc?.days||0} dias úteis · marco ${calc?iso(calc.start):'—'} · vencimento ${calc?iso(calc.due):'—'} · ${sel().cityName}/${sel().uf} · ${calc?.cov.missing.length?'resultado provisório, cobertura local parcial':'conferir calendário e atos oficiais do tribunal'}.`));
+$('save').addEventListener('click',saveHistory);$('csv').addEventListener('click',csv);$('copyMem').addEventListener('click',()=>copy(getMem()));$('printMem').addEventListener('click',()=>window.print());
+$('historyTop').addEventListener('click',showHistory);$('navHistory').addEventListener('click',showHistory);$('sourcesTop').addEventListener('click',()=>dialog('sourcesDialog'));$('navSettings').addEventListener('click',showCustom);$('navCalendar').addEventListener('click',()=>document.querySelector('[aria-label="Calendário visual"]').scrollIntoView({behavior:'smooth',block:'nearest'}));$('navCalc').addEventListener('click',()=>document.querySelector('[aria-label="Parâmetros do prazo"]').scrollIntoView({behavior:'smooth',block:'nearest'}));
+$('customOpen').addEventListener('click',showCustom);$('customSave').addEventListener('click',saveCustom);$('clearHistory').addEventListener('click',()=>{if(confirm('Apagar o histórico local do Raf-Prazo?')){safeSet('raf-prazo:history',[]);dismiss('historyDialog');showHistory()}});
+$('manualCityOpen').addEventListener('click',()=>{$('ibgeInput').value=$('city').value||'';$('ibgeError').textContent='';dialog('ibgeDialog')});
+$('ibgeApply').addEventListener('click',()=>{let code=$('ibgeInput').value.trim();if(!/^\d{7}$/.test(code)){$('ibgeError').textContent='O código IBGE deve ter exatamente 7 dígitos.';return}let uf=$('uf').value,found=cityOptions[uf]?.find(x=>String(x.id)===code);setCities(uf,{city:code,cityName:found?.nome||'Município '+code});dismiss('ibgeDialog');onPlaceChanged()});
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>dismiss(b.dataset.close)));
+for(let d of document.querySelectorAll('dialog'))d.addEventListener('click',e=>{let r=d.getBoundingClientRect();if(d.id==='rafTermsDialog'&&!document.getElementById('rafTermsAccept').hidden)return;if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()});
+const now=new Date(),today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');$('start').value=today;
+updateTheme();setUfs();$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').checked=selectedCity.uf==='RJ';calculate();cacheSignature=`${selectedCity.uf}:${selectedCity.city}`;loadCities(selectedCity.uf);syncCalendar(false);
+})();
+</script>
+<script>(function(){const due=document.getElementById('due'),weekday=document.getElementById('weekday'),topDue=document.getElementById('calendarDue'),topWeek=document.getElementById('calendarWeekday');if(!due||!topDue)return;function update(){topDue.textContent=due.textContent;topWeek.textContent=weekday?.textContent||''}new MutationObserver(update).observe(due,{childList:true,characterData:true,subtree:true});if(weekday)new MutationObserver(update).observe(weekday,{childList:true,characterData:true,subtree:true});update()})();</script>
+
+<script>
+(function(){
+  const app=document.getElementById('app');
+  const toggle=document.getElementById('menuToggle');
+  const main=document.getElementById('mainContent');
+  function setOpen(open){
+    app.classList.toggle('menu-open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+    toggle.setAttribute('aria-label',open?'Fechar menu de navegação':'Abrir menu de navegação');
+    toggle.title=open?'Fechar menu':'Abrir menu';
+    toggle.textContent=open?'✕':'☰';
+  }
+  setOpen(false); // Sempre inicia recolhido ao abrir o HTML.
+  toggle.addEventListener('click',()=>setOpen(!app.classList.contains('menu-open')));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&app.classList.contains('menu-open')){setOpen(false);toggle.focus()}});
+  main.addEventListener('click',e=>{if(window.innerWidth<=1060&&app.classList.contains('menu-open')&&!e.target.closest('dialog'))setOpen(false)});
+  document.querySelectorAll('.sidebar .nav-link').forEach(b=>b.addEventListener('click',()=>{if(window.innerWidth<=1060)setOpen(false)}));
+})();
+</script>
+
+<script>
+/* Preview isolada: nao conecta GitHub, nao altera o motor de calculo. */
+(function(){
+  const byId=id=>document.getElementById(id);
+  const news=byId('rafNewsDialog'),about=byId('rafAboutDialog'),dot=byId('rafNewsDot');
+  const openDialog=d=>{if(d&&!d.open){if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','')}};
+  byId('rafNewsOpen').addEventListener('click',()=>{openDialog(news);if(dot.textContent==='0')dot.hidden=true;});
+  byId('navAbout').addEventListener('click',()=>openDialog(about));
+  document.querySelectorAll('[data-raf-close]').forEach(btn=>btn.addEventListener('click',()=>byId(btn.dataset.rafClose).close()));
+  [news,about].forEach(d=>d.addEventListener('click',event=>{if(event.target===d)d.close()}));
+  const tabs=[...document.querySelectorAll('[data-raf-tab]')];
+  const panels={news:byId('rafPanelNews'),sources:byId('rafPanelSources'),sync:byId('rafPanelSync')};
+  function chooseTab(key){for(const t of tabs){const on=t.dataset.rafTab===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;}for(const [k,p] of Object.entries(panels))p.hidden=k!==key;}
+  tabs.forEach(t=>t.addEventListener('click',()=>chooseTab(t.dataset.rafTab)));
+  tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;chooseTab(tabs[n].dataset.rafTab);tabs[n].focus();}));
+})();
+</script>
+
+
+<script>
+/* Termos de Uso v1.0 — controle local, não representa autenticação nem aceite auditável. */
+(function(){
+  'use strict';
+  const VERSION='1.0';
+  const KEY='raf-prazo:terms-consent';
+  const $=id=>document.getElementById(id);
+  const dialog=$('rafTermsDialog');
+  const checkbox=$('rafTermsCheckbox');
+  const accept=$('rafTermsAccept');
+  const decline=$('rafTermsDecline');
+  const done=$('rafTermsDone');
+  const close=$('rafTermsClose');
+  const gate=$('rafAccessGate');
+  let accepted=false;
+  let mandatory=false;
+  function readConsent(){
+    try {
+      const saved=JSON.parse(localStorage.getItem(KEY)||'null');
+      return !!(saved && saved.version===VERSION && saved.accepted===true);
+    } catch (_) { return false; }
+  }
+  function showTerms(required){
+    mandatory=!!required;
+    checkbox.checked=false;
+    accept.disabled=true;
+    $('rafConsentControls').hidden=!mandatory;
+    accept.hidden=!mandatory;
+    decline.hidden=!mandatory;
+    done.hidden=mandatory;
+    close.hidden=mandatory;
+    gate.hidden=true;
+    if(!dialog.open)dialog.showModal();
+    $('rafTermsContent').scrollTop=0;
+  }
+  function finishAccept(){
+    if(!checkbox.checked)return;
+    try {localStorage.setItem(KEY,JSON.stringify({version:VERSION,accepted:true,at:new Date().toISOString()}));}
+    catch (_) { /* Armazenamento indisponível: novo aceite na próxima visita. */ }
+    accepted=true;
+    mandatory=false;
+    gate.hidden=true;
+    dialog.close();
+  }
+  function refuse(){
+    accepted=false;
+    mandatory=false;
+    dialog.close();
+    gate.hidden=false;
+    $('rafGateReview').focus();
+  }
+  checkbox.addEventListener('change',()=>{accept.disabled=!checkbox.checked;});
+  accept.addEventListener('click',finishAccept);
+  decline.addEventListener('click',refuse);
+  done.addEventListener('click',()=>dialog.close());
+  close.addEventListener('click',()=>dialog.close());
+  $('rafGateReview').addEventListener('click',()=>showTerms(true));
+  $('navTerms').addEventListener('click',()=>showTerms(!accepted));
+  $('rafLegalOpen').addEventListener('click',()=>showTerms(!accepted));
+  // O modal inicial não pode ser dispensado pelo Esc sem uma escolha explícita.
+  dialog.addEventListener('cancel',e=>{if(mandatory)e.preventDefault();});
+  dialog.addEventListener('click',e=>{if(e.target===dialog && !mandatory)dialog.close();});
+  accepted=readConsent();
+  if(!accepted){
+    gate.hidden=false;
+    // Aguardar a inicialização do cálculo e então solicitar o aceite.
+    requestAnimationFrame(()=>showTerms(true));
+  }
+})();
+</script>
+
+</body>
+</html>

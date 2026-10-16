@@ -1,0 +1,21 @@
+{
+  "description": "Atos do TJRJ verificados manualmente. Não há coletor automático de atos normativos.",
+  "events": [
+    {
+      "id": "tjrj-aviso-290-2026-2026-10-30",
+      "date": "2026-10-30",
+      "name": "Suspensão de atividades e prazos processuais — Dia do Servidor Público transferido",
+      "type": "SUSPENSAO_TJRJ",
+      "scope": {"kind": "tjrj", "uf": "RJ"},
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "TJRJ — Aviso nº 290/2026 (notícia oficial de 15/10/2026)",
+        "act": "Aviso nº 290/2026",
+        "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295"
+      },
+      "verified_at": "2026-10-16",
+      "origin": "curated"
+    }
+  ]
+}
