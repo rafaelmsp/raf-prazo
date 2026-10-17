@@ -49,12 +49,13 @@ def check(browser,url,width):
     assert theme["result"]=="rgb(239, 245, 250)",f"Resultado deveria ser azul acinzentado: {theme}"
     assert theme["parameters"]=="rgb(255, 255, 255)",f"Parâmetros deveriam ter fundo branco: {theme}"
     assert theme["profile"]=="rgb(247, 249, 251)",f"Seleção não deveria usar fundos coloridos: {theme}"
-    assert theme["calendarHoliday"]=="#eef3f7" and theme["calendarWeekend"]=="#f0f2f5", "Calendário deve ter paleta neutra"
+    assert theme["calendarHoliday"]=="#f9e0e2" and theme["calendarWeekend"]=="#f0f2f5", "Cores antigas do calendário devem ser restauradas"
+    assert page.locator(".header").evaluate("(el)=>getComputedStyle(el).backgroundColor")=="rgb(18, 97, 160)","Só o cabeçalho fica em azul PJe"
     light_days=calendar_palette(page)
-    expected={'raf-weekend':'rgb(240, 242, 245)','raf-holiday':'rgb(238, 243, 247)',
-              'raf-suspension':'rgb(232, 241, 247)','raf-recess':'rgb(243, 245, 247)',
-              'raf-manual':'rgb(237, 245, 242)','raf-user-tjrj':'rgb(240, 242, 245)',
-              'due':'rgb(18, 97, 160)'}
+    expected={'raf-weekend':'rgb(240, 242, 245)','raf-holiday':'rgb(249, 224, 226)',
+              'raf-suspension':'rgb(255, 239, 204)','raf-recess':'rgb(238, 227, 252)',
+              'raf-manual':'rgb(223, 242, 238)','raf-user-tjrj':'rgb(240, 242, 245)',
+              'due':'rgb(29, 78, 128)'}
     assert {k:v['background'] for k,v in light_days.items()}==expected,f"Cores claras do calendário incorretas: {light_days}"
     assert light_days['due']['color']=='rgb(255, 255, 255)',"Vencimento deve ter contraste com o azul PJe"
     assert page.locator("#rafProfileOpen").is_visible()
