@@ -625,20 +625,20 @@
  <div class="raf-modal-inner">
   <div class="raf-modal-head"><div class="raf-modal-heading"><div class="raf-modal-emblem" aria-hidden="true">↻</div><div><h2 id="rafNewsHeading">Atualizações do Calendário Judicial</h2><p>Raf-Prazo Sync · Rastreabilidade de alterações</p></div></div><button type="button" class="raf-modal-close" data-raf-close="rafNewsDialog" aria-label="Fechar atualizações">×</button></div>
   <div class="raf-tabs" role="tablist" aria-label="Informações das atualizações">
-  <button type="button" class="raf-tab" role="tab" aria-selected="true" aria-controls="rafPanelNews" id="rafTabNews" data-raf-tab="news">Calendário</button>
-  <button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelTjrj" id="rafTabTjrj" data-raf-tab="tjrj">TJRJ</button>
+  <button type="button" class="raf-tab" role="tab" aria-selected="true" aria-controls="rafPanelTjrj" id="rafTabTjrj" data-raf-tab="tjrj" tabindex="0">TJRJ</button>
+  <button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelNews" id="rafTabNews" data-raf-tab="news" tabindex="-1">Calendário</button>
   <button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelPending" id="rafTabPending" data-raf-tab="pending">Pendências</button>
   <button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSources" id="rafTabSources" data-raf-tab="sources">Fontes</button>
   <button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSync" id="rafTabSync" data-raf-tab="sync">Sincronização</button>
  </div>
   <div class="raf-modal-content">
-   <section class="raf-tab-panel" id="rafPanelNews" role="tabpanel" aria-labelledby="rafTabNews">
+   <section class="raf-tab-panel" id="rafPanelNews" role="tabpanel" aria-labelledby="rafTabNews" hidden>
     <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Feriados e alterações da base</b><br>Registros com lei e fonte identificada. A aplicação ao cálculo depende do âmbito e das opções selecionadas.</div></div>
     <div class="raf-list-toolbar"><label for="rafHolidayYear">Ano <select id="rafHolidayYear" aria-label="Filtrar feriados por ano"><option value="all">Todos</option></select></label><div class="raf-list-actions"><button type="button" class="btn" id="rafClearHolidays">Limpar lista</button><button type="button" class="btn" id="rafRestoreHolidays">Restaurar</button></div></div>
     <p class="raf-small-note raf-list-hint">Limpar oculta os cartões só neste navegador; os feriados e os cálculos permanecem intactos.</p>
     <div id="rafUpdatesList" aria-live="polite"><p class="raf-small-note">Carregando alterações...</p></div>
    </section>
-   <section class="raf-tab-panel" id="rafPanelTjrj" role="tabpanel" aria-labelledby="rafTabTjrj" hidden>
+   <section class="raf-tab-panel" id="rafPanelTjrj" role="tabpanel" aria-labelledby="rafTabTjrj">
     <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Novidades e suspensões do TJRJ</b><br>Indícios extraídos automaticamente de documentos oficiais. Não representam suspensão validada de prazo.</div></div>
     <div id="rafTjrjNewsMount"></div>
     <details class="raf-technical-details"><summary>Simulações individuais de dias não contados (não homologadas)</summary><div id="rafTjrjOptInMount"></div></details>
@@ -1058,7 +1058,7 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  }
  function render(){updateYears();renderChanges();renderPending();renderSources();renderSync();updateBadge()}
  const open=d=>{if(d&&!d.open)d.showModal()};
- $('rafNewsOpen').addEventListener('click',()=>{render();open(news);markSeen()});
+ $('rafNewsOpen').addEventListener('click',()=>{chooseTab('tjrj');render();open(news);markSeen()});
  $('navAbout').addEventListener('click',()=>open(about));
  $('navTutorial').addEventListener('click',()=>open($('rafTutorialDialog')));
  $('rafSyncRefresh').addEventListener('click',()=>$('sync').click());
@@ -1086,6 +1086,7 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  function chooseTab(key){for(const t of tabs){const on=t.dataset.rafTab===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;}for(const [k,p] of Object.entries(panels))p.hidden=k!==key;}
  tabs.forEach(t=>t.addEventListener('click',()=>chooseTab(t.dataset.rafTab)));
  tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;chooseTab(tabs[n].dataset.rafTab);tabs[n].focus()}));
+ chooseTab('tjrj');
  window.addEventListener('raf-prazo:sync',render);render();
 })();
 </script>
