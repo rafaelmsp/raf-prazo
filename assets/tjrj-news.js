@@ -67,9 +67,21 @@ function ensure(){
  document.head.append(style);
  return root;
 }
+function refreshBadge(news,read){
+ const dot=$('rafNewsDot');if(!dot)return;
+ let seenChanges=[];
+ try{const v=JSON.parse(localStorage.getItem('raf-prazo:updates-seen:v1')||'[]');if(Array.isArray(v))seenChanges=v}catch(_){}
+ const changes=window.RafPrazoData?.base?.changes||[];
+ const unseenChanges=changes.filter(c=>!new Set(seenChanges).has(c.id)).length;
+ const count=news+unseenChanges;
+ dot.textContent=count>99?'99+':String(count);
+ dot.hidden=!count;
+ dot.title=count+' atualizações e indícios do TJRJ não visualizados';
+}
 function render(){
  if(!ensure())return;
  const all=feed(),seen=readSeen(),unread=all.filter(x=>!seen.has(x.id)).length;
+ refreshBadge(unread,seen);
  const base=window.RafPrazoData?.base;
  let text='Na base: '+all.length+' indício(s) documental(is) · '+unread+' ainda não visualizado(s).';
  text+=' Coleta TJRJ: '+(base?.sync?.tjrj_collector_status||'não informada');
