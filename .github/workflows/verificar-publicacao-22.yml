@@ -57,8 +57,13 @@ jobs:
                grep -Fq 'id="rafDayFocus"' /tmp/site.html && \
                grep -Fq 'id="rafDayFocusDetails"' /tmp/site.html && \
                grep -Fq 'function updateRafDayFocus(n)' /tmp/site.html && \
-               ! grep -Fq 'id="calendarDue"' /tmp/site.html; then
-              echo 'RAF_PRAZO_23_PUBLICADO_E_VALIDADO — 44/56, ficha do dia e vencimento único confirmados por HTTP'
+               ! grep -Fq 'id="calendarDue"' /tmp/site.html && \
+               grep -Fq '/* Raf-Prazo 2.3.1 — identidade institucional.' /tmp/site.html && \
+               grep -Fq -- '--office-blue:#1261a0;' /tmp/site.html && \
+               grep -Fq -- '--office-panel:#ffffff;' /tmp/site.html && \
+               grep -Fq '.workspace>.panel:not(.raf-22-calendar)' /tmp/site.html && \
+               grep -Fq '.raf-22-results .result-block{background:var(--office-blue-tint)' /tmp/site.html; then
+              echo 'RAF_PRAZO_231_INSTITUCIONAL_PUBLICADO — tons neutros fora do calendário confirmados por HTTP'
               exit 0
             fi
             sleep 8
