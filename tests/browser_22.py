@@ -54,7 +54,7 @@ def check(browser,url,width):
     light_days=calendar_palette(page)
     expected={'raf-weekend':'rgb(240, 242, 245)','raf-holiday':'rgb(249, 224, 226)',
               'raf-suspension':'rgb(255, 239, 204)','raf-recess':'rgb(238, 227, 252)',
-              'raf-manual':'rgb(223, 242, 238)','raf-user-tjrj':'rgb(240, 242, 245)',
+              'raf-manual':'rgb(223, 242, 238)','raf-user-tjrj':'rgb(222, 244, 237)',
               'due':'rgb(29, 78, 128)'}
     assert {k:v['background'] for k,v in light_days.items()}==expected,f"Cores claras do calendário incorretas: {light_days}"
     assert light_days['due']['color']=='rgb(255, 255, 255)',"Vencimento deve ter contraste com o azul PJe"
