@@ -16,6 +16,22 @@ function predicate(html){
 }
 const day=iso=>Math.floor(Date.parse(iso+'T00:00:00Z')/86400000);
 
+test('cabeçalho azul PJe e fins de semana vinho, mantendo paleta oficial de feriados',()=>{
+ const fs=require('node:fs');
+ const path=require('node:path');
+ for(const file of ['src/template.html','index.html']){
+  const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+  assert.ok(html.includes('--pje-header:#1261a0'),'Cabeçalho PJe não pode perder azul institucional');
+  assert.ok(html.includes('--raf-weekend-bg:#b85a5f'),'Fim de semana tem de ter vermelho sóbrio no tema claro');
+  assert.ok(html.includes('--raf-weekend-bg:#79383e'),'Fim de semana precisa ser legível no tema escuro');
+  assert.ok(html.includes('.calendar .day.blocked.raf-weekend:not(.due)'));
+  assert.ok(html.includes('raf-holiday:not(.due)'),'Feriados devem conservar categoria distinta');
+  assert.ok(html.includes('--raf-holiday-bg:#f9e0e2'),'Não trocar a paleta anterior do feriado');
+  assert.ok(html.includes('btn.classList.add(category)'),'Categoria deve derivar do tipo de impedimento');
+  assert.ok(html.includes("block.type==='FINAL DE SEMANA'?'raf-weekend'"));
+  assert.ok(html.includes('.day.due{background:var(--accent)'),'Vencimento mantém cor própria');
+ }
+});
 test('o próprio predicado distingue sexta, sábado, domingo, segunda e virada de ano',()=>{
  for(const html of [index,template]){
   const weekend=predicate(html);
