@@ -13,6 +13,8 @@ on:
       - scripts/local_holidays.py
       - tests/test_local_holidays.py
       - tests/test_local_holidays_browser.cjs
+      - tests/test_safe_mode.py
+      - docs/FERIADOS_RJ_DUQUE_DE_CAXIAS.md
       - tests/test_extract_tjrj.py
       - tests/test_pdf_table_tjrj.py
       - tests/test_scope_tjrj.py
