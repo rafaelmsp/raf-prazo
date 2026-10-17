@@ -20,7 +20,7 @@ class Node {
  focus(){this.focused=true}
  closest(name){return name==='[data-days]'?this:null}
 }
-const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick','rafProfileOpen','rafProfileDialog','rafProfileShort','rafProfileSub','rafActList','rafActCount','rafActAlert'];
+const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick','rafProfileOpen','rafProfileDialog','rafProfileShort','rafProfileSub','rafActList','rafActCount','rafActAlert','rafConditionalApply'];
 const nodes=Object.fromEntries(ids.map(id=>[id,new Node(id)]));
 nodes.rafRegime.value='jec';nodes.rafOrigin.value='conferido';nodes.start.value='2026-10-19';nodes.days.value='15';
 const storage=new Map();const windowStub={addEventListener(){}};
@@ -60,10 +60,10 @@ test('JEC é padrão e prazo inicial manual não inventa ato',()=>{
  assert.equal(nodes.rafSpecialDeadline.hidden,true);
  assert.ok(nodes.rafRuleSummary.textContent.includes('JEC'));
  assert.ok(nodes.rafProfileShort.textContent.includes('JEC'));
- assert.equal(cards().length,11,'Todos os 11 atos JEC devem estar disponíveis sem pesquisa');
+ assert.equal(cards().length,13,'Todos os 13 atos JEC devem estar disponíveis sem pesquisa');
  assert.ok(groups().includes('Recursos'));
  assert.ok(groups().includes('Execução'));
- assert.equal(nodes.rafActCount.textContent,'11 opções · JEC');
+ assert.equal(nodes.rafActCount.textContent,'13 opções · JEC');
  assert.ok(cards().every(x=>x.children.length===2),'Cada ato deve mostrar fundamento e duração');
  nodes.rafProfileOpen.trigger('click');
  assert.equal(nodes.rafProfileDialog.open,true);
@@ -90,12 +90,58 @@ test('modificação manual rompe preset e preserva número informado',()=>{
  assert.equal(metadata().days,9);
 });
 test('todos os atos aparecem prontamente, ordenados por categorias',()=>{
- assert.equal(cards().length,11);
+ assert.equal(cards().length,13);
  assert.equal(nodes.rafActList.children[0].dataset.category,'Recursos');
  assert.ok(cards().some(x=>x.dataset.preset==='jec_preparo'));
- assert.ok(cards().some(x=>x.dataset.preset==='jec_embargos_execucao'));
+ assert.ok(cards().some(x=>x.dataset.preset==='jec_embargos_titulo_judicial'));
+ assert.ok(cards().some(x=>x.dataset.preset==='jec_embargos_titulo_extrajudicial'));
+ assert.ok(cards().some(x=>x.dataset.preset==='jec_cumprimento_pagar'));
  assert.ok(cards().some(x=>x.dataset.preset==='custom'));
 });
+test('FONAJE 142: referência de 15 dias não se aplica sem confirmação',()=>{
+ const entry=cards().find(x=>x.dataset.preset==='jec_embargos_titulo_judicial');
+ assert.ok(entry);
+ entry.trigger('click');
+ assert.equal(nodes.rafAct.value,'jec_embargos_titulo_judicial');
+ assert.equal(nodes.days.value,'');
+ assert.equal(metadata().days,null);
+ assert.equal(metadata().reference_days,15);
+ assert.equal(metadata().reference_accepted,false);
+ assert.equal(metadata().requires_manual_review,true);
+ assert.equal(nodes.rafConditionalApply.hidden,false);
+ assert.ok(nodes.rafActAlert.textContent.includes('penhora'));
+ nodes.rafConditionalApply.trigger('click');
+ assert.equal(nodes.days.value,'15');
+ assert.equal(metadata().reference_accepted,true);
+ assert.equal(metadata().reference_days,15);
+ assert.equal(nodes.rafConditionalApply.hidden,true);
+ assert.ok(metadata().basis.includes('Enunciados 117, 121 e 142'));
+});
+test('título extrajudicial usa audiência, não herda prazo judicial de 15 dias',()=>{
+ const entry=cards().find(x=>x.dataset.preset==='jec_embargos_titulo_extrajudicial');
+ entry.trigger('click');
+ assert.equal(nodes.days.value,'');
+ assert.equal(metadata().reference_days,null);
+ assert.equal(metadata().preset_kind,'procedural');
+ assert.equal(nodes.rafConditionalApply.hidden,true);
+ assert.ok(metadata().description.includes('audiência de conciliação'));
+});
+test('cumprimento de pagar: CPC 523 exige seleção explícita',()=>{
+ const item=cards().find(x=>x.dataset.preset==='jec_cumprimento_pagar');
+ item.trigger('click');
+ assert.equal(nodes.days.value,'');
+ assert.equal(metadata().reference_days,15);
+ assert.equal(nodes.rafConditionalApply.hidden,false);
+ assert.ok(metadata().basis.includes('CPC, art. 523'));
+ nodes.rafConditionalApply.trigger('click');
+ assert.equal(nodes.days.value,'15');
+ const other=cards().find(x=>x.dataset.preset==='jec_cumprimento_fazer');
+ other.trigger('click');
+ assert.equal(nodes.days.value,'');
+ assert.equal(metadata().preset_kind,'manual');
+ assert.equal(nodes.rafConditionalApply.hidden,true);
+});
+
 test('prazo dependente de decisão não recebe prazo automático',()=>{
  const manual=cards().find(x=>x.dataset.preset==='jec_contestacao');
  assert.ok(manual);
@@ -154,20 +200,27 @@ for(const target of ['src/template.html','index.html']){
  test('integração do catálogo e memória em '+target,()=>{
   for(const id of ['rafRegime','rafAct','rafRuleSummary','rafOrigin','rafCommunicationDate','rafContextResult' ,'rafActList','rafActAlert'])
    assert.ok(html.includes('id="'+id+'"'),'Faltou '+id);
-  assert.ok(html.includes('src="assets/raf-prazo-22.js?v=2.2.4"'));
+  assert.ok(html.includes('src="assets/raf-prazo-22.js?v=2.2.5"'));
   assert.ok(html.includes("legal_profile:window.RafPrazo22Current||null"));
   assert.ok(html.includes('id="rafEmbeddedBase"'));
   assert.ok(html.includes("if(scope.kind==='tjrj')continue"));
   assert.ok(html.includes('id="rafTabPending"'));
   assert.ok(html.includes('.raf-library-native-hidden{display:none!important}'));
   assert.ok(html.includes('id="rafActCount"'));
+  assert.ok(html.includes('id="rafConditionalApply"'));
+  assert.ok(html.includes('data-preset="jec_embargos_titulo_judicial"'));
+  assert.ok(html.includes('data-preset="jec_embargos_titulo_extrajudicial"'));
+  assert.ok(html.includes('data-preset="jec_cumprimento_pagar"'));
+  assert.ok(html.includes('raf-library-legend'));
+  assert.ok(!html.includes('data-preset="jec_embargos_execucao"'));
+  assert.ok(!html.includes('data-preset="jec_cumprimento"'));
   assert.ok(!html.includes('id="rafActSearch"'),'Pesquisa não deve ocupar tela');
   assert.ok(!html.includes('id="rafActFilters"'),'Filtros não devem ocultar atos');
   assert.ok(html.includes('data-regime="jec"'));
   assert.ok(html.includes('data-regime="cpc"'));
   assert.ok(html.includes('data-preset="jec_recurso"'));
   assert.ok(html.includes('data-preset="cpc_apelacao"'));
-  assert.ok(html.includes('assets/raf-prazo-22.js?v=2.2.4'));
+  assert.ok(html.includes('assets/raf-prazo-22.js?v=2.2.5'));
   const left=html.slice(html.indexOf('<section class="panel raf-22-parameters"'),html.indexOf('<section class="panel raf-22-calendar"'));
   assert.ok(left.includes('id="rafProfileOpen"'));
   assert.ok(!left.includes('id="rafRegime"'),'Os seletores não devem esticar o painel de parâmetros');
