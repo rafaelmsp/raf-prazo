@@ -846,14 +846,14 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  $('rafHolidayYear').addEventListener('change',renderChanges);
  $('rafClearHolidays').addEventListener('click',()=>{
   const ids=hiddenIds();const year=$('rafHolidayYear').value;
-  for(const item of changeRows())if(year==='all'||String(item.date||'').startsWith(year))ids.add(changeId(item));
-  if(!confirm('Ocultar todos os itens '+(year==='all'?'desta aba':'do ano '+year)+' somente neste navegador? Os dados oficiais permanecerão na base e poderão ser restaurados.'))return;
+  for(const item of changeRows().filter(c=>(year==='all'||String(c.date||'').startsWith(year))&&!ids.has(changeId(c))).slice(0,40))ids.add(changeId(item));
+  if(!confirm('Ocultar os até 40 itens exibidos '+(year==='all'?'nesta aba':'do ano '+year)+' somente neste navegador? Os dados oficiais permanecerão na base e poderão ser restaurados.'))return;
   if(persistHidden(ids)){renderChanges();updateBadge()}
  });
  $('rafRestoreHolidays').addEventListener('click',()=>{if(persistHidden(new Set())){renderChanges();updateBadge()}});
  $('rafClearPending').addEventListener('click',()=>{
-  const items=hiddenPendingIds();for(const entry of pendingRows())items.add(candidateId(entry));
-  if(!confirm('Ocultar todos os candidatos pendentes somente neste navegador? A base e a contagem permanecerão inalteradas.'))return;
+  const items=hiddenPendingIds();for(const entry of pendingRows().filter(c=>!items.has(candidateId(c))).slice(0,60))items.add(candidateId(entry));
+  if(!confirm('Ocultar os até 60 candidatos exibidos nesta aba, somente neste navegador? A base e a contagem permanecerão inalteradas.'))return;
   if(persistPending(items))renderPending();
  });
  $('rafRestorePending').addEventListener('click',()=>{if(persistPending(new Set()))renderPending()});
