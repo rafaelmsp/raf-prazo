@@ -46,6 +46,11 @@ class TjrjExtractionTests(unittest.TestCase):
   result=self.report("Aviso nº 290/2026. Trata de suspensão de prazos.")
   self.assertTrue(result["act_references"])
   self.assertEqual(result["occurrences"],[])
+ def test_navigation_noise_not_promoted_to_events(self):
+  menu="Menu Informação Jornal Oficial Intranet Acesso rápido Serviços " * 18
+  result=self.report(menu+"15/10/2026 e 30/10/2026. Suspensão de prazos processuais em 28/10/2026.")
+  self.assertTrue(all(x["applies_to_deadlines"] is False for x in result["occurrences"]))
+  self.assertNotIn("2026-10-15",[x["date"] for x in result["occurrences"]])
  def test_system_outage_is_not_automatic_extension(self):
   x=self.report("Em 30/10/2026 ocorreu indisponibilidade do sistema PJe.")["occurrences"][0]
   self.assertEqual(x["effect_hint"],"system_unavailability")
