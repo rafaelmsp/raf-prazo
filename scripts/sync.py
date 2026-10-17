@@ -169,16 +169,33 @@ def main(argv=None):
     if any(not 2020 <= y <= 2100 for y in years):
         parser.error('Anos permitidos: 2020 a 2100')
     previous = read_json(OUT, {}) or {}
-    curated = []
-    for filename in ('atos-tjrj.json', 'feriados-locais.json'):
-        obj = read_json(ROOT / 'dados' / filename)
-        if not isinstance(obj, dict) or not isinstance(obj.get('events'), list):
-            raise ValueError(f'{filename}: estrutura inválida')
-        for e in obj['events']:
-            curated.append(verify_event(e))
+    # Operacao conservadora: eventos manuais locais/TJRJ nao entram na contagem.
+    # Publicacoes oficiais coletadas sao somente pistas informativas, sem homologacao.
+    collected = read_json(ROOT / 'dados' / 'coleta-tjrj.json', {}) or {}
     national, candidates, checked, failed = national_events(years, previous, args.offline or args.check)
-    # O arquivo manual não pode sobrescrever IDs nacionais.
-    events = national + curated
+    for item in collected.get('candidates', []):
+        if not isinstance(item, dict) or item.get('applies_to_deadlines') is not False:
+            continue
+        if item.get('status') != 'pending_review' or item.get('verified') is not False:
+            continue
+        if not str(item.get('source_url', '')).startswith(('https://www.tjrj.jus.br/', 'https://portaltj.tjrj.jus.br/')):
+            continue
+        candidates.append({
+            'id': item['id'], 'date': None,
+            'name': str(item.get('name') or 'Documento oficial a conferir')[:240],
+            'type': 'CANDIDATO_TJRJ', 'scope': {'kind': 'tjrj', 'uf': 'RJ'},
+            'status': 'pending_review', 'verified': False,
+            'applies_to_deadlines': False,
+            'source_url': item['source_url'],
+            'source': {'title':'TJRJ — documento consultado automaticamente', 'url':item['source_url']},
+            'date_mentions': item.get('date_mentions', [])[:35],
+            'excerpt': str(item.get('excerpt',''))[:430],
+            'stale': bool(item.get('stale')),
+            'source_hash_sha256': str(item.get('source_hash_sha256','')),
+            'reason': 'Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem.'
+        })
+    # Apenas feriados nacionais legais fixos sao aplicados nesta fase.
+    events = national
     if len({e['id'] for e in events}) != len(events):
         raise ValueError('IDs duplicados')
     events.sort(key=event_key)
@@ -209,33 +226,31 @@ def main(argv=None):
     changes_by_id = {c['id']: c for c in prior_changes if isinstance(c, dict) and 'id' in c}
     for c in changed:
         changes_by_id[c['id']] = c
-    # Não publicar centenas de notificações no primeiro bootstrap.
-    if not previous_events or args.offline:
-        changes_by_id = {c['id']: c for c in changed if c['event_id'].startswith('tjrj-')}
-        # Registro inicial do ato pontual conferido: não confundir com coleta automática.
-        if args.offline:
-            for e in curated:
-                if e['type'] == 'SUSPENSAO_TJRJ':
-                    change_id = 'added:' + e['id']
-                    changes_by_id[change_id] = {'id': change_id, 'kind':'added', 'event_id':e['id'],
-                        'date':e['date'], 'name':e['name'], 'scope':e['scope'],
-                        'status':'confirmed', 'source_url':e['source']['url'],
-                        'applied':True, 'detected_at':e['verified_at']}
+    # Um registro antigo de inclusao manual nao pode sugerir suspensao ativa.
+    changes_by_id = {k:v for k,v in changes_by_id.items()
+                     if not (k.startswith('added:tjrj-') and v.get('applied'))}
+    if not previous_events:
+        changes_by_id = {}
     changes = sorted(changes_by_id.values(), key=lambda c: (c['detected_at'], c['date'], c['id']), reverse=True)[:120]
     digest = hashlib.sha256(json.dumps([fingerprint(e) for e in events], sort_keys=True).encode()).hexdigest()[:12]
     status = 'offline_seed' if args.offline or args.check else ('ok' if not failed else 'partial')
     sources = [
         {'id':'federal','label':'Legislação federal — feriados nacionais','url':NATIONAL_SOURCE['url'], 'kind':'official','status':'curated', 'checked_at':None,'note':'Datas fixas previstas em lei; não cobre feriados forenses locais.'},
         {'id':'brasilapi','label':'BrasilAPI — feriados nacionais','url':'https://brasilapi.com.br/docs','kind':'community','status':'ok' if checked and not failed else 'unavailable','checked_at': TODAY.isoformat() if checked else None,'note':'Somente feriados fixos legalmente reconhecidos são promovidos; outros registros ficam pendentes.'},
-        {'id':'tjrj','label':'TJRJ — atos e avisos oficiais','url':'https://www.tjrj.jus.br/','kind':'official','status':'manual','checked_at':None,'note':'Curadoria manual por ato; sem varredura automática de publicações.'},
+        {'id':'tjrj','label':'TJRJ — documentos oficiais consultados','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc','kind':'official','status': collected.get('status','not_run'),'checked_at': collected.get('collected_at') if collected.get('source_success',0) else None,'note':'Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica.'},
         {'id':'ibge','label':'IBGE — municípios','url':'https://servicodados.ibge.gov.br/api/docs/localidades','kind':'official','status':'client','checked_at':None,'note':'Consulta de nomes e códigos municipais, não certifica feriados.'},
     ]
     output = {
         'schema': 1, 'version': digest, 'generated_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'),
         'last_checked_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds') if not args.offline and not args.check else None,
-        'coverage': {'national_years':years, 'national':'fixed_law', 'state':'curated_only', 'municipal':'curated_only', 'tjrj':'curated_only'},
+        'coverage': {'national_years':years, 'national':'fixed_law', 'state':'not_applied', 'municipal':'not_applied', 'tjrj':'discovery_only'},
         'sync': {'status':status, 'brasilapi_years_checked':checked, 'failed':failed,
-                 'tjrj':'manual_verification_required', 'local':'manual_verification_required'},
+                 'tjrj':'discovery_only', 'tjrj_collector_status':collected.get('status','not_run'),
+                 'tjrj_collector_at':collected.get('collected_at') if collected.get('source_success',0) else None,
+                 'tjrj_sources_checked':collected.get('source_count',0),
+                 'tjrj_sources_success':collected.get('source_success',0),
+                 'tjrj_pending':sum(x.get('type')=='CANDIDATO_TJRJ' for x in candidates),
+                 'local':'manual_disabled'},
         'events': events, 'candidates': candidates, 'changes': changes, 'sources': sources,
     }
     if args.check:
