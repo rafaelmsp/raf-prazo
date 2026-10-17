@@ -126,8 +126,12 @@
   const renderList=()=>{
    const data=configurations[validRegime(regime.value)];
    const q=normalize(search.value);
-   const matches=data.presets.filter(item=>(activeCategory==='Todos'||(item.category||'Outros')===activeCategory)&&
-    (!q||normalize([item.label,item.category,item.basis,item.description].join(' ')).includes(q)));
+   const terms=q.replace(/\b(?:art|arts)\b\.?/g,'').split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+   const matches=data.presets.filter(item=>{
+    if(activeCategory!=='Todos'&&(item.category||'Outros')!==activeCategory)return false;
+    const haystack=normalize([item.label,item.category,item.basis,item.description].join(' '));
+    return !q||haystack.includes(q)||terms.every(term=>haystack.includes(term));
+   });
    list.replaceChildren();
    count.textContent=data.presets.length+' atos · '+matches.length+' exibidos';
    for(const item of matches){
@@ -145,7 +149,7 @@
      const previous=days.value;
      if(item.days!==null){
       days.value=String(item.days);
-     }else if(item.id!=='custom'||previous.trim()===''){
+     }else{
       days.value='';
      }
      days.dispatchEvent(new Event('input',{bubbles:true}));
@@ -182,6 +186,9 @@
    }
    const inactiveHours=$('rafSpecialDeadline');
    inactiveHours.hidden=selected.id!=='jec_recurso'&&selected.kind!=='hours';
+   days.disabled=selected.kind==='hours';
+   if(selected.kind==='hours')days.setAttribute('aria-label','Prazo especial em horas: contagem de dias desativada');
+   else days.setAttribute('aria-label','Duração do prazo em dias úteis');
    $('sourceFoot').textContent=regime.value==='jec'?'Fonte legal: Lei 9.099/95, art. 12-A · normas subsidiárias quando aplicáveis':'Fonte legal: CPC, arts. 219, 220 e 224';
    window.RafPrazo22Current=Object.freeze({
     regime:regime.value,regime_label:r.label,preset:selected.id,act_label:selected.label,
@@ -191,18 +198,21 @@
     requires_manual_review:!!(selected.kind==='manual'||selected.kind==='hours'),
     communication:origin.value,communication_label:communications[origin.value].label,
     communication_date:$('rafCommunicationDate').value||null,description:selected.description,
-    count_mode:'business_days',validated_start:start.value||null
+    count_mode:selected.kind==='hours'?'hours_unsupported':'business_days',validated_start:start.value||null
    });
   };
   const refresh=()=>{updateView();safeWrite()};
   buildActs(saved.preset);
   search.addEventListener('input',renderList);
   if(act.value!=='custom'){
-   days.value=byId(regime.value,act.value).days;
+   const initial=byId(regime.value,act.value);
+   days.value=initial.days===null?'':String(initial.days);
    days.dispatchEvent(new Event('input',{bubbles:true}));
   }
   regime.addEventListener('change',()=>{
+   const old=byId(regime.value==='jec'?'cpc':'jec',act.value);
    buildActs('custom');
+   if(old.id!=='custom')days.value='';
    refresh();
    renderCategories();
    renderList();
@@ -219,7 +229,8 @@
   $('rafCommunicationDate').addEventListener('change',refresh);
   days.addEventListener('input',()=>{
    const selected=byId(regime.value,act.value);
-   if(selected.days!==null&&Number(days.value)!==selected.days)act.value='custom';
+   if(selected.kind==='hours'&&days.value.trim()!=='')act.value='custom';
+   else if(selected.days!==null&&Number(days.value)!==selected.days)act.value='custom';
    refresh();
    renderList();
   });
