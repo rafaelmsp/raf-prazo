@@ -81,7 +81,12 @@ function showDay(date){
   card.append(el('small','','Vigência e abrangência não verificadas.'+(signal.yearInferred?' Ano inferido do documento: conferir.':'')));
   if(signal.page)card.append(el('small','','Página da extração no PDF: '+signal.page));
   if(signal.acts.length)card.append(el('small','','Referências textuais (não verificadas): '+signal.acts.join(' · ')));
-  if(Array.isArray(signal.scope.comarcas_mentioned)&&signal.scope.comarcas_mentioned.length)card.append(el('small','','Comarcas mencionadas, abrangência não comprovada: '+signal.scope.comarcas_mentioned.join(', ')));
+  const linked=Array.isArray(signal.scope.date_linked_comarcas)?signal.scope.date_linked_comarcas:[];
+  if(linked.length)card.append(el('small','','Associação textual entre comarca e data (NÃO validada juridicamente): '+linked.join(', ')));
+  if(Array.isArray(signal.scope.comarcas_mentioned)&&signal.scope.comarcas_mentioned.length)card.append(el('small','','Comarcas mencionadas no texto, sem prova de abrangência: '+signal.scope.comarcas_mentioned.join(', ')));
+  if(linked.length&&Array.isArray(signal.scope.scope_evidence))for(const e of signal.scope.scope_evidence.slice(0,3)){
+   if(typeof e.literal_excerpt==='string'&&e.literal_excerpt.length)card.append(el('small','','Trecho textual: '+e.literal_excerpt.slice(0,220)));
+  }
   const refs=el('div','raf-official-sources');
   for(const [i,s] of signal.references.entries()){
    const a=el('a','','Abrir fonte oficial '+(i+1)+' ↗');a.href=s.url;a.target='_blank';a.rel='noopener noreferrer';
