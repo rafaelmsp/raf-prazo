@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "88cf4218075b",
-  "generated_at": "2026-10-16T23:27:40+00:00",
+  "version": "20261017-safe-tjrj-pending",
+  "generated_at": "2026-10-17T05:39:15.617Z",
   "last_checked_at": null,
   "coverage": {
     "national_years": [
@@ -10,16 +10,21 @@
       2028
     ],
     "national": "fixed_law",
-    "state": "curated_only",
-    "municipal": "curated_only",
-    "tjrj": "curated_only"
+    "state": "not_applied",
+    "municipal": "not_applied",
+    "tjrj": "discovery_only"
   },
   "sync": {
     "status": "offline_seed",
     "brasilapi_years_checked": [],
     "failed": [],
-    "tjrj": "manual_verification_required",
-    "local": "manual_verification_required"
+    "tjrj": "discovery_only",
+    "local": "manual_disabled",
+    "tjrj_collector_status": "not_run",
+    "tjrj_collector_at": null,
+    "tjrj_pending": 0,
+    "tjrj_sources_checked": 0,
+    "tjrj_sources_success": 0
   },
   "events": [
     {
@@ -111,25 +116,6 @@
       },
       "verified_at": "2026-10-16",
       "origin": "lei-federal"
-    },
-    {
-      "id": "tjrj-aviso-290-2026-2026-10-30",
-      "date": "2026-10-30",
-      "name": "Suspensão de atividades e prazos processuais — Dia do Servidor Público transferido",
-      "type": "SUSPENSAO_TJRJ",
-      "scope": {
-        "kind": "tjrj",
-        "uf": "RJ"
-      },
-      "status": "confirmed",
-      "applies_to_deadlines": true,
-      "source": {
-        "title": "TJRJ — Aviso nº 290/2026 (notícia oficial de 15/10/2026)",
-        "act": "Aviso nº 290/2026",
-        "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295"
-      },
-      "verified_at": "2026-10-16",
-      "origin": "curated"
     },
     {
       "id": "nacional-2026-11-02",
@@ -531,19 +517,19 @@
   "candidates": [],
   "changes": [
     {
-      "id": "added:tjrj-aviso-290-2026-2026-10-30",
-      "kind": "added",
+      "id": "disabled:tjrj-aviso-290-2026-2026-10-30",
+      "kind": "removed",
       "event_id": "tjrj-aviso-290-2026-2026-10-30",
       "date": "2026-10-30",
-      "name": "Suspensão de atividades e prazos processuais — Dia do Servidor Público transferido",
+      "name": "Suspensão de atividades e prazos processuais — Dia do Servidor Público transferido — aplicação automática desativada",
       "scope": {
         "kind": "tjrj",
         "uf": "RJ"
       },
-      "status": "confirmed",
+      "status": "disabled",
       "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-      "applied": true,
-      "detected_at": "2026-10-16"
+      "applied": false,
+      "detected_at": "2026-10-17"
     }
   ],
   "sources": [
@@ -567,12 +553,12 @@
     },
     {
       "id": "tjrj",
-      "label": "TJRJ — atos e avisos oficiais",
-      "url": "https://www.tjrj.jus.br/",
+      "label": "TJRJ — coleta automática de fontes",
+      "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
       "kind": "official",
-      "status": "manual",
+      "status": "not_run",
       "checked_at": null,
-      "note": "Curadoria manual por ato; sem varredura automática de publicações."
+      "note": "Documentos encontrados são pendências informativas. Coleta sem execução confirmada, sem aplicar suspensão à contagem."
     },
     {
       "id": "ibge",
