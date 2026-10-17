@@ -68,11 +68,15 @@ def check(browser,url,width):
     assert page.locator("#rafAct").is_hidden(), "O seletor nativo não deve aparecer no celular"
     assert page.locator("#rafActSearch").count()==0, "A lista deve estar pronta, sem pesquisa"
     assert page.locator("#rafActFilters").count()==0, "Nenhuma categoria deve esconder os atos"
-    assert page.locator("#rafActList button.raf-library-item").count()==11
-    assert page.locator("#rafActCount").inner_text()=="11 opções · JEC"
+    assert page.locator("#rafActList button.raf-library-item").count()==13
+    assert page.locator("#rafActCount").inner_text()=="13 opções · JEC"
     assert page.locator("#rafActList .raf-library-group").count()>=4
     assert page.locator('#rafActList button[data-preset="jec_recurso"]').is_visible()
     assert page.locator('#rafActList button[data-preset="jec_preparo"]').count()==1
+    assert page.locator('#rafActList button[data-preset="jec_embargos_titulo_judicial"]').count()==1
+    assert page.locator('#rafActList button[data-preset="jec_embargos_titulo_extrajudicial"]').count()==1
+    assert page.locator('#rafActList button[data-preset="jec_cumprimento_pagar"]').count()==1
+    assert page.locator(".raf-library-legend").is_visible()
     assert page.locator('#rafActList button[data-preset="custom"]').count()==1
     assert page.locator("#rafRuleBox").is_visible()
     # Drawer ocupa camada independente e não aumenta a altura do calendário.
@@ -92,6 +96,29 @@ def check(browser,url,width):
     assert page.locator("#days").is_disabled()
     assert page.locator("#rafActAlert").is_visible()
     assert page.evaluate("window.RafPrazo22Current.count_mode")=="hours_unsupported"
+    page.locator('#rafActList button[data-preset="jec_embargos_titulo_judicial"]').click()
+    assert page.locator("#days").input_value()=="","A hipótese de 15 dias não pode ser imposta automaticamente"
+    assert page.locator("#due").inner_text()=="—"
+    assert page.evaluate("window.RafPrazo22Current.reference_days")==15
+    assert not page.evaluate("window.RafPrazo22Current.reference_accepted")
+    assert page.locator("#rafConditionalApply").is_visible()
+    assert "penhora" in page.locator("#rafActDescription").inner_text()
+    page.locator("#rafConditionalApply").click()
+    assert page.locator("#days").input_value()=="15"
+    assert page.evaluate("window.RafPrazo22Current.reference_accepted")
+    assert page.locator("#rafConditionalApply").is_hidden()
+    assert page.locator("#due").inner_text()!="—"
+    page.locator('#rafActList button[data-preset="jec_embargos_titulo_extrajudicial"]').click()
+    assert page.locator("#days").input_value()==""
+    assert page.locator("#rafConditionalApply").is_hidden()
+    assert "audiência" in page.locator("#rafActDescription").inner_text()
+    page.locator('#rafActList button[data-preset="jec_cumprimento_pagar"]').click()
+    assert page.locator("#days").input_value()==""
+    assert page.locator("#rafConditionalApply").is_visible()
+    assert "CPC, art. 523" in page.locator("#rafActBasis").inner_text()
+    page.locator('#rafActList button[data-preset="jec_cumprimento_fazer"]').click()
+    assert page.locator("#days").input_value()==""
+    assert page.locator("#rafConditionalApply").is_hidden()
     page.locator('#rafActList button[data-preset="jec_contestacao"]').click()
     assert page.locator("#days").input_value()==""
     assert not page.locator("#days").is_disabled()
