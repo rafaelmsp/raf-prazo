@@ -1,7 +1,9 @@
 # Raf-Prazo
 ### Calculadora Judicial de Prazos · HTML5 · Projeto independente
 
-**Versão do aplicativo:** 2.1 (modo conservador de coleta oficial)  
+**Versão do aplicativo:** 2.1 (modo conservador de coleta oficial)
+
+**Extração estruturada TJRJ (fase 1):** [Como a coleta identifica indícios e por que não altera prazos](docs/EXTRACAO_TJRJ.md). Os registros são pendentes, não constituem validação de atos.  
 **Desenvolvimento e autoria:** Rafael Moraes da Silva Passos  
 **Edição desta documentação:** 17 de outubro de 2026  
 **Distribuição:** acesso gratuito; código-fonte sem licença aberta de reutilização  
