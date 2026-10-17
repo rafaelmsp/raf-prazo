@@ -96,4 +96,5 @@ $('calendar')?.addEventListener('click',event=>{
 if($('calendar'))new MutationObserver(decorate).observe($('calendar'),{childList:true});
 window.addEventListener('raf-prazo:sync',decorate);
 ensure();decorate();
+window.RafPrazoRecalculate?.();
 })();
