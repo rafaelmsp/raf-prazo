@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "version": "36a7104cca87",
-  "generated_at": "2026-10-17T05:50:56+00:00",
-  "last_checked_at": "2026-10-17T05:50:56+00:00",
+  "generated_at": "2026-10-17T06:04:31+00:00",
+  "last_checked_at": "2026-10-17T06:04:31+00:00",
   "coverage": {
     "national_years": [
       2026,
@@ -24,7 +24,7 @@
     "failed": [],
     "tjrj": "discovery_only",
     "tjrj_collector_status": "ok",
-    "tjrj_collector_at": "2026-10-17T05:50:29+00:00",
+    "tjrj_collector_at": "2026-10-17T06:04:01+00:00",
     "tjrj_sources_checked": 8,
     "tjrj_sources_success": 8,
     "tjrj_pending": 8,
@@ -813,6 +813,44 @@
         "2026-02-04",
         "2026-02-05"
       ],
+      "structured": {
+        "act_references": [
+          "aviso nº 290",
+          "decreto nº 50",
+          "decreto nº 505",
+          "ato executivo nº 162",
+          "lei nº 10",
+          "ato executivo nº 159",
+          "ato executivo nº 114",
+          "ato executivo nº 129",
+          "decreto nº 50418",
+          "ato executivo nº 116",
+          "ato executivo nº 103",
+          "ato executivo nº 96",
+          "ato executivo nº 91",
+          "lei nº 11",
+          "ato executivo nº 79",
+          "ato executivo nº 73",
+          "aviso nº 87",
+          "aviso nº 89",
+          "ato executivo nº 66",
+          "ato executivo nº 60",
+          "ato executivo nº 24",
+          "ato executivo nº 20",
+          "aviso nº 28",
+          "ato executivo nº 54",
+          "ato executivo nº 57",
+          "ato executivo nº 59",
+          "ato executivo nº 53",
+          "ato executivo nº 51",
+          "ato executivo nº 52",
+          "ato executivo nº 55"
+        ],
+        "occurrences": [],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "ativo, não substitui em hipótese alguma, a publicação Oficial. SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS Data da atualização: 15.10.2026 2026 ▪ Consulta por Assunto ▪ Consulta por Comarca ▪ Consulta de feriados, pontos facultativos e outras ocorrências com abrangência de todo o Estado ou toda Capital. Todo conteúdo disponí",
       "stale": false,
       "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
@@ -839,9 +877,108 @@
         "2026-10-15",
         "2026-10-28"
       ],
+      "structured": {
+        "act_references": [
+          "aviso nº 290/2026",
+          "decreto nº 50"
+        ],
+        "occurrences": [
+          {
+            "id": "tjrj-extract-37db79aa036e290e18",
+            "date": "2026-10-15",
+            "date_expression": "15/10/2026",
+            "year_inferred": false,
+            "effect_hint": "normal_expediente",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro Aut",
+            "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "8b5d566ea0355964cc0059f5263b4c265c11c032c07bdfc613360e5765d572e2",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Data mencionada: conferir contexto."
+            ]
+          },
+          {
+            "id": "tjrj-extract-53d05e222bc08b2674",
+            "date": "2026-10-30",
+            "date_expression": "30 de outubro",
+            "year_inferred": true,
+            "effect_hint": "normal_expediente",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro Aut",
+            "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "8b5d566ea0355964cc0059f5263b4c265c11c032c07bdfc613360e5765d572e2",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Ano inferido de referência do documento."
+            ]
+          },
+          {
+            "id": "tjrj-extract-f5ae00e8c1079e57ba",
+            "date": "2026-10-28",
+            "date_expression": "dia 28 de outubro de 2026",
+            "year_inferred": false,
+            "effect_hint": "normal_expediente",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro Aut",
+            "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "8b5d566ea0355964cc0059f5263b4c265c11c032c07bdfc613360e5765d572e2",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Data mencionada: conferir contexto."
+            ]
+          },
+          {
+            "id": "tjrj-extract-ae5cdac406c1b497f8",
+            "date": "2026-10-30",
+            "date_expression": "30 de outubro",
+            "year_inferred": true,
+            "effect_hint": "possible_deadline_suspension",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
+            "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "8b5d566ea0355964cc0059f5263b4c265c11c032c07bdfc613360e5765d572e2",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Ano inferido de referência do documento."
+            ]
+          }
+        ],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "dacbddd1d2efcebcc5ed77e68b2460e9d00a11b733e2ddf1f6280c9f3dc1e5ef",
+      "source_hash_sha256": "8b5d566ea0355964cc0059f5263b4c265c11c032c07bdfc613360e5765d572e2",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -862,9 +999,16 @@
         "url": "https://www.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos"
       },
       "date_mentions": [],
+      "structured": {
+        "act_references": [],
+        "occurrences": [],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "acb4bf4ccc69daff662c03a2618107ebb6fcb653e1a39a4d9654eb788df08406",
+      "source_hash_sha256": "ba419a1d4241b4c1bcce863ffe54eb4251e3d6ce4e08a9d8731db87eca11e0bb",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -885,9 +1029,16 @@
         "url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos"
       },
       "date_mentions": [],
+      "structured": {
+        "act_references": [],
+        "occurrences": [],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "d8229c3cf02fd024cd7dd1708edee0a5bd5b39e0ea35a9c38562828aafa61be9",
+      "source_hash_sha256": "1b29802335f0756711747fe6eab1dd6418ac0ee818a2a0affea921f777f44ac9",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -911,9 +1062,108 @@
         "2026-10-15",
         "2026-10-28"
       ],
+      "structured": {
+        "act_references": [
+          "aviso nº 290/2026",
+          "decreto nº 50"
+        ],
+        "occurrences": [
+          {
+            "id": "tjrj-extract-d5e00991f1cdd36ef3",
+            "date": "2026-10-15",
+            "date_expression": "15/10/2026",
+            "year_inferred": false,
+            "effect_hint": "normal_expediente",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro Aut",
+            "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "68f89d37fefbc9d2a0821f1e72ccd1f181573ff5272cf0a89c364be7f7ab48fc",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Data mencionada: conferir contexto."
+            ]
+          },
+          {
+            "id": "tjrj-extract-b2dab06cf3bd2c6648",
+            "date": "2026-10-30",
+            "date_expression": "30 de outubro",
+            "year_inferred": true,
+            "effect_hint": "normal_expediente",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro Aut",
+            "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "68f89d37fefbc9d2a0821f1e72ccd1f181573ff5272cf0a89c364be7f7ab48fc",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Ano inferido de referência do documento."
+            ]
+          },
+          {
+            "id": "tjrj-extract-451d3ea7935d9ec219",
+            "date": "2026-10-28",
+            "date_expression": "dia 28 de outubro de 2026",
+            "year_inferred": false,
+            "effect_hint": "normal_expediente",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro Aut",
+            "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "68f89d37fefbc9d2a0821f1e72ccd1f181573ff5272cf0a89c364be7f7ab48fc",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Data mencionada: conferir contexto."
+            ]
+          },
+          {
+            "id": "tjrj-extract-efa065fcbfef874cfc",
+            "date": "2026-10-30",
+            "date_expression": "30 de outubro",
+            "year_inferred": true,
+            "effect_hint": "possible_deadline_suspension",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
+            "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+            "source_hash_sha256": "68f89d37fefbc9d2a0821f1e72ccd1f181573ff5272cf0a89c364be7f7ab48fc",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Ano inferido de referência do documento."
+            ]
+          }
+        ],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "9afb378724b5d635bbc91f1f3d11ee2134cde529ab16806f69aa48833bdfdb74",
+      "source_hash_sha256": "68f89d37fefbc9d2a0821f1e72ccd1f181573ff5272cf0a89c364be7f7ab48fc",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -970,6 +1220,44 @@
         "2026-02-04",
         "2026-02-05"
       ],
+      "structured": {
+        "act_references": [
+          "aviso nº 290",
+          "decreto nº 50",
+          "decreto nº 505",
+          "ato executivo nº 162",
+          "lei nº 10",
+          "ato executivo nº 159",
+          "ato executivo nº 114",
+          "ato executivo nº 129",
+          "decreto nº 50418",
+          "ato executivo nº 116",
+          "ato executivo nº 103",
+          "ato executivo nº 96",
+          "ato executivo nº 91",
+          "lei nº 11",
+          "ato executivo nº 79",
+          "ato executivo nº 73",
+          "aviso nº 87",
+          "aviso nº 89",
+          "ato executivo nº 66",
+          "ato executivo nº 60",
+          "ato executivo nº 24",
+          "ato executivo nº 20",
+          "aviso nº 28",
+          "ato executivo nº 54",
+          "ato executivo nº 57",
+          "ato executivo nº 59",
+          "ato executivo nº 53",
+          "ato executivo nº 51",
+          "ato executivo nº 52",
+          "ato executivo nº 55"
+        ],
+        "occurrences": [],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "ativo, não substitui em hipótese alguma, a publicação Oficial. SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS Data da atualização: 15.10.2026 2026 ▪ Consulta por Assunto ▪ Consulta por Comarca ▪ Consulta de feriados, pontos facultativos e outras ocorrências com abrangência de todo o Estado ou toda Capital. Todo conteúdo disponí",
       "stale": false,
       "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
@@ -995,9 +1283,39 @@
       "date_mentions": [
         "2023-04-17"
       ],
+      "structured": {
+        "act_references": [],
+        "occurrences": [
+          {
+            "id": "tjrj-extract-66c8926999d326a7d7",
+            "date": "2023-04-17",
+            "date_expression": "17/04/2023",
+            "year_inferred": false,
+            "effect_hint": "possible_deadline_suspension",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia Feriados Locais e Suspensão de Prazos Autofit Section Feriados Locais e Susp",
+            "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
+            "source_hash_sha256": "05425b2ef1714bc3c3fc4c3fc606c5019cac3656c31bcc00cfcfcee696efb0f0",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Data mencionada: conferir contexto."
+            ]
+          }
+        ],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "e017fdf3d68280a486375b9f7c92b68fba32f8459f1b0ea26110bc55fa354409",
+      "source_hash_sha256": "05425b2ef1714bc3c3fc4c3fc606c5019cac3656c31bcc00cfcfcee696efb0f0",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1020,9 +1338,39 @@
       "date_mentions": [
         "2023-04-17"
       ],
+      "structured": {
+        "act_references": [],
+        "occurrences": [
+          {
+            "id": "tjrj-extract-f1beee199ec6bc6a6d",
+            "date": "2023-04-17",
+            "date_expression": "17/04/2023",
+            "year_inferred": false,
+            "effect_hint": "possible_deadline_suspension",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": []
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "Num. única 2 Mensagem CNJ Clearfix Inferior Consulta à Jurisprudência Autofit Section Intranet Atos Oficiais do PJERJ Diários da Justiça CEDES Escolas Escolas Escola da Magistratura - EMERJ Escola de Administração Judiciária - ESAJ Escola de Mediação - EMEDI Biblioteca Autofit Section Tribunal de Justiça do Estado do Rio de Janeiro Portal do Conhecimento Notícias Notícia Feriados Locais e Suspensão de Prazos Autofit Section Feriados Locais e Susp",
+            "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
+            "source_hash_sha256": "5e352bf8eff3a840be299cec6c745be83d66069338c5062f3271ceed827fa98c",
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Verificar vigência, abrangência, exceções e efeito jurídico.",
+              "Data mencionada: conferir contexto."
+            ]
+          }
+        ],
+        "truncated": false,
+        "status": "pending_review",
+        "automatically_applies_events": false
+      },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "7eed070b4199f73df305bc89c75951cb9822910bee4e08672509a2fba650eea9",
+      "source_hash_sha256": "5e352bf8eff3a840be299cec6c745be83d66069338c5062f3271ceed827fa98c",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     }
   ],
@@ -1068,7 +1416,7 @@
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
       "kind": "official",
       "status": "ok",
-      "checked_at": "2026-10-17T05:50:29+00:00",
+      "checked_at": "2026-10-17T06:04:01+00:00",
       "note": "Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica."
     },
     {
