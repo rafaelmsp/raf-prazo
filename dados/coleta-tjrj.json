@@ -2,28 +2,49 @@
   "schema": 1,
   "service": "TJRJ",
   "status": "unavailable",
-  "collected_at": "2026-10-17T05:43:54+00:00",
-  "source_count": 3,
+  "collected_at": "2026-10-17T05:44:50+00:00",
+  "source_count": 6,
   "source_success": 0,
   "source_statuses": [
     {
-      "id": "consulta_2026",
+      "id": "consulta_2026_portaltj",
+      "url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
+      "checked_at": "2026-10-17T05:44:50+00:00",
+      "result": "failed",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "id": "central_portaltj",
+      "url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
+      "checked_at": "2026-10-17T05:44:50+00:00",
+      "result": "failed",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "id": "aviso_290_portaltj",
+      "url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+      "checked_at": "2026-10-17T05:44:50+00:00",
+      "result": "failed",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "id": "consulta_2026_www",
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-      "checked_at": "2026-10-17T05:43:54+00:00",
+      "checked_at": "2026-10-17T05:44:50+00:00",
       "result": "failed",
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
     },
     {
-      "id": "central",
+      "id": "central_www",
       "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-      "checked_at": "2026-10-17T05:43:54+00:00",
+      "checked_at": "2026-10-17T05:44:50+00:00",
       "result": "failed",
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
     },
     {
-      "id": "aviso_290",
+      "id": "aviso_290_www",
       "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-      "checked_at": "2026-10-17T05:43:54+00:00",
+      "checked_at": "2026-10-17T05:44:50+00:00",
       "result": "failed",
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
     }

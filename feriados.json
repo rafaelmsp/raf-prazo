@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "version": "36a7104cca87",
-  "generated_at": "2026-10-17T05:43:56+00:00",
-  "last_checked_at": "2026-10-17T05:43:56+00:00",
+  "generated_at": "2026-10-17T05:44:55+00:00",
+  "last_checked_at": "2026-10-17T05:44:55+00:00",
   "coverage": {
     "national_years": [
       2026,
@@ -25,7 +25,7 @@
     "tjrj": "discovery_only",
     "tjrj_collector_status": "unavailable",
     "tjrj_collector_at": null,
-    "tjrj_sources_checked": 3,
+    "tjrj_sources_checked": 6,
     "tjrj_sources_success": 0,
     "tjrj_pending": 0,
     "local": "manual_disabled"
