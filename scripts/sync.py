@@ -15,6 +15,7 @@ import urllib.error
 import urllib.request
 import urllib.parse
 from pathlib import Path
+from local_holidays import legal_local_events, OFFICIAL_ALERJ_CARNAVAL, OFFICIAL_CAMARA_CAXIAS
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'feriados.json'
@@ -169,7 +170,7 @@ def main(argv=None):
     if any(not 2020 <= y <= 2100 for y in years):
         parser.error('Anos permitidos: 2020 a 2100')
     previous = read_json(OUT, {}) or {}
-    # Operacao conservadora: eventos manuais locais/TJRJ nao entram na contagem.
+    # Operacao conservadora: atos TJRJ nao entram na contagem; feriados locais legais dependem de opt-in.
     # Publicacoes oficiais coletadas sao somente pistas informativas, sem homologacao.
     collected = read_json(ROOT / 'dados' / 'coleta-tjrj.json', {}) or {}
     national, candidates, checked, failed = national_events(years, previous, args.offline or args.check)
@@ -204,8 +205,11 @@ def main(argv=None):
             'source_hash_sha256': str(item.get('source_hash_sha256','')),
             'reason': 'Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem.'
         })
-    # Apenas feriados nacionais legais fixos sao aplicados nesta fase.
-    events = national
+    # Datas legais locais cadastradas com norma pública; aplicação no navegador somente por opt-in.
+    local_events = legal_local_events(years, previous)
+    for local in local_events:
+        verify_event(local)
+    events = national + local_events
     if len({e['id'] for e in events}) != len(events):
         raise ValueError('IDs duplicados')
     events.sort(key=event_key)
@@ -248,19 +252,21 @@ def main(argv=None):
         {'id':'federal','label':'Legislação federal — feriados nacionais','url':NATIONAL_SOURCE['url'], 'kind':'official','status':'curated', 'checked_at':None,'note':'Datas fixas previstas em lei; não cobre feriados forenses locais.'},
         {'id':'brasilapi','label':'BrasilAPI — feriados nacionais','url':'https://brasilapi.com.br/docs','kind':'community','status':'ok' if checked and not failed else 'unavailable','checked_at': TODAY.isoformat() if checked else None,'note':'Somente feriados fixos legalmente reconhecidos são promovidos; outros registros ficam pendentes.'},
         {'id':'tjrj','label':'TJRJ — documentos oficiais consultados','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc','kind':'official','status': collected.get('status','not_run'),'checked_at': collected.get('collected_at') if collected.get('source_success',0) else None,'note':'Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica.'},
+        {'id':'rj-feriados','label':'RJ — feriados estaduais previstos em lei','url':OFFICIAL_ALERJ_CARNAVAL,'kind':'official','status':'curated','checked_at':None,'note':'Leis estaduais nº 5.243/2008, 5.198/2008 e 11.002/2025; habilitar feriados locais no cálculo.'},
+        {'id':'caxias-feriados','label':'Duque de Caxias — Deliberação municipal 1.543/1970','url':OFFICIAL_CAMARA_CAXIAS,'kind':'official','status':'curated','checked_at':None,'note':'Sexta da Paixão e Santo Antônio. 25/08 e 28/10 são pontos facultativos municipais, não feriados.'},
         {'id':'ibge','label':'IBGE — municípios','url':'https://servicodados.ibge.gov.br/api/docs/localidades','kind':'official','status':'client','checked_at':None,'note':'Consulta de nomes e códigos municipais, não certifica feriados.'},
     ]
     output = {
         'schema': 1, 'version': digest, 'generated_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'),
         'last_checked_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds') if not args.offline and not args.check else None,
-        'coverage': {'national_years':years, 'national':'fixed_law', 'state':'not_applied', 'municipal':'not_applied', 'tjrj':'discovery_only'},
+        'coverage': {'national_years':years, 'national':'fixed_law', 'state':'RJ_legal_opt_in', 'municipal':'Duque_de_Caxias_3301702_legal_opt_in', 'tjrj':'discovery_only'},
         'sync': {'status':status, 'brasilapi_years_checked':checked, 'failed':failed,
                  'tjrj':'discovery_only', 'tjrj_collector_status':collected.get('status','not_run'),
                  'tjrj_collector_at':collected.get('collected_at') if collected.get('source_success',0) else None,
                  'tjrj_sources_checked':collected.get('source_count',0),
                  'tjrj_sources_success':collected.get('source_success',0),
                  'tjrj_pending':sum(x.get('type')=='CANDIDATO_TJRJ' for x in candidates),
-                 'local':'manual_disabled'},
+                 'local':'legal_holidays_opt_in'},
         'events': events, 'candidates': candidates, 'changes': changes, 'sources': sources,
     }
     if args.check:
