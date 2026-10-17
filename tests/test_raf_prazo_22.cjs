@@ -7,15 +7,18 @@ const path=require('node:path');
 const ROOT=path.resolve(__dirname,'..');
 const code=fs.readFileSync(path.join(ROOT,'assets/raf-prazo-22.js'),'utf8');
 class Node {
- constructor(id){this.id=id;this.value='';this.textContent='';this.href='';this.hidden=false;this.children=[];this.listeners={};this.className='';}
+ constructor(id){this.id=id;this.value='';this.textContent='';this.href='';this.hidden=false;this.children=[];this.listeners={};this.className='';this.open=false;this.focused=false;}
  replaceChildren(...items){this.children=[...items]}
  append(item){this.children.push(item)}
  addEventListener(type,callback){this.listeners[type]=callback}
  dispatchEvent(event){this.listeners[event.type]?.(event);return true}
  trigger(name){this.listeners[name]?.({target:this})}
+ showModal(){this.open=true}
+ close(){this.open=false;this.listeners.close?.()}
+ focus(){this.focused=true}
  closest(name){return name==='[data-days]'?this:null}
 }
-const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick'];
+const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick','rafProfileOpen','rafProfileDialog','rafProfileShort','rafProfileSub'];
 const nodes=Object.fromEntries(ids.map(id=>[id,new Node(id)]));
 nodes.rafRegime.value='jec';nodes.rafOrigin.value='conferido';nodes.start.value='2026-10-19';nodes.days.value='15';
 const storage=new Map();const windowStub={addEventListener(){}};
@@ -32,6 +35,11 @@ test('JEC é padrão e prazo inicial manual não inventa ato',()=>{
  assert.equal(metadata().count_mode,'business_days');
  assert.equal(nodes.rafSpecialDeadline.hidden,true);
  assert.ok(nodes.rafRuleSummary.textContent.includes('JEC'));
+ assert.ok(nodes.rafProfileShort.textContent.includes('JEC'));
+ nodes.rafProfileOpen.trigger('click');
+ assert.equal(nodes.rafProfileDialog.open,true);
+ nodes.rafProfileDialog.close();
+ assert.equal(nodes.rafProfileDialog.open,false);
 });
 test('recurso do JEC define exatamente 10 dias e lei',()=>{
  nodes.rafAct.value='jec_recurso';nodes.rafAct.trigger('change');
@@ -45,6 +53,7 @@ test('embargos de declaração JEC definem 5 dias',()=>{
  assert.equal(Number(nodes.days.value),5);
  assert.equal(nodes.rafSpecialDeadline.hidden,true);
  assert.equal(metadata().preset,'jec_embargos');
+ assert.ok(nodes.rafProfileShort.textContent.includes('Embargos'));
 });
 test('modificação manual rompe preset e preserva número informado',()=>{
  nodes.days.value='9';nodes.days.trigger('input');
@@ -87,5 +96,15 @@ for(const target of ['src/template.html','index.html']){
   assert.ok(html.includes('id="rafEmbeddedBase"'));
   assert.ok(html.includes("if(scope.kind==='tjrj')continue"));
   assert.ok(html.includes('id="rafTabPending"'));
+  const left=html.slice(html.indexOf('<section class="panel raf-22-parameters"'),html.indexOf('<section class="panel raf-22-calendar"'));
+  assert.ok(left.includes('id="rafProfileOpen"'));
+  assert.ok(!left.includes('id="rafRegime"'),'Os seletores não devem esticar o painel de parâmetros');
+  assert.ok(!left.includes('id="rafRuleBox"'),'O quadro legal não deve ficar no painel esquerdo');
+  const drawer=html.slice(html.indexOf('<dialog id="rafProfileDialog"'),html.indexOf('<dialog id="rafDayDialog"'));
+  for(const id of ['rafRegime','rafAct','rafRuleBox','rafCommunicationDetails','rafProfileDone'])assert.ok(drawer.includes('id="'+id+'"'),'Drawer deve conter '+id);
+  assert.ok(!html.includes('min-height:750px'),'Remover altura artificial de 750px');
+  assert.ok(html.includes('.raf-22-drawer::backdrop'));
+  assert.ok(html.includes('raf-22-drawer-footer'));
+  
  });
 }
