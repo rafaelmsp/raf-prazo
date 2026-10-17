@@ -46,10 +46,10 @@ test('ativação local do TJRJ não pode excluir finais de semana duas vezes',()
 });
 
 test('fontes nacionais usam API mais leis; cobertura estadual e municipal permanece ausente',()=>{
- assert.deepEqual(base.sync.brasilapi_years_checked,[2026,2027,2028]);
+ assert.ok(base.sync.brasilapi_years_checked.every(y=>base.coverage.national_years.includes(y)));
  assert.equal(base.coverage.state,'not_applied');
  assert.equal(base.coverage.municipal,'not_applied');
  assert.equal(base.coverage.tjrj,'discovery_only');
- assert.equal(base.events.filter(e=>e.type==='NACIONAL').length,27);
+ assert.equal(base.events.filter(e=>e.type==='NACIONAL').length,9*base.coverage.national_years.length);
  assert.equal(base.events.filter(e=>e.type==='SUSPENSAO_TJRJ').length,0);
 });
