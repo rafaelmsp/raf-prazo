@@ -15,7 +15,7 @@ class TableTests(unittest.TestCase):
        'Comarca de Duque de Caxias, nos dias 30 e 31 de julho de 2026. '
        'Resolve suspender o expediente e os prazos processuais nos Fóruns das '
        'ATO EXECUTIVO Nº 117, DE DJERJ, ADM, n. 218, p. 2. Comarcas de Nova Iguaçu,')
-  data=self.report('[RAF_TJRJ_PAGE=33]\\n'+row+'\\n')
+  data=self.report('[RAF_TJRJ_PAGE=33]\n'+row+'\n')
   self.assertEqual([o['date'] for o in data['occurrences']],['2026-07-31'])
   scope=data['occurrences'][0]['scope_hint']
   self.assertEqual(scope['date_linked_comarcas'],['Duque de Caxias'])
