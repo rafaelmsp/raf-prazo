@@ -1,7 +1,7 @@
 # Raf-Prazo
 ### Calculadora Judicial de Prazos · HTML5 · Projeto independente
 
-**Versão do aplicativo:** 2.1 (modo conservador de coleta oficial)
+**Versão do aplicativo:** 2.2 (JEC padrão, CPC alternativo; coleta TJRJ conservadora)
 
 **Extração estruturada TJRJ (fase 1):** [Como a coleta identifica indícios e por que não altera prazos](docs/EXTRACAO_TJRJ.md). Os registros são pendentes, não constituem validação de atos.  
 **Desenvolvimento e autoria:** Rafael Moraes da Silva Passos  
@@ -10,7 +10,7 @@
 **Situação:** código publicado no GitHub; verificar o status de cada execução em Actions. A coleta de fontes TJRJ é parcial, não oficial e nunca altera automaticamente os prazos.
 
 > [!IMPORTANT]
-> **MODO CONSERVADOR (17/10/2026):** o sistema NÃO computa feriados locais, atos do TJRJ ou datas adicionadas manualmente. Apenas feriados nacionais fixos e a suspensão legal do art. 220 do CPC, quando habilitada. Fontes TJRJ são coletadas somente como documentos pendentes. **Não use o resultado isoladamente para definir vencimento forense.** [Detalhes da coleta](docs/COLETA_TJRJ.md).
+> **MODO CONSERVADOR (17/10/2026):** feriados nacionais fixos e o período do art. 220 do CPC integram a lógica conforme parâmetros da ferramenta. Feriados legais do RJ e Duque de Caxias podem ser considerados **somente por opção expressa do usuário**, com cobertura forense parcial. Documentos TJRJ não homologados são coletados como indícios e **nunca alteram automaticamente os prazos**; escolhas individuais geram simulações não homologadas. **Não use o resultado isoladamente para definir vencimento forense.** [Detalhes da coleta](docs/COLETA_TJRJ.md).
 
 > [!CAUTION]
 > **FERRAMENTA AUXILIAR, INDEPENDENTE E NÃO OFICIAL.** O Raf-Prazo **não certifica a tempestividade**, não calcula automaticamente todas as situações processuais e **não substitui** os sistemas judiciais, a consulta aos atos normativos, o calendário oficial, a análise da intimação nem a conferência do profissional responsável. **Nunca pratique um ato processual exclusivamente com base no resultado do aplicativo.**
@@ -40,6 +40,14 @@
 19. [Autoria, direitos e referências](#19-autoria-direitos-e-referências)
 
 ---
+
+## Novidade da versão 2.2 — JEC padrão, UX premium
+
+O novo painel começa no **Juizado Especial Cível**, sem limitar a abrangência nacional do aplicativo. O usuário pode alternar para **Processo Civil (CPC)**, selecionar um ato processual com prazo previsto (ou informar duração personalizada), consultar a base legal e registrar opcionalmente a origem da comunicação **sem inferir automaticamente ciência ou publicação**. A memória do cálculo registra o perfil selecionado.
+
+O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os regimes CLT, CPP, contagem em horas e demais hipóteses especiais exigem implementação e validação separadas.
+
+[Documento técnico completo do Raf-Prazo 2.2](docs/RAF_PRAZO_22_ENTREGA.md).
 
 ## 1. Visão geral e objetivos
 
