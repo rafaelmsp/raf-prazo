@@ -53,6 +53,10 @@
  const init=()=>{
   const regime=$('rafRegime'),act=$('rafAct'),origin=$('rafOrigin'),days=$('days'),start=$('start');
   if(!regime||!act||!origin||!days||!start)return;
+  const drawer=$('rafProfileDialog'),trigger=$('rafProfileOpen');
+  if(!drawer||!trigger)return;
+  trigger.addEventListener('click',()=>{if(!drawer.open)drawer.showModal()});
+  drawer.addEventListener('close',()=>{if(document.contains?.(trigger))trigger.focus({preventScroll:true})});
   const saved=safeRead();
   regime.value=validRegime(saved.regime);
   origin.value=Object.hasOwn(communications,saved.origin)?saved.origin:'conferido';
@@ -78,6 +82,8 @@
    $('rafSourceGuidance').href=origin.value==='djen'||origin.value==='pessoal'?CNJ:validRegime(regime.value)==='jec'?LAW_9099:CPC;
    $('rafSourceGuidance').textContent=origin.value==='djen'||origin.value==='pessoal'?'Consultar normas do CNJ ↗':'Consultar fundamento legal ↗';
    $('rafContextResult').textContent=(regime.value==='jec'?'JEC':'CPC')+' · '+(selected.id==='custom'?'Prazo informado':selected.label);
+   $('rafProfileShort').textContent=(regime.value==='jec'?'JEC':'CPC')+' · '+(selected.id==='custom'?'Prazo personalizado':selected.label);
+   $('rafProfileSub').textContent=selected.id==='custom'?'Personalizar procedimento e ato':selected.days+' dias úteis · '+selected.basis;
    const inactiveHours=$('rafSpecialDeadline');
    inactiveHours.hidden=selected.id!=='jec_recurso';
    $('sourceFoot').textContent=regime.value==='jec'?'Fonte legal: Lei 9.099/95, art. 12-A · normas subsidiárias quando aplicáveis':'Fonte legal: CPC, arts. 219, 220 e 224';
