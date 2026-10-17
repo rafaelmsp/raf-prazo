@@ -99,10 +99,22 @@
 .raf-disclaimer{padding:11px 12px;background:var(--warnbg);border-radius:9px;color:var(--text);font-size:11px;line-height:1.55;margin-top:10px}
 .raf-meta{padding-top:12px;margin-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.7}
 .raf-meta strong{color:var(--text)}
-.raf-tabs{display:flex;gap:5px;padding:12px 22px 0;border-bottom:1px solid var(--line);flex:none}
-.raf-tab{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-weight:750;padding:9px 12px;white-space:nowrap}
+.raf-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;padding:10px 16px 0;border-bottom:1px solid var(--line);flex:none}
+.raf-tab{min-width:0;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-weight:750;padding:10px 3px;white-space:nowrap;text-align:center}
 .raf-tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
 .raf-tab-panel[hidden]{display:none}
+.raf-list-toolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+.raf-list-toolbar label{font-size:11px;font-weight:750;display:flex;align-items:center;gap:6px}
+.raf-list-toolbar select{padding:9px 6px;min-height:36px;max-width:110px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--text)}
+.raf-list-actions{display:flex;gap:6px;flex-wrap:wrap}
+.raf-list-actions .btn,.raf-item-dismiss{font-size:11px;padding:8px 10px;min-height:35px}
+.raf-list-hint{margin:6px 0 15px!important}
+.raf-item-dismiss{margin-top:10px;border:1px solid var(--line);border-radius:7px;background:var(--paper2);color:var(--muted);cursor:pointer}
+.raf-technical-details{margin-top:14px;border:1px solid var(--line);border-radius:9px;padding:10px}
+.raf-technical-details summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--accent);padding:5px}
+.raf-technical-details #rafCandidatesList{margin-top:10px}
+.raf-update-modal .raf-modal-content{scrollbar-gutter:stable}
+.raf-update-modal .raf-event{margin-bottom:11px}
 .raf-demo-ribbon{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--accentline);background:var(--accentbg);border-radius:9px;padding:11px 12px;margin-bottom:14px;font-size:11px;line-height:1.5}
 .raf-demo-ribbon b{color:var(--accent)}
 .raf-event{border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -390,12 +402,18 @@
 <dialog class="raf-modal raf-update-modal" id="rafNewsDialog" aria-labelledby="rafNewsHeading">
  <div class="raf-modal-inner">
   <div class="raf-modal-head"><div class="raf-modal-heading"><div class="raf-modal-emblem" aria-hidden="true">↻</div><div><h2 id="rafNewsHeading">Atualizações do Calendário Judicial</h2><p>Raf-Prazo Sync · Rastreabilidade de alterações</p></div></div><button type="button" class="raf-modal-close" data-raf-close="rafNewsDialog" aria-label="Fechar atualizações">×</button></div>
-  <div class="raf-tabs" role="tablist" aria-label="Informações das atualizações"><button type="button" class="raf-tab" role="tab" aria-selected="true" aria-controls="rafPanelNews" id="rafTabNews" data-raf-tab="news">Alterações</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSources" id="rafTabSources" data-raf-tab="sources">Fontes</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSync" id="rafTabSync" data-raf-tab="sync">Sincronização</button></div>
+  <div class="raf-tabs" role="tablist" aria-label="Informações das atualizações"><button type="button" class="raf-tab" role="tab" aria-selected="true" aria-controls="rafPanelNews" id="rafTabNews" data-raf-tab="news">Feriados</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelTjrj" id="rafTabTjrj" data-raf-tab="tjrj">TJRJ</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSources" id="rafTabSources" data-raf-tab="sources">Fontes</button><button type="button" class="raf-tab" role="tab" aria-selected="false" aria-controls="rafPanelSync" id="rafTabSync" data-raf-tab="sync" aria-label="Sincronização e status">Status</button></div>
   <div class="raf-modal-content">
    <section class="raf-tab-panel" id="rafPanelNews" role="tabpanel" aria-labelledby="rafTabNews">
-    <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Rastreabilidade dos eventos</b><br>Somente registros confirmados afetam a contagem. Fontes locais e atos do tribunal exigem conferência individual.</div></div>
+    <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Feriados e alterações da base</b><br>Registros com lei e fonte identificada. A aplicação ao cálculo depende do âmbito e das opções selecionadas.</div></div>
+    <div class="raf-list-toolbar"><label for="rafHolidayYear">Ano <select id="rafHolidayYear" aria-label="Filtrar feriados por ano"><option value="all">Todos</option></select></label><div class="raf-list-actions"><button type="button" class="btn" id="rafClearHolidays">Limpar itens</button><button type="button" class="btn" id="rafRestoreHolidays">Restaurar</button></div></div>
+    <p class="raf-small-note raf-list-hint">Limpar oculta os cartões só neste navegador; os feriados e os cálculos permanecem intactos.</p>
     <div id="rafUpdatesList" aria-live="polite"><p class="raf-small-note">Carregando alterações...</p></div>
-    <div class="raf-section-kicker">Registros pendentes — não aplicados</div><div id="rafCandidatesList"></div>
+   </section>
+   <section class="raf-tab-panel" id="rafPanelTjrj" role="tabpanel" aria-labelledby="rafTabTjrj" hidden>
+    <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Novidades e suspensões do TJRJ</b><br>Indícios extraídos automaticamente de documentos oficiais. Não representam suspensão validada de prazo.</div></div>
+    <div id="rafTjrjNewsMount"></div>
+    <details class="raf-technical-details"><summary>Documentos técnicos e opções de simulação</summary><div id="rafCandidatesList"></div></details>
    </section>
    <section class="raf-tab-panel" id="rafPanelSources" role="tabpanel" aria-labelledby="rafTabSources" hidden>
     <div class="raf-demo-ribbon"><span aria-hidden="true">ⓘ</span><div><b>Fontes e limites de cobertura</b><br>Documentos oficiais do TJRJ são coletados periodicamente. A presença de um ato na base é um indício informativo, não uma validação de suspensão de prazo.</div></div>
@@ -713,6 +731,9 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  'use strict';
  const $=id=>document.getElementById(id),news=$('rafNewsDialog'),about=$('rafAboutDialog'),dot=$('rafNewsDot');
  const seenKey='raf-prazo:updates-seen:v1';
+ const HIDE_KEY='raf-prazo:updates-holidays-hidden:v1';
+ const hiddenIds=()=>{try{const v=JSON.parse(localStorage.getItem(HIDE_KEY)||'[]');return new Set(Array.isArray(v)?v.slice(-1200):[])}catch(_){return new Set()}};
+ const persistHidden=s=>{try{localStorage.setItem(HIDE_KEY,JSON.stringify([...s].slice(-1200)))}catch(_){}};
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=String(text);return n};
  const safeUrl=url=>{try{const u=new URL(url);return u.protocol==='https:'?u.href:null}catch(_){return null}};
  const link=(url,label)=>{const href=safeUrl(url);if(!href)return el('span','',label||'Fonte não disponível');const a=el('a','',label||'Consultar fonte oficial ↗');a.href=href;a.target='_blank';a.rel='noopener noreferrer';return a};
@@ -734,14 +755,32 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
   return [...uniq].slice(0,350);
  }
  function markSeen(){const b=window.RafPrazoData?.base;if(!b)return;try{localStorage.setItem(seenKey,JSON.stringify(allNotificationIds(b)))}catch(_){}updateBadge();}
- function updateBadge(){const b=window.RafPrazoData?.base||{},seen=new Set(getSeen());const unread=allNotificationIds(b).filter(id=>!seen.has(id)).length;dot.textContent=unread>99?'99+':String(unread);dot.hidden=!unread;}
- function renderChanges(){const b=window.RafPrazoData?.base;if(!b)return;const root=$('rafUpdatesList');root.replaceChildren();const changes=(b.changes||[]).slice(0,35);
-  if(!changes.length)root.append(el('p','raf-small-note','Nenhuma alteração de eventos registrada na base disponível.'));
+ function updateBadge(){const b=window.RafPrazoData?.base||{},seen=new Set(getSeen()),hidden=hiddenIds();const unread=allNotificationIds(b).filter(id=>!seen.has(id)&&!hidden.has(id)).length;dot.textContent=unread>99?'99+':String(unread);dot.hidden=!unread;}
+ function changeId(c){return String(c.id||[c.date||'',c.name||'',c.kind||''].join('|'))}
+ function changeRows(){return (window.RafPrazoData?.base?.changes||[]).filter(c=>c&&typeof c==='object')}
+ function updateYears(){
+  const select=$('rafHolidayYear');if(!select)return;
+  const years=[...new Set(changeRows().map(c=>String(c.date||'').slice(0,4)).filter(x=>/^20\d{2}$/.test(x)))].sort();
+  const previous=select.value;
+  select.replaceChildren();
+  const all=el('option','','Todos');all.value='all';select.append(all);
+  for(const year of years){const opt=el('option','',year);opt.value=year;select.append(opt)}
+  const current=String(new Date().getFullYear());
+  select.value=years.includes(previous)||previous==='all'&&select.dataset.initialized==='1'?previous:years.includes(current)?current:'all';
+  select.dataset.initialized='1';
+ }
+ function renderChanges(){const b=window.RafPrazoData?.base;if(!b)return;const root=$('rafUpdatesList');root.replaceChildren();
+  const chosen=$('rafHolidayYear')?.value||'all', hidden=hiddenIds();
+  const source=changeRows().filter(c=>chosen==='all'||String(c.date||'').startsWith(chosen));
+  const changes=source.filter(c=>!hidden.has(changeId(c))).slice(0,40);
+  if(!changes.length)root.append(el('p','raf-small-note',source.length?'Lista limpa neste navegador. Use Restaurar para rever os cartões.':'Nenhuma alteração de feriados para o ano selecionado.'));
   for(const c of changes){const card=el('div','raf-event'),top=el('div','raf-event-top'),body=el('div','raf-event-body'),meta=el('div','raf-event-meta');
    top.append(el('b','',c.name||'Alteração de calendário'),el('span','raf-state',c.kind==='added'?'Incluído':c.kind==='modified'?'Alterado':'Removido'));
    const scope=c.scope||{},territory=scope.kind==='national'?'Brasil':scope.kind==='tjrj'?'TJRJ · RJ':scope.kind==='state'?scope.uf||'Estado':scope.kind==='municipal'?(scope.uf||'Município')+' · IBGE '+(scope.ibge||''):'A conferir';
-   for(const [k,v] of [['Data afetada',c.date||'—'],['Abrangência',territory],['Situação',c.status||'—'],['Aplicação ao cálculo',c.applied?'Sim — quando abrangente':'Não']]){meta.append(el('span','',k),el('strong','',v));}
-   body.append(meta);const source=el('p','raf-small-note');source.append(link(c.source_url,'Ver fonte do evento ↗'));body.append(source);card.append(top,body);root.append(card);
+   for(const [k,v] of [['Data afetada',c.date||'—'],['Abrangência',territory],['Situação',c.status||'—'],['Aplicação ao cálculo',c.applied?'Conforme opções e abrangência':'Não']]){meta.append(el('span','',k),el('strong','',v));}
+   body.append(meta);const sourceLink=el('p','raf-small-note');sourceLink.append(link(c.source_url,'Ver fonte do evento ↗'));body.append(sourceLink);
+   const dismiss=el('button','raf-item-dismiss','Ocultar este item');dismiss.type='button';dismiss.addEventListener('click',()=>{const ids=hiddenIds();ids.add(changeId(c));persistHidden(ids);renderChanges();updateBadge()});body.append(dismiss);
+   card.append(top,body);root.append(card);
   }
   const candidates=$('rafCandidatesList');candidates.replaceChildren();const pending=b.candidates||[];
   if(!pending.length)candidates.append(el('p','raf-small-note','Nenhum candidato pendente na base disponível.'));
@@ -766,7 +805,7 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
   $('rafSyncVersion').textContent=b.version||'—';$('rafSyncOrigin').textContent=state.mode||'—';$('rafSyncYears').textContent=(b.coverage?.national_years||[]).join(', ')||'—';const coletor=b.sync?.tjrj_collector_status||'not_run';$('rafTjrjCollectorStatus').textContent=({ok:'Consultado',partial:'Consulta parcial',unavailable:'Fonte indisponível',not_run:'Ainda não executada'}[coletor]||'Sem status')+' · '+(b.sync?.tjrj_pending||0)+' pendentes · '+(b.sync?.tjrj_sources_success||0)+'/'+(b.sync?.tjrj_sources_checked||0)+' fontes';
   $('rafSyncNote').textContent=state.error?'Falha ao buscar feriados.json: '+state.error+'. Base local preservada.':'Feriados nacionais: leis federais cotejadas com BrasilAPI. RJ: feriados estaduais e Duque de Caxias: feriados municipais fundamentados em legislação, disponíveis por opção explícita; não vêm de API de feriados locais. TJRJ: coleta de avisos e PDFs pendentes, sem exclusão oficial automática.';
  }
- function render(){renderChanges();renderSources();renderSync();updateBadge()}
+ function render(){updateYears();renderChanges();renderSources();renderSync();updateBadge()}
  const open=d=>{if(d&&!d.open)d.showModal()};
  $('rafNewsOpen').addEventListener('click',()=>{render();open(news);markSeen()});
  $('navAbout').addEventListener('click',()=>open(about));
@@ -774,7 +813,14 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  $('rafSyncRefresh').addEventListener('click',()=>$('sync').click());
  document.querySelectorAll('[data-raf-close]').forEach(btn=>btn.addEventListener('click',()=>$(btn.dataset.rafClose).close()));
  [news,about].forEach(d=>d.addEventListener('click',event=>{if(event.target===d)d.close()}));
- const tabs=[...document.querySelectorAll('[data-raf-tab]')],panels={news:$('rafPanelNews'),sources:$('rafPanelSources'),sync:$('rafPanelSync')};
+ $('rafHolidayYear').addEventListener('change',renderChanges);
+ $('rafClearHolidays').addEventListener('click',()=>{
+  const ids=hiddenIds();const year=$('rafHolidayYear').value;
+  for(const item of changeRows())if(year==='all'||String(item.date||'').startsWith(year))ids.add(changeId(item));
+  persistHidden(ids);renderChanges();updateBadge();
+ });
+ $('rafRestoreHolidays').addEventListener('click',()=>{persistHidden(new Set());renderChanges();updateBadge()});
+ const tabs=[...document.querySelectorAll('[data-raf-tab]')],panels={news:$('rafPanelNews'),tjrj:$('rafPanelTjrj'),sources:$('rafPanelSources'),sync:$('rafPanelSync')};
  function chooseTab(key){for(const t of tabs){const on=t.dataset.rafTab===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;}for(const [k,p] of Object.entries(panels))p.hidden=k!==key;}
  tabs.forEach(t=>t.addEventListener('click',()=>chooseTab(t.dataset.rafTab)));
  tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;chooseTab(tabs[n].dataset.rafTab);tabs[n].focus()}));
