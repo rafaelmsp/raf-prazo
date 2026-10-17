@@ -60,9 +60,8 @@ jobs:
                ! grep -Fq 'id="calendarDue"' /tmp/site.html && \
                grep -Fq -- '--pje-header:#1261a0' /tmp/site.html && \
                grep -Fq -- '--raf-holiday-bg:#f9e0e2' /tmp/site.html && \
-               { [ "$GITHUB_REF" != "refs/heads/main" ] || { \
-                   grep -Fq -- '--raf-weekend-bg:#b85a5f' /tmp/site.html && \
-                   grep -Fq '.calendar .day.blocked.raf-weekend:not(.due)' /tmp/site.html; }; }; then
+               grep -Fq -- '--raf-weekend-bg:#b85a5f' /tmp/site.html && \
+               grep -Fq '.calendar .day.blocked.raf-weekend:not(.due)' /tmp/site.html; then
               echo 'RAF_PRAZO_CORES_PUBLICADAS — cabeçalho azul PJe, feriados preservados e fins de semana vinho'
               exit 0
             fi
