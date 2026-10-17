@@ -84,81 +84,62 @@
   const saved=safeRead();
   regime.value=validRegime(saved.regime);
   origin.value=Object.hasOwn(communications,saved.origin)?saved.origin:'conferido';
-  const search=$('rafActSearch'),categoryBox=$('rafActFilters'),list=$('rafActList'),count=$('rafActCount'),alertBox=$('rafActAlert');
-  if(!search||!categoryBox||!list||!count||!alertBox)return;
-  let activeCategory='Todos';
-  const normalize=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-  const presetStatus=item=>item.kind==='hours'?'48 horas · não calculável':item.days===null?'Conferir prazo':item.days+' dias úteis';
+  const list=$('rafActList'),count=$('rafActCount'),alertBox=$('rafActAlert');
+  if(!list||!count||!alertBox)return;
+  const presetStatus=item=>item.kind==='hours'?'48 horas · não calculado':item.days===null?'Conferir prazo':item.days+' dias úteis';
   const create=(tag,className,value)=>{
    const node=document.createElement(tag);
    if(className)node.className=className;
    if(value!==undefined)node.textContent=value;
    return node;
   };
-  const buildActs=(requested)=>{
+  const groupOrder=['Recursos','Defesa','Petição inicial','Cumprimento','Execução','Procedimentos especiais','Provas','Diligências','Personalizado'];
+  const buildActs=requested=>{
    const data=configurations[validRegime(regime.value)];
    act.replaceChildren();
    for(const item of data.presets){
-    const option=document.createElement('option');option.value=item.id;
+    const option=document.createElement('option');
+    option.value=item.id;
     option.textContent=item.label;
     act.append(option);
    }
    act.value=data.presets.some(x=>x.id===requested)?requested:'custom';
-   activeCategory='Todos';
-   search.value='';
   };
-  const renderCategories=()=>{
-   categoryBox.replaceChildren();
-   const data=configurations[validRegime(regime.value)];
-   const categories=['Todos',...new Set(data.presets.map(item=>item.category||'Outros'))];
-   for(const name of categories){
-    const button=create('button','raf-library-filter',name);
-    button.type='button';button.dataset.category=name;
-    button.setAttribute('aria-pressed',String(activeCategory===name));
-    button.addEventListener('click',()=>{
-     activeCategory=name;
-     renderCategories();
-     renderList();
-    });
-    categoryBox.append(button);
-   }
-  };
+  // Toda a biblioteca é apresentada imediatamente, em seções abertas.
+  // A marcação estática em HTML permanece como fallback durante a carga do JS.
   const renderList=()=>{
    const data=configurations[validRegime(regime.value)];
-   const q=normalize(search.value);
-   const terms=q.replace(/\b(?:art|arts)\b\.?/g,'').split(/[^\p{L}\p{N}]+/u).filter(Boolean);
-   const matches=data.presets.filter(item=>{
-    if(activeCategory!=='Todos'&&(item.category||'Outros')!==activeCategory)return false;
-    const haystack=normalize([item.label,item.category,item.basis,item.description].join(' '));
-    return !q||haystack.includes(q)||terms.every(term=>haystack.includes(term));
-   });
+   const groups=groupOrder.filter(category=>data.presets.some(item=>(item.category||'Outros')===category));
    list.replaceChildren();
-   count.textContent=data.presets.length+' atos · '+matches.length+' exibidos';
-   for(const item of matches){
-    const button=create('button','raf-library-item');
-    button.type='button';button.dataset.preset=item.id;
-    const active=item.id===act.value;
-    button.setAttribute('aria-pressed',String(active));
-    const copy=create('span','raf-library-item-copy');
-    copy.append(create('strong','',item.label),create('small','',item.basis));
-    const label=create('span','raf-library-item-time',presetStatus(item));
-    if(item.days===null)label.dataset.unknown='true';
-    button.append(copy,label);
-    button.addEventListener('click',()=>{
-     act.value=item.id;
-     const previous=days.value;
-     if(item.days!==null){
-      days.value=String(item.days);
-     }else{
-      days.value='';
-     }
-     days.dispatchEvent(new Event('input',{bubbles:true}));
-     refresh();
-     renderList();
-    });
-    list.append(button);
+   count.textContent=data.presets.length+' opções · '+(regime.value==='jec'?'JEC':'CPC');
+   for(const category of groups){
+    const matches=data.presets.filter(item=>(item.category||'Outros')===category);
+    const section=create('section','raf-library-group');
+    section.dataset.category=category;
+    const heading=create('h3','raf-library-group-title',category);
+    heading.append(create('span','',String(matches.length)));
+    section.append(heading);
+    for(const item of matches){
+     const button=create('button','raf-library-item');
+     button.type='button';
+     button.dataset.preset=item.id;
+     button.setAttribute('aria-pressed',String(item.id===act.value));
+     const copy=create('span','raf-library-item-copy');
+     copy.append(create('strong','',item.label),create('small','',item.basis));
+     const duration=create('span','raf-library-item-time',presetStatus(item));
+     if(item.days===null)duration.dataset.unknown='true';
+     button.append(copy,duration);
+     button.addEventListener('click',()=>{
+      act.value=item.id;
+      days.value=item.days===null?'':String(item.days);
+      days.dispatchEvent(new Event('input',{bubbles:true}));
+      refresh();
+      renderList();
+     });
+     section.append(button);
+    }
+    list.append(section);
    }
-   if(!matches.length)list.append(create('p','raf-library-empty','Nenhum ato encontrado. Tente outro termo ou escolha a categoria Todos.'));
   };
   const updateView=()=>{
    const r=configurations[validRegime(regime.value)],selected=byId(regime.value,act.value);
@@ -203,7 +184,6 @@
   };
   const refresh=()=>{updateView();safeWrite()};
   buildActs(saved.preset);
-  search.addEventListener('input',renderList);
   if(act.value!=='custom'){
    const initial=byId(regime.value,act.value);
    days.value=initial.days===null?'':String(initial.days);
@@ -214,7 +194,6 @@
    buildActs('custom');
    if(old.id!=='custom')days.value='';
    refresh();
-   renderCategories();
    renderList();
    days.dispatchEvent(new Event('input',{bubbles:true}));
   });
@@ -244,7 +223,6 @@
   start.addEventListener('change',refresh);
   window.addEventListener('raf-prazo:sync',updateView);
   refresh();
-  renderCategories();
   renderList();
  };
  window.RafPrazoLegal22=Object.freeze({configurations,communications,getCurrent:()=>window.RafPrazo22Current||null});

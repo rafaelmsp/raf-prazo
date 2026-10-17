@@ -9,7 +9,7 @@ const code=fs.readFileSync(path.join(ROOT,'assets/raf-prazo-22.js'),'utf8');
 class Node {
  constructor(id){this.id=id;this.value='';this.textContent='';this.href='';this.hidden=false;this.children=[];this.listeners={};this.className='';this.open=false;this.focused=false;this.dataset={};this.attributes={};this.type='';}
  replaceChildren(...items){this.children=[...items]}
- append(item){this.children.push(item)}
+ append(...items){this.children.push(...items)}
  addEventListener(type,callback){this.listeners[type]=callback}
  setAttribute(k,v){this.attributes[k]=String(v)}
  getAttribute(k){return this.attributes[k]??null}
@@ -20,7 +20,7 @@ class Node {
  focus(){this.focused=true}
  closest(name){return name==='[data-days]'?this:null}
 }
-const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick','rafProfileOpen','rafProfileDialog','rafProfileShort','rafProfileSub','rafActSearch','rafActFilters','rafActList','rafActCount','rafActAlert'];
+const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick','rafProfileOpen','rafProfileDialog','rafProfileShort','rafProfileSub','rafActList','rafActCount','rafActAlert'];
 const nodes=Object.fromEntries(ids.map(id=>[id,new Node(id)]));
 nodes.rafRegime.value='jec';nodes.rafOrigin.value='conferido';nodes.start.value='2026-10-19';nodes.days.value='15';
 const storage=new Map();const windowStub={addEventListener(){}};
@@ -29,6 +29,8 @@ class Event{constructor(type){this.type=type}}
 vm.runInNewContext(code,{document:doc,window:windowStub,
  localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},Event,Map,Set,JSON,Object,Array,Date});
 const metadata=()=>windowStub.RafPrazoLegal22.getCurrent();
+const cards=()=>nodes.rafActList.children.flatMap(group=>group.children.filter(c=>c.className==='raf-library-item'));
+const groups=()=>nodes.rafActList.children.map(g=>g.dataset.category);
 test('resultado acima dos parâmetros e calendário sem expansão artificial',()=>{
  for(const file of ['index.html','src/template.html']){
   const html=fs.readFileSync(path.join(ROOT,file),'utf8');
@@ -58,8 +60,11 @@ test('JEC é padrão e prazo inicial manual não inventa ato',()=>{
  assert.equal(nodes.rafSpecialDeadline.hidden,true);
  assert.ok(nodes.rafRuleSummary.textContent.includes('JEC'));
  assert.ok(nodes.rafProfileShort.textContent.includes('JEC'));
- assert.ok(nodes.rafActList.children.length>=10,'Catálogo JEC deveria ser amplo');
- assert.ok(nodes.rafActFilters.children.some(x=>x.textContent==='Recursos'));
+ assert.equal(cards().length,11,'Todos os 11 atos JEC devem estar disponíveis sem pesquisa');
+ assert.ok(groups().includes('Recursos'));
+ assert.ok(groups().includes('Execução'));
+ assert.equal(nodes.rafActCount.textContent,'11 opções · JEC');
+ assert.ok(cards().every(x=>x.children.length===2),'Cada ato deve mostrar fundamento e duração');
  nodes.rafProfileOpen.trigger('click');
  assert.equal(nodes.rafProfileDialog.open,true);
  nodes.rafProfileDialog.close();
@@ -84,19 +89,15 @@ test('modificação manual rompe preset e preserva número informado',()=>{
  assert.equal(nodes.rafAct.value,'custom');
  assert.equal(metadata().days,9);
 });
-test('pesquisa encontra ato por nome e artigo, inclusive sem acento',()=>{
- nodes.rafActSearch.value='embargos a execucao';
- nodes.rafActSearch.trigger('input');
- assert.equal(nodes.rafActList.children.length,1);
- assert.equal(nodes.rafActList.children[0].dataset.preset,'jec_embargos_execucao');
- nodes.rafActSearch.value='art. 42';
- nodes.rafActSearch.trigger('input');
- assert.ok(nodes.rafActList.children.some(x=>x.dataset.preset==='jec_recurso'));
- nodes.rafActSearch.value='';
- nodes.rafActSearch.trigger('input');
+test('todos os atos aparecem prontamente, ordenados por categorias',()=>{
+ assert.equal(cards().length,11);
+ assert.equal(nodes.rafActList.children[0].dataset.category,'Recursos');
+ assert.ok(cards().some(x=>x.dataset.preset==='jec_preparo'));
+ assert.ok(cards().some(x=>x.dataset.preset==='jec_embargos_execucao'));
+ assert.ok(cards().some(x=>x.dataset.preset==='custom'));
 });
 test('prazo dependente de decisão não recebe prazo automático',()=>{
- const manual=nodes.rafActList.children.find(x=>x.dataset.preset==='jec_contestacao');
+ const manual=cards().find(x=>x.dataset.preset==='jec_contestacao');
  assert.ok(manual);
  manual.trigger('click');
  assert.equal(nodes.rafAct.value,'jec_contestacao');
@@ -109,7 +110,7 @@ test('prazo dependente de decisão não recebe prazo automático',()=>{
  assert.equal(metadata().days,12);
 });
 test('preparo em horas não é transformado em dias úteis',()=>{
- const button=nodes.rafActList.children.find(x=>x.dataset.preset==='jec_preparo');
+ const button=cards().find(x=>x.dataset.preset==='jec_preparo');
  assert.ok(button);
  button.trigger('click');
  assert.equal(nodes.rafAct.value,'jec_preparo');
@@ -125,7 +126,9 @@ test('CPC tem catálogo separado e não herda um ato JEC',()=>{
  assert.equal(metadata().regime,'cpc');
  assert.ok(nodes.rafRuleSummary.textContent.includes('CPC'));
  assert.equal(nodes.rafSpecialDeadline.hidden,true);
- assert.ok(nodes.rafActList.children.length>=20,'Catálogo CPC deveria ser amplo');
+ assert.equal(cards().length,21,'Todos os 21 atos CPC disponíveis diretamente');
+ assert.equal(nodes.rafActCount.textContent,'21 opções · CPC');
+ assert.ok(groups().includes('Cumprimento'));
  nodes.rafAct.value='cpc_apelacao';nodes.rafAct.trigger('change');
  assert.equal(Number(nodes.days.value),15);
  assert.equal(metadata().basis,'CPC, arts. 1.003, § 5º, e 1.009');
@@ -149,15 +152,22 @@ test('preferências persistem somente em chave isolada',()=>{
 for(const target of ['src/template.html','index.html']){
  const html=fs.readFileSync(path.join(ROOT,target),'utf8');
  test('integração do catálogo e memória em '+target,()=>{
-  for(const id of ['rafRegime','rafAct','rafRuleSummary','rafOrigin','rafCommunicationDate','rafContextResult','rafActSearch','rafActList','rafActFilters','rafActAlert'])
+  for(const id of ['rafRegime','rafAct','rafRuleSummary','rafOrigin','rafCommunicationDate','rafContextResult' ,'rafActList','rafActAlert'])
    assert.ok(html.includes('id="'+id+'"'),'Faltou '+id);
-  assert.ok(html.includes('src="assets/raf-prazo-22.js"'));
+  assert.ok(html.includes('src="assets/raf-prazo-22.js?v=2.2.4"'));
   assert.ok(html.includes("legal_profile:window.RafPrazo22Current||null"));
   assert.ok(html.includes('id="rafEmbeddedBase"'));
   assert.ok(html.includes("if(scope.kind==='tjrj')continue"));
   assert.ok(html.includes('id="rafTabPending"'));
   assert.ok(html.includes('.raf-library-native-hidden{display:none!important}'));
   assert.ok(html.includes('id="rafActCount"'));
+  assert.ok(!html.includes('id="rafActSearch"'),'Pesquisa não deve ocupar tela');
+  assert.ok(!html.includes('id="rafActFilters"'),'Filtros não devem ocultar atos');
+  assert.ok(html.includes('data-regime="jec"'));
+  assert.ok(html.includes('data-regime="cpc"'));
+  assert.ok(html.includes('data-preset="jec_recurso"'));
+  assert.ok(html.includes('data-preset="cpc_apelacao"'));
+  assert.ok(html.includes('assets/raf-prazo-22.js?v=2.2.4'));
   const left=html.slice(html.indexOf('<section class="panel raf-22-parameters"'),html.indexOf('<section class="panel raf-22-calendar"'));
   assert.ok(left.includes('id="rafProfileOpen"'));
   assert.ok(!left.includes('id="rafRegime"'),'Os seletores não devem esticar o painel de parâmetros');
