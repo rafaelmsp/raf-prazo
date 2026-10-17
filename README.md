@@ -49,7 +49,7 @@ O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os
 
 [Documento técnico completo do Raf-Prazo 2.2](docs/RAF_PRAZO_22_ENTREGA.md).
 
-**Biblioteca de atos (2.2.3):** pesquisa e filtros por categoria, com prazos JEC e CPC fundamentados; atos sem duração legal única exigem entrada manual, e preparo recursal de 48 horas não é calculado em dias úteis. [Escopo e fontes](docs/BIBLIOTECA_PRAZOS_223.md).
+**Biblioteca de atos (2.2.5):** lista direta por categorias, com 13 opções no JEC e 21 no CPC. Prazos legais, condicionados e definidos nos autos são identificados separadamente; os 15 dias de referência em certas hipóteses do JEC só entram na calculadora por escolha expressa após conferência. Preparo recursal de 48 horas não é convertido em dias úteis. [Escopo e fontes](docs/BIBLIOTECA_PRAZOS_223.md).
 
 ## 1. Visão geral e objetivos
 

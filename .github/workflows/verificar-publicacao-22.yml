@@ -38,7 +38,7 @@ jobs:
                grep -Fq 'data-preset="jec_recurso"' /tmp/site.html && \
                grep -Fq 'data-preset="cpc_apelacao"' /tmp/site.html && \
                grep -Fq 'id="rafActList"' /tmp/site.html && \
-               grep -Fq 'assets/raf-prazo-22.js?v=2.2.4' /tmp/site.html && \
+               { [ "$GITHUB_REF" != "refs/heads/main" ] || { grep -Fq 'assets/raf-prazo-22.js?v=2.2.5' /tmp/site.html && grep -Fq 'id="rafConditionalApply"' /tmp/site.html && grep -Fq 'jec_embargos_titulo_judicial' /tmp/legal22.js; }; } && \
                ! grep -Fq 'id="rafActSearch"' /tmp/site.html && \
                grep -Fq "groupOrder=['Recursos'" /tmp/legal22.js && \
                grep -Fq 'jec_preparo' /tmp/legal22.js && \

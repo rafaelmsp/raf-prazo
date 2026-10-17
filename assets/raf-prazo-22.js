@@ -6,6 +6,7 @@
  const LAW_9099='https://www.planalto.gov.br/ccivil_03/leis/l9099.htm';
  const CPC='https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm';
  const CNJ='https://atos.cnj.jus.br/atos/detalhar/4509';
+ const FONAJE='https://www.cnj.jus.br/enunciados-civeis/';
  const configurations=Object.freeze({
   jec:Object.freeze({
    label:'Juizado Especial Cível',
@@ -17,10 +18,12 @@
     {id:'jec_recurso',label:'Recurso inominado',days:10,category:'Recursos',description:'Dez dias após a ciência da sentença; confirme a possibilidade de recurso e o marco nos autos.',basis:'Lei 9.099/95, arts. 12-A e 42, caput',url:LAW_9099},
     {id:'jec_resposta',label:'Resposta ao recurso',days:10,category:'Recursos',description:'Dez dias após intimação do recorrido, observado o processamento do recurso.',basis:'Lei 9.099/95, arts. 12-A e 42, § 2º',url:LAW_9099},
     {id:'jec_embargos',label:'Embargos de declaração',days:5,category:'Recursos',description:'Cinco dias após ciência da decisão; observar os efeitos dos embargos sobre outros recursos.',basis:'Lei 9.099/95, arts. 12-A, 49 e 50',url:LAW_9099},
-    {id:'jec_contestacao',label:'Contestação / defesa no JEC',days:null,kind:'manual',category:'Defesa',description:'Não há prazo geral de 15 dias automaticamente aplicável à contestação no JEC. Confira citação, audiência e decisão.',basis:'Lei 9.099/95, arts. 27 a 30',url:LAW_9099},
-    {id:'jec_manifestacao',label:'Manifestação ou réplica',days:null,kind:'manual',category:'Defesa',description:'Prazo conforme intimação/decisão do juízo; não presumir os 15 dias do CPC.',basis:'Lei 9.099/95, arts. 2º e 30; determinação judicial',url:LAW_9099},
-    {id:'jec_cumprimento',label:'Cumprimento de sentença',days:null,kind:'manual',category:'Execução',description:'Conferir intimação e providência exigida. O CPC aplica-se apenas no que couber, sem prazo único universal.',basis:'Lei 9.099/95, art. 52',url:LAW_9099},
-    {id:'jec_embargos_execucao',label:'Embargos à execução',days:null,kind:'manual',category:'Execução',description:'Conferir modalidade executiva, garantia e rito aplicável; não presumir prazo do CPC sem análise.',basis:'Lei 9.099/95, arts. 52, IX, e 53',url:LAW_9099},
+    {id:'jec_contestacao',label:'Contestação / defesa no JEC',days:null,kind:'procedural',category:'Defesa',description:'O Enunciado 10 do FONAJE admite contestação até a audiência de instrução e julgamento. Confirme audiência, citação e orientação do juízo; não aplicar 15 dias do CPC por padrão.',basis:'Lei 9.099/95, arts. 27 a 30; FONAJE, Enunciado 10 (orientação não vinculante)',url:FONAJE},
+    {id:'jec_manifestacao',label:'Manifestação ou réplica',days:null,kind:'manual',category:'Defesa',description:'Conferir intimação e ato determinado. Documentos apresentados em audiência admitem manifestação imediata (art. 29, parágrafo único); não há prazo geral de 15 dias.',basis:'Lei 9.099/95, art. 29, parágrafo único; ato judicial',url:LAW_9099},
+    {id:'jec_cumprimento_pagar',label:'Cumprimento de sentença — pagar quantia',days:null,kind:'conditional',referenceDays:15,category:'Execução',description:'Referência de 15 dias para pagamento voluntário (CPC, art. 523), aplicável subsidiariamente quando cabível. Confira a ordem de pagamento, a intimação, a natureza da obrigação e o marco processual. A multa do art. 523 é tratada no Enunciado 97 do FONAJE; não presumir honorários de 10%.',basis:'Lei 9.099/95, art. 52; CPC, art. 523; FONAJE, Enunciado 97',url:CPC,secondaryUrl:FONAJE},
+    {id:'jec_cumprimento_fazer',label:'Cumprimento de sentença — fazer/não fazer',days:null,kind:'manual',category:'Execução',description:'O prazo decorre da decisão que impõe a obrigação e de sua intimação. Não existe período uniforme de pagamento aplicável a obrigações de fazer.',basis:'Lei 9.099/95, art. 52, V e VI; CPC, art. 536, no que couber',url:LAW_9099},
+    {id:'jec_embargos_titulo_judicial',label:'Embargos à execução — título judicial',days:null,kind:'conditional',referenceDays:15,category:'Execução',description:'O Enunciado 142 do FONAJE orienta prazo de 15 dias a partir da intimação da penhora na execução de título judicial. Confirme penhora, intimação, garantia e entendimento do juízo; enunciado não é lei vinculante.',basis:'Lei 9.099/95, art. 52, IX; FONAJE, Enunciados 117, 121 e 142',url:FONAJE,secondaryUrl:LAW_9099},
+    {id:'jec_embargos_titulo_extrajudicial',label:'Embargos à execução — título extrajudicial',days:null,kind:'procedural',category:'Execução',description:'O art. 53, § 1º, prevê embargos por escrito ou verbalmente na audiência de conciliação após a penhora. Verifique a designação e a intimação; não aplicar automaticamente 15 dias do título judicial.',basis:'Lei 9.099/95, art. 53, § 1º; FONAJE, Enunciado 117',url:LAW_9099,secondaryUrl:FONAJE},
     {id:'jec_audiencia',label:'Providência determinada em audiência',days:null,kind:'manual',category:'Diligências',description:'O prazo depende da ata e da decisão, não do nome do ato.',basis:'Lei 9.099/95, arts. 27 a 29; ata',url:LAW_9099},
     {id:'jec_tutela',label:'Cumprimento de tutela de urgência',days:null,kind:'manual',category:'Diligências',description:'O prazo para cumprir a ordem deve ser extraído da decisão e da intimação específica.',basis:'Decisão judicial e legislação aplicável',url:LAW_9099},
     {id:'jec_preparo',label:'Preparo do recurso — 48 horas',days:null,kind:'hours',category:'Recursos',unit:'hours',duration:48,description:'Não calculável por este motor de dias úteis: 48 horas seguintes à interposição, independentemente de intimação.',basis:'Lei 9.099/95, art. 42, § 1º',url:LAW_9099}
@@ -84,9 +87,11 @@
   const saved=safeRead();
   regime.value=validRegime(saved.regime);
   origin.value=Object.hasOwn(communications,saved.origin)?saved.origin:'conferido';
-  const list=$('rafActList'),count=$('rafActCount'),alertBox=$('rafActAlert');
-  if(!list||!count||!alertBox)return;
-  const presetStatus=item=>item.kind==='hours'?'48 horas · não calculado':item.days===null?'Conferir prazo':item.days+' dias úteis';
+  const list=$('rafActList'),count=$('rafActCount'),alertBox=$('rafActAlert'),referenceBtn=$('rafConditionalApply');
+  if(!list||!count||!alertBox||!referenceBtn)return;
+  let referenceAccepted=false;
+  const presetStatus=item=>item.kind==='hours'?'48 horas · não calculado':item.kind==='conditional'?item.referenceDays+' dias · condicionado':item.kind==='procedural'?'Conferir audiência/rito':item.kind==='manual'?'Prazo nos autos':item.days===null?'Definir prazo':item.days+' dias úteis';
+  const classLabel=item=>item.kind==='conditional'?'Prazo condicionado ao procedimento':item.kind==='procedural'?'Prazo condicionado à audiência/rito':item.kind==='manual'?'Prazo definido nos autos':item.kind==='hours'?'Prazo especial em horas':item.kind==='custom'?'Prazo informado pelo usuário':'Prazo legal definido';
   const create=(tag,className,value)=>{
    const node=document.createElement(tag);
    if(className)node.className=className;
@@ -128,9 +133,11 @@
      copy.append(create('strong','',item.label),create('small','',item.basis));
      const duration=create('span','raf-library-item-time',presetStatus(item));
      if(item.days===null)duration.dataset.unknown='true';
+     duration.dataset.kind=item.kind||'fixed';
      button.append(copy,duration);
      button.addEventListener('click',()=>{
       act.value=item.id;
+      referenceAccepted=false;
       days.value=item.days===null?'':String(item.days);
       days.dispatchEvent(new Event('input',{bubbles:true}));
       refresh();
@@ -145,7 +152,7 @@
    const r=configurations[validRegime(regime.value)],selected=byId(regime.value,act.value);
    const summary=$('rafRuleSummary'),description=$('rafActDescription'),link=$('rafRuleLink');
    $('rafRegimeCaption').textContent=r.hint;
-   summary.textContent=r.short+' · '+(selected.kind==='hours'?'prazo especial em horas — não calculado':selected.kind==='manual'?'prazo a conferir na decisão':selected.days===null?'prazo definido pelo usuário':selected.days+' dias úteis');
+   summary.textContent=r.short+' · '+classLabel(selected)+' · '+presetStatus(selected);
    description.textContent=selected.description;
    $('rafActBasis').textContent=selected.basis;
    link.href=selected.url;
@@ -155,16 +162,16 @@
    $('rafContextResult').textContent=(regime.value==='jec'?'JEC':'CPC')+' · '+(selected.id==='custom'?'Prazo informado':selected.label);
    $('rafProfileShort').textContent=(regime.value==='jec'?'JEC':'CPC')+' · '+(selected.id==='custom'?'Prazo personalizado':selected.label);
    $('rafProfileSub').textContent=selected.id==='custom'?'Personalizar procedimento e ato':presetStatus(selected)+' · '+selected.basis;
-   if(selected.kind==='hours'){
-    alertBox.hidden=false;
-    alertBox.textContent='Atenção: este prazo é expresso em horas e não pode ser calculado pelo motor de dias úteis. Verifique a interposição e as regras de preparo.';
-   }else if(selected.kind==='manual'){
-    alertBox.hidden=false;
-    alertBox.textContent='Este ato depende da decisão, intimação ou modalidade processual. Preencha manualmente a duração no campo Prazo após conferir os autos.';
-   }else{
-    alertBox.hidden=true;
-    alertBox.textContent='';
-   }
+   const requiresReview=['manual','procedural','conditional','hours'].includes(selected.kind);
+   alertBox.hidden=!requiresReview;
+   referenceBtn.hidden=selected.kind!=='conditional'||referenceAccepted;
+   if(selected.kind==='hours')alertBox.textContent='Prazo em horas: este motor não calcula o vencimento. Verifique interposição, horário e regras de preparo.';
+   else if(selected.kind==='conditional')alertBox.textContent=(referenceAccepted?'Referência adotada por escolha do usuário. ':'Referência ainda não aplicada. ')+selected.description;
+   else if(selected.kind==='procedural')alertBox.textContent='Ato sujeito ao rito/audiência: '+selected.description+' Se houver período fixado nos autos, informe-o manualmente.';
+   else if(selected.kind==='manual')alertBox.textContent='Prazo conforme os autos: '+selected.description+' Informe os dias somente após conferir a decisão/intimação.';
+   else alertBox.textContent='';
+   referenceBtn.textContent=selected.kind==='conditional'?'Usar '+selected.referenceDays+' dias após conferir a hipótese':'';
+   referenceBtn.disabled=selected.kind!=='conditional';
    const inactiveHours=$('rafSpecialDeadline');
    inactiveHours.hidden=selected.id!=='jec_recurso'&&selected.kind!=='hours';
    days.disabled=selected.kind==='hours';
@@ -176,7 +183,10 @@
     days:days.value.trim()===''?null:Number(days.value),basis:selected.basis,source:selected.url,
     preset_kind:selected.kind||'fixed',category:selected.category||'Outros',
     duration_hours:selected.kind==='hours'?selected.duration:null,
-    requires_manual_review:!!(selected.kind==='manual'||selected.kind==='hours'),
+    reference_days:selected.kind==='conditional'?selected.referenceDays:null,
+    legal_classification:classLabel(selected),
+    reference_accepted:!!(selected.kind==='conditional'&&referenceAccepted),
+    requires_manual_review:['manual','procedural','conditional','hours'].includes(selected.kind),
     communication:origin.value,communication_label:communications[origin.value].label,
     communication_date:$('rafCommunicationDate').value||null,description:selected.description,
     count_mode:selected.kind==='hours'?'hours_unsupported':'business_days',validated_start:start.value||null
@@ -189,7 +199,17 @@
    days.value=initial.days===null?'':String(initial.days);
    days.dispatchEvent(new Event('input',{bubbles:true}));
   }
+  referenceBtn.addEventListener('click',()=>{
+   const selected=byId(regime.value,act.value);
+   if(selected.kind!=='conditional'||!Number.isSafeInteger(selected.referenceDays))return;
+   referenceAccepted=true;
+   days.value=String(selected.referenceDays);
+   days.dispatchEvent(new Event('input',{bubbles:true}));
+   refresh();
+   renderList();
+  });
   regime.addEventListener('change',()=>{
+   referenceAccepted=false;
    const old=byId(regime.value==='jec'?'cpc':'jec',act.value);
    buildActs('custom');
    if(old.id!=='custom')days.value='';
@@ -198,6 +218,7 @@
    days.dispatchEvent(new Event('input',{bubbles:true}));
   });
   act.addEventListener('change',()=>{
+   referenceAccepted=false;
    const selected=byId(regime.value,act.value);
    days.value=selected.days!==null?String(selected.days):'';
    days.dispatchEvent(new Event('input',{bubbles:true}));
@@ -208,6 +229,7 @@
   $('rafCommunicationDate').addEventListener('change',refresh);
   days.addEventListener('input',()=>{
    const selected=byId(regime.value,act.value);
+   if(selected.kind==='conditional'&&Number(days.value)!==selected.referenceDays)referenceAccepted=false;
    if(selected.kind==='hours'&&days.value.trim()!=='')act.value='custom';
    else if(selected.days!==null&&Number(days.value)!==selected.days)act.value='custom';
    refresh();
@@ -217,6 +239,7 @@
   $('quick')?.addEventListener('click',event=>{
    if(!event.target.closest('[data-days]'))return;
    act.value='custom';
+   referenceAccepted=false;
    refresh();
    renderList();
   });
