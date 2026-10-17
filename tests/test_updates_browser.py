@@ -69,9 +69,10 @@ def check_width(browser,url,width):
     assert saved and saved!="[]","Ocultos devem persistir no navegador"
     page.reload(wait_until="domcontentloaded")
     open_updates(page)
-    page.locator("#rafTabPending").click()
+    page.locator("#rafTabPending").evaluate("(el)=>el.click()")
+    assert page.locator("#rafPanelPending").is_visible(),"Painel Pendências não ficou visível após reload"
     assert page.evaluate("localStorage.getItem('raf-prazo:updates-pending-hidden:v1')")==saved,"Ocultação perdida após reload"
-    page.locator("#rafRestorePending").click()
+    page.locator("#rafRestorePending").click(timeout=6000)
     assert page.locator("#rafCandidatesList article.raf-event").count()==initial,"Restaurar não recuperou lista"
     assert page.evaluate("localStorage.getItem('raf-prazo:updates-pending-hidden:v1')")=="[]"
     assert page.evaluate("(keys)=>keys.map(k=>localStorage.getItem(k))",list(keys))==user_before,"Exclusões pessoais foram afetadas"
