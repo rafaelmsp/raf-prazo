@@ -10,6 +10,21 @@ HEAD='SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE\nCALENDÁRIO DE FERIADOS\n202
 
 class TableTests(unittest.TestCase):
  def report(self,body):return m.extract_pdf_table(HEAD+body,URL,SHA)
+ def test_real_comarca_link_from_pdf_row(self):
+  row=('31/07/2026 03/08/2026 Mesquita, no dia 31 de julho de 2026 e na '
+       'Comarca de Duque de Caxias, nos dias 30 e 31 de julho de 2026. '
+       'Resolve suspender o expediente e os prazos processuais nos Fóruns das '
+       'ATO EXECUTIVO Nº 117, DE DJERJ, ADM, n. 218, p. 2. Comarcas de Nova Iguaçu,')
+  data=self.report('[RAF_TJRJ_PAGE=33]\\n'+row+'\\n')
+  self.assertEqual([o['date'] for o in data['occurrences']],['2026-07-31'])
+  scope=data['occurrences'][0]['scope_hint']
+  self.assertEqual(scope['date_linked_comarcas'],['Duque de Caxias'])
+  self.assertEqual(scope['assessment'],'textual_date_link_pending')
+  self.assertEqual(scope['kind'],'unresolved')
+  self.assertFalse(scope['verified'])
+  self.assertFalse(scope['applies_to_deadlines'])
+  self.assertNotIn('Mesquita',scope['date_linked_comarcas'])
+  self.assertNotIn('Nova Iguaçu',scope['date_linked_comarcas'])
  def test_period_date_vs_publication_date(self):
   body='[RAF_TJRJ_PAGE=7]\n01/04/2026  ATO EXECUTIVO Nº 76, DE 06/05/2026   DJERJ 07/05/2026  Resolve declarar suspensos os prazos processuais na Comarca de São José do Vale do Rio Preto, no dia 01 de abril de 2026.\n'
   r=self.report(body);self.assertEqual([x['date'] for x in r['occurrences']],['2026-04-01']);self.assertEqual(r['occurrences'][0]['document_page'],7);self.assertEqual(r['occurrences'][0]['scope_hint']['kind'],'unresolved');self.assertFalse(r['occurrences'][0]['applies_to_deadlines'])
