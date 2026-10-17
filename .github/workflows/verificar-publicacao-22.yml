@@ -32,13 +32,12 @@ jobs:
                grep -Fq 'id="rafCalendarSettings"' /tmp/site.html && \
                grep -Fq 'raf-22-primary-date' /tmp/site.html && \
                grep -Fq 'aspect-ratio:1/1' /tmp/site.html && \
-               { [ "$GITHUB_REF" != "refs/heads/main" ] || { \
-                   grep -Fq 'id="rafActSearch"' /tmp/site.html && \
-                   grep -Fq 'id="rafActList"' /tmp/site.html && \
-                   grep -Fq 'raf-library-native-hidden' /tmp/site.html && \
-                   grep -Fq 'jec_preparo' /tmp/legal22.js && \
-                   grep -Fq 'cpc_impugnacao_525' /tmp/legal22.js; }; }; then
-              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — janela retrátil e calendário quadrado confirmados em HTTP'
+               grep -Fq 'id="rafActSearch"' /tmp/site.html && \
+               grep -Fq 'id="rafActList"' /tmp/site.html && \
+               grep -Fq 'raf-library-native-hidden' /tmp/site.html && \
+               grep -Fq 'jec_preparo' /tmp/legal22.js && \
+               grep -Fq 'cpc_impugnacao_525' /tmp/legal22.js; then
+              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — biblioteca JEC/CPC com pesquisa confirmada no site'
               exit 0
             fi
             sleep 8
