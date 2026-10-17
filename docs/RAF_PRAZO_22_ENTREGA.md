@@ -55,3 +55,11 @@ O Raf-Prazo é **nacional e independente**. O perfil inicial para um novo usuár
 ## Revisão de UX 2.2.1 — simetria entre calendário e painel
 
 O bloco de procedimento e ato passou para a janela `#rafProfileDialog`, aberta por `#rafProfileOpen`. A janela ocupa camada própria (`dialog.showModal()`), não altera a altura da grade de três colunas e oferece opção Concluir/Fechar e ESC. O bloco de parâmetros mostra apenas um resumo JEC/CPC com o ato atual, seguido dos campos essenciais de data e duração. Foi removida a regra de altura mínima artificial de 750 px. Os testes Chromium verificam posição do calendário antes/depois da abertura, ausência de transbordamento horizontal e funcionamento de controle em temas claro e escuro.
+
+## UX 2.2.2 — prioridade à data e calendário compacto
+
+A tela inicial passa a apresentar o **Vencimento calculado** primeiro, com **Parâmetros do prazo** imediatamente abaixo (à direita no desktop e logo depois no celular). O calendário fica à esquerda em telas largas e depois dos parâmetros em dispositivos pequenos. O campo de **Marco inicial conferido** passa a ser o elemento visual principal dos parâmetros (altura de 54 px, borda de contraste e rótulo reforçado). A duração permanece editável.
+
+As opções de localização, sincronização, feriados, suspensão por recesso e rastreabilidade ficam recolhidas em **Calendário e feriados**, sem perda de função. O motor de cálculo, fontes e as opções locais foram preservados. O calendário usa seis linhas e sete colunas com células praticamente quadradas, com altura ditada pela largura da própria grade, nunca pela altura dos painéis. O painel de resultados mostra o vencimento e o primeiro dia contabilizado; as ações e advertências adicionais ficam na seção **Memória e segurança**.
+
+**Teste de aceite:** verificar as quatro resoluções (360/390/430/1366 px), resultado antes de parâmetros, realce da data, 42 células quadradas, ausência de overflow e nenhuma regressão na memória jurídica nem nos seletores JEC/CPC.
