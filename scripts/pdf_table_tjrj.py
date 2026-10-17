@@ -9,13 +9,15 @@ import unicodedata
 PAGE_RE = re.compile(r'^\s*\[RAF_TJRJ_PAGE=(\d+)\]\s*$', re.I)
 START_RE = re.compile(r'^\s*(?P<period>\d{1,2}[./]\d{1,2}(?:[./]20\d{2})?(?:\s*(?:(?:,|;)\s*(?:e\s+)?|\be\s+|\bat[eé]\s+|\ba\s+|[-–]\s*)\d{1,2}[./]\d{1,2}(?:[./]20\d{2})?){0,14})\s*(?P<rest>.*)$',re.I)
 DATE_RE = re.compile(r'(?<!\d)(\d{1,2})[./](\d{1,2})(?:[./](20\d{2}))?(?!\d)')
-ACT_RE = re.compile(r'\b(ato\s+executivo|aviso|ato\s+normativo|decreto|lei\s+org[aâ]nica(?:\s+do\s+munic[ií]pio)?|lei|portaria)\s*(?:n[.º°o]*\s*)?(\d{1,7}(?:[./-]20\d{2})?)\b',re.I)
+ACT_RE = re.compile(r'\b(ato\s+executivo|aviso|ato\s+normativo|decreto|lei(?:\s+(?:org[aâ]nica(?:\s+do\s+munic[ií]pio)?|federal|estadual))?|portaria)\s+n[.º°o]*\s*(\d{1,3}(?:\.\d{3})+|\d{1,7})(?:[/.-](20\d{2}))?\b',re.I)
 SUSP = re.compile(r'\b(?:suspens(?:ao|os|as)|suspender|suspende|suspensos?|declarar?\s+suspensos?)\b[^.]{0,90}\b(?:prazos?\s+processuais?|expediente\s+e\s+(?:os\s+)?prazos?)\b|\bprazos?\s+processuais?\s+suspens[oa]s?\b',re.I)
 EXT = re.compile(r'\bprorrog(?:acao|ar?|ados?|adas?)\b',re.I)
-FERIADO = re.compile(r'\bferiado\b|semana\s+santa|s[aã]o\s+jorge|s[aã]o\s+sebasti[aã]o',re.I)
+FERIADO = re.compile(r'\bferiado\b|\bsemana\s+santa\b',re.I)
 OPTIONAL = re.compile(r'\bponto\s+facultativo\b',re.I)
 OUTAGE = re.compile(r'\bindisponibilid(?:ade|ades)\b|\binoperan(?:cia|te)\b',re.I)
 EXCEPT = re.compile(r'\bexceto\b|\bressalvad[oa]s?\b|\bapenas\b|\bsomente\b|\bplant[aã]o\b|\bexce[cç][aã]o\b',re.I)
+DESC_DATE = re.compile(r'\b(?:no\s+dia|nos\s+dias|dia|dias)\s+(?:(\d{1,2})\s+e\s+)?(\d{1,2})\s+de\s+(janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s+de\s+(20\d{2})\b', re.I)
+MONTHS = {name: i+1 for i,name in enumerate('janeiro fevereiro marco abril maio junho julho agosto setembro outubro novembro dezembro'.split())}
 COMARCA = re.compile(r'\bcomarca\s+(?:de|do|da)\s+([\wÀ-ÿ][\wÀ-ÿ\s-]{2,58}?)(?=\s*[,;:()]|\s+(?:no\s+dia|nos\s+dias|em\s+|exceto\b|por\s+|com\s+)|$)',re.I)
 LIMIT = 120
 
@@ -37,6 +39,15 @@ def _effect(text):
  if FERIADO.search(text):return 'holiday_mention'
  if OPTIONAL.search(text):return 'optional_workday'
  return None
+
+def _described_dates(text):
+ found=set()
+ for first,second,month,year in DESC_DATE.findall(_fold(text)):
+  for day in (first,second):
+   if not day:continue
+   try:found.add(dt.date(int(year),MONTHS[month],int(day)).isoformat())
+   except ValueError:pass
+ return found
 
 def _dates(period, year):
  found=[]
@@ -82,6 +93,10 @@ def extract_pdf_table(text,url,digest,limit=LIMIT):
   if not acts:continue
   effect=_effect(content)
   if not effect:continue
+  described=_described_dates(content)
+  if described:
+   dates=[d for d in dates if d['date'] in described]
+   if not dates:continue
   exception=bool(EXCEPT.search(content))
   places=[re.sub(r'\s+',' ',x).strip().title() for x in COMARCA.findall(content)][:3]
   row_text=re.sub(r'\s+',' ',period+' '+content).strip()
@@ -97,7 +112,7 @@ def extract_pdf_table(text,url,digest,limit=LIMIT):
     'has_possible_exceptions':exception,
     'evidence_excerpt':row_text[:450], 'source_url':url, 'source_hash_sha256':digest,
     'document_page':row['page'],'extraction_method':'pdf_table_row',
-    'act_references':[f'{kind} nº {number}' for kind,number in acts[:3]],
+    'act_references':[f'{kind} nº {number}'+('/'+yearpart if yearpart else '') for kind,number,yearpart in acts[:3]],
     'status':'pending_review','verified':False,'applies_to_deadlines':False,
     'review_reasons':['Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.',
        'Ano inferido de título e URL do informativo anual.' if entry['year_inferred'] else 'Conferir data, abrangência e ato.']
