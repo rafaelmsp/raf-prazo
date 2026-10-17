@@ -1,0 +1,41 @@
+name: Raf-Prazo - Atualizar calendario
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 10 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: raf-prazo-calendario
+  cancel-in-progress: false
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validar regras
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Consultar fonte nacional e atualizar base
+        run: python scripts/sync.py
+      - name: Atualizar calendario incorporado
+        run: python scripts/build_html.py
+      - name: Validar artefatos
+        run: |
+          python -m json.tool feriados.json > /dev/null
+          test -s index.html
+          grep -q rafEmbeddedBase index.html
+      - name: Publicar alteracoes de calendario
+        run: |
+          git config user.name "raf-prazo-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feriados.json index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: atualizar calendario judicial"
+            git push
+          fi
