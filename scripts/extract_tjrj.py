@@ -36,13 +36,13 @@ def dates_in_clause(original,year_hint):
     for m in NUMERIC_DATE.finditer(normalized):
         try: date=dt.date(int(m.group(3)),int(m.group(2)),int(m.group(1))).isoformat()
         except ValueError:continue
-        dates.append({"date":date,"text":original[m.start():m.end()],"year_inferred":False})
+        dates.append({"date":date,"text":original[m.start():m.end()],"year_inferred":False,"position":m.start()})
     for m in WRITTEN_DATE.finditer(normalized):
         year=int(m.group(3)) if m.group(3) else year_hint
         if year is None:continue
         try: date=dt.date(year,MONTHS[m.group(2)],int(m.group(1))).isoformat()
         except ValueError:continue
-        dates.append({"date":date,"text":original[m.start():m.end()],"year_inferred":m.group(3) is None})
+        dates.append({"date":date,"text":original[m.start():m.end()],"year_inferred":m.group(3) is None,"position":m.start()})
     return dates
 
 def effect_hint(fragment):
@@ -68,7 +68,7 @@ def extract_structured(body,source_url,document_hash,title=""):
     seen=set()
     for clause in SPLIT.split(body):
         clause=clause.strip()
-        if len(clause)<12 or len(clause)>1300:continue
+        if len(clause)<12 or len(clause)>650:continue
         effect=effect_hint(clause)
         if effect is None:continue
         hints=dates_in_clause(clause,year_hint)
@@ -77,6 +77,13 @@ def extract_structured(body,source_url,document_hash,title=""):
         exceptions=bool(RESTRICTION.search(text))
         places=[re.sub(r"\s+"," ",p).strip().title() for p in COMARCA.findall(text)][:3]
         for hint in hints:
+            # Proximidade entre data e efeito: evita vincular datas do menu
+            # ou da publicacao a uma suspensao distante no documento.
+            pos=hint["position"]
+            nearby=clause[max(0,pos-65):min(len(clause),pos+160)]
+            actual_effect=effect_hint(nearby)
+            if actual_effect is None:continue
+            effect=actual_effect
             clause_hash=hashlib.sha256(clause.encode("utf-8")).hexdigest()[:12]
             key=(hint["date"],effect,clause_hash)
             if key in seen:continue
