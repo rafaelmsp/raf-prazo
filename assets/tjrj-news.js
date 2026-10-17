@@ -26,19 +26,24 @@ function feed(){
    // Duas URLs do mesmo documento não são duas suspensões.
    const id=[e.date,e.effect_hint,excerpt.toLowerCase().replace(/\s+/g,' ')].join('|');
    let row=map.get(id);
-   if(!row){row={id,date:e.date,effect:e.effect_hint,excerpt,scope:e.scope_hint||{},firstSeen:doc.first_seen_at||'',sources:[]};map.set(id,row)}
+   const receivedAt=doc.content_changed_at||doc.first_seen_at||'';
+   if(!row){row={id,date:e.date,effect:e.effect_hint,excerpt,scope:e.scope_hint||{},firstSeen:doc.first_seen_at||'',receivedAt,sources:[]};map.set(id,row)}
    if(!row.sources.some(x=>x.url===doc.source_url))row.sources.push({url:doc.source_url,hash:doc.source_hash_sha256,page:e.document_page||null});
    if(doc.first_seen_at&&(!row.firstSeen||doc.first_seen_at<row.firstSeen))row.firstSeen=doc.first_seen_at;
+   // Para uma evidência agrupada, a entrada mais recente de QUALQUER fonte é a novidade.
+   if(receivedAt&&(!row.receivedAt||receivedAt>row.receivedAt))row.receivedAt=receivedAt;
   }
  }
- return [...map.values()].map(row=>({...row,id:row.id+'|'+[...new Set(row.sources.map(s=>s.hash))].sort().join(',')})).sort((a,b)=>b.firstSeen.localeCompare(a.firstSeen)||b.date.localeCompare(a.date)).slice(0,150);
+ return [...map.values()].map(row=>({...row,id:row.id+'|'+[...new Set(row.sources.map(s=>s.hash))].sort().join(',')}))
+  // Ordem de chegada da notícia/versão ao sistema; NUNCA ordenar pela data do evento jurídico.
+  .sort((a,b)=>(b.receivedAt||'').localeCompare(a.receivedAt||'')).slice(0,150);
 }
 function ensure(){
  let root=$('rafTjrjNewsFeed');if(root)return root;
  const parent=$('rafPanelTjrj')||$('rafPanelNews');if(!parent)return null;
  root=el('section');root.id='rafTjrjNewsFeed';root.className='raf-tjrj-feed';
- const title=el('h3','Buscar novidades de suspensão — TJRJ');
- const note=el('p','Consulta a última coleta pública realizada pelo GitHub Actions. Não é busca em tempo real no portal nem validação de atos.');
+ const title=el('h3','Últimas atualizações — TJRJ');
+ const note=el('p','Ordem de chegada: registros novos ou alterados primeiro. A data do evento não determina a posição. Consulte a última coleta pública do GitHub Actions; não é busca em tempo real nem validação jurídica.');
  note.className='raf-tjrj-note';
  const controls=el('div');controls.className='raf-tjrj-controls';
  const field=el('input');field.type='search';field.id='rafTjrjNewsQuery';field.placeholder='Comarca, data, ato ou suspensão';field.setAttribute('aria-label','Pesquisar indícios do TJRJ');
@@ -79,7 +84,7 @@ function ensure(){
  });
  restore.addEventListener('click',()=>{if(saveHidden(new Set()))render()});
  const style=el('style');
- style.textContent='.raf-tjrj-detail summary{cursor:pointer;min-height:36px;font-size:11px;color:var(--accent);font-weight:700;padding:8px 0}.raf-tjrj-feed{padding:12px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}.raf-tjrj-feed h3{font-size:14px;margin:0 0 6px}.raf-tjrj-note{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0}.raf-tjrj-controls{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}.raf-tjrj-controls input{flex:2 1 170px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--text)}.raf-tjrj-controls button{flex:1 1 125px;white-space:normal;font-size:11px}.raf-tjrj-item{padding:10px;margin:7px 0;border:1px solid var(--line);border-radius:9px}.raf-tjrj-item strong{font-size:12px}.raf-tjrj-item small{display:block;font-size:10px;color:var(--muted);margin:5px 0}.raf-tjrj-item p{font-size:11px;line-height:1.5;overflow-wrap:anywhere;margin:6px 0}.raf-tjrj-item a{font-size:11px;color:var(--accent);text-decoration:underline}.raf-tjrj-new{font-weight:800;color:#946006}.raf-tjrj-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}.raf-tjrj-dismiss{margin-top:8px;font-size:11px;min-height:35px;padding:7px 10px}.raf-tjrj-controls button{flex:1 1 112px}';
+ style.textContent='.raf-tjrj-arrival{font-size:11px!important;font-weight:780;color:var(--accent)!important}.raf-tjrj-detail summary{cursor:pointer;min-height:36px;font-size:11px;color:var(--accent);font-weight:700;padding:8px 0}.raf-tjrj-feed{padding:12px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}.raf-tjrj-feed h3{font-size:14px;margin:0 0 6px}.raf-tjrj-note{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0}.raf-tjrj-controls{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}.raf-tjrj-controls input{flex:2 1 170px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--text)}.raf-tjrj-controls button{flex:1 1 125px;white-space:normal;font-size:11px}.raf-tjrj-item{padding:10px;margin:7px 0;border:1px solid var(--line);border-radius:9px}.raf-tjrj-item strong{font-size:12px}.raf-tjrj-item small{display:block;font-size:10px;color:var(--muted);margin:5px 0}.raf-tjrj-item p{font-size:11px;line-height:1.5;overflow-wrap:anywhere;margin:6px 0}.raf-tjrj-item a{font-size:11px;color:var(--accent);text-decoration:underline}.raf-tjrj-new{font-weight:800;color:#946006}.raf-tjrj-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}.raf-tjrj-dismiss{margin-top:8px;font-size:11px;min-height:35px;padding:7px 10px}.raf-tjrj-controls button{flex:1 1 112px}';
  document.head.append(style);
  return root;
 }
@@ -106,14 +111,17 @@ function render(){
   const haystack=[row.date,row.effect,row.excerpt,...row.sources.map(s=>s.url),...(row.scope.date_linked_comarcas||[]),...(row.scope.comarcas_mentioned||[])].join(' ').toLocaleLowerCase('pt-BR');
   if(hidden.has(row.id)||search&&!haystack.includes(search))continue;
   const card=el('article');card.className='raf-tjrj-item';
-  const heading=el('strong',row.date+' · '+effects[row.effect]);card.append(heading);
+  const heading=el('strong',effects[row.effect]);card.append(heading);
+  const arrived=el('small',row.receivedAt?'Recebido/atualizado no Raf-Prazo: '+new Date(row.receivedAt).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}):'Chegada sem horário registrado');
+  arrived.className='raf-tjrj-arrival';card.append(arrived);
+  card.append(el('small','Data do evento mencionada: '+row.date+' (não validada)'));
   if(!seen.has(row.id)){const state=el('small','NOVO / AINDA NÃO VISTO');state.className='raf-tjrj-new';card.append(state)}
   const scope=(row.scope.date_linked_comarcas||[]).join(', ');
   const more=el('details');more.className='raf-tjrj-detail';
   more.append(el('summary','Ver evidência e abrangência'));
   more.append(el('p',row.excerpt),el('small',scope?'Comarca mencionada: '+scope+' (não confirmada)':'Abrangência não verificada.'));
   card.append(more);
-  if(row.firstSeen)card.append(el('small','Primeira coleta registrada: '+row.firstSeen));
+  if(row.firstSeen&&row.firstSeen!==row.receivedAt)card.append(el('small','Primeira identificação da fonte: '+new Date(row.firstSeen).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})));
   const links=el('div');links.className='raf-tjrj-links';
   for(const [i,ref] of row.sources.slice(0,3).entries()){
    const a=el('a','Fonte oficial '+(i+1)+' ↗');a.href=ref.url;a.target='_blank';a.rel='noopener noreferrer';links.append(a);
