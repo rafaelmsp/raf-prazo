@@ -183,7 +183,7 @@ def main(argv=None):
         extracted = item.get('structured', {})
         if not isinstance(extracted, dict) or extracted.get('automatically_applies_events') is not False:
             extracted = {}
-        signals = [x for x in extracted.get('occurrences', [])[:30] if isinstance(x, dict)
+        signals = [x for x in extracted.get('occurrences', [])[:120] if isinstance(x, dict)
                    and x.get('status') == 'pending_review' and x.get('verified') is False
                    and x.get('applies_to_deadlines') is False]
         structured = {'act_references': [str(x)[:90] for x in extracted.get('act_references', [])[:30]],
