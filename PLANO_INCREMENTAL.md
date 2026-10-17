@@ -38,10 +38,17 @@ Cada etapa tem escopo reduzido: implementar, testar, publicar e somente depois a
 **Limites:** esta etapa nao consulta indisponibilidade oficial automaticamente, nao autentica documentos, nao valida alcance individual ou certifica prorrogação. Uma ocorrencia extraordinaria pendente nao se torna uma exclusao automatica apenas por ter uma URL cadastrada. O registro local nao e compartilhado entre dispositivos.
 
 ## Etapa 4 — Rastreabilidade e historico
-**Estado: planejada.**
-- [ ] Identificador persistente do evento, documento de origem, data de conferência e revisao
-- [ ] Historico de inclusao, alteracao, revogacao e efeito em calculos anteriores
-- [ ] Identificacao de versao da base no relatorio e exportacao
+**Estado: implementada em 17/10/2026 (escopo local).**
+- [x] Registrar identificador, horario e alteracoes locais de eventos extraordinarios com dados anteriores e posteriores
+- [x] Possibilitar edicao de ocorrencias mantendo identificador, com historico de inclusao, alteracao e exclusao local
+- [x] Rastrear inclusoes, alteracoes e remocoes de feriados informados manualmente por municipio
+- [x] Congelar versao da base, parametros, dias contados, impedimentos e fontes nos calculos salvos a partir desta versao
+- [x] Exibir memoria salva sem recalculo automatico, separando-a da acao Reabrir
+- [x] Painel de consulta e exportacao JSON do log local, calculos e alteracoes disponiveis na base publicada
+- [x] Testes locais em Chromium desktop e celular, com seis mudancas simuladas, exportacao e memoria preservada
+- [x] Adicionar teste de regressao e documentacao em `docs/AUDITORIA_LOCAL.md`
+
+**Limites:** nao existe autenticacao, trilha inviolavel, assinatura digital, hora certificada ou monitoramento automatico de revogacoes de atos oficiais. Registros anteriores a etapa 4 nao recebem memoria retroativa. Acoes e calculos sao salvos apenas neste navegador, sujeitos a alteracao/exclusao; o log e limitado a 200 acoes e nao prova autoria ou integridade.
 
 ## Etapa 5 — Cobertura e validacao
 **Estado: planejada.**
