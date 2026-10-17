@@ -43,7 +43,7 @@
 
 ## Novidade da versão 2.2 — JEC padrão, UX premium
 
-O novo painel começa no **Juizado Especial Cível**, sem limitar a abrangência nacional do aplicativo. O usuário pode alternar para **Processo Civil (CPC)**, selecionar um ato processual com prazo previsto (ou informar duração personalizada), consultar a base legal e registrar opcionalmente a origem da comunicação **sem inferir automaticamente ciência ou publicação**. A memória do cálculo registra o perfil selecionado.
+O novo painel começa no **Juizado Especial Cível**, sem limitar a abrangência nacional do aplicativo. A escolha de procedimento, ato e fonte legal fica em um **painel retrátil independente**, acessado por botão compacto; os campos de data e prazo permanecem visíveis, e o calendário não é esticado pela configuração. O usuário pode alternar para **Processo Civil (CPC)**, selecionar um ato processual com prazo previsto (ou informar duração personalizada), consultar a base legal e registrar opcionalmente a origem da comunicação **sem inferir automaticamente ciência ou publicação**. A memória do cálculo registra o perfil selecionado.
 
 O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os regimes CLT, CPP, contagem em horas e demais hipóteses especiais exigem implementação e validação separadas.
 
