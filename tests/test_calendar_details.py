@@ -19,7 +19,8 @@ class CalendarDayDetailsTests(unittest.TestCase):
     def test_information_does_not_change_start_date(self):
         html=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn("function openDayDetails(n){",html)
-        self.assertIn("$('rafDayChooseStart').onclick=",html)
+        self.assertIn("const chooseStart=$('rafDayChooseStart');",html)
+        self.assertIn("chooseStart.onclick=()=>{if(isWeekendDate(n))return;",html)
         self.assertIn("function calculate(keepMonth=false)",html)
         self.assertNotIn("btn.addEventListener('click',()=>{$('start').value=iso(n)",html)
         self.assertIn("a.rel='noopener noreferrer'",html)
