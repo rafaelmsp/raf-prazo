@@ -23,6 +23,7 @@ on:
       - assets/tjrj-optin.js
       - assets/tjrj-news.js
       - tests/test_tjrj_news.cjs
+      - tests/test_update_tabs.cjs
       - tests/test_user_date_exclusions.cjs
       - assets/user-date-exclusions.js
       - tests/test_tjrj_optin.py
@@ -58,6 +59,7 @@ jobs:
           node --check assets/tjrj-optin.js
           node --check assets/tjrj-news.js
           node --test tests/test_tjrj_news.cjs
+          node --test tests/test_update_tabs.cjs
           node --test tests/test_user_date_exclusions.cjs
           node --check assets/user-date-exclusions.js
           node --test tests/test_tjrj_optin.cjs
