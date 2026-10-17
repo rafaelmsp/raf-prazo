@@ -50,8 +50,8 @@ for(const page of ['index.html','src/template.html']){
  });
  test('cada script embutido mantém sintaxe JavaScript válida em '+page,()=>{
   let checked=0;
-  for(const match of html.matchAll(/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/g)){
-   if(/type="application\\/json"/.test(match[1]))continue;
+  for(const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)){
+   if(/type="application\/json"/.test(match[1]))continue;
    new vm.Script(match[2],{filename:page+'#script-'+checked});
    checked++;
   }
@@ -61,6 +61,6 @@ for(const page of ['index.html','src/template.html']){
 test('index gerado mantém a mesma interface do template',()=>{
  const a=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const b=fs.readFileSync(path.join(root,'src/template.html'),'utf8');
- const beforeJSON=x=>x.replace(/(<script id="rafEmbeddedBase" type="application\\/json">)[\\s\\S]*?(<\\/script>)/,'$1[BASE]$2');
+ const beforeJSON=x=>x.replace(/(<script id="rafEmbeddedBase" type="application\/json">)[\s\S]*?(<\/script>)/,'$1[BASE]$2');
  assert.equal(beforeJSON(a),beforeJSON(b));
 });
