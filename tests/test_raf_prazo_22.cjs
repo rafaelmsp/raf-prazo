@@ -27,6 +27,26 @@ class Event{constructor(type){this.type=type}}
 vm.runInNewContext(code,{document:doc,window:windowStub,
  localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},Event,Map,Set,JSON,Object,Array,Date});
 const metadata=()=>windowStub.RafPrazoLegal22.getCurrent();
+test('resultado acima dos parâmetros e calendário sem expansão artificial',()=>{
+ for(const file of ['index.html','src/template.html']){
+  const html=fs.readFileSync(path.join(ROOT,file),'utf8');
+  const start=html.indexOf('<div class="workspace">');
+  const result=html.indexOf('<section class="panel raf-22-results"',start);
+  const params=html.indexOf('<section class="panel raf-22-parameters"',start);
+  const calendar=html.indexOf('<section class="panel raf-22-calendar"',start);
+  const verification=html.indexOf('<section class="panel raf-22-verification"',start);
+  assert.ok(start>=0&&start<result&&result<params&&params<calendar&&calendar<verification);
+  assert.ok(html.includes('id="rafCalendarSettings"'));
+  assert.ok(html.includes('raf-22-primary-date'));
+  assert.ok(html.includes('.raf-22-calendar #calendar{'));
+  assert.ok(html.includes('aspect-ratio:7/6'));
+  assert.ok(html.includes('aspect-ratio:1/1'));
+  assert.ok(html.includes('height:54px!important'));
+  assert.ok(html.includes('id="rafProfileDialog"'));
+  assert.ok(html.includes('id="rafTjrjNewsMount"'));
+  assert.ok(html.includes("legal_profile:window.RafPrazo22Current||null"));
+ }
+});
 test('JEC é padrão e prazo inicial manual não inventa ato',()=>{
  assert.equal(nodes.rafRegime.value,'jec');
  assert.equal(nodes.rafAct.value,'custom');
