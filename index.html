@@ -236,7 +236,7 @@
 <main class="content" id="mainContent"><div class="intro"><h1>Calculadora de prazos</h1><span class="hint">CPC · dias úteis · marco inicial informado e excluído da contagem</span></div>
 <div class="workspace">
 <section class="panel" aria-label="Parâmetros do prazo"><div class="panel-head"><div><h2>▤ &nbsp;Parâmetros do prazo</h2><p class="subtitle">Informe o marco legal já definido no processo.</p></div></div>
-<div class="field-grid"><div class="field"><label class="label" for="start">Marco inicial (excluído)</label><input class="input" id="start" type="date"></div><div class="field"><label class="label" for="days">Prazo · dias úteis</label><input class="input" id="days" type="number" min="1" max="365" step="1" value="15"></div></div>
+<div class="field-grid"><div class="field"><label class="label" for="start">Marco inicial (excluído)</label><input class="input" id="start" type="date" aria-describedby="rafStartRule"><small id="rafStartRule" class="muted">Selecione um dia de segunda a sexta-feira. Sábados e domingos não podem ser o marco inicial.</small></div><div class="field"><label class="label" for="days">Prazo · dias úteis</label><input class="input" id="days" type="number" min="1" max="365" step="1" value="15"></div></div>
 <div class="quick" id="quick"><button type="button" class="pill" data-days="5">5 dias</button><button type="button" class="pill" data-days="10">10 dias</button><button type="button" class="pill" data-days="15">15 dias</button><button type="button" class="pill" data-days="30">30 dias</button></div>
 <div class="section-divider"></div>
 <div class="subhead"><strong>⌖ &nbsp;Localização do calendário</strong><button type="button" class="settings-button" id="manualCityOpen">Código IBGE ↗</button></div>
@@ -419,7 +419,10 @@ const UFS=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA'
 const fixed={'01-01':'Confraternização Universal','04-21':'Tiradentes','05-01':'Dia do Trabalho','09-07':'Independência do Brasil','10-12':'Nossa Senhora Aparecida','11-02':'Finados','11-15':'Proclamação da República','11-20':'Dia Nacional de Zumbi e da Consciência Negra','12-25':'Natal'};
 const weekdays=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
 const p=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s))return null;let d=new Date(s+'T00:00:00Z');return !isNaN(+d)&&d.toISOString().slice(0,10)===s?Math.floor(+d/MS):null};
-const iso=n=>new Date(n*MS).toISOString().slice(0,10);const f=(n,o)=>new Intl.DateTimeFormat('pt-BR',{timeZone:'UTC',...o}).format(new Date(n*MS));
+const iso=n=>new Date(n*MS).toISOString().slice(0,10);
+const isWeekendDate=n=>n!==null&&Number.isInteger(n)&&[0,6].includes(new Date(n*MS).getUTCDay());
+let lastValidStart='';
+const f=(n,o)=>new Intl.DateTimeFormat('pt-BR',{timeZone:'UTC',...o}).format(new Date(n*MS));
 const volatileStore=new Map();
 const safeGet=(key,fallback=null)=>{if(volatileStore.has(key))return volatileStore.get(key);try{let v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch(_){return fallback}};
 const safeSet=(key,value)=>{volatileStore.set(key,value);try{localStorage.setItem(key,JSON.stringify(value));return true}catch(_){return false}};
@@ -519,7 +522,7 @@ function showStatus(){
 }
 function updateTheme(){const t=document.documentElement.dataset.theme;$('themeLabel').textContent=t==='dark'?'Modo escuro':'Modo claro';$('themeEmoji').textContent=t==='dark'?'☾':'☀';$('themeToggle').setAttribute('aria-pressed',t==='dark'?'true':'false');$('themeColor').content=t==='dark'?'#0b1625':'#f4f6fa'}
 function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem('raf-prazo:theme',theme)}catch(_){}updateTheme()}
-function calculate(keepMonth=false){let start=p($('start').value),days=Number($('days').value);let invalid=start===null||!Number.isSafeInteger(days)||days<1||days>365;if(invalid){calc=null;$('due').textContent='—';$('weekday').textContent='Data inválida ou prazo fora de 1–365 dias';$('first').textContent='—';$('excluded').textContent='—';showStatus();renderCalendar();return}
+function calculate(keepMonth=false){let start=p($('start').value),days=Number($('days').value);let weekendStart=isWeekendDate(start),invalid=start===null||weekendStart||!Number.isSafeInteger(days)||days<1||days>365;if(invalid){calc=null;$('due').textContent='—';$('weekday').textContent=weekendStart?'Sábado ou domingo não pode ser escolhido como marco inicial':'Data inválida ou prazo fora de 1–365 dias';$('first').textContent='—';$('excluded').textContent='—';showStatus();renderCalendar();return}
  let rows=[],num=0,n=start;while(num<days&&rows.length<1400){n++;let block=reason(n);if(!block)num++;rows.push({n,count:block?null:num,name:block?.name||'Dia útil contabilizado',type:block?.type||'CONTADO',source:block?.source||''})}
  if(num!==days){calc=null;$('due').textContent='—';$('weekday').textContent='Não foi possível concluir o cálculo';return}
  let cov=coverage(start,days);calc={start,days,due:n,rows,cov,place:sel(),savedAt:new Date().toISOString(),recess:$('recess').checked,local:$('useLocal').checked,tjrj:$('tjrj').checked};
@@ -569,7 +572,8 @@ function openDayDetails(n){
  const extra=extraAt(n),section=$('rafExtraDay'),extraRoot=$('rafExtraDayList');section.hidden=!extra.length;extraRoot.replaceChildren();for(const e of extra)appendExtraCard(extraRoot,e);
   $('rafDayHelp').textContent=note+(extra.length?' Existem '+extra.length+' ocorrência(s) locais pendentes nesta data, sem efeito automático.':'')+' A cobertura estadual, municipal e forense pode ser incompleta.';
   $('rafExtraFromDay').onclick=()=>{$('rafDayDialog').close();openExtraDialog(n)};
- $('rafDayChooseStart').onclick=()=>{$('rafDayDialog').close();$('start').value=date;calculate(true);syncCalendar(false)};
+ const chooseStart=$('rafDayChooseStart');chooseStart.disabled=isWeekendDate(n);chooseStart.title=isWeekendDate(n)?'Fim de semana: consulte os detalhes, mas escolha um dia de segunda a sexta-feira como marco inicial':'';chooseStart.textContent=isWeekendDate(n)?'Fim de semana — marco indisponível':'Usar como marco inicial';
+ chooseStart.onclick=()=>{if(isWeekendDate(n))return;$('rafDayDialog').close();$('start').value=date;lastValidStart=date;calculate(true);syncCalendar(false)};
  if(!$('rafDayDialog').open)dialog('rafDayDialog');
 }
 window.RafPrazoRefreshDay=date=>{const n=p(date);if(n!==null&&$('rafDayDialog').open)openDayDetails(n)};
@@ -630,7 +634,7 @@ function nextMonth(inc){let d=new Date(Date.UTC(viewed.y,viewed.m+inc,1));viewed
 window.RafPrazoRecalculate=()=>{calculate(true);notifySync();};
 window.RafPrazoTjrjAudit=(action,date,previous,current)=>logLocalChange(action,'usuario_tjrj:'+date,previous,current);
 $('themeToggle').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
-$('start').addEventListener('change',()=>{calculate();syncMaybe()});$('days').addEventListener('input',()=>{calculate();syncMaybe()});
+$('start').addEventListener('change',()=>{const next=p($('start').value);if(isWeekendDate(next)){$('start').value=lastValidStart;flash('Sábado e domingo não podem ser escolhidos como marco inicial.');return;}if(next!==null)lastValidStart=$('start').value;calculate();syncMaybe()});$('days').addEventListener('input',()=>{calculate();syncMaybe()});
 document.querySelectorAll('[data-days]').forEach(b=>b.addEventListener('click',()=>{$('days').value=b.dataset.days;calculate();syncMaybe()}));
 $('uf').addEventListener('change',async()=>{let uf=$('uf').value;setCities(uf,null);calculate();await loadCities(uf);if(!$('city').value&&cityOptions[uf]?.length){setCities(uf,{city:String(cityOptions[uf][0].id)})}onPlaceChanged()});
 $('city').addEventListener('change',onPlaceChanged);
@@ -646,7 +650,7 @@ $('manualCityOpen').addEventListener('click',()=>{$('ibgeInput').value=$('city')
 $('ibgeApply').addEventListener('click',()=>{let code=$('ibgeInput').value.trim();if(!/^\d{7}$/.test(code)){$('ibgeError').textContent='O código IBGE deve ter exatamente 7 dígitos.';return}let uf=$('uf').value,found=cityOptions[uf]?.find(x=>String(x.id)===code);setCities(uf,{city:code,cityName:found?.nome||'Município '+code});dismiss('ibgeDialog');onPlaceChanged()});
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>dismiss(b.dataset.close)));
 for(let d of document.querySelectorAll('dialog'))d.addEventListener('click',e=>{let r=d.getBoundingClientRect();if(d.id==='rafTermsDialog'&&!document.getElementById('rafTermsAccept').hidden)return;if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()});
-const now=new Date(),today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');$('start').value=today;
+const now=new Date(),initial=new Date(now.getFullYear(),now.getMonth(),now.getDate());while(initial.getDay()===0||initial.getDay()===6)initial.setDate(initial.getDate()+1);const today=[initial.getFullYear(),String(initial.getMonth()+1).padStart(2,'0'),String(initial.getDate()).padStart(2,'0')].join('-');$('start').value=today;lastValidStart=today;
 updateTheme();setUfs();$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').checked=false;calculate();loadCities(selectedCity.uf);notifySync();syncCalendar(false);
 })();
 </script>
@@ -713,7 +717,7 @@ updateTheme();setUfs();$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').check
   $('rafSyncDescription').textContent=b.sync?.status==='ok'?'Consulta automática nacional concluída':b.sync?.status==='partial'?'Consulta automática nacional parcialmente indisponível':'Base inicial sem consulta automática registrada';
   $('rafSyncChecked').textContent=b.last_checked_at?new Date(b.last_checked_at).toLocaleString('pt-BR'):'Não registrada';
   $('rafSyncVersion').textContent=b.version||'—';$('rafSyncOrigin').textContent=state.mode||'—';$('rafSyncYears').textContent=(b.coverage?.national_years||[]).join(', ')||'—';const coletor=b.sync?.tjrj_collector_status||'not_run';$('rafTjrjCollectorStatus').textContent=({ok:'Consultado',partial:'Consulta parcial',unavailable:'Fonte indisponível',not_run:'Ainda não executada'}[coletor]||'Sem status')+' · '+(b.sync?.tjrj_pending||0)+' pendentes · '+(b.sync?.tjrj_sources_success||0)+'/'+(b.sync?.tjrj_sources_checked||0)+' fontes';
-  $('rafSyncNote').textContent=state.error?'Falha ao buscar feriados.json: '+state.error+'. Base local preservada.':'A coleta TJRJ exibe fontes pendentes. Somente após opção explícita uma data pode ser desconsiderada como SIMULAÇÃO local, não homologada. Execução automática depende do GitHub Actions.';
+  $('rafSyncNote').textContent=state.error?'Falha ao buscar feriados.json: '+state.error+'. Base local preservada.':'Feriados nacionais: lista fixa de leis federais, confrontada com a BrasilAPI nos anos informados. Feriados estaduais e municipais: ainda NÃO abrangidos por API nem aplicados. TJRJ: PDFs e avisos coletados automaticamente, com possível exclusão apenas por escolha expressa como SIMULAÇÃO NÃO HOMOLOGADA.';
  }
  function render(){renderChanges();renderSources();renderSync();updateBadge()}
  const open=d=>{if(d&&!d.open)d.showModal()};
