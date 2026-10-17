@@ -58,7 +58,10 @@ class TestRafPrazoSync(unittest.TestCase):
         self.assertIn(2026,data['coverage']['national_years'])
         self.assertTrue(all(e['status']=='confirmed' for e in data['events']))
         self.assertFalse(any(e['type']=='SUSPENSAO_TJRJ' for e in data['events']))
-        self.assertFalse(any(e.get('type') in ('ESTADUAL','MUNICIPAL') for e in data['events']))
+        self.assertEqual(sum(e['type']=='ESTADUAL' for e in data['events']),3*len(data['coverage']['national_years']))
+        self.assertEqual(sum(e['type']=='MUNICIPAL' for e in data['events']),2*len(data['coverage']['national_years']))
+        self.assertTrue(all(e['scope']['uf']=='RJ' for e in data['events'] if e['type'] in ('ESTADUAL','MUNICIPAL')))
+        self.assertTrue(all(e['scope']['ibge']=='3301702' for e in data['events'] if e['type']=='MUNICIPAL'))
         self.assertEqual(data['coverage']['tjrj'],'discovery_only')
 
     def test_html_has_embedded_base(self):
