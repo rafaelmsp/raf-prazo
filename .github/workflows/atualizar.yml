@@ -19,22 +19,35 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validar regras
+      - name: Dependencia de leitura de documentos oficiais em PDF
+        run: python -m pip install 'pypdf>=5,<7'
+      - name: Testes de seguranca e colecao
         run: python -m unittest discover -s tests -p 'test_*.py' -v
-      - name: Consultar fonte nacional e atualizar base
+      - name: Coletar documentos do TJRJ sem alterar prazos
+        run: python scripts/collect_tjrj.py
+      - name: Validar candidatos — jamais aptos a alterar contagem
+        run: python scripts/collect_tjrj.py --check
+      - name: Consultar feriados nacionais e incorporar candidatos pendentes
         run: python scripts/sync.py
       - name: Atualizar calendario incorporado
         run: python scripts/build_html.py
       - name: Validar artefatos
         run: |
           python -m json.tool feriados.json > /dev/null
+          python -m json.tool dados/coleta-tjrj.json > /dev/null
+          python - <<'PY'
+          import json
+          base=json.load(open('feriados.json',encoding='utf-8'))
+          assert not any(e.get('type')=='SUSPENSAO_TJRJ' for e in base['events']), 'TJRJ nao pode atuar sem revisao'
+          assert all(c.get('applies_to_deadlines') is False for c in base['candidates']), 'Candidato ativo'
+          PY
           test -s index.html
           grep -q rafEmbeddedBase index.html
       - name: Publicar alteracoes de calendario
         run: |
           git config user.name "raf-prazo-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feriados.json index.html
+          git add dados/coleta-tjrj.json feriados.json index.html
           if ! git diff --cached --quiet; then
             git commit -m "chore: atualizar calendario judicial"
             git push
