@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - scripts/collect_tjrj.py
+      - scripts/extract_tjrj.py
+      - scripts/sync.py
+      - tests/test_extract_tjrj.py
       - .github/workflows/atualizar.yml
   schedule:
     - cron: '17 10 * * *'
@@ -52,6 +55,7 @@ jobs:
           base=json.load(open('feriados.json',encoding='utf-8'))
           assert not any(e.get('type')=='SUSPENSAO_TJRJ' for e in base['events']), 'TJRJ nao pode atuar sem revisao'
           assert all(c.get('applies_to_deadlines') is False for c in base['candidates']), 'Candidato ativo'
+          assert all(o.get('status')=='pending_review' and o.get('verified') is False and o.get('applies_to_deadlines') is False for c in base['candidates'] for o in (c.get('structured') or {}).get('occurrences', [])), 'Indicio extraido indevidamente ativo'
           PY
           test -s index.html
           grep -q rafEmbeddedBase index.html
@@ -62,5 +66,16 @@ jobs:
           git add dados/coleta-tjrj.json feriados.json index.html src/template.html
           if ! git diff --cached --quiet; then
             git commit -m "chore: atualizar calendario judicial"
-            git push
+            for tentativa in 1 2 3; do
+              if git push origin HEAD:main; then
+                echo "Calendario publicado sem sobrescrever alteracoes concorrentes"
+                exit 0
+              fi
+              echo "Conflito de atualizacao; buscando commits remotos - tentativa $tentativa"
+              git fetch origin main
+              git rebase origin/main || { git rebase --abort; echo "Conflito real: publicacao interrompida com seguranca"; exit 1; }
+              sleep 3
+            done
+            echo "Nao foi possivel publicar o calendario apos 3 tentativas" >&2
+            exit 1
           fi
