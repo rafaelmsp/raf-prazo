@@ -10,6 +10,21 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self,*args,**kw): super().__init__(*args,directory=str(ROOT),**kw)
     def log_message(self,*args): pass
 class Server(socketserver.ThreadingTCPServer): allow_reuse_address=True
+def calendar_palette(page):
+    # Cores reais das classes do calendário, independentemente do mês exibido.
+    return page.evaluate("""() => {
+      const parent=document.querySelector('#calendar');
+      const result={};
+      for(const type of ['raf-weekend','raf-holiday','raf-suspension','raf-recess','raf-manual','raf-user-tjrj','due']){
+        const day=document.createElement('button');
+        day.className=type==='due'?'day due':'day blocked '+type;
+        parent.appendChild(day);
+        const style=getComputedStyle(day);
+        result[type]={background:style.backgroundColor,color:style.color};
+        day.remove();
+      }
+      return result;
+    }""")
 def check(browser,url,width):
     ctx=browser.new_context(viewport={"width":width,"height":820},locale="pt-BR",color_scheme="light")
     page=ctx.new_page()
@@ -34,7 +49,14 @@ def check(browser,url,width):
     assert theme["result"]=="rgb(239, 245, 250)",f"Resultado deveria ser azul acinzentado: {theme}"
     assert theme["parameters"]=="rgb(255, 255, 255)",f"Parâmetros deveriam ter fundo branco: {theme}"
     assert theme["profile"]=="rgb(247, 249, 251)",f"Seleção não deveria usar fundos coloridos: {theme}"
-    assert theme["calendarHoliday"]=="#f9e0e2" and theme["calendarWeekend"]=="#f8eded", "Paleta do calendário deve ser preservada"
+    assert theme["calendarHoliday"]=="#eef3f7" and theme["calendarWeekend"]=="#f0f2f5", "Calendário deve ter paleta neutra"
+    light_days=calendar_palette(page)
+    expected={'raf-weekend':'rgb(240, 242, 245)','raf-holiday':'rgb(238, 243, 247)',
+              'raf-suspension':'rgb(232, 241, 247)','raf-recess':'rgb(243, 245, 247)',
+              'raf-manual':'rgb(237, 245, 242)','raf-user-tjrj':'rgb(240, 242, 245)',
+              'due':'rgb(18, 97, 160)'}
+    assert {k:v['background'] for k,v in light_days.items()}==expected,f"Cores claras do calendário incorretas: {light_days}"
+    assert light_days['due']['color']=='rgb(255, 255, 255)',"Vencimento deve ter contraste com o azul PJe"
     assert page.locator("#rafProfileOpen").is_visible()
     assert not page.locator("#rafProfileDialog").is_visible()
     assert page.locator("#rafRegime").input_value()=="jec"
@@ -222,6 +244,13 @@ def check(browser,url,width):
     assert dark_palette["body"]=="rgb(14, 25, 40)",f"Modo escuro incoerente: {dark_palette}"
     assert dark_palette["result"]=="rgb(32, 56, 80)",f"Resultado no modo escuro: {dark_palette}"
     assert dark_palette["profile"]=="rgb(27, 45, 65)",f"Seletor no modo escuro: {dark_palette}"
+    dark_days=calendar_palette(page)
+    expected_dark={'raf-weekend':'rgb(38, 53, 69)','raf-holiday':'rgb(37, 56, 74)',
+                   'raf-suspension':'rgb(32, 62, 87)','raf-recess':'rgb(43, 56, 70)',
+                   'raf-manual':'rgb(37, 62, 59)','raf-user-tjrj':'rgb(38, 53, 69)',
+                   'due':'rgb(43, 112, 159)'}
+    assert {k:v['background'] for k,v in dark_days.items()}==expected_dark,f"Cores do calendário escuro incorretas: {dark_days}"
+    assert dark_days['due']['color']=='rgb(255, 255, 255)'
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-dark.png"),full_page=True)
     page.locator("#rafProfileOpen").click()
     assert page.locator("#rafProfileDialog").is_visible()
