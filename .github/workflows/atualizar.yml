@@ -21,12 +21,15 @@ on:
       - tests/test_tjrj_markers.py
       - assets/tjrj-markers.js
       - assets/tjrj-optin.js
+      - assets/tjrj-news-search.js
+      - assets/user-date-exclusions.js
+      - tests/test_tjrj_news_search.cjs
       - tests/test_tjrj_optin.py
       - tests/test_tjrj_optin.cjs
       - tests/test_weekend_sources.cjs
       - .github/workflows/atualizar.yml
   schedule:
-    - cron: '17 10 * * *'
+    - cron: '17 2,6,10,14,18,22 * * *'
 permissions:
   contents: write
 concurrency:
@@ -52,6 +55,9 @@ jobs:
         run: |
           node --check assets/tjrj-markers.js
           node --check assets/tjrj-optin.js
+          node --check assets/tjrj-news-search.js
+          node --check assets/user-date-exclusions.js
+          node --test tests/test_tjrj_news_search.cjs
           node --test tests/test_tjrj_optin.cjs
       - name: Diagnosticar certificados TLS da origem oficial (sem ignorar validacao)
         run: |
