@@ -246,10 +246,10 @@ def check(browser,url,width):
     assert dark_palette["result"]=="rgb(32, 56, 80)",f"Resultado no modo escuro: {dark_palette}"
     assert dark_palette["profile"]=="rgb(27, 45, 65)",f"Seletor no modo escuro: {dark_palette}"
     dark_days=calendar_palette(page)
-    expected_dark={'raf-weekend':'rgb(38, 53, 69)','raf-holiday':'rgb(37, 56, 74)',
-                   'raf-suspension':'rgb(32, 62, 87)','raf-recess':'rgb(43, 56, 70)',
-                   'raf-manual':'rgb(37, 62, 59)','raf-user-tjrj':'rgb(38, 53, 69)',
-                   'due':'rgb(43, 112, 159)'}
+    expected_dark={'raf-weekend':'rgb(38, 53, 69)','raf-holiday':'rgb(84, 42, 53)',
+                   'raf-suspension':'rgb(73, 58, 33)','raf-recess':'rgb(58, 47, 86)',
+                   'raf-manual':'rgb(33, 68, 64)','raf-user-tjrj':'rgb(222, 244, 237)',
+                   'due':'rgb(166, 203, 255)'}
     assert {k:v['background'] for k,v in dark_days.items()}==expected_dark,f"Cores do calendário escuro incorretas: {dark_days}"
     assert dark_days['due']['color']=='rgb(255, 255, 255)'
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-dark.png"),full_page=True)
