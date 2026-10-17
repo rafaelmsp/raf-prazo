@@ -1,11 +1,14 @@
 # Raf-Prazo
 ### Calculadora Judicial de Prazos · HTML5 · Projeto independente
 
-**Versão do aplicativo:** 2.0 (projeto preparado para publicação)  
+**Versão do aplicativo:** 2.1 (modo conservador de coleta oficial)  
 **Desenvolvimento e autoria:** Rafael Moraes da Silva Passos  
-**Edição desta documentação:** 16 de outubro de 2026  
+**Edição desta documentação:** 17 de outubro de 2026  
 **Distribuição:** acesso gratuito; código-fonte sem licença aberta de reutilização  
-**Situação:** projeto local funcional; publicação no GitHub Pages e execução do GitHub Actions em repositório remoto **ainda não comprovadas**.
+**Situação:** código publicado no GitHub; verificar o status de cada execução em Actions. A coleta de fontes TJRJ é parcial, não oficial e nunca altera automaticamente os prazos.
+
+> [!IMPORTANT]
+> **MODO CONSERVADOR (17/10/2026):** o sistema NÃO computa feriados locais, atos do TJRJ ou datas adicionadas manualmente. Apenas feriados nacionais fixos e a suspensão legal do art. 220 do CPC, quando habilitada. Fontes TJRJ são coletadas somente como documentos pendentes. **Não use o resultado isoladamente para definir vencimento forense.** [Detalhes da coleta](docs/COLETA_TJRJ.md).
 
 > [!CAUTION]
 > **FERRAMENTA AUXILIAR, INDEPENDENTE E NÃO OFICIAL.** O Raf-Prazo **não certifica a tempestividade**, não calcula automaticamente todas as situações processuais e **não substitui** os sistemas judiciais, a consulta aos atos normativos, o calendário oficial, a análise da intimação nem a conferência do profissional responsável. **Nunca pratique um ato processual exclusivamente com base no resultado do aplicativo.**
@@ -67,9 +70,9 @@ Um sistema oficial de gestão processual, uma certidão de prazo, um sistema de 
 | Calendário | Navegação por mês, ficha de detalhes ao tocar nas datas, escolha expressa de novo marco e destaques para feriados, suspensões e ocorrências informativas. |
 | Resultado em destaque | Data de vencimento acima do calendário e painel de resultado. |
 | Recesso CPC | Opção para excluir o período de **20/12 a 20/01**; deve ser analisada conforme o caso concreto. |
-| Eventos locais | Opção para considerar eventos estaduais/municipais **presentes na base confirmada**; a cobertura não é completa. |
-| Atos TJRJ | Opção para aplicar atos **cadastrados e conferidos**; não representa monitoramento de todos os atos. |
-| Datas manuais | Inclusão de feriados/suspensões por data e motivo, armazenados no navegador, **sem validação jurídica automática**. |
+| Eventos locais | Aplicação suspensa no modo conservador; conferir feriados municipais e estaduais em fontes oficiais. |
+| Atos TJRJ | Coleta de documentos oficiais como alertas pendentes; nunca excluem dias da contagem automaticamente. |
+| Datas manuais | Cadastro manual temporariamente desativado; registros antigos não entram na contagem. |
 | Memória de cálculo | Relação cronológica de dias contados e excluídos, com cópia e impressão/PDF pelo navegador. |
 | Histórico | Cálculos salvos com versão da base, parâmetros e memória cronológica congelada (para registros novos); reabertura recalcula na base atual. |
 | Exportação | CSV da memória do cálculo e JSON com trilha local de alterações e cálculos salvos. |
@@ -78,7 +81,9 @@ Um sistema oficial de gestão processual, uma certidão de prazo, um sistema de 
 | Termos e tutorial | Modal de aceite inicial, consulta posterior dos termos e tutorial incorporado. |
 | Offline | Base inicial de contingência embutida em `index.html`, sujeita a desatualização. |
 
-**Documentação da auditoria local (Etapa 4):** [Registro de alterações e memórias congeladas](docs/AUDITORIA_LOCAL.md). A trilha fica somente no navegador e não é imutável nem certificada.\n\n**Atenção:** os botões e recursos não substituem a confirmação do calendário forense oficial. A presença de um evento na interface não demonstra, por si, sua aplicabilidade a determinado processo.
+**Documentação da auditoria local (Etapa 4):** [Registro de alterações e memórias congeladas](docs/AUDITORIA_LOCAL.md). A trilha fica somente no navegador e não é imutável nem certificada.
+
+**Atenção:** os botões e recursos não substituem a confirmação do calendário forense oficial. A presença de um evento na interface não demonstra, por si, sua aplicabilidade a determinado processo.
 
 ## 3. Como usar a calculadora
 
@@ -132,10 +137,12 @@ Intimações eletrônicas, ciência tácita, publicação no Diário, recesso, f
 |---|---|---|
 | **Legislação federal** | Feriados nacionais fixos incorporados ao motor e ao JSON. | Não cobre todos os feriados móveis, locais e forenses. |
 | **BrasilAPI** | Consulta automática gratuita pelo script Python para anos configurados. | Registros extras, como Carnaval e Corpus Christi, **não são promovidos automaticamente** a suspensão forense. |
-| **TJRJ (fonte oficial)** | Atos **individualmente conferidos e cadastrados** em `dados/atos-tjrj.json`. | **Não existe coletor automático de atos do TJRJ** nesta versão. |
-| **Fontes estaduais/municipais** | Eventos previamente conferidos em `dados/feriados-locais.json`. | Arquivo local inicia vazio; não há cobertura exaustiva. |
+| **TJRJ (fonte oficial)** | Coletor de fontes HTML/PDF do tribunal; arquivo `dados/coleta-tjrj.json` armazena somente documentos pendentes. | Nenhum candidato é promovido a suspensão; cobertura não exaustiva e sem validação jurídica automática. |
+| **Fontes estaduais/municipais** | Exibição e uso suspensos nesta fase. | Sem cobertura automática confiável: conferir na legislação e nos atos oficiais. |
 | **IBGE** | Consulta de municípios e códigos de identificação. | IBGE não certifica feriados processuais. |
-| **Usuário** | Datas e motivos adicionados manualmente. | Informação **não homologada**; aplicabilidade e exatidão são de responsabilidade de quem a cadastrou. |
+| **Usuário** | Cadastros novos manuais pausados; dados anteriores são apenas histórico local. | Entradas antigas não excluem dias úteis. |
+
+**Ato TJRJ nº 290/2026 (30/10/2026):** foi mantido como referência histórica no Git, mas removido da base ativa por opção conservadora. O mecanismo de coleta poderá localizar a fonte novamente, apenas como candidata informativa. A eventual suspensão deve ser conferida no TJRJ antes de qualquer cálculo.
 
 ### Regra de segurança para os eventos publicados
 
@@ -283,8 +290,8 @@ Etapas:
 2. Executa os testes unitários.
 3. Consulta a BrasilAPI para os anos configurados (atualmente **2026, 2027 e 2028**).
 4. Incorpora somente os feriados nacionais fixos previstos na configuração legal; outros itens da API ficam como **candidatos pendentes**, sem alterar a contagem.
-5. Valida e incorpora os eventos curados de `dados/`.
-6. Atualiza `feriados.json` e reconstrói `index.html` com base offline.
+5. Busca documentos TJRJ em fontes oficiais, armazena candidatos NÃO aplicáveis e rejeita qualquer tentativa de inclusão automática como dia excluído.
+6. Atualiza `dados/coleta-tjrj.json`, `feriados.json` e as bases embutidas no HTML e no template.
 7. Faz commit/push **apenas se houver alterações**.
 
 O workflow requer permissão de escrita para `contents`; políticas do repositório podem restringir esse acesso. Verifique os logs da execução e o commit produzido.
@@ -293,47 +300,13 @@ O workflow requer permissão de escrita para `contents`; políticas do repositó
 
 Se a BrasilAPI não responder, o script registra falha parcial e mantém o conjunto de feriados fixos legais implementados. O navegador pode continuar usando a última base válida em cache ou a incorporada, **sem garantia de atualização de feriados locais ou atos judiciais**.
 
-**Não há varredura automática de portais, PDFs, notícias ou Diário do TJRJ.** Esses registros exigem curadoria humana.
+**Existe coleta automática PARCIAL de fontes HTML/PDF do TJRJ.** O coletor não abrange todo o portal nem confirma automaticamente atos, vigência ou suspensão de prazo. Consulte [COLETA_TJRJ.md](docs/COLETA_TJRJ.md).
 
-## 11. Como cadastrar um ato oficial
+## 11. Cadastro manual temporariamente suspenso
 
-### Procedimento de curadoria
+Os registros anteriores estão arquivados no histórico do Git, mas **não integram a contagem atual**. O projeto está na fase de coleta automática **informativa**, com validação por documentação oficial e sem promoção automática de eventos. A etapa de aprovação jurídica e eventual publicação de eventos que influenciem prazos só deverá ser reintroduzida após testes e definição de procedimento seguro.
 
-1. Localize a **fonte oficial** e o ato correspondente.
-2. Leia o texto integral: determine se há **suspensão de prazos**, apenas mudança de expediente ou situação distinta.
-3. Identifique data, alcance (tribunal, UF ou município), eventuais exceções, retificações e revogações.
-4. Registre o ato em `dados/atos-tjrj.json` ou `dados/feriados-locais.json`.
-5. Indique `verified_at`, identificação do ato, URL HTTPS e `status: "confirmed"` **somente após conferência**.
-6. Rode os testes e o sincronizador, reconstrua o HTML e compare o resultado com os atos oficiais.
-7. Registre a alteração no histórico do Git; em caso de revogação, **corrija ou remova o evento** e gere novamente a base.
-8. Em casos duvidosos, **não aplique** o evento automaticamente; mantenha-o fora da base ativa até revisão.
-
-### Exemplo de estrutura de ato TJRJ
-
-```json
-{
-  "id": "tjrj-exemplo-2026-10-30",
-  "date": "2026-10-30",
-  "name": "Suspensão de prazos — descrição conferida",
-  "type": "SUSPENSAO_TJRJ",
-  "scope": {"kind": "tjrj", "uf": "RJ"},
-  "status": "confirmed",
-  "applies_to_deadlines": true,
-  "source": {
-    "title": "Título da publicação oficial",
-    "act": "Número do ato",
-    "url": "https://www.tjrj.jus.br/"
-  },
-  "verified_at": "2026-10-16",
-  "origin": "curated"
-}
-```
-
-**Exemplo estrutural apenas:** não copie esse registro como se fosse um ato válido. Utilize os dados concretos da publicação. A abrangência `tjrj` é **ampla**: não use esse tipo para uma suspensão restrita a uma vara, comarca ou processo. O modelo atual **não representa todas as granularidades institucionais**; se necessário, evolua o esquema antes de incluir eventos restritos.
-
-### Exemplo municipal
-
-Use `type: "MUNICIPAL"` e `scope: {"kind": "municipal", "uf": "RJ", "ibge": "3301702"}` com fonte oficial válida. **O código IBGE identifica a localidade; não prova a existência de feriado.**
+Detalhes: [Coleta de fontes do TJRJ](docs/COLETA_TJRJ.md).
 
 ## 12. Modelo de dados e validações
 
