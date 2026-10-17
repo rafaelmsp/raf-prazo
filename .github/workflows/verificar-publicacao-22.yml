@@ -19,7 +19,7 @@ jobs:
           set -e
           BASE="https://rafaelmsp.github.io/raf-prazo"
           for attempt in 1 2 3 4 5 6 7 8; do
-            echo "Conferindo publicação do Raf-Prazo 2.2 — tentativa $attempt"
+            echo "Conferindo publicação do Raf-Prazo 2.3 — tentativa $attempt"
             if curl --retry 2 -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/?v=2.2-$GITHUB_RUN_ID-$attempt" -o /tmp/site.html && \
                curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/assets/raf-prazo-22.js?v=2.2-$GITHUB_RUN_ID-$attempt" -o /tmp/legal22.js && \
                curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/assets/tjrj-news.js?v=tjrj-ordem-$GITHUB_RUN_ID-$attempt" -o /tmp/tjrj-news.js && \
@@ -51,11 +51,17 @@ jobs:
                grep -Fq "chooseTab('tjrj');render();open(news)" /tmp/site.html && \
                grep -Fq '/* UX desktop: resultado e parâmetros à esquerda' /tmp/site.html && \
                grep -Fq '.workspace>.raf-22-parameters{grid-column:1;grid-row:2}' /tmp/site.html && \
-               grep -Fq '.workspace>.raf-22-calendar{grid-column:2;grid-row:1 / span 3;align-self:start}' /tmp/site.html; then
-              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — desktop com parâmetros à esquerda e calendário à direita, confirmado por HTTP'
+               grep -Fq '.workspace>.raf-22-calendar{grid-column:2;grid-row:1 / span 3;align-self:start}' /tmp/site.html && \
+               grep -Fq 'RAF-PRAZO 2.3 · FERRAMENTA JURÍDICA' /tmp/site.html && \
+               grep -Fq 'grid-template-columns:minmax(0,44fr) minmax(0,56fr)' /tmp/site.html && \
+               grep -Fq 'id="rafDayFocus"' /tmp/site.html && \
+               grep -Fq 'id="rafDayFocusDetails"' /tmp/site.html && \
+               grep -Fq 'function updateRafDayFocus(n)' /tmp/site.html && \
+               ! grep -Fq 'id="calendarDue"' /tmp/site.html; then
+              echo 'RAF_PRAZO_23_PUBLICADO_E_VALIDADO — 44/56, ficha do dia e vencimento único confirmados por HTTP'
               exit 0
             fi
             sleep 8
           done
-          echo 'O GitHub Pages ainda não expõe todos os arquivos da versão 2.2' >&2
+          echo 'O GitHub Pages ainda não expõe todos os arquivos da versão 2.3' >&2
           exit 1
