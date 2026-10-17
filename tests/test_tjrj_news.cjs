@@ -49,6 +49,22 @@ test('busca atualiza apenas a última base publicada',()=>{
  assert.equal(syncClicks,1);
  assert.ok(get('rafTjrjNewsStatus').textContent.includes('Base pública consultada'));
 });
+test('limpar itens TJRJ oculta somente na interface, e restaurar recupera a fonte',()=>{
+ assert.equal(articles().length,1);
+ get('rafTjrjClearList').click();
+ assert.equal(articles().length,0);
+ assert.ok(app.base.candidates.length===2,'Base original permanece intacta');
+ assert.ok(get('rafTjrjNewsStatus').textContent.includes('1 oculto(s)'));
+ get('rafTjrjRestoreList').click();
+ assert.equal(articles().length,1);
+});
+test('ocultar item individual e restaurar não muda o documento oficial',()=>{
+ const card=articles()[0];
+ const button=card.children.find(x=>x.tag==='button'&&x.textContent==='Ocultar este item');
+ assert.ok(button);
+ button.click();assert.equal(articles().length,0);
+ get('rafTjrjRestoreList').click();assert.equal(articles().length,1);
+});
 test('data sem documento oficial ou ato pendente não é promovida',()=>{
  app.base.candidates[0].stale=true;app.base.candidates[1].stale=true;events['raf-prazo:sync']();
  assert.equal(articles().length,0);
