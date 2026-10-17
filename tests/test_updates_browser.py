@@ -42,15 +42,20 @@ def check_width(browser,url,width):
     assert page.locator("#rafNewsDialog").evaluate(
         "(el)=>{const r=el.getBoundingClientRect();return r.left>=-2&&r.right<=innerWidth+2}"
     ),f"Modal fora do viewport {width}"
-    expected=[("News","Calendário"),("Tjrj","TJRJ"),("Pending","Pendências"),
+    expected=[("Tjrj","TJRJ"),("News","Calendário"),("Pending","Pendências"),
               ("Sources","Fontes"),("Sync","Sincronização")]
+    assert page.locator('#rafNewsDialog .raf-tabs button').first.get_attribute("id")=="rafTabTjrj"
+    assert page.locator("#rafTabTjrj").get_attribute("aria-selected")=="true","TJRJ deve abrir selecionado"
+    assert page.locator("#rafPanelTjrj").is_visible(),"Atualizações devem mostrar TJRJ primeiro"
     for key,label in expected:
         tab=page.locator("#rafTab"+key)
         tab.click()
         assert tab.get_attribute("aria-selected")=="true",f"Falhou aba {label} em {width}px"
         assert page.locator("#rafPanel"+key).is_visible(),f"Painel {label} oculto em {width}px"
-    page.locator("#rafTabNews").click()
-    page.locator("#rafTabNews").press("ArrowRight")
+    page.locator("#rafTabTjrj").click()
+    page.locator("#rafTabTjrj").press("ArrowRight")
+    assert page.locator("#rafTabNews").get_attribute("aria-selected")=="true"
+    page.locator("#rafTabNews").press("Home")
     assert page.locator("#rafTabTjrj").get_attribute("aria-selected")=="true"
     page.locator("#rafTabPending").click()
     initial=page.locator("#rafCandidatesList article.raf-event").count()
@@ -71,6 +76,7 @@ def check_width(browser,url,width):
     assert saved and saved!="[]","Ocultos devem persistir no navegador"
     page.reload(wait_until="domcontentloaded")
     open_updates(page)
+    assert page.locator("#rafTabTjrj").get_attribute("aria-selected")=="true","TJRJ deve continuar padrão após reload"
     page.locator("#rafTabPending").click()
     if not page.locator("#rafPanelPending").is_visible():
         debug=page.evaluate("""() => ({
