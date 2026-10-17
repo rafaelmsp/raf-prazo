@@ -11,16 +11,16 @@ import sync
 
 
 class TestRafPrazoSync(unittest.TestCase):
-    def test_curated_official_act(self):
-        acts=json.loads((ROOT/'dados'/'atos-tjrj.json').read_text(encoding='utf-8'))['events']
-        self.assertEqual(len(acts),1)
-        e=sync.verify_event(acts[0])
-        self.assertEqual(e['date'],'2026-10-30')
-        self.assertEqual(e['scope']['kind'],'tjrj')
-        self.assertTrue(e['source']['url'].startswith('https://www.tjrj.jus.br/'))
+    def test_curated_official_acts_are_archived(self):
+        data=json.loads((ROOT/'dados'/'atos-tjrj.json').read_text(encoding='utf-8'))
+        self.assertEqual(data['events'],[])
+        self.assertFalse(data['applied_to_deadlines'])
 
     def test_invalid_or_unconfirmed_event_rejected(self):
-        e=json.loads((ROOT/'dados'/'atos-tjrj.json').read_text(encoding='utf-8'))['events'][0]
+        e={'id':'tjrj-example-check','date':'2026-10-30','name':'Teste de validador',
+           'type':'SUSPENSAO_TJRJ','scope':{'kind':'tjrj','uf':'RJ'},
+           'status':'confirmed','applies_to_deadlines':True,'verified_at':'2026-10-16',
+           'source':{'title':'Documento oficial para TESTE','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/teste'}}
         for k,v in [('status','pending'),('date','2026-02-30'),('applies_to_deadlines',False)]:
             bad=copy.deepcopy(e);bad[k]=v
             with self.subTest(field=k),self.assertRaises(ValueError):
@@ -57,7 +57,9 @@ class TestRafPrazoSync(unittest.TestCase):
         self.assertEqual(data['schema'],1)
         self.assertIn(2026,data['coverage']['national_years'])
         self.assertTrue(all(e['status']=='confirmed' for e in data['events']))
-        self.assertTrue(any(e['date']=='2026-10-30' for e in data['events']))
+        self.assertFalse(any(e['type']=='SUSPENSAO_TJRJ' for e in data['events']))
+        self.assertFalse(any(e.get('type') in ('ESTADUAL','MUNICIPAL') for e in data['events']))
+        self.assertEqual(data['coverage']['tjrj'],'discovery_only')
 
     def test_html_has_embedded_base(self):
         html=(ROOT/'index.html').read_text(encoding='utf-8')
