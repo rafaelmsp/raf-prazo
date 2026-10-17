@@ -5,6 +5,7 @@ import datetime as dt
 import hashlib
 import re
 import unicodedata
+from scope_tjrj import link_date_to_comarca
 
 PAGE_RE = re.compile(r'^\s*\[RAF_TJRJ_PAGE=(\d+)\]\s*$', re.I)
 START_RE = re.compile(r'^\s*(?P<period>\d{1,2}[./]\d{1,2}(?:[./]20\d{2})?(?:\s*(?:(?:,|;)\s*(?:e\s+)?|\be\s+|\bat[eé]\s+|\ba\s+|[-–]\s*)\d{1,2}[./]\d{1,2}(?:[./]20\d{2})?){0,14})\s*(?P<rest>.*)$',re.I)
@@ -105,10 +106,12 @@ def extract_pdf_table(text,url,digest,limit=LIMIT):
    if key in seen:continue
    seen.add(key)
    suffix=hashlib.sha256((url+'|'+str(row['page'])+'|'+str(key)).encode('utf-8')).hexdigest()[:18]
+   scope=link_date_to_comarca(row_text,entry['date'])
+   scope['comarcas_mentioned']=list(dict.fromkeys(places+scope['comarcas_mentioned']))[:8]
    results.append({
     'id':'tjrj-extract-'+suffix,'date':entry['date'],'date_expression':period,
     'year_inferred':entry['year_inferred'],'effect_hint':effect,
-    'scope_hint':{'kind':'unresolved','comarcas_mentioned':places},
+    'scope_hint':scope,
     'has_possible_exceptions':exception,
     'evidence_excerpt':row_text[:450], 'source_url':url, 'source_hash_sha256':digest,
     'document_page':row['page'],'extraction_method':'pdf_table_row',
