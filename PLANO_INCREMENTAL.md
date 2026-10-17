@@ -12,11 +12,16 @@ Cada etapa tem escopo reduzido: implementar, testar, publicar e somente depois a
 - [x] Teste automatizado de regressão de classificacoes
 
 ## Etapa 2 — Informacoes do dia selecionado
-**Estado: planejada.**
-- [ ] Ao tocar/clicar em uma data, oferecer painel de detalhes sem alterar automaticamente o marco inicial
-- [ ] Exibir motivo, natureza do evento, origem, abrangencia e link oficial (quando cadastrado)
-- [ ] Indicar explicitamente quando o dia nao possui impedimento cadastrado, sem prometer completude
-- [ ] Testar acessibilidade e funcionamento mobile
+**Estado: implementada em 17/10/2026.**
+- [x] Ao tocar/clicar em uma data, abrir ficha sem alterar automaticamente o marco inicial
+- [x] Mostrar botao explicito **Usar como marco inicial**, preservando funcionalidade anterior
+- [x] Exibir motivo, tipo, abrangencia, impacto no prazo, fonte HTTPS quando existente, data de verificacao e versao da base
+- [x] Informar ausência de impedimento cadastrado com aviso de cobertura parcial, sem garantir dia util forense
+- [x] Validar interface em Chromium desktop (1366x768) e mobile (390x844), sem erros JavaScript
+- [x] Testar feriado nacional, suspensao TJRJ, fim de semana, dia contado e selecao expressa do novo marco
+- [x] Sincronizar `index.html` e `src/template.html` e incluir testes de regressao
+
+**Limite:** a ficha descreve dados e regras ja disponiveis; nao amplia a cobertura ou realiza coleta automatica de atos TJRJ.
 
 ## Etapa 3 — Eventos extraordinarios e escopo
 **Estado: planejada.**
