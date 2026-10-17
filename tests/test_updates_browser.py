@@ -70,7 +70,17 @@ def check_width(browser,url,width):
     page.reload(wait_until="domcontentloaded")
     open_updates(page)
     page.locator("#rafTabPending").evaluate("(el)=>el.click()")
-    assert page.locator("#rafPanelPending").is_visible(),"Painel Pendências não ficou visível após reload"
+    if not page.locator("#rafPanelPending").is_visible():
+        debug=page.evaluate("""() => ({
+          open:document.getElementById('rafNewsDialog').open,
+          selected:document.getElementById('rafTabPending').getAttribute('aria-selected'),
+          panelHidden:document.getElementById('rafPanelPending').hidden,
+          panelDisplay:getComputedStyle(document.getElementById('rafPanelPending')).display,
+          dialogDisplay:getComputedStyle(document.getElementById('rafNewsDialog')).display,
+          termsOpen:document.getElementById('rafTermsDialog')?.open,
+          modalCount:[...document.querySelectorAll('dialog[open]')].map(x=>x.id)
+        })""")
+        raise AssertionError(f"Painel Pendências oculto após reload: {debug}, jsErrors={exceptions}")
     assert page.evaluate("localStorage.getItem('raf-prazo:updates-pending-hidden:v1')")==saved,"Ocultação perdida após reload"
     page.locator("#rafRestorePending").click(timeout=6000)
     assert page.locator("#rafCandidatesList article.raf-event").count()==initial,"Restaurar não recuperou lista"
