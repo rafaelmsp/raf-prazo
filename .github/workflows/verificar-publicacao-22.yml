@@ -48,8 +48,11 @@ jobs:
                grep -Fq 'cpc_impugnacao_525' /tmp/legal22.js && \
                grep -A 1 'class="raf-tabs" role="tablist"' /tmp/site.html | grep -Fq 'id="rafTabTjrj" data-raf-tab="tjrj"' && \
                grep -Fq 'aria-selected="true" aria-controls="rafPanelTjrj"' /tmp/site.html && \
-               grep -Fq "chooseTab('tjrj');render();open(news)" /tmp/site.html; then
-              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — TJRJ primeiro e selecionado na abertura, confirmado por HTTP'
+               grep -Fq "chooseTab('tjrj');render();open(news)" /tmp/site.html && \
+               grep -Fq '/* UX desktop: resultado e parâmetros à esquerda' /tmp/site.html && \
+               grep -Fq '.workspace>.raf-22-parameters{grid-column:1;grid-row:2}' /tmp/site.html && \
+               grep -Fq '.workspace>.raf-22-calendar{grid-column:2;grid-row:1 / span 3;align-self:start}' /tmp/site.html; then
+              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — desktop com parâmetros à esquerda e calendário à direita, confirmado por HTTP'
               exit 0
             fi
             sleep 8
