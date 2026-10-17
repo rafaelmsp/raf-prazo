@@ -14,7 +14,8 @@ const applicable=(signal,p)=>{
  const cities=signal?.scope?.date_linked_comarcas;
  return !Array.isArray(cities)||!cities.length||cities.some(x=>normalize(x)===normalize(p.cityName));
 };
-const eligible=signal=>!!signal&&allow.has(signal.effect)&&iso(signal.date)&&Array.isArray(signal.references)&&signal.references.length>0;
+const isWeekendDate=date=>iso(date)&&[0,6].includes(new Date(date+'T00:00:00Z').getUTCDay());
+const eligible=signal=>!!signal&&allow.has(signal.effect)&&iso(signal.date)&&!isWeekendDate(signal.date)&&Array.isArray(signal.references)&&signal.references.length>0;
 const matches=(data,signal)=>eligible(signal)&&data?.date===signal.date&&data.effect===signal.effect&&data.excerpt===signal.excerpt
  &&signal.references.some(ref=>ref.url===data.source_url&&ref.sha256===data.source_hash_sha256);
 function activeChoice(date,p=place()){
