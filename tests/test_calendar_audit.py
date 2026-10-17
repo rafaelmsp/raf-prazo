@@ -52,7 +52,7 @@ class AuditTrackingTests(unittest.TestCase):
         source = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("slice(-200)", source)
         self.assertIn("não são autenticados", source)
-        self.assertIn("não protegidos contra edição", source)
+        self.assertIn("nem protegidos contra edição", source)
         self.assertIn("raf-prazo:audit-events:v1", source)
 
 
