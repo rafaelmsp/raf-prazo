@@ -50,3 +50,15 @@ Os testes `test_extract_tjrj.py` incluem: notícia com dia de suspensão e dia d
 **4. Casos reais e implantação:** executar testes com diferentes comarcas, retificações, prorrogações, pontos facultativos, datas de publicação e falhas de coleta antes de habilitar qualquer efeito automático.
 
 **Aviso:** Raf-Prazo é independente e não oficial. Mesmo depois de futuras ampliações, a verificação nos atos e sistemas judiciais oficiais continua necessária.
+
+## Leitura de tabelas do informativo anual (17/10/2026)
+
+O novo `scripts/pdf_table_tjrj.py` processa linhas de tabelas do PDF oficial, preservando a separação entre **Período**, **Ato**, **Publicação** e **Ementa**, na medida em que o texto do PDF permitir. `scripts/collect_tjrj.py` solicita ao pypdf o modo de extração com preservação de layout e identifica as páginas com marcadores internos. A rotina lê até 80 páginas ou o limite de texto, e pode deixar ocorrências de fora.
+
+Critérios conservadores: data válida na coluna inicial; número de ato reconhecível; expressão relevante na mesma linha/registro; quando a ementa contém datas em linguagem natural, a data inicial deve ser compatível. Dados com datas contraditórias ou números de atos confundidos com datas são rejeitados. O campo `document_page` mostra a página consultada (contagem de páginas do PDF), `extraction_method: pdf_table_row` mostra como o indício surgiu, e `source_hash_sha256` identifica os bytes coletados.
+
+**Limitações de leitura reais:** textos de múltiplas colunas podem vir entrelaçados; nem toda linha isolada é recuperada e o mecanismo pode gerar falsos negativos. O cadastro de PDF é apenas uma fonte informativa e não substitui o DJERJ. O status dos registros continua `pending_review`, `verified: false`, `applies_to_deadlines: false`, e o campo `scope_hint.kind` permanece `unresolved`. **Nenhum registro do TJRJ passa a ser aplicado ao cálculo.**
+
+O módulo `assets/tjrj-markers.js` exibe os indícios em datas do calendário para UF=RJ, com acesso à fonte, hash, referência textual do ato e página do PDF quando disponível. A presença de uma data no calendário **não comprova** que haja suspensão naquela comarca, unidade ou processo; a ausência também não certifica dia útil forense.
+
+Testes dedicados: `tests/test_pdf_table_tjrj.py` — períodos múltiplos, suspensão e feriado, datas de publicação distintas, linhas repartidas, fontes sem ano, datas cruzadas entre comarcas e falsos números de leis. O workflow GitHub Actions executa esses testes antes da coleta/publicação.
