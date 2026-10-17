@@ -180,6 +180,15 @@ def main(argv=None):
             continue
         if not str(item.get('source_url', '')).startswith(('https://www.tjrj.jus.br/', 'https://portaltj.tjrj.jus.br/')):
             continue
+        extracted = item.get('structured', {})
+        if not isinstance(extracted, dict) or extracted.get('automatically_applies_events') is not False:
+            extracted = {}
+        signals = [x for x in extracted.get('occurrences', [])[:30] if isinstance(x, dict)
+                   and x.get('status') == 'pending_review' and x.get('verified') is False
+                   and x.get('applies_to_deadlines') is False]
+        structured = {'act_references': [str(x)[:90] for x in extracted.get('act_references', [])[:30]],
+                      'occurrences': signals, 'truncated': bool(extracted.get('truncated')),
+                      'status': 'pending_review', 'automatically_applies_events': False}
         candidates.append({
             'id': item['id'], 'date': None,
             'name': str(item.get('name') or 'Documento oficial a conferir')[:240],
@@ -189,6 +198,7 @@ def main(argv=None):
             'source_url': item['source_url'],
             'source': {'title':'TJRJ — documento consultado automaticamente', 'url':item['source_url']},
             'date_mentions': item.get('date_mentions', [])[:35],
+            'structured': structured,
             'excerpt': str(item.get('excerpt',''))[:430],
             'stale': bool(item.get('stale')),
             'source_hash_sha256': str(item.get('source_hash_sha256','')),
