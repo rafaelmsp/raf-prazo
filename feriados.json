@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "version": "36a7104cca87",
-  "generated_at": "2026-10-17T06:40:01+00:00",
-  "last_checked_at": "2026-10-17T06:40:01+00:00",
+  "generated_at": "2026-10-17T06:43:28+00:00",
+  "last_checked_at": "2026-10-17T06:43:28+00:00",
   "coverage": {
     "national_years": [
       2026,
@@ -23,10 +23,10 @@
     ],
     "failed": [],
     "tjrj": "discovery_only",
-    "tjrj_collector_status": "ok",
-    "tjrj_collector_at": "2026-10-17T06:39:37+00:00",
+    "tjrj_collector_status": "partial",
+    "tjrj_collector_at": "2026-10-17T06:43:09+00:00",
     "tjrj_sources_checked": 8,
-    "tjrj_sources_success": 8,
+    "tjrj_sources_success": 7,
     "tjrj_pending": 8,
     "local": "manual_disabled"
   },
@@ -828,23 +828,23 @@
         ],
         "occurrences": [
           {
-            "id": "tjrj-extract-9a8780c66f782a8f4a",
-            "date": "2026-09-03",
-            "date_expression": "03/09/2026",
+            "id": "tjrj-extract-39f05add50d5fdd5d6",
+            "date": "2026-06-05",
+            "date_expression": "05/06/2026",
             "year_inferred": false,
-            "effect_hint": "possible_deadline_suspension",
+            "effect_hint": "optional_workday",
             "scope_hint": {
               "kind": "unresolved",
               "comarcas_mentioned": []
             },
             "has_possible_exceptions": false,
-            "evidence_excerpt": "03/09/2026 04/09/2026 11:00h e encerrar-se-á às 15:00h, ficando suspensos os prazos processuais. Dispõe sobre alteração de horário DORJ-I, n. 161, p.1. do expediente nas repartições DECRETO 03/09/2026 públicas estaduais, localizadas na",
+            "evidence_excerpt": "05/06/2026 providências. Art. 83, Inc. II, da DORJ-I, n. 236, p. 1. Lei Estadual nº 19/12/2024 Art. 83. Não haverá expediente nos 10.633/18/2024. órgãos do Poder Judiciário: II – Nos dias declarados como ponto facultativo nas repartições públicas estaduais;",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
             "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 3,
+            "document_page": 4,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "DECRETO nº 03"
+              "Lei Estadual nº 19"
             ],
             "status": "pending_review",
             "verified": false,
@@ -871,7 +871,7 @@
             "document_page": 5,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -898,7 +898,7 @@
             "document_page": 5,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -925,7 +925,7 @@
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -952,7 +952,7 @@
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -982,120 +982,6 @@
             "extraction_method": "pdf_table_row",
             "act_references": [
               "ATO EXECUTIVO nº 117"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-8577a9ae1b1c25d3ba",
-            "date": "2026-02-02",
-            "date_expression": "02/02/2026",
-            "year_inferred": false,
-            "effect_hint": "possible_deadline_suspension",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": [
-                "São João Da Barra"
-              ]
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "02/02/2026 03/07/2026 Comarca de São João da Barra, no dia 30 de junho de 2026. Resolve suspender o expediente e os prazos ATO EXECUTIVO Nº 93, DE DJERJ, ADM, n. 178, p. 7. processuais no Fórum da",
-            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 37,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 93"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-a76bcd4e81b48cd7d7",
-            "date": "2026-05-04",
-            "date_expression": "04/05/2026",
-            "year_inferred": false,
-            "effect_hint": "holiday_mention",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": [
-                "São Sebastião Do Alto"
-              ]
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "04/05/2026 05/05/2026 processuais na Comarca de São Sebastião do Alto, no dia 22 de maio de 2026. Resolve suspender o ATO EXECUTIVO Nº 72, DE expediente e os prazos",
-            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 38,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 72"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-9599f9f3dc76031081",
-            "date": "2026-03-26",
-            "date_expression": "26/03/2026",
-            "year_inferred": false,
-            "effect_hint": "holiday_mention",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": []
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "26/03/2026 São Sebastião do Alto, no dia 27 de março de 2026. Resolve suspender as atividades presenciais e os ATO EXECUTIVO Nº 25, DE DJERJ, ADM, n. 107, p. 8. prazos processuais na",
-            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 38,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 25"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-0dbe0fb003056697ba",
-            "date": "2026-02-06",
-            "date_expression": "06/02/2026",
-            "year_inferred": false,
-            "effect_hint": "holiday_mention",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": [
-                "São Sebastião Do Alto"
-              ]
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "06/02/2026 09/02/2026 Comarca de São Sebastião do Alto, nos dias 05 e 06 de fevereiro de 2026. Resolve suspender os prazos ATO EXECUTIVO Nº 22, DE DJERJ, ADM, n. 106, p. 8. processuais na Comarca de",
-            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 38,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 22"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1155,7 +1041,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "b13fa780aab79cb2f180d0d80ddf4a04ee960051f082684ff86d7eca554c532c",
+            "source_hash_sha256": "9d85ad8970b9af3466fb0124ecdd0e6de1036f798373f8d017c060698ffa6137",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1171,7 +1057,7 @@
       },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "b13fa780aab79cb2f180d0d80ddf4a04ee960051f082684ff86d7eca554c532c",
+      "source_hash_sha256": "9d85ad8970b9af3466fb0124ecdd0e6de1036f798373f8d017c060698ffa6137",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1201,7 +1087,7 @@
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "140f6c68f3df6ec442c0290304f0a29bccfa9d133387108ff36f2ff614bd321f",
+      "source_hash_sha256": "68e6c9fd96e496af57853aeb4aec7f5bdef6fe2bb8f7c24b3be3f04fc74c1ab1",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1230,7 +1116,7 @@
         "automatically_applies_events": false
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
-      "stale": false,
+      "stale": true,
       "source_hash_sha256": "5e8d926700db935fc4c46d62644edd26f3b4f3c72a3bdc28db38e8b0f84af578",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
@@ -1274,7 +1160,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "c3265b86e347d1954c85d0cb44585029567fc71206ef5ac03d32a4770a8b6d14",
+            "source_hash_sha256": "1eebb78f6d74c6b4d15f40ec3ffdf8d3724a6202965aaedb0405cb265716c89e",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1290,7 +1176,7 @@
       },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "c3265b86e347d1954c85d0cb44585029567fc71206ef5ac03d32a4770a8b6d14",
+      "source_hash_sha256": "1eebb78f6d74c6b4d15f40ec3ffdf8d3724a6202965aaedb0405cb265716c89e",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1362,23 +1248,23 @@
         ],
         "occurrences": [
           {
-            "id": "tjrj-extract-f45268f2e4e3c8d33f",
-            "date": "2026-09-03",
-            "date_expression": "03/09/2026",
+            "id": "tjrj-extract-2d04759f4a7e5eb886",
+            "date": "2026-06-05",
+            "date_expression": "05/06/2026",
             "year_inferred": false,
-            "effect_hint": "possible_deadline_suspension",
+            "effect_hint": "optional_workday",
             "scope_hint": {
               "kind": "unresolved",
               "comarcas_mentioned": []
             },
             "has_possible_exceptions": false,
-            "evidence_excerpt": "03/09/2026 04/09/2026 11:00h e encerrar-se-á às 15:00h, ficando suspensos os prazos processuais. Dispõe sobre alteração de horário DORJ-I, n. 161, p.1. do expediente nas repartições DECRETO 03/09/2026 públicas estaduais, localizadas na",
+            "evidence_excerpt": "05/06/2026 providências. Art. 83, Inc. II, da DORJ-I, n. 236, p. 1. Lei Estadual nº 19/12/2024 Art. 83. Não haverá expediente nos 10.633/18/2024. órgãos do Poder Judiciário: II – Nos dias declarados como ponto facultativo nas repartições públicas estaduais;",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
             "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 3,
+            "document_page": 4,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "DECRETO nº 03"
+              "Lei Estadual nº 19"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1405,7 +1291,7 @@
             "document_page": 5,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1432,7 +1318,7 @@
             "document_page": 5,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1459,7 +1345,7 @@
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1486,7 +1372,7 @@
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
-              "LEI nº 10"
+              "LEI nº 10.633"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1516,120 +1402,6 @@
             "extraction_method": "pdf_table_row",
             "act_references": [
               "ATO EXECUTIVO nº 117"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-3064a76bc64c015a66",
-            "date": "2026-02-02",
-            "date_expression": "02/02/2026",
-            "year_inferred": false,
-            "effect_hint": "possible_deadline_suspension",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": [
-                "São João Da Barra"
-              ]
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "02/02/2026 03/07/2026 Comarca de São João da Barra, no dia 30 de junho de 2026. Resolve suspender o expediente e os prazos ATO EXECUTIVO Nº 93, DE DJERJ, ADM, n. 178, p. 7. processuais no Fórum da",
-            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 37,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 93"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-02a40bd4cdb44c259e",
-            "date": "2026-05-04",
-            "date_expression": "04/05/2026",
-            "year_inferred": false,
-            "effect_hint": "holiday_mention",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": [
-                "São Sebastião Do Alto"
-              ]
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "04/05/2026 05/05/2026 processuais na Comarca de São Sebastião do Alto, no dia 22 de maio de 2026. Resolve suspender o ATO EXECUTIVO Nº 72, DE expediente e os prazos",
-            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 38,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 72"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-5772e256aa03850c57",
-            "date": "2026-03-26",
-            "date_expression": "26/03/2026",
-            "year_inferred": false,
-            "effect_hint": "holiday_mention",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": []
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "26/03/2026 São Sebastião do Alto, no dia 27 de março de 2026. Resolve suspender as atividades presenciais e os ATO EXECUTIVO Nº 25, DE DJERJ, ADM, n. 107, p. 8. prazos processuais na",
-            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 38,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 25"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
-            "id": "tjrj-extract-d33ba67b5c9fdb96c2",
-            "date": "2026-02-06",
-            "date_expression": "06/02/2026",
-            "year_inferred": false,
-            "effect_hint": "holiday_mention",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": [
-                "São Sebastião Do Alto"
-              ]
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "06/02/2026 09/02/2026 Comarca de São Sebastião do Alto, nos dias 05 e 06 de fevereiro de 2026. Resolve suspender os prazos ATO EXECUTIVO Nº 22, DE DJERJ, ADM, n. 106, p. 8. processuais na Comarca de",
-            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 38,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "ATO EXECUTIVO nº 22"
             ],
             "status": "pending_review",
             "verified": false,
@@ -1678,7 +1450,7 @@
       },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "8d22939ac162bfe07d7520260a357f8467fb1a91f63e5e5cd28eca9fc325f5be",
+      "source_hash_sha256": "6f08c021d2dcb3a26fe50480eeca63a3d5d34b35165114a2d39971943dd1d6f8",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1710,7 +1482,7 @@
       },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "e7ef1492f31c291e24c2b3c1b8eb9962f377145dcde3eb2869298f61bd46d7eb",
+      "source_hash_sha256": "752f5fd5ad583d6e37ea9c01fcf94ece616bed808a492978f634b1fe2832bb42",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     }
   ],
@@ -1755,8 +1527,8 @@
       "label": "TJRJ — documentos oficiais consultados",
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
       "kind": "official",
-      "status": "ok",
-      "checked_at": "2026-10-17T06:39:37+00:00",
+      "status": "partial",
+      "checked_at": "2026-10-17T06:43:09+00:00",
       "note": "Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica."
     },
     {
