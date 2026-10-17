@@ -4,6 +4,39 @@ from __future__ import annotations
 import argparse,datetime as dt,hashlib,io,json,re,sys,urllib.parse,urllib.request
 from html.parser import HTMLParser
 from pathlib import Path
+import ssl,urllib.error
+
+# Autoridade intermediaria oficial da GlobalSign, ja autenticada/pinada na origem.
+# https://support.globalsign.com/ssl/products/organizationssl/organizationssl-intermediate-certificates
+INTERMEDIATE_URL='https://secure.globalsign.com/cacert/gsrsaovsslca2018.crt'
+INTERMEDIATE_SHA1='dfe83023062b997682708b4eab8e819aff5d9775'
+_tjrj_ssl_context=None
+
+def trusted_tjrj_context():
+ global _tjrj_ssl_context
+ if _tjrj_ssl_context is not None:return _tjrj_ssl_context
+ req=urllib.request.Request(INTERMEDIATE_URL,headers={'User-Agent':'Raf-Prazo/2.1 TLS verifier'})
+ # A conexao com a GlobalSign usa o CA-store padrao, SEM desabilitar TLS.
+ with urllib.request.urlopen(req,timeout=10) as response:
+  if urllib.parse.urlsplit(response.geturl()).hostname!='secure.globalsign.com':
+   raise ValueError('Redirecionamento inesperado da autoridade certificadora')
+  cert=response.read(16000)
+ if not cert or len(cert)>12000:raise ValueError('Certificado intermediario invalido')
+ if cert.lstrip().startswith(b'-----BEGIN CERTIFICATE-----'):
+  import base64
+  data=b''.join(line for line in cert.splitlines() if not line.startswith(b'-----'))
+  cert=base64.b64decode(data,validate=True)
+ if hashlib.sha1(cert).hexdigest()!=INTERMEDIATE_SHA1:
+  raise ValueError('Certificado intermediario nao corresponde a assinatura oficial da GlobalSign')
+ ctx=ssl.create_default_context()
+ ctx.load_verify_locations(cadata=ssl.DER_cert_to_PEM_cert(cert))
+ # O intermediario identificado torna-se ancora parcial; nome do host,
+ # data de validade e assinatura TLS do portal continuam obrigatorios.
+ ctx.verify_flags|=ssl.VERIFY_X509_PARTIAL_CHAIN
+ ctx.check_hostname=True
+ ctx.verify_mode=ssl.CERT_REQUIRED
+ _tjrj_ssl_context=ctx
+ return ctx
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'dados'/'coleta-tjrj.json'
@@ -71,7 +104,14 @@ def mentioned_dates(text):
 def fetch_source(url):
  if not valid_url(url):raise ValueError('URL não oficial')
  req=urllib.request.Request(url,headers={'User-Agent':'Raf-Prazo/2.1 (coleta informativa nao oficial)','Accept':'text/html,application/pdf;q=0.9'})
- with urllib.request.urlopen(req,timeout=14) as response:
+ try:
+  response=urllib.request.urlopen(req,timeout=14)
+ except urllib.error.URLError as exc:
+  if not isinstance(getattr(exc,'reason',None),ssl.SSLCertVerificationError):
+   raise
+  # Recupera cadeia intermediaria AUSENTE, sem aceitar TLS inseguro.
+  response=urllib.request.urlopen(req,timeout=14,context=trusted_tjrj_context())
+ with response:
   redirect=response.geturl()
   if not valid_url(redirect):raise ValueError('Redirecionamento externo bloqueado')
   if response.status!=200:raise RuntimeError('HTTP '+str(response.status))
