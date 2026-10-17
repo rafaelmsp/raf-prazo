@@ -717,8 +717,24 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  const safeUrl=url=>{try{const u=new URL(url);return u.protocol==='https:'?u.href:null}catch(_){return null}};
  const link=(url,label)=>{const href=safeUrl(url);if(!href)return el('span','',label||'Fonte não disponível');const a=el('a','',label||'Consultar fonte oficial ↗');a.href=href;a.target='_blank';a.rel='noopener noreferrer';return a};
  function getSeen(){try{return JSON.parse(localStorage.getItem(seenKey)||'[]')}catch(_){return []}}
- function markSeen(){const b=window.RafPrazoData?.base;if(!b)return;try{localStorage.setItem(seenKey,JSON.stringify((b.changes||[]).map(c=>c.id)))}catch(_){}updateBadge();}
- function updateBadge(){const changes=window.RafPrazoData?.base?.changes||[],seen=new Set(getSeen());const unread=changes.filter(c=>!seen.has(c.id)).length;dot.textContent=unread>99?'99+':String(unread);dot.hidden=!unread;}
+ function allNotificationIds(b){
+  const ids=(b.changes||[]).map(c=>c.id).filter(x=>typeof x==='string');
+  const uniq=new Set(ids);
+  for(const c of b.candidates||[]){
+   if(c?.type!=='CANDIDATO_TJRJ'||c.stale===true)continue;
+   for(const o of c.structured?.occurrences||[]){
+    if(!o||o.status!=='pending_review'||o.verified!==false||o.applies_to_deadlines!==false)continue;
+    if(!['possible_deadline_suspension','possible_deadline_extension'].includes(o.effect_hint))continue;
+    if(o.source_url!==c.source_url||o.source_hash_sha256!==c.source_hash_sha256)continue;
+    const excerpt=String(o.evidence_excerpt||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/\\s+/g,' ').trim().slice(0,170);
+    if(excerpt.length<18)continue;
+    uniq.add('tjrj:'+o.date+':'+o.effect_hint+':'+excerpt);
+   }
+  }
+  return [...uniq].slice(0,350);
+ }
+ function markSeen(){const b=window.RafPrazoData?.base;if(!b)return;try{localStorage.setItem(seenKey,JSON.stringify(allNotificationIds(b)))}catch(_){}updateBadge();}
+ function updateBadge(){const b=window.RafPrazoData?.base||{},seen=new Set(getSeen());const unread=allNotificationIds(b).filter(id=>!seen.has(id)).length;dot.textContent=unread>99?'99+':String(unread);dot.hidden=!unread;}
  function renderChanges(){const b=window.RafPrazoData?.base;if(!b)return;const root=$('rafUpdatesList');root.replaceChildren();const changes=(b.changes||[]).slice(0,35);
   if(!changes.length)root.append(el('p','raf-small-note','Nenhuma alteração de eventos registrada na base disponível.'));
   for(const c of changes){const card=el('div','raf-event'),top=el('div','raf-event-top'),body=el('div','raf-event-body'),meta=el('div','raf-event-meta');
