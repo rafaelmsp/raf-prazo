@@ -33,7 +33,7 @@ test('cálculo, escolha no calendário e campo de data recusam finais de semana'
   assert.ok(html.includes("if(isWeekendDate(next)){$('start').value=lastValidStart;"),'Campo de data deve recusar');
   assert.ok(html.includes("initial.getDay()===0||initial.getDay()===6"),'Data inicial sugerida deve ser útil na semana');
   assert.ok(html.includes('id="rafStartRule"'),'Instrução visível obrigatória');
-  assert.ok(html.includes("btn.addEventListener('click',()=>openDayDetails(n))"),'Ainda deve ser possível consultar o dia');
+  assert.ok(html.includes("btn.addEventListener('click',()=>{updateRafDayFocus(n);openDayDetails(n)})"),'A data deve atualizar o resumo e manter a ficha de consulta acessível');
  }
 });
 
