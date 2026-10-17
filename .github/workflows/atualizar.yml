@@ -9,6 +9,8 @@ on:
       - scripts/extract_tjrj.py
       - scripts/sync.py
       - tests/test_extract_tjrj.py
+      - tests/test_tjrj_markers.py
+      - assets/tjrj-markers.js
       - .github/workflows/atualizar.yml
   schedule:
     - cron: '17 10 * * *'
@@ -33,6 +35,8 @@ jobs:
           python-version: '3.12'
       - name: Dependencia de leitura de documentos oficiais em PDF
         run: python -m pip install 'pypdf>=5,<7'
+      - name: Verificar sintaxe dos indicadores TJRJ
+        run: node --check assets/tjrj-markers.js
       - name: Testes de seguranca e colecao
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Diagnosticar certificados TLS da origem oficial (sem ignorar validacao)
