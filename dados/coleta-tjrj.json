@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "service": "TJRJ",
+  "status": "not_run",
+  "collected_at": null,
+  "source_count": 0,
+  "source_success": 0,
+  "source_statuses": [],
+  "candidates": [],
+  "automatically_applies_events": false,
+  "coverage": "A coleta ainda não executou. Nenhuma suspensão TJRJ está autorizada a afetar prazos."
+}
