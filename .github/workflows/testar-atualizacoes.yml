@@ -63,6 +63,8 @@ jobs:
                curl -fsSL --max-time 20 -H "Cache-Control: no-cache" "$URL/assets/tjrj-news.js?verify=$GITHUB_RUN_ID-$tentativa" -o /tmp/raf-tjrj-news.js && \
                grep -q 'id="rafTabPending"' /tmp/raf-prazo-publicado.html && \
                grep -q 'id="rafTjrjOptInMount"' /tmp/raf-prazo-publicado.html && \
+               grep -Fq 'news.dataset.backdropDown' /tmp/raf-prazo-publicado.html && \
+               grep -Fq "if(d.id==='rafNewsDialog')continue" /tmp/raf-prazo-publicado.html && \
                grep -q 'RafPrazoTjrjNewsUnread' /tmp/raf-tjrj-news.js; then
               echo "PAGES_VERIFIED: HTML de cinco abas e script TJRJ publicados"
               exit 0
