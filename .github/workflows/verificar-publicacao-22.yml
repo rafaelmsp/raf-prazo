@@ -1,0 +1,36 @@
+name: Raf-Prazo 2.2 - Site Publicado
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verificar interface e script públicos
+        run: |
+          set -e
+          BASE="https://rafaelmsp.github.io/raf-prazo"
+          for attempt in 1 2 3 4 5 6 7 8; do
+            echo "Conferindo publicação do Raf-Prazo 2.2 — tentativa $attempt"
+            if curl --retry 2 -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/?v=2.2-$GITHUB_RUN_ID-$attempt" -o /tmp/site.html && \
+               curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/assets/raf-prazo-22.js?v=2.2-$GITHUB_RUN_ID-$attempt" -o /tmp/legal22.js && \
+               grep -Fq 'id="rafRegime"' /tmp/site.html && \
+               grep -Fq 'id="rafAct"' /tmp/site.html && \
+               grep -Fq 'assets/raf-prazo-22.js' /tmp/site.html && \
+               grep -Fq 'id="rafTabPending"' /tmp/site.html && \
+               grep -Fq 'RafPrazoLegal22' /tmp/legal22.js; then
+              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO'
+              exit 0
+            fi
+            sleep 8
+          done
+          echo 'O GitHub Pages ainda não expõe todos os arquivos da versão 2.2' >&2
+          exit 1
