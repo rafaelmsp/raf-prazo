@@ -53,7 +53,7 @@ O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os
 
 ## Identidade visual institucional 2.3.1
 
-O restante do site recebeu uma paleta profissional de **branco, cinza frio e azul PJe**, com cartões, botões, modais, avisos e menus discretos. O calendário e suas cores foram **intencionalmente preservados**. [Especificação visual](docs/IDENTIDADE_INSTITUCIONAL_231.md).
+O restante do site recebeu uma paleta profissional de **branco, cinza frio e azul PJe**, com cartões, botões, modais, avisos e menus discretos. O calendário foi atualizado na versão **2.3.2**: dias não úteis em tons claros de cinza, azul-acinzentado e verde discreto, sem rosa/lilás; o vencimento permanece em azul PJe. [Especificação visual](docs/IDENTIDADE_INSTITUCIONAL_231.md).
 
 ## UX Premium 2.3 — desktop harmonizado
 
