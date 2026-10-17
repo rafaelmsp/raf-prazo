@@ -9,7 +9,7 @@ import unicodedata
 PAGE_RE = re.compile(r'^\s*\[RAF_TJRJ_PAGE=(\d+)\]\s*$', re.I)
 START_RE = re.compile(r'^\s*(?P<period>\d{1,2}[./]\d{1,2}(?:[./]20\d{2})?(?:\s*(?:(?:,|;)\s*(?:e\s+)?|\be\s+|\bat[eé]\s+|\ba\s+|[-–]\s*)\d{1,2}[./]\d{1,2}(?:[./]20\d{2})?){0,14})\s*(?P<rest>.*)$',re.I)
 DATE_RE = re.compile(r'(?<!\d)(\d{1,2})[./](\d{1,2})(?:[./](20\d{2}))?(?!\d)')
-ACT_RE = re.compile(r'\b(ato\s+executivo|aviso|ato\s+normativo|decreto|lei(?:\s+(?:org[aâ]nica(?:\s+do\s+munic[ií]pio)?|federal|estadual))?|portaria)\s+n[.º°o]*\s*(\d{1,3}(?:\.\d{3})+|\d{1,7})(?:[/.-](20\d{2}))?\b',re.I)
+ACT_RE = re.compile(r'\b(ato\s+executivo|aviso|ato\s+normativo|decreto|lei(?:\s+(?:org[aâ]nica(?:\s+do\s+munic[ií]pio)?|federal|estadual))?|portaria)\s+n[.º°o]*\s*(\d{1,3}(?:\.\d{3})+|\d{1,7})(?:[/.-](20\d{2}))?\b(?![/.-]\d{1,2}[/.-]20\d{2})',re.I)
 SUSP = re.compile(r'\b(?:suspens(?:ao|os|as)|suspender|suspende|suspensos?|declarar?\s+suspensos?)\b[^.]{0,90}\b(?:prazos?\s+processuais?|expediente\s+e\s+(?:os\s+)?prazos?)\b|\bprazos?\s+processuais?\s+suspens[oa]s?\b',re.I)
 EXT = re.compile(r'\bprorrog(?:acao|ar?|ados?|adas?)\b',re.I)
 FERIADO = re.compile(r'\bferiado\b|\bsemana\s+santa\b',re.I)
