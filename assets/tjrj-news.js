@@ -68,13 +68,13 @@ function ensure(){
   render();
  });
  hide.addEventListener('click',()=>{
-  const items=getHidden();
+  const items=getHidden();let visible=0;
   for(const entry of feed()){
    const terms=[entry.date,entry.effect,entry.excerpt,...(entry.scope.date_linked_comarcas||[])].join(' ').toLocaleLowerCase('pt-BR');
-   if(!search||terms.includes(search))items.add(entry.id);
+   if(!items.has(entry.id)&&(!search||terms.includes(search))){items.add(entry.id);visible++;if(visible>=40)break}
   }
-  if(!items.size)return;
-  if(typeof confirm==='function'&&!confirm('Ocultar os itens exibidos nesta aba somente neste navegador? Os documentos oficiais continuarão na base e poderão ser restaurados.'))return;
+  if(!visible)return;
+  if(typeof confirm==='function'&&!confirm('Ocultar os até 40 itens exibidos nesta aba somente neste navegador? Os documentos oficiais continuarão na base e poderão ser restaurados.'))return;
   if(saveHidden(items))render();
  });
  restore.addEventListener('click',()=>{if(saveHidden(new Set()))render()});
