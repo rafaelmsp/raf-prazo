@@ -51,6 +51,12 @@ O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os
 
 **Biblioteca de atos (2.2.5):** lista direta por categorias, com 13 opções no JEC e 21 no CPC. Prazos legais, condicionados e definidos nos autos são identificados separadamente; os 15 dias de referência em certas hipóteses do JEC só entram na calculadora por escolha expressa após conferência. Preparo recursal de 48 horas não é convertido em dias úteis. [Escopo e fontes](docs/BIBLIOTECA_PRAZOS_223.md).
 
+## UX Premium 2.3 — desktop harmonizado
+
+O novo layout prioriza o vencimento único e os parâmetros à esquerda (44%) e organiza o calendário judicial à direita (56%). A grade mantém 42 células quadradas; em telas largas, a área lateral mostra um resumo contextual da data selecionada, com botão para consultar detalhes e fontes na ficha já existente. O celular preserva o fluxo habitual. **Nenhuma regra jurídica da contagem foi alterada.**
+
+[Plano e critérios da UX 2.3](docs/UX_PREMIUM_23.md).
+
 ## 1. Visão geral e objetivos
 
 O **Raf-Prazo** é uma aplicação web estática, escrita em **HTML5, CSS e JavaScript**, voltada à **conferência auxiliar de prazos processuais em dias úteis**. Foi concebida para reduzir tarefas repetitivas, tornar visíveis as datas excluídas da contagem e facilitar a rastreabilidade de fontes.
