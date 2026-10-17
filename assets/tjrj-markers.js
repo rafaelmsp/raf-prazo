@@ -34,7 +34,7 @@ function extractedByDay(){
    let day=grouped.get(a.date);
    if(!day){day=new Map();grouped.set(a.date,day)}
    let signal=day.get(key);
-   if(!signal){signal={date:a.date,effect:a.effect_hint,excerpt,yearInferred:a.year_inferred===true,scope:a.scope_hint||{},references:[]};day.set(key,signal)}
+   if(!signal){signal={date:a.date,effect:a.effect_hint,excerpt,yearInferred:a.year_inferred===true,scope:a.scope_hint||{},page:Number.isInteger(a.document_page)?a.document_page:null,acts:Array.isArray(a.act_references)?a.act_references.slice(0,3):[],references:[]};day.set(key,signal)}
    if(!signal.references.some(s=>s.url===doc.source_url))signal.references.push({url:doc.source_url,sha256:doc.source_hash_sha256});
   }
  }
@@ -79,6 +79,9 @@ function showDay(date){
   const card=el('article','raf-official-card');
   card.append(el('strong','',effects[signal.effect]),el('p','',signal.excerpt));
   card.append(el('small','','Vigência e abrangência não verificadas.'+(signal.yearInferred?' Ano inferido do documento: conferir.':'')));
+  if(signal.page)card.append(el('small','','Página da extração no PDF: '+signal.page));
+  if(signal.acts.length)card.append(el('small','','Referências textuais (não verificadas): '+signal.acts.join(' · ')));
+  if(Array.isArray(signal.scope.comarcas_mentioned)&&signal.scope.comarcas_mentioned.length)card.append(el('small','','Comarcas mencionadas, abrangência não comprovada: '+signal.scope.comarcas_mentioned.join(', ')));
   const refs=el('div','raf-official-sources');
   for(const [i,s] of signal.references.entries()){
    const a=el('a','','Abrir fonte oficial '+(i+1)+' ↗');a.href=s.url;a.target='_blank';a.rel='noopener noreferrer';
