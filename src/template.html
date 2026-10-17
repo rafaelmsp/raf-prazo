@@ -939,9 +939,46 @@ function openDayDetails(n){
  if(!$('rafDayDialog').open)dialog('rafDayDialog');
 }
 window.RafPrazoRefreshDay=date=>{const n=p(date);if(n!==null&&$('rafDayDialog').open)openDayDetails(n)};
+
+let rafFocusedDay=null;
+function updateRafDayFocus(n){
+ const root=$('rafDayFocus');if(!root||n===null||!Number.isFinite(n))return;
+ rafFocusedDay=n;
+ const block=reason(n),local=localLegalEvent(n),inRows=calc?.rows.find(row=>row.n===n),
+       onStart=calc?.start===n,onDue=calc?.due===n,extras=extraAt(n);
+ let status='Nenhum impedimento registrado';
+ if(onDue)status='Vencimento estimado do prazo';
+ else if(onStart)status='Marco inicial — não contado';
+ else if(block)status=block.name||'Data excluída segundo as opções atuais';
+ else if(inRows?.count!==null&&inRows?.count!==undefined)status='Dia útil nº '+inRows.count+' do prazo';
+ else if(local)status='Feriado local identificado — não aplicado';
+ $('rafDayFocusDate').textContent=f(n,{day:'2-digit',month:'short',year:'numeric'});
+ $('rafDayFocusWeekday').textContent=f(n,{weekday:'long'});
+ $('rafDayFocusStatus').textContent=status;
+ let note=block?'Exclusão segundo as opções atuais. Confira abrangência e documentação oficial.':
+       local?'Feriado local informativo; confirme se a opção local está ativa e se o expediente forense foi afetado.':
+       onStart?'O marco informado não integra a quantidade de dias contados. Confira a intimação nos autos.':
+       onDue?'Vencimento auxiliar: confirme a decisão, a ciência e o calendário forense do processo.':
+       inRows?.count!=null?'Dia contado no cálculo atual; verifique suspensões e feriados eventualmente não cadastrados.':
+       'Nenhum impedimento conhecido na base não assegura expediente forense regular.';
+ if(extras.length)note+=' Há ocorrência extraordinária em análise nesta data.';
+ $('rafDayFocusNote').textContent=note;
+ const cal=$('calendar');
+ if(cal){
+  cal.querySelectorAll('.raf-23-focus-selected').forEach(el=>el.classList.remove('raf-23-focus-selected'));
+  const selected=cal.querySelector('[data-raf-day="'+n+'"]');
+  if(selected)selected.classList.add('raf-23-focus-selected');
+ }
+}
+$('rafDayFocusDetails')?.addEventListener('click',()=>{if(rafFocusedDay!==null)openDayDetails(rafFocusedDay)});
+
 function renderCalendar(){let now=new Date(),month=viewed||{y:now.getFullYear(),m:now.getMonth()};$('month').textContent=new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(month.y,month.m,1)));
  let base=Math.floor(Date.UTC(month.y,month.m,1)/MS),offset=(new Date(base*MS).getUTCDay()+6)%7,calendar=$('calendar'),counted=new Set(calc?.rows.filter(r=>r.count!==null).map(r=>r.n)||[]);calendar.replaceChildren();let fragment=document.createDocumentFragment();
- for(let i=0;i<42;i++){let n=base-offset+i,d=new Date(n*MS),block=reason(n),btn=document.createElement('button');btn.type='button';btn.className='day';if(d.getUTCMonth()!==month.m)btn.classList.add('other');if(block){btn.classList.add('blocked');const category=block.type==='FINAL DE SEMANA'?'raf-weekend':block.type==='RECESSO'?'raf-recess':block.type==='MANUAL'?'raf-manual':block.type==='EXCLUSAO_USUARIO'?'raf-user-tjrj':block.type==='ESCOLHA_USUARIO_TJRJ'?'raf-user-tjrj':block.type==='SUSPENSAO_TJRJ'?'raf-suspension':'raf-holiday';btn.classList.add(category);btn.dataset.eventKind=category;}if(localLegalEvent(n)&&!block)btn.classList.add('raf-local-information');if(extraAt(n).length)btn.classList.add('raf-extra-flag');if(counted.has(n))btn.classList.add('counted');if(n===calc?.start)btn.classList.add('origin');if(n===calc?.due)btn.classList.add('due');btn.append(document.createTextNode(String(d.getUTCDate())));if(n===calc?.start||n===calc?.due){let small=document.createElement('small');small.textContent=n===calc?.due?'FIM':'BASE';btn.append(small)}let what=n===calc?.due?'Vencimento':n===calc?.start?'Marco informado':block?`${block.name} (${block.type})`:counted.has(n)?'Dia computado':localLegalEvent(n)?'Feriado local identificado (não aplicado; habilite a opção para considerar)':'Dia sem impedimento conhecido';btn.title=`${f(n,{day:'2-digit',month:'2-digit',year:'numeric'})}: ${what}`;btn.setAttribute('aria-label',btn.title+'; abrir detalhes da data');btn.addEventListener('click',()=>openDayDetails(n));fragment.append(btn)}calendar.append(fragment);
+ for(let i=0;i<42;i++){let n=base-offset+i,d=new Date(n*MS),block=reason(n),btn=document.createElement('button');btn.type='button';btn.className='day';btn.dataset.rafDay=String(n);if(d.getUTCMonth()!==month.m)btn.classList.add('other');if(block){btn.classList.add('blocked');const category=block.type==='FINAL DE SEMANA'?'raf-weekend':block.type==='RECESSO'?'raf-recess':block.type==='MANUAL'?'raf-manual':block.type==='EXCLUSAO_USUARIO'?'raf-user-tjrj':block.type==='ESCOLHA_USUARIO_TJRJ'?'raf-user-tjrj':block.type==='SUSPENSAO_TJRJ'?'raf-suspension':'raf-holiday';btn.classList.add(category);btn.dataset.eventKind=category;}if(localLegalEvent(n)&&!block)btn.classList.add('raf-local-information');if(extraAt(n).length)btn.classList.add('raf-extra-flag');if(counted.has(n))btn.classList.add('counted');if(n===calc?.start)btn.classList.add('origin');if(n===calc?.due)btn.classList.add('due');btn.append(document.createTextNode(String(d.getUTCDate())));if(n===calc?.start||n===calc?.due){let small=document.createElement('small');small.textContent=n===calc?.due?'FIM':'BASE';btn.append(small)}let what=n===calc?.due?'Vencimento':n===calc?.start?'Marco informado':block?`${block.name} (${block.type})`:counted.has(n)?'Dia computado':localLegalEvent(n)?'Feriado local identificado (não aplicado; habilite a opção para considerar)':'Dia sem impedimento conhecido';btn.title=`${f(n,{day:'2-digit',month:'2-digit',year:'numeric'})}: ${what}`;btn.setAttribute('aria-label',btn.title+'; abrir detalhes da data');btn.addEventListener('click',()=>{updateRafDayFocus(n);openDayDetails(n)});fragment.append(btn)}calendar.append(fragment);
+ const selected=rafFocusedDay===null?null:new Date(rafFocusedDay*MS);
+ const inViewedMonth=selected&&selected.getUTCFullYear()===month.y&&selected.getUTCMonth()===month.m;
+ const focus=inViewedMonth?rafFocusedDay:calc?.start!==undefined&&calc?.start!==null&&new Date(calc.start*MS).getUTCFullYear()===month.y&&new Date(calc.start*MS).getUTCMonth()===month.m?calc.start:base;
+ updateRafDayFocus(focus);
 }
 function validateBase(data){
  if(!data||data.schema!==1||!Array.isArray(data.events)||!Array.isArray(data.changes)||!Array.isArray(data.sources)||!Array.isArray(data.coverage?.national_years))throw Error('Formato do calendário inválido');
