@@ -52,8 +52,13 @@ def check(browser,url,width):
     assert page.locator("#rafActBasis").inner_text().endswith("42, caput")
     page.locator("#rafAct").select_option("jec_embargos")
     assert page.locator("#days").input_value()=="5"
+    page.locator("#rafProfileDone").click()
+    assert not page.locator("#rafProfileDialog").is_visible()
     page.locator("#days").fill("7")
     assert page.locator("#rafAct").input_value()=="custom"
+    assert "Prazo personalizado" in page.locator("#rafProfileShort").inner_text()
+    page.locator("#rafProfileOpen").click()
+    assert page.locator("#rafProfileDialog").is_visible()
     # Comunicação é informativa; o marco utilizado não muda automaticamente.
     original=page.locator("#start").input_value()
     page.locator("#rafCommunicationDetails summary").click()
