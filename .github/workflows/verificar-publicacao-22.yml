@@ -58,15 +58,12 @@ jobs:
                grep -Fq 'id="rafDayFocusDetails"' /tmp/site.html && \
                grep -Fq 'function updateRafDayFocus(n)' /tmp/site.html && \
                ! grep -Fq 'id="calendarDue"' /tmp/site.html && \
-               grep -Fq '/* Raf-Prazo 2.3.1 — identidade institucional.' /tmp/site.html && \
-               grep -Fq '/* Raf-Prazo 2.3.2 — calendário sóbrio:' /tmp/site.html && \
-               grep -Fq -- '--raf-holiday-bg:#eef3f7' /tmp/site.html && \
-               grep -Fq -- '--raf-recess-bg:#f3f5f7' /tmp/site.html && \
-               grep -Fq -- '--office-blue:#1261a0;' /tmp/site.html && \
-               grep -Fq -- '--office-panel:#ffffff;' /tmp/site.html && \
-               grep -Fq '.workspace>.panel:not(.raf-22-calendar)' /tmp/site.html && \
-               grep -Fq '.raf-22-results .result-block{background:var(--office-blue-tint)' /tmp/site.html; then
-              echo 'RAF_PRAZO_232_CALENDARIO_PUBLICADO — neutro azul PJe confirmado no site público'
+               grep -Fq -- '--pje-header:#1261a0' /tmp/site.html && \
+               grep -Fq -- '--raf-holiday-bg:#f9e0e2' /tmp/site.html && \
+               { [ "$GITHUB_REF" != "refs/heads/main" ] || { \
+                   grep -Fq -- '--raf-weekend-bg:#b85a5f' /tmp/site.html && \
+                   grep -Fq '.calendar .day.blocked.raf-weekend:not(.due)' /tmp/site.html; }; }; then
+              echo 'RAF_PRAZO_CORES_PUBLICADAS — cabeçalho azul PJe, feriados preservados e fins de semana vinho'
               exit 0
             fi
             sleep 8
