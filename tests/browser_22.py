@@ -27,6 +27,25 @@ def check(browser,url,width):
     assert page.locator("#rafAct").input_value()=="custom"
     assert page.locator("#rafContextResult").inner_text().startswith("JEC")
     assert page.locator(".raf-22-parameters #rafRegime").count()==0, "O seletor deve estar fora do painel esquerdo"
+    # Fluxo evidente: resultado primeiro e parâmetros imediatamente abaixo.
+    due_panel=page.locator(".raf-22-results").bounding_box()
+    params=page.locator(".raf-22-parameters").bounding_box()
+    date_input=page.locator("#start").bounding_box()
+    calendar_panel=page.locator(".raf-22-calendar").bounding_box()
+    assert due_panel and params and date_input and calendar_panel
+    assert params["y"]>=due_panel["y"]+due_panel["height"]-3, f"Parâmetros devem ficar abaixo do vencimento em {width}px"
+    if width>740:
+        assert calendar_panel["x"]<due_panel["x"], f"Calendário deveria ficar à esquerda em {width}px"
+    else:
+        assert calendar_panel["y"]>=params["y"]+params["height"]-3, f"Calendário deveria ficar depois dos parâmetros em {width}px"
+    assert date_input["height"]>=52, f"Campo de data pouco evidente em {width}px"
+    assert page.locator("#start").evaluate("(el)=>getComputedStyle(el).borderTopWidth")=="2px"
+    days_boxes=page.locator("#calendar button.day")
+    assert days_boxes.count()==42
+    cells=days_boxes.evaluate_all("(els)=>els.map(el=>{const box=el.getBoundingClientRect();return [box.width,box.height]})")
+    assert all(abs(w-h)<4 for w,h in cells), f"Casas do calendário esticadas em {width}px: {cells[:4]}"
+    assert max(h for w,h in cells)<=66, f"Casas muito grandes em {width}px"
+    assert page.locator("#rafCalendarSettings").get_attribute("open") is None
     assert page.locator(".raf-22-parameters #rafRuleBox").count()==0, "Fundamentos devem aparecer apenas no drawer"
     old_calendar_y=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top + scrollY")
     if width <= 430:
@@ -36,6 +55,13 @@ def check(browser,url,width):
         assert box and box["width"]>30 and box["x"]>=-2 and box["x"]+box["width"]<=width+2, f"{sel} fora da tela {width}px: {box}"
     SHOTS.mkdir(exist_ok=True)
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-light.png"),full_page=True)
+    before=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top+scrollY")
+    page.locator("#rafCalendarSettings summary").click()
+    assert page.locator("#rafCalendarSettings").get_attribute("open") is not None
+    after=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top+scrollY")
+    if width>740: assert abs(before-after)<3, f"Abrir feriados deslocou calendário em {width}px"
+    page.locator("#rafCalendarSettings summary").click()
+    assert page.locator("#rafCalendarSettings").get_attribute("open") is None
     page.locator("#rafProfileOpen").click()
     assert page.locator("#rafProfileDialog").is_visible()
     assert page.locator("#rafRegime").is_visible()

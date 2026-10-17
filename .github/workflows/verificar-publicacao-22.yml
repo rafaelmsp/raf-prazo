@@ -28,7 +28,11 @@ jobs:
                grep -Fq 'id="rafTabPending"' /tmp/site.html && \
                grep -Fq 'RafPrazoLegal22' /tmp/legal22.js && \
                grep -Fq 'id="rafProfileDialog"' /tmp/site.html && \
-               grep -Fq 'id="rafProfileOpen"' /tmp/site.html; then
+               grep -Fq 'id="rafProfileOpen"' /tmp/site.html && \
+               { [ "$GITHUB_REF" != "refs/heads/main" ] || { \
+                   grep -Fq 'id="rafCalendarSettings"' /tmp/site.html && \
+                   grep -Fq 'raf-22-primary-date' /tmp/site.html && \
+                   grep -Fq 'aspect-ratio:1/1' /tmp/site.html; }; }; then
               echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — janela retrátil conferida em main'
               exit 0
             fi
