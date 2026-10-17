@@ -42,8 +42,11 @@ jobs:
                ! grep -Fq 'id="rafActSearch"' /tmp/site.html && \
                grep -Fq "groupOrder=['Recursos'" /tmp/legal22.js && \
                grep -Fq 'jec_preparo' /tmp/legal22.js && \
-               grep -Fq 'cpc_impugnacao_525' /tmp/legal22.js; then
-              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — atos JEC/CPC exibidos sem busca, verificados por HTTP'
+               grep -Fq 'cpc_impugnacao_525' /tmp/legal22.js && \
+               grep -A 1 'class="raf-tabs" role="tablist"' /tmp/site.html | grep -Fq 'id="rafTabTjrj" data-raf-tab="tjrj"' && \
+               grep -Fq 'aria-selected="true" aria-controls="rafPanelTjrj"' /tmp/site.html && \
+               grep -Fq "chooseTab('tjrj');render();open(news)" /tmp/site.html; then
+              echo 'RAF_PRAZO_22_PUBLICADO_E_VALIDADO — TJRJ primeiro e selecionado na abertura, confirmado por HTTP'
               exit 0
             fi
             sleep 8
