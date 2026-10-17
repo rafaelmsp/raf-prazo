@@ -1,6 +1,12 @@
 name: Raf-Prazo - Atualizar calendario
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/collect_tjrj.py
+      - .github/workflows/atualizar.yml
   schedule:
     - cron: '17 10 * * *'
 permissions:
