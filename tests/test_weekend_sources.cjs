@@ -40,7 +40,7 @@ test('cálculo, escolha no calendário e campo de data recusam finais de semana'
 test('ativação local do TJRJ não pode excluir finais de semana duas vezes',()=>{
  assert.ok(optin.includes("const isWeekendDate=date=>"));
  assert.ok(optin.includes('!isWeekendDate(signal.date)&&Array.isArray(signal.references)'));
- const fn=vm.runInNewContext('(date)=>'+optin.match(/const isWeekendDate=date=>([^;]+);/)[1],{Date,Set,iso:d=>/^20\\d{2}-\\d{2}-\\d{2}$/.test(d)});
+ const fn=vm.runInNewContext('(date)=>'+optin.match(/const isWeekendDate=date=>([^;]+);/)[1],{Date,Set,iso:d=>typeof d==='string'&&d.length===10});
  assert.equal(fn('2026-10-17'),true);
  assert.equal(fn('2026-10-19'),false);
 });
