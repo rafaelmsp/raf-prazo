@@ -8,7 +8,7 @@ O Raf-Prazo é **nacional e independente**. O perfil inicial para um novo usuár
 
 ## Comportamento implementado
 
-- Painel principal compacto: **Procedimento → Ato processual → Marco conferido → Duração em dias úteis**.
+- Painel principal: **Marco conferido + duração em dias úteis**, sem crescimento artificial do calendário. O botão compacto de **procedimento/ato** abre um drawer independente, que não altera o tamanho dos três painéis.
 - Presets JEC: personalizado, recurso inominado de 10 dias (art. 42), resposta ao recurso de 10 dias (art. 42, § 2º), embargos de declaração de 5 dias (art. 49).
 - Presets CPC: personalizado, apelação de 15 dias, contrarrazões à apelação de 15 dias, embargos de declaração de 5 dias. Lei e artigo indicados junto ao seletor.
 - Alteração manual na duração desativa o preset escolhido; mudança de procedimento também limpa o preset, sem redefinir arbitrariamente a duração manual.
@@ -17,7 +17,7 @@ O Raf-Prazo é **nacional e independente**. O perfil inicial para um novo usuár
 - O preparo recursal no JEC (48 horas, art. 42, § 1º) é explicitamente destacado **fora** do motor de dias úteis.
 - Perfil, ato e tipo da comunicação persistidos localmente na chave `raf-prazo:juridical-profile:v1`; não alteram o local de outros usuários, nem as chaves TJRJ de exclusões individuais.
 - Memórias textuais, visualização e snapshots de novos cálculos incluem identificação do procedimento e do ato.
-- Modo claro e escuro: mesma identidade visual do Raf-Prazo, cartões leves, texto legível, seletor sem dependências e detalhes avançados recolhíveis.
+- Modo claro e escuro: mesma identidade visual do Raf-Prazo, cartões leves e texto legível. Procedimento, ato, fundamento e comunicação ficam no drawer lateral no desktop e em folha retrátil inferior no celular, com retorno de foco ao botão de abertura.
 
 ## O que deliberadamente NÃO foi feito
 
@@ -51,3 +51,7 @@ O Raf-Prazo é **nacional e independente**. O perfil inicial para um novo usuár
 5. GitHub Pages deve servir `id="rafRegime"`, `id="rafAct"` e o JS `RafPrazoLegal22`.
 
 **Observação:** a aprovação do código e dos testes não equivale a validação jurídica oficial dos prazos. Conferir intimação, procedimento, abrangência do calendário e eventual decisão judicial.
+
+## Revisão de UX 2.2.1 — simetria entre calendário e painel
+
+O bloco de procedimento e ato passou para a janela `#rafProfileDialog`, aberta por `#rafProfileOpen`. A janela ocupa camada própria (`dialog.showModal()`), não altera a altura da grade de três colunas e oferece opção Concluir/Fechar e ESC. O bloco de parâmetros mostra apenas um resumo JEC/CPC com o ato atual, seguido dos campos essenciais de data e duração. Foi removida a regra de altura mínima artificial de 750 px. Os testes Chromium verificam posição do calendário antes/depois da abertura, ausência de transbordamento horizontal e funcionamento de controle em temas claro e escuro.
