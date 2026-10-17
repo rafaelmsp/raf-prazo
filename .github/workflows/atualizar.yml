@@ -10,6 +10,8 @@ on:
       - scripts/pdf_table_tjrj.py
       - scripts/scope_tjrj.py
       - scripts/sync.py
+      - scripts/local_holidays.py
+      - tests/test_local_holidays.py
       - tests/test_extract_tjrj.py
       - tests/test_pdf_table_tjrj.py
       - tests/test_scope_tjrj.py
@@ -48,9 +50,6 @@ jobs:
           node --check assets/tjrj-markers.js
           node --check assets/tjrj-optin.js
           node --test tests/test_tjrj_optin.cjs
-          node --test tests/test_weekend_sources.cjs
-      - name: Testes de seguranca e colecao
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Diagnosticar certificados TLS da origem oficial (sem ignorar validacao)
         run: |
           for host in www.tjrj.jus.br portaltj.tjrj.jus.br; do
@@ -65,6 +64,10 @@ jobs:
         run: python scripts/sync.py
       - name: Atualizar calendario incorporado
         run: python scripts/build_html.py
+      - name: Testes da cobertura RJ e Duque de Caxias
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py' -v
+          node --test tests/test_weekend_sources.cjs
       - name: Validar artefatos
         run: |
           python -m json.tool feriados.json > /dev/null
