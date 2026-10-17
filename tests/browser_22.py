@@ -21,17 +21,31 @@ def check(browser,url,width):
     if page.locator("#rafTermsDialog").is_visible():
         page.locator("#rafTermsCheckbox").check()
         page.locator("#rafTermsAccept").click()
-    assert page.locator("#rafRegime").is_visible()
+    assert page.locator("#rafProfileOpen").is_visible()
+    assert not page.locator("#rafProfileDialog").is_visible()
     assert page.locator("#rafRegime").input_value()=="jec"
     assert page.locator("#rafAct").input_value()=="custom"
     assert page.locator("#rafContextResult").inner_text().startswith("JEC")
+    assert page.locator(".raf-22-parameters #rafRegime").count()==0, "O seletor deve estar fora do painel esquerdo"
+    assert page.locator(".raf-22-parameters #rafRuleBox").count()==0, "Fundamentos devem aparecer apenas no drawer"
+    old_calendar_y=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top + scrollY")
     if width <= 430:
         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+2"),f"Overflow horizontal global em {width}px"
-    for sel in ("#rafRegime","#rafAct","#rafRuleBox","#start","#days","#calendar","#due"):
+    for sel in ("#rafProfileOpen","#start","#days","#calendar","#due"):
         box=page.locator(sel).bounding_box()
         assert box and box["width"]>30 and box["x"]>=-2 and box["x"]+box["width"]<=width+2, f"{sel} fora da tela {width}px: {box}"
     SHOTS.mkdir(exist_ok=True)
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-light.png"),full_page=True)
+    page.locator("#rafProfileOpen").click()
+    assert page.locator("#rafProfileDialog").is_visible()
+    assert page.locator("#rafRegime").is_visible()
+    assert page.locator("#rafAct").is_visible()
+    assert page.locator("#rafRuleBox").is_visible()
+    # Drawer ocupa camada independente e não aumenta a altura do calendário.
+    new_calendar_y=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top + scrollY")
+    assert abs(new_calendar_y-old_calendar_y)<2, f"Calendário deslocado pelo drawer ({width}px)"
+    assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+2"),"Drawer provocou overflow horizontal"
+    page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-drawer-light.png"),full_page=True)
     page.locator("#rafAct").select_option("jec_recurso")
     assert page.locator("#days").input_value()=="10"
     assert "10 dias úteis" in page.locator("#rafRuleSummary").inner_text()
@@ -52,12 +66,17 @@ def check(browser,url,width):
     page.locator("#rafAct").select_option("cpc_apelacao")
     assert page.locator("#days").input_value()=="15"
     assert page.locator("#rafContextResult").inner_text().startswith("CPC")
+    page.locator("#rafProfileDone").click()
+    assert not page.locator("#rafProfileDialog").is_visible()
+    assert page.locator("#rafProfileOpen").is_visible()
+    assert page.locator("#rafProfileShort").inner_text().startswith("CPC")
     page.reload(wait_until="domcontentloaded")
     page.wait_for_function("window.RafPrazoLegal22?.getCurrent()")
     assert page.locator("#rafRegime").input_value()=="cpc"
     assert page.locator("#rafAct").input_value()=="cpc_apelacao"
     assert page.locator("#days").input_value()=="15"
     assert page.locator("#rafContextResult").inner_text().startswith("CPC")
+    assert not page.locator("#rafProfileDialog").is_visible()
     # Os termos já foram aceitos antes do reload.
     page.locator("#memoryOpen").click()
     assert page.locator("#memoryDialog").is_visible()
@@ -66,6 +85,10 @@ def check(browser,url,width):
     page.locator("#themeToggle").click()
     assert page.locator("html").get_attribute("data-theme")=="dark"
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-dark.png"),full_page=True)
+    page.locator("#rafProfileOpen").click()
+    assert page.locator("#rafProfileDialog").is_visible()
+    page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-drawer-dark.png"),full_page=True)
+    page.locator("#rafProfileDone").click()
     assert not errors,f"JavaScript errors: {errors}"
     print(f"PREMIUM_BROWSER_OK {width}px · JEC/CPC, presets, comunicação, memória, tema e persistência",flush=True)
     ctx.close()
