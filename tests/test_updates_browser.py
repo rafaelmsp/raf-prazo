@@ -6,7 +6,6 @@ import pathlib
 import socketserver
 import threading
 
-from playwright.sync_api import sync_playwright
 
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 
@@ -98,6 +97,7 @@ def check_width(browser,url,width):
     context.close()
 
 def main():
+    from playwright.sync_api import sync_playwright
     with Server(("127.0.0.1",0),Handler) as server:
         thread=threading.Thread(target=server.serve_forever,daemon=True)
         thread.start()
