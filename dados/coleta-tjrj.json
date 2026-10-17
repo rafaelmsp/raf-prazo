@@ -1,12 +1,34 @@
 {
   "schema": 1,
   "service": "TJRJ",
-  "status": "not_run",
-  "collected_at": null,
-  "source_count": 0,
+  "status": "unavailable",
+  "collected_at": "2026-10-17T05:43:54+00:00",
+  "source_count": 3,
   "source_success": 0,
-  "source_statuses": [],
+  "source_statuses": [
+    {
+      "id": "consulta_2026",
+      "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
+      "checked_at": "2026-10-17T05:43:54+00:00",
+      "result": "failed",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "id": "central",
+      "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
+      "checked_at": "2026-10-17T05:43:54+00:00",
+      "result": "failed",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "id": "aviso_290",
+      "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
+      "checked_at": "2026-10-17T05:43:54+00:00",
+      "result": "failed",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    }
+  ],
   "candidates": [],
   "automatically_applies_events": false,
-  "coverage": "A coleta ainda não executou. Nenhuma suspensão TJRJ está autorizada a afetar prazos."
+  "coverage": "Fontes apenas de descoberta; sem confirmação jurídica de vigência, suspensão ou comarca."
 }
