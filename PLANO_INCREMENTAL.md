@@ -24,11 +24,18 @@ Cada etapa tem escopo reduzido: implementar, testar, publicar e somente depois a
 **Limite:** a ficha descreve dados e regras ja disponiveis; nao amplia a cobertura ou realiza coleta automatica de atos TJRJ.
 
 ## Etapa 3 — Eventos extraordinarios e escopo
-**Estado: planejada.**
-- [ ] Modelar ocorrencias sem efeito automatico (mero expediente, ponto facultativo, indisponibilidade)
-- [ ] Registrar data e horario de inicio/fim e se houve suspensao, prorrogacao do vencimento ou informacao
-- [ ] Restringir abrangencia por tribunal, comarca, unidade ou processo, conforme fonte oficial
-- [ ] Evitar excluir datas de prazo sem ato juridico especifico confirmado
+**Estado: implementada em 17/10/2026.**
+- [x] Formulario para registrar ocorrencias informativas, alteracao de expediente, indisponibilidade e possivel suspensao
+- [x] Registrar data e horario local de inicio e fim; limitar intervalo a 31 dias e rejeitar dados invalidos
+- [x] Classificar efeito declarado: informativo, possivel suspensao da contagem ou possivel prorrogacao de vencimento
+- [x] Identificar ambito declarado (tribunal, comarca, vara/unidade, processo) e localidade selecionada; sem homologacao automatica
+- [x] Mostrar indicacao visual no calendario e os registros pendentes na ficha do dia
+- [x] Armazenar e permitir excluir registros somente neste navegador (ate 40)
+- [x] Nao alterar o motor de contagem: relatos sao `pending`, `verified: false`, `applies_to_deadlines: false`
+- [x] Testar em Chromium desktop e mobile: evento multidiario, persistencia, exclusao, rejeicao de periodo invalido e vencimento inalterado
+- [x] Atualizar arquivos publicados `index.html`, `src/template.html` e teste permanente de regressao
+
+**Limites:** esta etapa nao consulta indisponibilidade oficial automaticamente, nao autentica documentos, nao valida alcance individual ou certifica prorrogação. Uma ocorrencia extraordinaria pendente nao se torna uma exclusao automatica apenas por ter uma URL cadastrada. O registro local nao e compartilhado entre dispositivos.
 
 ## Etapa 4 — Rastreabilidade e historico
 **Estado: planejada.**
