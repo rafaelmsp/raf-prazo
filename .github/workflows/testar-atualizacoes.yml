@@ -53,3 +53,21 @@ jobs:
         run: |
           python scripts/build_html.py
           git diff --exit-code -- src/template.html index.html
+      - name: Conferir GitHub Pages (HTML e script publicados)
+        run: |
+          set -e
+          URL="https://rafaelmsp.github.io/raf-prazo"
+          for tentativa in 1 2 3; do
+            echo "Verificação da versão pública — tentativa $tentativa"
+            if curl -fsSL --max-time 20 -H "Cache-Control: no-cache" "$URL/?verify=$GITHUB_RUN_ID-$tentativa" -o /tmp/raf-prazo-publicado.html && \
+               curl -fsSL --max-time 20 -H "Cache-Control: no-cache" "$URL/assets/tjrj-news.js?verify=$GITHUB_RUN_ID-$tentativa" -o /tmp/raf-tjrj-news.js && \
+               grep -q 'id="rafTabPending"' /tmp/raf-prazo-publicado.html && \
+               grep -q 'id="rafTjrjOptInMount"' /tmp/raf-prazo-publicado.html && \
+               grep -q 'RafPrazoTjrjNewsUnread' /tmp/raf-tjrj-news.js; then
+              echo "PAGES_VERIFIED: HTML de cinco abas e script TJRJ publicados"
+              exit 0
+            fi
+            sleep 8
+          done
+          echo "PAGES_UNVERIFIED: recurso novo não pôde ser confirmado no site público" >&2
+          exit 1
