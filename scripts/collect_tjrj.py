@@ -3,6 +3,7 @@
 from __future__ import annotations
 import argparse,datetime as dt,hashlib,io,json,re,sys,urllib.parse,urllib.request
 from html.parser import HTMLParser
+from extract_tjrj import extract_structured
 from pathlib import Path
 import ssl,urllib.error
 
@@ -167,6 +168,8 @@ def collect(previous,fetch=fetch_source,seeds=SOURCES,max_discovered=8):
    if TERMS.search(body) or 'suspens' in destination or 'feriad' in destination:
     record_id='tjrj-source-'+hashlib.sha256(destination.encode()).hexdigest()[:18]
     c=make_candidate(destination,title,body,digest,when,prior.get(record_id))
+    c['structured']=extract_structured(body,destination,digest,title)
+    c['extracted_count']=len(c['structured']['occurrences'])
     candidates[c['id']]=c
    for href,anchor in links:
     if discovered>=max_discovered:break
