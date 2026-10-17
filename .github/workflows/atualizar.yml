@@ -29,6 +29,12 @@ jobs:
         run: python -m pip install 'pypdf>=5,<7'
       - name: Testes de seguranca e colecao
         run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Diagnosticar certificados TLS da origem oficial (sem ignorar validacao)
+        run: |
+          for host in www.tjrj.jus.br portaltj.tjrj.jus.br; do
+            echo "Verificacao TLS: $host"
+            timeout 12 bash -c "echo | openssl s_client -connect $host:443 -servername $host -verify_return_error 2>&1" | grep -E "subject=|issuer=|verify error:|Verify return code:|certificate verify failed" | head -12 || true
+          done
       - name: Coletar documentos do TJRJ sem alterar prazos
         run: python scripts/collect_tjrj.py
       - name: Validar candidatos — jamais aptos a alterar contagem
