@@ -59,12 +59,14 @@ jobs:
                grep -Fq 'function updateRafDayFocus(n)' /tmp/site.html && \
                ! grep -Fq 'id="calendarDue"' /tmp/site.html && \
                grep -Fq '/* Raf-Prazo 2.3.1 — identidade institucional.' /tmp/site.html && \
-               { [ "$GITHUB_REF" != "refs/heads/main" ] || { grep -Fq '/* Raf-Prazo 2.3.2 — calendário sóbrio:' /tmp/site.html && grep -Fq -- '--raf-holiday-bg:#eef3f7' /tmp/site.html && grep -Fq -- '--raf-recess-bg:#f3f5f7' /tmp/site.html; }; } && \
+               grep -Fq '/* Raf-Prazo 2.3.2 — calendário sóbrio:' /tmp/site.html && \
+               grep -Fq -- '--raf-holiday-bg:#eef3f7' /tmp/site.html && \
+               grep -Fq -- '--raf-recess-bg:#f3f5f7' /tmp/site.html && \
                grep -Fq -- '--office-blue:#1261a0;' /tmp/site.html && \
                grep -Fq -- '--office-panel:#ffffff;' /tmp/site.html && \
                grep -Fq '.workspace>.panel:not(.raf-22-calendar)' /tmp/site.html && \
                grep -Fq '.raf-22-results .result-block{background:var(--office-blue-tint)' /tmp/site.html; then
-              echo 'RAF_PRAZO_231_INSTITUCIONAL_PUBLICADO — tons neutros fora do calendário confirmados por HTTP'
+              echo 'RAF_PRAZO_232_CALENDARIO_PUBLICADO — neutro azul PJe confirmado no site público'
               exit 0
             fi
             sleep 8
