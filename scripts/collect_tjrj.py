@@ -8,9 +8,12 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'dados'/'coleta-tjrj.json'
 SOURCES=(
- {'id':'consulta_2026','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc'},
- {'id':'central','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389'},
- {'id':'aviso_290','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295'},
+ {'id':'consulta_2026_portaltj','url':'https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc'},
+ {'id':'central_portaltj','url':'https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389'},
+ {'id':'aviso_290_portaltj','url':'https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295'},
+ {'id':'consulta_2026_www','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc'},
+ {'id':'central_www','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389'},
+ {'id':'aviso_290_www','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295'},
 )
 TERMS=re.compile(r'(?i)suspens[ãa]o\s+(?:de\s+|dos\s+)?praz|prazos?\s+processua|feriados?\s+loca|expediente\s+forense|ponto\s+facultativo|ato\s+executivo')
 DATES=re.compile(r'(?<!\d)(\d{1,2})[./-](\d{1,2})[./-](20\d{2})(?!\d)')
