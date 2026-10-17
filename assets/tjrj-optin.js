@@ -52,7 +52,7 @@ const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.cla
 let selectedDay=null;
 const description=e=>e.effect==='holiday_mention'?'Feriado citado no PDF':'Possível suspensão processual';
 function makeButton(date,signal){
- const p=place(),active=!!activeChoice(date,p),ok=applicable(signal,p),b=el('button','btn raf-optin-button',ok?(active?'✓ Desconsiderado — desativar':'Desconsiderar na contagem (simulação)'):'Outra comarca — não aplicável');
+ const p=place(),selected=activeChoice(date,p),active=!!selected&&matches(selected,signal),ok=applicable(signal,p),b=el('button','btn raf-optin-button',ok?(active?'✓ Desconsiderado — desativar':'Desconsiderar na contagem (simulação)'):'Outra comarca — não aplicável');
  b.type='button';b.disabled=!ok;b.setAttribute('aria-pressed',String(active));
  b.addEventListener('click',()=>toggle(date,signal));
  return b;
