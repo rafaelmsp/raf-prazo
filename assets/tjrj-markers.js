@@ -121,5 +121,5 @@ if(cal){
 window.addEventListener('raf-prazo:sync',decorate);
 $('uf')?.addEventListener('change',()=>queueMicrotask(decorate));
 ensureSection();decorate();
-window.RafPrazoTjrjEvidence=Object.freeze({list:()=>[...extractedByDay()].map(([date,a])=>({date,count:a.length,sources:a.map(x=>x.references.length)}))});
+window.RafPrazoTjrjEvidence=Object.freeze({list:()=>[...extractedByDay()].map(([date,a])=>({date,count:a.length,sources:a.map(x=>x.references.length)})),signals:date=>(extractedByDay().get(date)||[])});
 })();
