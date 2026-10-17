@@ -15,7 +15,7 @@ class Node {
  trigger(name){this.listeners[name]?.({target:this})}
  closest(name){return name==='[data-days]'?this:null}
 }
-const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','quick'];
+const ids=['rafRegime','rafAct','rafOrigin','days','start','rafRegimeCaption','rafRuleSummary','rafActDescription','rafActBasis','rafRuleLink','rafOriginGuidance','rafSourceGuidance','rafContextResult','rafSpecialDeadline','rafCommunicationDate','sourceFoot','quick'];
 const nodes=Object.fromEntries(ids.map(id=>[id,new Node(id)]));
 nodes.rafRegime.value='jec';nodes.rafOrigin.value='conferido';nodes.start.value='2026-10-19';nodes.days.value='15';
 const storage=new Map();const windowStub={addEventListener(){}};
@@ -30,17 +30,20 @@ test('JEC é padrão e prazo inicial manual não inventa ato',()=>{
  assert.equal(nodes.days.value,'15');
  assert.equal(metadata().regime,'jec');
  assert.equal(metadata().count_mode,'business_days');
+ assert.equal(nodes.rafSpecialDeadline.hidden,true);
  assert.ok(nodes.rafRuleSummary.textContent.includes('JEC'));
 });
 test('recurso do JEC define exatamente 10 dias e lei',()=>{
  nodes.rafAct.value='jec_recurso';nodes.rafAct.trigger('change');
  assert.equal(Number(nodes.days.value),10);
+ assert.equal(nodes.rafSpecialDeadline.hidden,false);
  assert.equal(metadata().basis,'Lei 9.099/95, arts. 12-A e 42, caput');
  assert.ok(metadata().source.startsWith('https://www.planalto.gov.br/'));
 });
 test('embargos de declaração JEC definem 5 dias',()=>{
  nodes.rafAct.value='jec_embargos';nodes.rafAct.trigger('change');
  assert.equal(Number(nodes.days.value),5);
+ assert.equal(nodes.rafSpecialDeadline.hidden,true);
  assert.equal(metadata().preset,'jec_embargos');
 });
 test('modificação manual rompe preset e preserva número informado',()=>{
