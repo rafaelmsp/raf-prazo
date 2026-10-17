@@ -257,7 +257,7 @@
  <span id="rafDayStatus" class="raf-day-status">—</span>
  <dl id="rafDayFields" class="raf-day-list"></dl>
  <section class="raf-extra-day" id="rafExtraDay" hidden><h3>Ocorrências extraordinárias registradas — não aplicadas automaticamente</h3><div id="rafExtraDayList" class="raf-extra-list"></div></section><p class="raf-day-warning" id="rafDayHelp">O calendário é auxiliar e possui cobertura parcial. Confirme feriados, suspensões e regras do prazo em fontes oficiais.</p>
- <div class="raf-day-actions"><button type="button" class="btn" id="rafExtraFromDay">+ Registrar ocorrência</button><button type="button" class="btn" data-close="rafDayDialog">Fechar</button><button type="button" class="btn primary" id="rafDayChooseStart">Usar como marco inicial</button></div>
+ <div class="raf-day-actions"><button type="button" class="btn" id="rafExtraFromDay" hidden disabled style="display:none">+ Registrar ocorrência</button><button type="button" class="btn" data-close="rafDayDialog">Fechar</button><button type="button" class="btn primary" id="rafDayChooseStart">Usar como marco inicial</button></div>
 </div></dialog>
 <dialog id="rafExtraDialog" class="raf-extra-dialog" aria-labelledby="rafExtraTitle"><div class="raf-extra-inner">
  <div class="raf-extra-head"><h2 id="rafExtraTitle">Ocorrência extraordinária</h2><button type="button" class="close" data-close="rafExtraDialog" aria-label="Fechar registro de ocorrência">×</button></div>
@@ -794,5 +794,6 @@ updateTheme();setUfs();$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').check
 })();
 </script>
 
+<script src="assets/tjrj-markers.js"></script>
 </body>
 </html>
