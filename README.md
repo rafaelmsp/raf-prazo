@@ -64,21 +64,21 @@ Um sistema oficial de gestão processual, uma certidão de prazo, um sistema de 
 |---|---|
 | Contagem em dias úteis | Recebe marco inicial e quantidade de **1 a 365 dias úteis**; exclui o marco inicial informado. |
 | Atalhos de prazo | Botões de 5, 10, 15 e 30 dias. |
-| Calendário | Navegação por mês, seleção do marco pelo calendário e distinção visual de dias contados, não úteis e vencimento. |
+| Calendário | Navegação por mês, ficha de detalhes ao tocar nas datas, escolha expressa de novo marco e destaques para feriados, suspensões e ocorrências informativas. |
 | Resultado em destaque | Data de vencimento acima do calendário e painel de resultado. |
 | Recesso CPC | Opção para excluir o período de **20/12 a 20/01**; deve ser analisada conforme o caso concreto. |
 | Eventos locais | Opção para considerar eventos estaduais/municipais **presentes na base confirmada**; a cobertura não é completa. |
 | Atos TJRJ | Opção para aplicar atos **cadastrados e conferidos**; não representa monitoramento de todos os atos. |
 | Datas manuais | Inclusão de feriados/suspensões por data e motivo, armazenados no navegador, **sem validação jurídica automática**. |
 | Memória de cálculo | Relação cronológica de dias contados e excluídos, com cópia e impressão/PDF pelo navegador. |
-| Histórico | Registros locais de cálculos salvos; limpeza pelo próprio usuário. |
-| Exportação | CSV da memória do cálculo. |
+| Histórico | Cálculos salvos com versão da base, parâmetros e memória cronológica congelada (para registros novos); reabertura recalcula na base atual. |
+| Exportação | CSV da memória do cálculo e JSON com trilha local de alterações e cálculos salvos. |
 | Interface | Modo claro inicial, modo escuro, menu lateral retrátil, apresentação compacta. |
-| Atualizações | Central com **Alterações, Fontes e Sincronização**, indicando origem e limitações. |
+| Atualizações | Central com **Alterações, Fontes e Sincronização**, indicando origem e limites. A seção **Rastreabilidade** registra alterações locais de eventos extraordinários e datas manuais. |
 | Termos e tutorial | Modal de aceite inicial, consulta posterior dos termos e tutorial incorporado. |
 | Offline | Base inicial de contingência embutida em `index.html`, sujeita a desatualização. |
 
-**Atenção:** os botões e recursos não substituem a confirmação do calendário forense oficial. A presença de um evento na interface não demonstra, por si, sua aplicabilidade a determinado processo.
+**Documentação da auditoria local (Etapa 4):** [Registro de alterações e memórias congeladas](docs/AUDITORIA_LOCAL.md). A trilha fica somente no navegador e não é imutável nem certificada.\n\n**Atenção:** os botões e recursos não substituem a confirmação do calendário forense oficial. A presença de um evento na interface não demonstra, por si, sua aplicabilidade a determinado processo.
 
 ## 3. Como usar a calculadora
 
