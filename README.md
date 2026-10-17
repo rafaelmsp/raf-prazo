@@ -51,6 +51,10 @@ O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os
 
 **Biblioteca de atos (2.2.5):** lista direta por categorias, com 13 opções no JEC e 21 no CPC. Prazos legais, condicionados e definidos nos autos são identificados separadamente; os 15 dias de referência em certas hipóteses do JEC só entram na calculadora por escolha expressa após conferência. Preparo recursal de 48 horas não é convertido em dias úteis. [Escopo e fontes](docs/BIBLIOTECA_PRAZOS_223.md).
 
+## Identidade visual institucional 2.3.1
+
+O restante do site recebeu uma paleta profissional de **branco, cinza frio e azul PJe**, com cartões, botões, modais, avisos e menus discretos. O calendário e suas cores foram **intencionalmente preservados**. [Especificação visual](docs/IDENTIDADE_INSTITUCIONAL_231.md).
+
 ## UX Premium 2.3 — desktop harmonizado
 
 O novo layout prioriza o vencimento único e os parâmetros à esquerda (44%) e organiza o calendário judicial à direita (56%). A grade mantém 42 células quadradas; em telas largas, a área lateral mostra um resumo contextual da data selecionada, com botão para consultar detalhes e fontes na ficha já existente. O celular preserva o fluxo habitual. **Nenhuma regra jurídica da contagem foi alterada.**
