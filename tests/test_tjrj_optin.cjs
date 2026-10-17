@@ -23,7 +23,7 @@ class El {
  setAttribute(name,value){this[name]=value}
  click(){this.listeners.click?.({target:this,preventDefault(){}})}
 }
-const elements={uf:new El('select'),city:new El('select'),calendar:new El('div'),rafCandidatesList:new El('div'),rafNewsOpen:new El('button')};
+const elements={uf:new El('select'),city:new El('select'),calendar:new El('div'),rafTjrjOptInMount:new El('div'),rafNewsOpen:new El('button')};
 elements.uf.value='RJ';elements.city.value='3301702';elements.city.selectedOptions=[{textContent:'Duque de Caxias'}];
 const storage=new Map(),audits=[];let confirmCount=0,recalculations=0;
 const windowStub={
@@ -43,7 +43,7 @@ function findButton(node){if(node.tag==='button'&&node.className?.includes('raf-
 test('ativa, registra, persiste e desativa sem login',()=>{
  const control=windowStub.RafPrazoTjrjSelection;
  assert.equal(control.resolve(candidate.date,{uf:'RJ',city:'3301702',cityName:'Duque de Caxias'}),null);
- const button=findButton(elements.rafCandidatesList);assert.ok(button);
+ const button=findButton(elements.rafTjrjOptInMount);assert.ok(button);
  button.click();
  assert.ok(control.resolve(candidate.date,{uf:'RJ',city:'3301702',cityName:'Duque de Caxias'}));
  assert.equal(confirmCount,1);assert.equal(audits[0][0],'ATIVACAO_LOCAL');
@@ -57,7 +57,7 @@ test('ativa, registra, persiste e desativa sem login',()=>{
  assert.equal(control.resolve(candidate.date,{uf:'RJ',city:'3301702',cityName:'Duque de Caxias'}),null,'Fonte alterada deve invalidar escolha anterior');
  selectedSignal=old;
  assert.ok(control.resolve(candidate.date,{uf:'RJ',city:'3301702',cityName:'Duque de Caxias'}));
- const again=findButton(elements.rafCandidatesList);assert.ok(again);again.click();
+ const again=findButton(elements.rafTjrjOptInMount);assert.ok(again);again.click();
  assert.equal(control.resolve(candidate.date,{uf:'RJ',city:'3301702',cityName:'Duque de Caxias'}),null);
  assert.equal(audits.at(-1)[0],'DESATIVACAO_LOCAL');
 });

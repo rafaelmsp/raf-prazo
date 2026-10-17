@@ -68,7 +68,7 @@ function updateDayControls(){
  });
 }
 function updateNewsControls(){
- const root=$('rafCandidatesList');if(!root)return;
+ const root=$('rafTjrjOptInMount');if(!root)return;
  root.querySelector('#rafTjrjOptInNews')?.remove();
  const box=el('section','raf-optin-news');box.id='rafTjrjOptInNews';
  box.append(el('strong','','TJRJ — dias não contados por escolha do usuário'));

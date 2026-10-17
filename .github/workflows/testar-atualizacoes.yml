@@ -1,0 +1,55 @@
+name: Raf-Prazo - Testar Atualizacoes
+on:
+  push:
+    branches:
+      - main
+      - feature/central-atualizacoes-cinco-abas-20261017
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ui-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias para testes documentais
+        run: python -m pip install 'pypdf>=5,<7'
+      - name: Verificar JavaScript
+        run: |
+          node --check assets/tjrj-news.js
+          node --check assets/tjrj-optin.js
+          node --check assets/tjrj-markers.js
+          node --check assets/user-date-exclusions.js
+      - name: Testes Node
+        run: |
+          node --test tests/test_update_tabs.cjs
+          node --test tests/test_tjrj_news.cjs
+          node --test tests/test_tjrj_optin.cjs
+          node --test tests/test_user_date_exclusions.cjs
+          node --test tests/test_local_holidays_browser.cjs
+          node --test tests/test_weekend_sources.cjs
+      - name: Testes Python
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Validação conservadora dos dados
+        run: |
+          python -m json.tool feriados.json > /dev/null
+          python -m json.tool dados/coleta-tjrj.json > /dev/null
+          python - <<'PY'
+          import json
+          b=json.load(open('feriados.json',encoding='utf-8'))
+          assert all(c.get('applies_to_deadlines') is False for c in b['candidates'])
+          assert not any(e.get('type')=='SUSPENSAO_TJRJ' for e in b['events'])
+          assert all(o.get('status')=='pending_review' and o.get('verified') is False and o.get('applies_to_deadlines') is False for c in b['candidates'] for o in (c.get('structured') or {}).get('occurrences',[]))
+          PY
+      - name: Verificar build sem regressão
+        run: |
+          python scripts/build_html.py
+          git diff --exit-code -- src/template.html index.html
