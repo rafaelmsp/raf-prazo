@@ -1,4 +1,4 @@
-"""Raf-Prazo 2.2: smoke Chromium em resoluções reais, layout e jornadas jurídicas."""
+"""Raf-Prazo 2.3: UX harmonizada, calendário e jornadas jurídicas em Chromium."""
 from __future__ import annotations
 import http.server
 import pathlib
@@ -43,6 +43,22 @@ def check(browser,url,width):
         assert calendar_panel["x"]<due_panel["x"], f"Tablet deve preservar o layout em {width}px"
     else:
         assert calendar_panel["y"]>=params["y"]+params["height"]-3, f"Celular deve manter calendário após parâmetros em {width}px"
+    # UX 2.3 — resultado único e conferência contextual sem alongar o calendário.
+    assert page.locator("#calendarDue").count()==0,"Vencimento não deve estar duplicado no calendário"
+    assert page.locator(".raf-23-calendar-main #calendar").count()==1
+    assert page.locator("#rafDayFocus").count()==1
+    assert page.locator("#rafDayFocusDate").text_content().strip() not in ("","—")
+    if width>=1061:
+        ratio=due_panel["width"]/(due_panel["width"]+calendar_panel["width"])
+        assert .40<=ratio<=.48, f"Proporção do desktop inesperada ({ratio:.3f}) em {width}px"
+    if width>=1340:
+        day_focus=page.locator("#rafDayFocus").bounding_box()
+        cal_grid=page.locator("#calendar").bounding_box()
+        assert day_focus and cal_grid
+        assert page.locator("#rafDayFocus").is_visible()
+        assert day_focus["x"]>=cal_grid["x"]+cal_grid["width"]-3,"Ficha deve estar ao lado direito do calendário"
+        assert day_focus["x"]+day_focus["width"]<=calendar_panel["x"]+calendar_panel["width"]+2
+    if width<=740: assert page.locator("#rafDayFocus").is_hidden(),"Resumo lateral só deve aparecer em telas maiores"
     assert date_input["height"]>=52, f"Campo de data pouco evidente em {width}px"
     assert page.locator("#start").evaluate("(el)=>getComputedStyle(el).borderTopWidth")=="2px"
     days_boxes=page.locator("#calendar button.day")
@@ -60,6 +76,19 @@ def check(browser,url,width):
         assert box and box["width"]>30 and box["x"]>=-2 and box["x"]+box["width"]<=width+2, f"{sel} fora da tela {width}px: {box}"
     SHOTS.mkdir(exist_ok=True)
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-light.png"),full_page=True)
+    # O mesmo dia da grade alimenta a conferência resumida e a ficha detalhada.
+    first_day=page.locator("#calendar button.day:not(.other)").first
+    focus_number=first_day.get_attribute("data-raf-day")
+    first_day.click()
+    assert page.locator("#rafDayDialog").is_visible()
+    assert page.locator('#calendar button[data-raf-day="'+focus_number+'"]').evaluate("(el)=>el.classList.contains('raf-23-focus-selected')")
+    assert page.locator("#rafDayFocusDate").text_content().strip() not in ("","—")
+    assert len(page.locator("#rafDayFocusNote").text_content().strip())>30
+    page.locator('#rafDayDialog [data-close="rafDayDialog"]').last.click()
+    if width>=1340:
+        page.locator("#rafDayFocusDetails").click()
+        assert page.locator("#rafDayDialog").is_visible()
+        page.locator('#rafDayDialog [data-close="rafDayDialog"]').last.click()
     before=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top+scrollY")
     page.locator("#rafCalendarSettings summary").click()
     assert page.locator("#rafCalendarSettings").get_attribute("open") is not None

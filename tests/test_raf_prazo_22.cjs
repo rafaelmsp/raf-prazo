@@ -31,6 +31,27 @@ vm.runInNewContext(code,{document:doc,window:windowStub,
 const metadata=()=>windowStub.RafPrazoLegal22.getCurrent();
 const cards=()=>nodes.rafActList.children.flatMap(group=>group.children.filter(c=>c.className==='raf-library-item'));
 const groups=()=>nodes.rafActList.children.map(g=>g.dataset.category);
+test('UX Premium 2.3 elimina o vencimento duplicado e mantém conferência do dia independente da regra jurídica',()=>{
+ for(const target of ['src/template.html','index.html']){
+  const html=fs.readFileSync(path.join(ROOT,target),'utf8');
+  for(const id of ['rafDayFocus','rafDayFocusDate','rafDayFocusWeekday','rafDayFocusStatus','rafDayFocusNote','rafDayFocusDetails']){
+   assert.ok(html.includes('id="'+id+'"'),'Faltou o campo do dia: '+id);
+  }
+  assert.ok(!html.includes('id="calendarDue"'),'Vencimento não deve ser repetido no calendário');
+  assert.ok(!html.includes('id="calendarWeekday"'),'Dia da semana não deve ser duplicado');
+  assert.ok(!html.includes("topDue=document.getElementById('calendarDue')"),'Observer obsoleto do vencimento duplicado');
+  assert.ok(html.includes('raf-23-calendar-layout'));
+  assert.ok(html.includes('raf-23-calendar-main'));
+  assert.ok(html.includes('rafFocusedDay'));
+  assert.ok(html.includes('updateRafDayFocus(focus)'));
+  assert.ok(html.includes("btn.dataset.rafDay=String(n)"));
+  assert.ok(html.includes('grid-template-columns:minmax(0,44fr) minmax(0,56fr)'));
+  assert.ok(html.includes('@media (max-width:740px){'));
+  assert.ok(html.includes('.raf-23-day-focus{display:none}'));
+  assert.ok(html.includes("legal_profile:window.RafPrazo22Current||null"));
+  assert.ok(html.includes('id="rafTabTjrj"'));
+ }
+});
 test('desktop usa vencimento/parâmetros à esquerda e calendário à direita',()=>{
  for(const file of ['index.html','src/template.html']){
   const html=fs.readFileSync(path.join(ROOT,file),'utf8');
