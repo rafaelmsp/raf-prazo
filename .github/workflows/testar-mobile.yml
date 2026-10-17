@@ -9,6 +9,8 @@ on:
       - .github/workflows/testar-mobile.yml
       - index.html
       - src/template.html
+      - assets/raf-prazo-22.js
+      - tests/browser_22.py
       - assets/tjrj-news.js
       - assets/tjrj-optin.js
   pull_request:
@@ -31,4 +33,14 @@ jobs:
           python -m pip install 'playwright>=1.54,<2'
           python -m playwright install --with-deps chromium
       - name: Testar quatro larguras de viewport
-        run: python tests/test_updates_browser.py
+        run: |
+          python tests/test_updates_browser.py
+          python tests/browser_22.py
+      - name: Guardar screenshots para revisão visual
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-raf-prazo-22
+          path: tests/screenshots-22/*.png
+          if-no-files-found: ignore
+          retention-days: 5
