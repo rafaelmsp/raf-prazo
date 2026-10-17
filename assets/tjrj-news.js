@@ -9,7 +9,7 @@ const effects={possible_deadline_suspension:'Possível suspensão de prazos',pos
  holiday_mention:'Feriado mencionado',optional_workday:'Ponto facultativo informado'};
 const el=(tag,txt)=>{const n=document.createElement(tag);if(txt!==undefined)n.textContent=txt;return n};
 const readSeen=()=>{try{const o=JSON.parse(localStorage.getItem(KEY)||'[]');return new Set(Array.isArray(o)?o.slice(-600):[])}catch(_){return new Set()}};
-let search='',lastScan='';
+let search='',lastScan='',searchInProgress=false;
 function feed(){
  const docs=window.RafPrazoData?.base?.candidates||[],map=new Map();
  for(const doc of docs){
@@ -50,7 +50,7 @@ function ensure(){
  else parent.append(root);
  field.addEventListener('input',()=>{search=field.value.trim().toLocaleLowerCase('pt-BR');render()});
  button.addEventListener('click',()=>{
-  button.disabled=true;
+  searchInProgress=true;button.disabled=true;
   lastScan='Aguardando leitura da última base publicada…';
   render();
   const sync=$('sync');if(!sync){button.disabled=false;lastScan='Sincronização indisponível nesta página.';render();return}
@@ -110,6 +110,8 @@ function render(){
  if(!shown)list.append(el('p',search?'Nenhum resultado para esta pesquisa na base coletada.':'Nenhum indício de suspensão disponível na base atual.'));
 }
 function finishSync(){
+ if(!searchInProgress){render();return}
+ searchInProgress=false;
  const button=$('rafTjrjSearchNow');if(button)button.disabled=false;
  lastScan=window.RafPrazoData?.mode==='online'?'Base pública consultada com sucesso. Os documentos TJRJ foram coletados anteriormente pelo GitHub Actions.':
   'Não foi possível obter uma base nova; verifique a origem e a última coleta.';
