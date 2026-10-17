@@ -22,6 +22,15 @@ class TableTests(unittest.TestCase):
  def test_feriado_is_only_holiday_mention(self):
   body='20/01/2026  LEI ORGÂNICA DO MUNICÍPIO Nº 12/2026   Feriado de São Sebastião no Município do Rio de Janeiro\n'
   r=self.report(body);self.assertEqual(r['occurrences'][0]['effect_hint'],'holiday_mention');self.assertFalse(r['occurrences'][0]['verified'])
+ def test_rejects_date_crossed_with_other_comarca(self):
+  line='02/02/2026 03/07/2026 Comarca de São João da Barra, no dia 30 de junho de 2026. Resolve suspender o expediente e os prazos ATO EXECUTIVO Nº 93, DE DJERJ, ADM, n.178, p.7. processuais no Fórum da Comarca.'
+  self.assertEqual(self.report(line)['occurrences'],[])
+ def test_rejects_reference_without_explicit_act_number(self):
+  line='03/09/2026 04/09/2026 11:00h e encerrar-se-á às 15:00h, ficando suspensos os prazos processuais. DECRETO 03/09/2026 públicas estaduais.'
+  self.assertEqual(self.report(line)['occurrences'],[])
+ def test_comarca_name_is_not_automatically_a_feriado(self):
+  line='26/03/2026  ATO EXECUTIVO Nº 25, DE 06/02/2026  Prazos processuais na Comarca de São Sebastião do Alto, no dia 27 de março de 2026.'
+  self.assertEqual(self.report(line)['occurrences'],[])
  def test_publication_date_cannot_become_period(self):
   body='07/05/2026  DJERJ  Ato para mera ciência, sem ementa de suspensão.\n'
   self.assertEqual(self.report(body)['occurrences'],[])
