@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "36a7104cca87",
-  "generated_at": "2026-10-17T07:44:26+00:00",
-  "last_checked_at": "2026-10-17T07:44:26+00:00",
+  "version": "20022b1f5a80",
+  "generated_at": "2026-10-17T07:52:39+00:00",
+  "last_checked_at": "2026-10-17T07:52:39+00:00",
   "coverage": {
     "national_years": [
       2026,
@@ -10,8 +10,8 @@
       2028
     ],
     "national": "fixed_law",
-    "state": "not_applied",
-    "municipal": "not_applied",
+    "state": "RJ_legal_opt_in",
+    "municipal": "Duque_de_Caxias_3301702_legal_opt_in",
     "tjrj": "discovery_only"
   },
   "sync": {
@@ -23,12 +23,12 @@
     ],
     "failed": [],
     "tjrj": "discovery_only",
-    "tjrj_collector_status": "partial",
-    "tjrj_collector_at": "2026-10-17T07:44:03+00:00",
-    "tjrj_sources_checked": 7,
-    "tjrj_sources_success": 6,
+    "tjrj_collector_status": "ok",
+    "tjrj_collector_at": "2026-10-17T07:51:53+00:00",
+    "tjrj_sources_checked": 8,
+    "tjrj_sources_success": 8,
     "tjrj_pending": 8,
-    "local": "manual_disabled"
+    "local": "legal_holidays_opt_in"
   },
   "events": [
     {
@@ -50,6 +50,47 @@
       "origin": "brasilapi+lei"
     },
     {
+      "id": "rj-2026-02-17",
+      "date": "2026-02-17",
+      "name": "Terça-feira de Carnaval",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — Lei estadual nº 5.243/2008, em vigor",
+        "act": "Lei estadual nº 5.243/2008",
+        "url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
+      "id": "caxias-2026-04-03",
+      "date": "2026-04-03",
+      "name": "Sexta-feira da Paixão",
+      "type": "MUNICIPAL",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "Câmara Municipal de Duque de Caxias — Deliberação nº 1.543/1970",
+        "act": "Deliberação municipal nº 1.543/1970, art. 1º",
+        "url": "https://www.cmdc.rj.gov.br/?page_id=7592"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
       "id": "nacional-2026-04-21",
       "date": "2026-04-21",
       "name": "Tiradentes",
@@ -68,6 +109,26 @@
       "origin": "brasilapi+lei"
     },
     {
+      "id": "rj-2026-04-23",
+      "date": "2026-04-23",
+      "name": "Dia de São Jorge",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — PL 339/2007 convertido na Lei estadual nº 5.198/2008",
+        "act": "Lei estadual nº 5.198/2008",
+        "url": "https://alerjln1.alerj.rj.gov.br/scpro0711.nsf/3372bd49984790dd83257258006f0719/094e2cd7679638b2832572a7006ee116"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
       "id": "nacional-2026-05-01",
       "date": "2026-05-01",
       "name": "Dia do Trabalho",
@@ -84,6 +145,47 @@
       },
       "verified_at": "2026-10-16",
       "origin": "brasilapi+lei"
+    },
+    {
+      "id": "rj-2026-06-04",
+      "date": "2026-06-04",
+      "name": "Corpus Christi",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — Lei estadual nº 11.002/2025, validada pelo STF",
+        "act": "Lei estadual nº 11.002/2025; STF, ADI 7898",
+        "url": "https://www3.alerj.rj.gov.br/lotus_notes/default.asp?id=53&url=L2NvbnRsZWkubnNmL2M4YWEwOTAwMDI1ZmVlZjYwMzI1NjRlYzAwNjBkZmZmLzQ2ODM3ZTRkMjJiMDFmMzUwMzI1OGQyYzAwNDhhYmRhP09wZW5Eb2N1bWVudA%3D%3D"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
+      "id": "caxias-2026-06-13",
+      "date": "2026-06-13",
+      "name": "Santo Antônio — Padroeiro de Duque de Caxias",
+      "type": "MUNICIPAL",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "Câmara Municipal de Duque de Caxias — Deliberação nº 1.543/1970",
+        "act": "Deliberação municipal nº 1.543/1970, art. 1º",
+        "url": "https://www.cmdc.rj.gov.br/?page_id=7592"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
     },
     {
       "id": "nacional-2026-09-07",
@@ -212,6 +314,47 @@
       "origin": "brasilapi+lei"
     },
     {
+      "id": "rj-2027-02-09",
+      "date": "2027-02-09",
+      "name": "Terça-feira de Carnaval",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — Lei estadual nº 5.243/2008, em vigor",
+        "act": "Lei estadual nº 5.243/2008",
+        "url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
+      "id": "caxias-2027-03-26",
+      "date": "2027-03-26",
+      "name": "Sexta-feira da Paixão",
+      "type": "MUNICIPAL",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "Câmara Municipal de Duque de Caxias — Deliberação nº 1.543/1970",
+        "act": "Deliberação municipal nº 1.543/1970, art. 1º",
+        "url": "https://www.cmdc.rj.gov.br/?page_id=7592"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
       "id": "nacional-2027-04-21",
       "date": "2027-04-21",
       "name": "Tiradentes",
@@ -230,6 +373,26 @@
       "origin": "brasilapi+lei"
     },
     {
+      "id": "rj-2027-04-23",
+      "date": "2027-04-23",
+      "name": "Dia de São Jorge",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — PL 339/2007 convertido na Lei estadual nº 5.198/2008",
+        "act": "Lei estadual nº 5.198/2008",
+        "url": "https://alerjln1.alerj.rj.gov.br/scpro0711.nsf/3372bd49984790dd83257258006f0719/094e2cd7679638b2832572a7006ee116"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
       "id": "nacional-2027-05-01",
       "date": "2027-05-01",
       "name": "Dia do Trabalho",
@@ -246,6 +409,47 @@
       },
       "verified_at": "2026-10-16",
       "origin": "brasilapi+lei"
+    },
+    {
+      "id": "rj-2027-05-27",
+      "date": "2027-05-27",
+      "name": "Corpus Christi",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — Lei estadual nº 11.002/2025, validada pelo STF",
+        "act": "Lei estadual nº 11.002/2025; STF, ADI 7898",
+        "url": "https://www3.alerj.rj.gov.br/lotus_notes/default.asp?id=53&url=L2NvbnRsZWkubnNmL2M4YWEwOTAwMDI1ZmVlZjYwMzI1NjRlYzAwNjBkZmZmLzQ2ODM3ZTRkMjJiMDFmMzUwMzI1OGQyYzAwNDhhYmRhP09wZW5Eb2N1bWVudA%3D%3D"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
+      "id": "caxias-2027-06-13",
+      "date": "2027-06-13",
+      "name": "Santo Antônio — Padroeiro de Duque de Caxias",
+      "type": "MUNICIPAL",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "Câmara Municipal de Duque de Caxias — Deliberação nº 1.543/1970",
+        "act": "Deliberação municipal nº 1.543/1970, art. 1º",
+        "url": "https://www.cmdc.rj.gov.br/?page_id=7592"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
     },
     {
       "id": "nacional-2027-09-07",
@@ -374,6 +578,47 @@
       "origin": "brasilapi+lei"
     },
     {
+      "id": "rj-2028-02-29",
+      "date": "2028-02-29",
+      "name": "Terça-feira de Carnaval",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — Lei estadual nº 5.243/2008, em vigor",
+        "act": "Lei estadual nº 5.243/2008",
+        "url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
+      "id": "caxias-2028-04-14",
+      "date": "2028-04-14",
+      "name": "Sexta-feira da Paixão",
+      "type": "MUNICIPAL",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "Câmara Municipal de Duque de Caxias — Deliberação nº 1.543/1970",
+        "act": "Deliberação municipal nº 1.543/1970, art. 1º",
+        "url": "https://www.cmdc.rj.gov.br/?page_id=7592"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
       "id": "nacional-2028-04-21",
       "date": "2028-04-21",
       "name": "Tiradentes",
@@ -392,6 +637,26 @@
       "origin": "brasilapi+lei"
     },
     {
+      "id": "rj-2028-04-23",
+      "date": "2028-04-23",
+      "name": "Dia de São Jorge",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — PL 339/2007 convertido na Lei estadual nº 5.198/2008",
+        "act": "Lei estadual nº 5.198/2008",
+        "url": "https://alerjln1.alerj.rj.gov.br/scpro0711.nsf/3372bd49984790dd83257258006f0719/094e2cd7679638b2832572a7006ee116"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
       "id": "nacional-2028-05-01",
       "date": "2028-05-01",
       "name": "Dia do Trabalho",
@@ -408,6 +673,47 @@
       },
       "verified_at": "2026-10-16",
       "origin": "brasilapi+lei"
+    },
+    {
+      "id": "caxias-2028-06-13",
+      "date": "2028-06-13",
+      "name": "Santo Antônio — Padroeiro de Duque de Caxias",
+      "type": "MUNICIPAL",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "Câmara Municipal de Duque de Caxias — Deliberação nº 1.543/1970",
+        "act": "Deliberação municipal nº 1.543/1970, art. 1º",
+        "url": "https://www.cmdc.rj.gov.br/?page_id=7592"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
+    },
+    {
+      "id": "rj-2028-06-15",
+      "date": "2028-06-15",
+      "name": "Corpus Christi",
+      "type": "ESTADUAL",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "applies_to_deadlines": true,
+      "source": {
+        "title": "ALERJ — Lei estadual nº 11.002/2025, validada pelo STF",
+        "act": "Lei estadual nº 11.002/2025; STF, ADI 7898",
+        "url": "https://www3.alerj.rj.gov.br/lotus_notes/default.asp?id=53&url=L2NvbnRsZWkubnNmL2M4YWEwOTAwMDI1ZmVlZjYwMzI1NjRlYzAwNjBkZmZmLzQ2ODM3ZTRkMjJiMDFmMzUwMzI1OGQyYzAwNDhhYmRhP09wZW5Eb2N1bWVudA%3D%3D"
+      },
+      "verified_at": "2026-10-17",
+      "origin": "legislacao-estadual-municipal-curada",
+      "review_note": "Feriado civil comprovado por lei. A aplicação ao prazo processual exige opção expressa e conferência do expediente forense."
     },
     {
       "id": "nacional-2028-09-07",
@@ -1050,7 +1356,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "ab575ef11e55caa12609f33f03c333c614f9deddc3215d3536424bb7bb451329",
+            "source_hash_sha256": "3fadaa0fd59d3dbde4206ef5f230fd76d38849369e861f9693fb05fd7a1e4a92",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1066,7 +1372,7 @@
       },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "ab575ef11e55caa12609f33f03c333c614f9deddc3215d3536424bb7bb451329",
+      "source_hash_sha256": "3fadaa0fd59d3dbde4206ef5f230fd76d38849369e861f9693fb05fd7a1e4a92",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1096,7 +1402,7 @@
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "91b2446ee2ede467b5d537464f7dc9968243d8c1b0605621c040f5a0874e71dd",
+      "source_hash_sha256": "59a301aad8bcc83fd69b966c3345e0176fc7be4bfcdf6bba78ba40d9d59a01d5",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1125,8 +1431,8 @@
         "automatically_applies_events": false
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
-      "stale": true,
-      "source_hash_sha256": "34e622c120256172fae32e71c247b083f26e66fab3376cddfd655e67547a390d",
+      "stale": false,
+      "source_hash_sha256": "ddeb9a8e6457f3526ff4c87df5f6af4439e05ead27ead830f412053131709b1c",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1169,7 +1475,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "1c3fb90660c0e4204a847f97be1f9b6b3edd548f04927dddca6d5752acf71295",
+            "source_hash_sha256": "9ae0ff7217f66769631dbdfd5aae178bfd89bf07d969e3b73e573a34b24cca8c",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1185,7 +1491,7 @@
       },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "1c3fb90660c0e4204a847f97be1f9b6b3edd548f04927dddca6d5752acf71295",
+      "source_hash_sha256": "9ae0ff7217f66769631dbdfd5aae178bfd89bf07d969e3b73e573a34b24cca8c",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1468,7 +1774,7 @@
       },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "068ba55743f14899b1edff7a16e64dfdfb2961f49400c72de68739fe7086845c",
+      "source_hash_sha256": "255d4ed77757cac3821370bf3cf79a8c4c578c31e3b5a54263168181cb6b0f21",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1499,12 +1805,166 @@
         "automatically_applies_events": false
       },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
-      "stale": true,
-      "source_hash_sha256": "f2bb700cf20511c075a7e5d0946c0819d9b805a9528f4ac43a1a18c4dc3f9679",
+      "stale": false,
+      "source_hash_sha256": "e5630d3231e2db5b09d15a2ddc81fe0a571fb55004692ab7bd9ac5a6fe12aabe",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     }
   ],
   "changes": [
+    {
+      "id": "added:rj-2028-06-15",
+      "kind": "added",
+      "event_id": "rj-2028-06-15",
+      "date": "2028-06-15",
+      "name": "Corpus Christi",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://www3.alerj.rj.gov.br/lotus_notes/default.asp?id=53&url=L2NvbnRsZWkubnNmL2M4YWEwOTAwMDI1ZmVlZjYwMzI1NjRlYzAwNjBkZmZmLzQ2ODM3ZTRkMjJiMDFmMzUwMzI1OGQyYzAwNDhhYmRhP09wZW5Eb2N1bWVudA%3D%3D",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:caxias-2028-06-13",
+      "kind": "added",
+      "event_id": "caxias-2028-06-13",
+      "date": "2028-06-13",
+      "name": "Santo Antônio — Padroeiro de Duque de Caxias",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "source_url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2028-04-23",
+      "kind": "added",
+      "event_id": "rj-2028-04-23",
+      "date": "2028-04-23",
+      "name": "Dia de São Jorge",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://alerjln1.alerj.rj.gov.br/scpro0711.nsf/3372bd49984790dd83257258006f0719/094e2cd7679638b2832572a7006ee116",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:caxias-2028-04-14",
+      "kind": "added",
+      "event_id": "caxias-2028-04-14",
+      "date": "2028-04-14",
+      "name": "Sexta-feira da Paixão",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "source_url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2028-02-29",
+      "kind": "added",
+      "event_id": "rj-2028-02-29",
+      "date": "2028-02-29",
+      "name": "Terça-feira de Carnaval",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:caxias-2027-06-13",
+      "kind": "added",
+      "event_id": "caxias-2027-06-13",
+      "date": "2027-06-13",
+      "name": "Santo Antônio — Padroeiro de Duque de Caxias",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "source_url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2027-05-27",
+      "kind": "added",
+      "event_id": "rj-2027-05-27",
+      "date": "2027-05-27",
+      "name": "Corpus Christi",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://www3.alerj.rj.gov.br/lotus_notes/default.asp?id=53&url=L2NvbnRsZWkubnNmL2M4YWEwOTAwMDI1ZmVlZjYwMzI1NjRlYzAwNjBkZmZmLzQ2ODM3ZTRkMjJiMDFmMzUwMzI1OGQyYzAwNDhhYmRhP09wZW5Eb2N1bWVudA%3D%3D",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2027-04-23",
+      "kind": "added",
+      "event_id": "rj-2027-04-23",
+      "date": "2027-04-23",
+      "name": "Dia de São Jorge",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://alerjln1.alerj.rj.gov.br/scpro0711.nsf/3372bd49984790dd83257258006f0719/094e2cd7679638b2832572a7006ee116",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:caxias-2027-03-26",
+      "kind": "added",
+      "event_id": "caxias-2027-03-26",
+      "date": "2027-03-26",
+      "name": "Sexta-feira da Paixão",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "source_url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2027-02-09",
+      "kind": "added",
+      "event_id": "rj-2027-02-09",
+      "date": "2027-02-09",
+      "name": "Terça-feira de Carnaval",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
     {
       "id": "disabled:tjrj-aviso-290-2026-2026-10-30",
       "kind": "removed",
@@ -1518,6 +1978,83 @@
       "status": "disabled",
       "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
       "applied": false,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:caxias-2026-06-13",
+      "kind": "added",
+      "event_id": "caxias-2026-06-13",
+      "date": "2026-06-13",
+      "name": "Santo Antônio — Padroeiro de Duque de Caxias",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "source_url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2026-06-04",
+      "kind": "added",
+      "event_id": "rj-2026-06-04",
+      "date": "2026-06-04",
+      "name": "Corpus Christi",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://www3.alerj.rj.gov.br/lotus_notes/default.asp?id=53&url=L2NvbnRsZWkubnNmL2M4YWEwOTAwMDI1ZmVlZjYwMzI1NjRlYzAwNjBkZmZmLzQ2ODM3ZTRkMjJiMDFmMzUwMzI1OGQyYzAwNDhhYmRhP09wZW5Eb2N1bWVudA%3D%3D",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2026-04-23",
+      "kind": "added",
+      "event_id": "rj-2026-04-23",
+      "date": "2026-04-23",
+      "name": "Dia de São Jorge",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://alerjln1.alerj.rj.gov.br/scpro0711.nsf/3372bd49984790dd83257258006f0719/094e2cd7679638b2832572a7006ee116",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:caxias-2026-04-03",
+      "kind": "added",
+      "event_id": "caxias-2026-04-03",
+      "date": "2026-04-03",
+      "name": "Sexta-feira da Paixão",
+      "scope": {
+        "kind": "municipal",
+        "uf": "RJ",
+        "ibge": "3301702"
+      },
+      "status": "confirmed",
+      "source_url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "applied": true,
+      "detected_at": "2026-10-17"
+    },
+    {
+      "id": "added:rj-2026-02-17",
+      "kind": "added",
+      "event_id": "rj-2026-02-17",
+      "date": "2026-02-17",
+      "name": "Terça-feira de Carnaval",
+      "scope": {
+        "kind": "state",
+        "uf": "RJ"
+      },
+      "status": "confirmed",
+      "source_url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0",
+      "applied": true,
       "detected_at": "2026-10-17"
     }
   ],
@@ -1545,9 +2082,27 @@
       "label": "TJRJ — documentos oficiais consultados",
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
       "kind": "official",
-      "status": "partial",
-      "checked_at": "2026-10-17T07:44:03+00:00",
+      "status": "ok",
+      "checked_at": "2026-10-17T07:51:53+00:00",
       "note": "Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica."
+    },
+    {
+      "id": "rj-feriados",
+      "label": "RJ — feriados estaduais previstos em lei",
+      "url": "https://alerjln1.alerj.rj.gov.br/contlei.nsf/351902c88b9f0cde03256bcf00607a5b/063f7c027766eab48325744a007a4ab0",
+      "kind": "official",
+      "status": "curated",
+      "checked_at": null,
+      "note": "Leis estaduais nº 5.243/2008, 5.198/2008 e 11.002/2025; habilitar feriados locais no cálculo."
+    },
+    {
+      "id": "caxias-feriados",
+      "label": "Duque de Caxias — Deliberação municipal 1.543/1970",
+      "url": "https://www.cmdc.rj.gov.br/?page_id=7592",
+      "kind": "official",
+      "status": "curated",
+      "checked_at": null,
+      "note": "Sexta da Paixão e Santo Antônio. 25/08 e 28/10 são pontos facultativos municipais, não feriados."
     },
     {
       "id": "ibge",
