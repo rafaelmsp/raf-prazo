@@ -70,8 +70,12 @@ function renderDate(date){
  const alreadyExcluded=!!block&&block.type!=='EXCLUSAO_USUARIO';
  section.hidden=!dayValid;
  if(!dayValid)return;
- $('rafManualExcludedReason').value=current?.reason||'';
- $('rafManualExcludedSource').value=current?.source_url||'';
+ // Um feriado estadual/municipal conhecido oferece nome e fonte para a escolha individual.
+ const holiday=(window.RafPrazoData?.base?.events||[]).find(e=>e.date===date&&
+  (e.type==='ESTADUAL'&&e.scope?.uf===p.uf||
+   e.type==='MUNICIPAL'&&e.scope?.uf===p.uf&&e.scope?.ibge===String(p.city)));
+ $('rafManualExcludedReason').value=current?.reason||(holiday&&!alreadyExcluded?holiday.name+' — conferir expediente forense':'');
+ $('rafManualExcludedSource').value=current?.source_url||(holiday&&!alreadyExcluded?holiday.source?.url||'':'');
  button.disabled=!current&&alreadyExcluded;
  button.textContent=current?'✓ Dia desconsiderado — reativar contagem':'Excluir este dia da contagem (simulação)';
  label.textContent=current?'Exclusão individual ATIVA — pode ser desfeita.':
