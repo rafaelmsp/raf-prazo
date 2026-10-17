@@ -685,7 +685,17 @@ updateTheme();setUfs();$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').check
   }
   const candidates=$('rafCandidatesList');candidates.replaceChildren();const pending=b.candidates||[];
   if(!pending.length)candidates.append(el('p','raf-small-note','Nenhum candidato pendente na base disponível.'));
-  for(const c of pending.slice(0,12)){const item=el('div','raf-event');const isTJRJ=c.type==='CANDIDATO_TJRJ';const headline=isTJRJ?'TJRJ — documento coletado · '+c.name:(c.date||'Data não determinada')+' · '+c.name;item.append(el('b','',headline));item.append(el('p','raf-small-note',isTJRJ?'Menções a datas (não são suspensões confirmadas): '+((c.date_mentions||[]).join(', ')||'não encontradas')+'. '+(c.stale?'Coleta desatualizada. ':'')+'Não altera nenhum prazo.':'Não aplicado: exige verificação jurídica e do calendário forense.'));if(isTJRJ){const p=el('p','raf-small-note');p.append(link(c.source_url,'Abrir fonte oficial ↗'));item.append(p);}candidates.append(item)}
+  for(const c of pending.slice(0,12)){const item=el('div','raf-event');const isTJRJ=c.type==='CANDIDATO_TJRJ';const headline=isTJRJ?'TJRJ — documento coletado · '+c.name:(c.date||'Data não determinada')+' · '+c.name;item.append(el('b','',headline));item.append(el('p','raf-small-note',isTJRJ?'Menções a datas (não são suspensões confirmadas): '+((c.date_mentions||[]).join(', ')||'não encontradas')+'. '+(c.stale?'Coleta desatualizada. ':'')+'Não altera nenhum prazo.':'Não aplicado: exige verificação jurídica e do calendário forense.'));if(isTJRJ){
+    const structured=c.structured||{},refs=Array.isArray(structured.act_references)?structured.act_references:[],signals=Array.isArray(structured.occurrences)?structured.occurrences:[];
+    if(refs.length)item.append(el('p','raf-small-note','Referências detectadas (não verificadas): '+refs.slice(0,5).join(' · ')));
+    const effects={possible_deadline_suspension:'Possível suspensão de prazo',possible_deadline_extension:'Possível prorrogação',system_unavailability:'Indisponibilidade de sistema',service_interruption:'Alteração de expediente',optional_workday:'Ponto facultativo',normal_expediente:'Expediente normal informado'};
+    for(const e of signals.slice(0,3)){
+      const desc=(effects[e.effect_hint]||'Menção de efeito')+' · '+(e.date||'Data a conferir')+(e.year_inferred?' (ano inferido)':'')+'. Abrangência e vigência não verificadas.';
+      item.append(el('p','raf-small-note',desc));
+    }
+    if(signals.length>3)item.append(el('p','raf-small-note',String(signals.length-3)+' outras menções; consultar fonte completa.'));
+    const p=el('p','raf-small-note');p.append(link(c.source_url,'Abrir fonte oficial ↗'));item.append(p);
+   }candidates.append(item)}
   if(pending.length>12)candidates.append(el('p','raf-small-note',`Mais ${pending.length-12} registro(s) pendentes omitidos desta lista.`));
  }
  function renderSources(){const b=window.RafPrazoData?.base;if(!b)return;const root=$('rafSourcesList');root.replaceChildren();for(const s of b.sources||[]){const card=el('div','raf-source-card'),title=el('div','raf-source-title'),icon=el('span','raf-source-icon','⌖'),head=el('div'),details=el('div','raf-source-detail');head.append(el('strong','',s.label),el('small','',s.note||''));title.append(icon,head);details.append(el('span','','Situação'),el('b','',s.status==='ok'?'Consulta concluída':s.status==='partial'?'Consulta parcial':s.status==='unavailable'?'Fonte indisponível':s.status==='not_run'?'Ainda não executada':s.status==='manual'?'Verificação manual':s.status==='curated'?'Legislação cadastrada':s.status==='client'?'Consulta no navegador':'Não consultada nesta base'),el('span','','Origem'),link(s.url,'Abrir fonte ↗'));card.append(title,details);root.append(card)}}
