@@ -49,6 +49,8 @@ O preparo recursal de 48 horas do JEC não é convertido em dois dias úteis. Os
 
 [Documento técnico completo do Raf-Prazo 2.2](docs/RAF_PRAZO_22_ENTREGA.md).
 
+**Biblioteca de atos (2.2.3):** pesquisa e filtros por categoria, com prazos JEC e CPC fundamentados; atos sem duração legal única exigem entrada manual, e preparo recursal de 48 horas não é calculado em dias úteis. [Escopo e fontes](docs/BIBLIOTECA_PRAZOS_223.md).
+
 ## 1. Visão geral e objetivos
 
 O **Raf-Prazo** é uma aplicação web estática, escrita em **HTML5, CSS e JavaScript**, voltada à **conferência auxiliar de prazos processuais em dias úteis**. Foi concebida para reduzir tarefas repetitivas, tornar visíveis as datas excluídas da contagem e facilitar a rastreabilidade de fontes.

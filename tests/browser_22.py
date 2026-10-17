@@ -65,18 +65,40 @@ def check(browser,url,width):
     page.locator("#rafProfileOpen").click()
     assert page.locator("#rafProfileDialog").is_visible()
     assert page.locator("#rafRegime").is_visible()
-    assert page.locator("#rafAct").is_visible()
+    assert page.locator("#rafAct").is_hidden(), "O seletor nativo não deve aparecer no celular"
+    assert page.locator("#rafActSearch").is_visible()
+    assert page.locator("#rafActList button.raf-library-item").count()>=10
+    assert page.locator("#rafActFilters").is_visible()
     assert page.locator("#rafRuleBox").is_visible()
     # Drawer ocupa camada independente e não aumenta a altura do calendário.
     new_calendar_y=page.locator(".raf-22-calendar").evaluate("(el)=>el.getBoundingClientRect().top + scrollY")
     assert abs(new_calendar_y-old_calendar_y)<2, f"Calendário deslocado pelo drawer ({width}px)"
     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+2"),"Drawer provocou overflow horizontal"
     page.screenshot(path=str(SHOTS/f"raf-prazo-22-{width}-drawer-light.png"),full_page=True)
-    page.locator("#rafAct").select_option("jec_recurso")
+    page.locator("#rafActSearch").fill("recurso inominado")
+    assert page.locator("#rafActList button.raf-library-item").count()==1
+    page.locator('#rafActList button[data-preset="jec_recurso"]').click()
     assert page.locator("#days").input_value()=="10"
     assert "10 dias úteis" in page.locator("#rafRuleSummary").inner_text()
     assert page.locator("#rafActBasis").inner_text().endswith("42, caput")
-    page.locator("#rafAct").select_option("jec_embargos")
+    page.locator("#rafActSearch").fill("embargos")
+    assert page.locator('#rafActList button[data-preset="jec_embargos"]').count()==1
+    page.locator('#rafActList button[data-preset="jec_embargos"]').click()
+    assert page.locator("#days").input_value()=="5"
+    # Hora não é dia útil: seleção deve invalidar o resultado, sem converter 48 h em 2 dias.
+    page.locator("#rafActSearch").fill("preparo")
+    page.locator('#rafActList button[data-preset="jec_preparo"]').click()
+    assert page.locator("#days").input_value()==""
+    assert page.locator("#days").is_disabled()
+    assert page.locator("#rafActAlert").is_visible()
+    assert page.evaluate("window.RafPrazo22Current.count_mode")=="hours_unsupported"
+    page.locator("#rafActSearch").fill("contestacao")
+    page.locator('#rafActList button[data-preset="jec_contestacao"]').click()
+    assert page.locator("#days").input_value()==""
+    assert not page.locator("#days").is_disabled()
+    assert page.evaluate("window.RafPrazo22Current.requires_manual_review")
+    page.locator("#rafActSearch").fill("")
+    page.locator('#rafActList button[data-preset="jec_embargos"]').click()
     assert page.locator("#days").input_value()=="5"
     page.locator("#rafProfileDone").click()
     assert not page.locator("#rafProfileDialog").is_visible()
@@ -94,7 +116,11 @@ def check(browser,url,width):
     assert page.evaluate("window.RafPrazo22Current.communication_date")=="2026-10-18"
     page.locator("#rafRegime").select_option("cpc")
     assert page.locator("#rafAct").input_value()=="custom"
-    page.locator("#rafAct").select_option("cpc_apelacao")
+    assert page.locator("#rafActList button.raf-library-item").count()>=20
+    page.locator("#rafActSearch").fill("art. 523")
+    assert page.locator('#rafActList button[data-preset="cpc_pagamento_523"]').count()==1
+    page.locator("#rafActSearch").fill("apelação")
+    page.locator('#rafActList button[data-preset="cpc_apelacao"]').click()
     assert page.locator("#days").input_value()=="15"
     assert page.locator("#rafContextResult").inner_text().startswith("CPC")
     page.locator("#rafProfileDone").click()
