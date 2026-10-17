@@ -712,7 +712,7 @@ $('customOpen').addEventListener('click',showCustom);$('rafExtraOpen').addEventL
 $('manualCityOpen').addEventListener('click',()=>{$('ibgeInput').value=$('city').value||'';$('ibgeError').textContent='';dialog('ibgeDialog')});
 $('ibgeApply').addEventListener('click',()=>{let code=$('ibgeInput').value.trim();if(!/^\d{7}$/.test(code)){$('ibgeError').textContent='O código IBGE deve ter exatamente 7 dígitos.';return}let uf=$('uf').value,found=cityOptions[uf]?.find(x=>String(x.id)===code);setCities(uf,{city:code,cityName:found?.nome||'Município '+code});dismiss('ibgeDialog');onPlaceChanged()});
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>dismiss(b.dataset.close)));
-for(let d of document.querySelectorAll('dialog'))d.addEventListener('click',e=>{let r=d.getBoundingClientRect();if(d.id==='rafTermsDialog'&&!document.getElementById('rafTermsAccept').hidden)return;if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()});
+for(let d of document.querySelectorAll('dialog')){if(d.id==='rafNewsDialog')continue;d.addEventListener('click',e=>{let r=d.getBoundingClientRect();if(d.id==='rafTermsDialog'&&!document.getElementById('rafTermsAccept').hidden)return;if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()});}
 const now=new Date(),initial=new Date(now.getFullYear(),now.getMonth(),now.getDate());while(initial.getDay()===0||initial.getDay()===6)initial.setDate(initial.getDate()+1);const today=[initial.getFullYear(),String(initial.getMonth()+1).padStart(2,'0'),String(initial.getDate()).padStart(2,'0')].join('-');$('start').value=today;lastValidStart=today;
 updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity.uf!=='RJ';$('tjrj').checked=false;calculate();loadCities(selectedCity.uf);notifySync();syncCalendar(false);
 })();
@@ -842,7 +842,11 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  $('navTutorial').addEventListener('click',()=>open($('rafTutorialDialog')));
  $('rafSyncRefresh').addEventListener('click',()=>$('sync').click());
  document.querySelectorAll('[data-raf-close]').forEach(btn=>btn.addEventListener('click',()=>$(btn.dataset.rafClose).close()));
- [news,about].forEach(d=>d.addEventListener('click',event=>{if(event.target===d)d.close()}));
+ // Só fecha no backdrop quando o pointerdown também ocorreu no backdrop.
+ // Evita fechamento acidental ao trocar abas e redimensionar a janela no desktop.
+ news.addEventListener('pointerdown',event=>{news.dataset.backdropDown=event.target===news?'1':'0'});
+ news.addEventListener('click',event=>{const backdrop=news.dataset.backdropDown==='1';news.dataset.backdropDown='0';if(event.target===news&&backdrop)news.close()});
+ about.addEventListener('click',event=>{if(event.target===about)about.close()});
  $('rafHolidayYear').addEventListener('change',renderChanges);
  $('rafClearHolidays').addEventListener('click',()=>{
   const ids=hiddenIds();const year=$('rafHolidayYear').value;
