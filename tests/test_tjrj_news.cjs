@@ -74,3 +74,35 @@ test('data sem documento oficial ou ato pendente não é promovida',()=>{
 test('sincronização não transforma candidato TJRJ em evento homologado',()=>{
  assert.equal(app.base.candidates.every(x=>x.applies_to_deadlines===false),true);
 });
+
+test('feed exibe chegada mais recente antes da data do evento mais nova',()=>{
+ const make=(date,first,hash,updated,source)=>({
+  type:'CANDIDATO_TJRJ',status:'pending_review',verified:false,applies_to_deadlines:false,stale:false,
+  source_url:source||url,source_hash_sha256:hash,first_seen_at:first,content_changed_at:updated,
+  structured:{occurrences:[{date,effect_hint:'possible_deadline_suspension',evidence_excerpt:'Indício documental sobre suspensão a conferir referente à data '+date+'.',
+   status:'pending_review',verified:false,applies_to_deadlines:false,source_url:source||url,source_hash_sha256:hash}]}
+ });
+ const old=make('2026-12-15','2026-10-17T06:00:00+00:00','a'.repeat(64),'2026-10-17T06:00:00+00:00');
+ const newDoc=make('2026-02-02','2026-10-17T12:00:00+00:00','b'.repeat(64),'2026-10-17T12:00:00+00:00',url2);
+ app.base.candidates=[old,newDoc];
+ events['raf-prazo:sync']();
+ assert.equal(articles().length,2);
+ assert.ok(articles()[0].children.some(x=>x.textContent.includes('Data do evento mencionada: 2026-02-02')));
+ assert.ok(articles()[0].children.some(x=>x.textContent.includes('Recebido/atualizado no Raf-Prazo:')));
+ assert.ok(get('rafTjrjNewsFeed').children.some(x=>x.textContent.includes('Ordem de chegada')));
+});
+test('atualização de documento antigo sobe para o topo sem alterar data do evento',()=>{
+ const first=app.base.candidates[0];
+ first.content_changed_at='2026-10-18T12:00:00+00:00';
+ first.source_hash_sha256='c'.repeat(64);
+ first.structured.occurrences[0].source_hash_sha256='c'.repeat(64);
+ events['raf-prazo:sync']();
+ assert.ok(articles()[0].children.some(x=>x.textContent.includes('Data do evento mencionada: 2026-12-15')));
+});
+test('reconsulta de documento sem mudança não cria novidade fictícia',()=>{
+ const old=app.base.candidates[1];
+ old.last_seen_at='2026-11-01T12:00:00+00:00';
+ events['raf-prazo:sync']();
+ assert.ok(articles()[0].children.some(x=>x.textContent.includes('Data do evento mencionada: 2026-12-15')));
+ assert.ok(app.base.candidates.every(x=>x.applies_to_deadlines===false));
+});
