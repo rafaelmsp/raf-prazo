@@ -50,7 +50,6 @@ SOURCES=(
  {'id':'central_www','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389'},
  {'id':'aviso_290_www','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295'},
  {'id':'capital_2inst_2026_www','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-comarca-capital-e-2a-inst_2026_seesc'},
- {'id':'noticias_portal_conhecimento_www','url':'https://www.tjrj.jus.br/web/portal-conhecimento/noticias'},
 )
 TERMS=re.compile(r'(?i)suspens[ãa]o\s+(?:de\s+|dos\s+)?praz|prazos?\s+processua|feriados?\s+loca|expediente\s+forense|ponto\s+facultativo|ato\s+executivo')
 DATES=re.compile(r'(?<!\d)(\d{1,2})[./-](\d{1,2})[./-](20\d{2})(?!\d)')
