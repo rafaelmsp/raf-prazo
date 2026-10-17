@@ -31,6 +31,16 @@ vm.runInNewContext(code,{document:doc,window:windowStub,
 const metadata=()=>windowStub.RafPrazoLegal22.getCurrent();
 const cards=()=>nodes.rafActList.children.flatMap(group=>group.children.filter(c=>c.className==='raf-library-item'));
 const groups=()=>nodes.rafActList.children.map(g=>g.dataset.category);
+test('desktop usa vencimento/parâmetros à esquerda e calendário à direita',()=>{
+ for(const file of ['index.html','src/template.html']){
+  const html=fs.readFileSync(path.join(ROOT,file),'utf8');
+  assert.ok(html.includes('@media (min-width:1061px){'),'Breakpoints desktop necessários');
+  assert.ok(html.includes('.workspace>.raf-22-parameters{grid-column:1;grid-row:2}'));
+  assert.ok(html.includes('.workspace>.raf-22-results{grid-column:1;grid-row:1}'));
+  assert.ok(html.includes('.workspace>.raf-22-calendar{grid-column:2;grid-row:1 / span 3;align-self:start}'));
+  assert.ok(html.includes('@media (max-width:740px){'),'Layout do celular preservado');
+ }
+});
 test('resultado acima dos parâmetros e calendário sem expansão artificial',()=>{
  for(const file of ['index.html','src/template.html']){
   const html=fs.readFileSync(path.join(ROOT,file),'utf8');
