@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "version": "36a7104cca87",
-  "generated_at": "2026-10-17T06:44:28+00:00",
-  "last_checked_at": "2026-10-17T06:44:28+00:00",
+  "generated_at": "2026-10-17T06:46:38+00:00",
+  "last_checked_at": "2026-10-17T06:46:38+00:00",
   "coverage": {
     "national_years": [
       2026,
@@ -24,7 +24,7 @@
     "failed": [],
     "tjrj": "discovery_only",
     "tjrj_collector_status": "ok",
-    "tjrj_collector_at": "2026-10-17T06:43:49+00:00",
+    "tjrj_collector_at": "2026-10-17T06:46:06+00:00",
     "tjrj_sources_checked": 8,
     "tjrj_sources_success": 8,
     "tjrj_pending": 8,
@@ -828,33 +828,6 @@
         ],
         "occurrences": [
           {
-            "id": "tjrj-extract-39f05add50d5fdd5d6",
-            "date": "2026-06-05",
-            "date_expression": "05/06/2026",
-            "year_inferred": false,
-            "effect_hint": "optional_workday",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": []
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "05/06/2026 providências. Art. 83, Inc. II, da DORJ-I, n. 236, p. 1. Lei Estadual nº 19/12/2024 Art. 83. Não haverá expediente nos 10.633/18/2024. órgãos do Poder Judiciário: II – Nos dias declarados como ponto facultativo nas repartições públicas estaduais;",
-            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 4,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "Lei Estadual nº 19"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
-          {
             "id": "tjrj-extract-e2aa2b79c12b24961c",
             "date": "2026-04-02",
             "date_expression": "02/04 e 03/04",
@@ -1041,7 +1014,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "d058fd3e16c0b4acff88bd2aac6f74f60d76b6780b5a8591bb11aa8098a53f65",
+            "source_hash_sha256": "66bd380fff79af0537d3ced47006256eddafddb867b275beb4247bdb7380a025",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1057,7 +1030,7 @@
       },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "d058fd3e16c0b4acff88bd2aac6f74f60d76b6780b5a8591bb11aa8098a53f65",
+      "source_hash_sha256": "66bd380fff79af0537d3ced47006256eddafddb867b275beb4247bdb7380a025",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1087,7 +1060,7 @@
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "550c43823427c8494e998eb6c66aee7de677fb9c53a588776fdaa1332de53fcf",
+      "source_hash_sha256": "55c410f1a83d33e59fa487936925119793da5b539ff637ec80208ee6af8b6096",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1117,7 +1090,7 @@
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "f8b4ea99e34a037652fc3ea39a720331863c6dda17cf69d456ddbcfda97711c0",
+      "source_hash_sha256": "3d015c15e67610a62042300ddb3e6c4666e63e6bab18af0febe2cab7e440b12d",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1160,7 +1133,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "eda2e58b8ab08e7d97a1e48451a1254f19e503cdf4acd857631a08281909aa58",
+            "source_hash_sha256": "2dc5ac35d1005ddc4d1e01616b15ddba728e79bcc58d142f41e89f41601e50a5",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1176,7 +1149,7 @@
       },
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
-      "source_hash_sha256": "eda2e58b8ab08e7d97a1e48451a1254f19e503cdf4acd857631a08281909aa58",
+      "source_hash_sha256": "2dc5ac35d1005ddc4d1e01616b15ddba728e79bcc58d142f41e89f41601e50a5",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1247,33 +1220,6 @@
           "lei nº 20"
         ],
         "occurrences": [
-          {
-            "id": "tjrj-extract-2d04759f4a7e5eb886",
-            "date": "2026-06-05",
-            "date_expression": "05/06/2026",
-            "year_inferred": false,
-            "effect_hint": "optional_workday",
-            "scope_hint": {
-              "kind": "unresolved",
-              "comarcas_mentioned": []
-            },
-            "has_possible_exceptions": false,
-            "evidence_excerpt": "05/06/2026 providências. Art. 83, Inc. II, da DORJ-I, n. 236, p. 1. Lei Estadual nº 19/12/2024 Art. 83. Não haverá expediente nos 10.633/18/2024. órgãos do Poder Judiciário: II – Nos dias declarados como ponto facultativo nas repartições públicas estaduais;",
-            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "bf302518ef4379a893aa2ea4553f1b7bf669e88f8e2d9690977148b37f4fb92a",
-            "document_page": 4,
-            "extraction_method": "pdf_table_row",
-            "act_references": [
-              "Lei Estadual nº 19"
-            ],
-            "status": "pending_review",
-            "verified": false,
-            "applies_to_deadlines": false,
-            "review_reasons": [
-              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
-              "Conferir data, abrangência e ato."
-            ]
-          },
           {
             "id": "tjrj-extract-bd81c6e063c2579b6d",
             "date": "2026-04-02",
@@ -1450,7 +1396,7 @@
       },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "db90328d458dd3872c2b5f79d883ba4f41ae6745ebe789ed48797209b803c046",
+      "source_hash_sha256": "80c3f95b91cdd201878011873414a35bca8dd28bf8119205e3e4f20bee955019",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1482,7 +1428,7 @@
       },
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
-      "source_hash_sha256": "a2a22bd36fed0f9c96dcee9fe635edf27e1605b597f704414f9ab30c60f2e80d",
+      "source_hash_sha256": "56478f0d3ac7fa679ba0e3797eb0b15c916b876354056f183efeedfb05adca42",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     }
   ],
@@ -1528,7 +1474,7 @@
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
       "kind": "official",
       "status": "ok",
-      "checked_at": "2026-10-17T06:43:49+00:00",
+      "checked_at": "2026-10-17T06:46:06+00:00",
       "note": "Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica."
     },
     {
