@@ -8,7 +8,8 @@ const effects={
  system_unavailability:'Indisponibilidade de sistema',
  service_interruption:'Interrupção de expediente',
  optional_workday:'Ponto facultativo',
- normal_expediente:'Expediente normal mencionado'
+ normal_expediente:'Expediente normal mencionado',
+ holiday_mention:'Feriado mencionado no informativo (não validado)'
 };
 const $=id=>document.getElementById(id);
 const validURL=u=>{try{const p=new URL(u);return p.protocol==='https:'&&officialHosts.has(p.hostname)&&!p.username&&!p.password&&(!p.port||p.port==='443')&&(p.pathname.startsWith('/web/portal-conhecimento/')||p.pathname.startsWith('/documents/'))}catch(_){return false}};
@@ -24,7 +25,7 @@ function extractedByDay(){
   if(!validURL(doc.source_url)||!/^[a-f0-9]{64}$/.test(doc.source_hash_sha256||''))continue;
   const occurrences=doc.structured?.occurrences;
   if(!Array.isArray(occurrences))continue;
-  for(const a of occurrences.slice(0,30)){
+  for(const a of occurrences.slice(0,120)){
    if(!a||!validDate(a.date)||!Object.prototype.hasOwnProperty.call(effects,a.effect_hint)||a.status!=='pending_review'||a.verified!==false||a.applies_to_deadlines!==false)continue;
    if(a.source_url!==doc.source_url||a.source_hash_sha256!==doc.source_hash_sha256)continue;
    const excerpt=String(a.evidence_excerpt||'').trim();
