@@ -34,10 +34,15 @@ def check(browser,url,width):
     calendar_panel=page.locator(".raf-22-calendar").bounding_box()
     assert due_panel and params and date_input and calendar_panel
     assert params["y"]>=due_panel["y"]+due_panel["height"]-3, f"Parâmetros devem ficar abaixo do vencimento em {width}px"
-    if width>740:
-        assert calendar_panel["x"]<due_panel["x"], f"Calendário deveria ficar à esquerda em {width}px"
+    if width>=1061:
+        assert due_panel["x"]<calendar_panel["x"], f"Vencimento deve ficar à esquerda em desktop {width}px"
+        assert params["x"]<calendar_panel["x"], f"Parâmetros devem ficar à esquerda em desktop {width}px"
+        assert calendar_panel["x"]>=params["x"]+params["width"]-3, f"Colunas sobrepostas em {width}px"
+        assert abs(due_panel["x"]-params["x"])<3, f"Vencimento e parâmetros desalinhados em {width}px"
+    elif width>740:
+        assert calendar_panel["x"]<due_panel["x"], f"Tablet deve preservar o layout em {width}px"
     else:
-        assert calendar_panel["y"]>=params["y"]+params["height"]-3, f"Calendário deveria ficar depois dos parâmetros em {width}px"
+        assert calendar_panel["y"]>=params["y"]+params["height"]-3, f"Celular deve manter calendário após parâmetros em {width}px"
     assert date_input["height"]>=52, f"Campo de data pouco evidente em {width}px"
     assert page.locator("#start").evaluate("(el)=>getComputedStyle(el).borderTopWidth")=="2px"
     days_boxes=page.locator("#calendar button.day")
@@ -181,7 +186,7 @@ def main():
         with sync_playwright() as p:
             browser=p.chromium.launch(headless=True)
             try:
-                for width in (360,390,430,1366):check(browser,f"http://127.0.0.1:{server.server_address[1]}/",width)
+                for width in (360,390,430,1024,1366):check(browser,f"http://127.0.0.1:{server.server_address[1]}/",width)
             finally:browser.close()
         server.shutdown()
 if __name__=="__main__":main()
