@@ -21,14 +21,17 @@ class Server(socketserver.ThreadingTCPServer):
 
 def open_updates(page):
     page.wait_for_function("document.getElementById('rafNewsDialog') && window.RafPrazoData?.base")
-    page.wait_for_timeout(120)
-    page.evaluate("""() => {
-      for(const d of document.querySelectorAll('dialog[open]'))d.close();
-      const gate=document.querySelector('.raf-access-gate');
-      if(gate)gate.hidden=true;
-      document.getElementById('rafNewsDialog').showModal();
+    accepted=page.evaluate("""() => {
+      try{const s=JSON.parse(localStorage.getItem('raf-prazo:terms-consent')||'null');
+        return !!(s&&s.version==='1.0'&&s.accepted===true)}
+      catch(_){return false}
     }""")
-    assert page.locator("#rafNewsDialog").evaluate("(el)=>el.open")
+    if not accepted:
+        page.locator("#rafTermsDialog").wait_for(state="visible",timeout=15000)
+        page.locator("#rafTermsCheckbox").check()
+        page.locator("#rafTermsAccept").click()
+    page.locator("#rafNewsOpen").click()
+    assert page.locator("#rafNewsDialog").evaluate("(el)=>el.open"),"Modal de Atualizações não abriu"
 
 def check_width(browser,url,width):
     context=browser.new_context(viewport={"width":width,"height":780},locale="pt-BR",color_scheme="light")
@@ -69,7 +72,7 @@ def check_width(browser,url,width):
     assert saved and saved!="[]","Ocultos devem persistir no navegador"
     page.reload(wait_until="domcontentloaded")
     open_updates(page)
-    page.locator("#rafTabPending").evaluate("(el)=>el.click()")
+    page.locator("#rafTabPending").click()
     if not page.locator("#rafPanelPending").is_visible():
         debug=page.evaluate("""() => ({
           open:document.getElementById('rafNewsDialog').open,
