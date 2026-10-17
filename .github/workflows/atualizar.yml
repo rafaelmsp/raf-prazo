@@ -21,12 +21,10 @@ on:
       - tests/test_tjrj_markers.py
       - assets/tjrj-markers.js
       - assets/tjrj-optin.js
-      - assets/tjrj-news-search.js
       - assets/tjrj-news.js
       - tests/test_tjrj_news.cjs
       - tests/test_user_date_exclusions.cjs
       - assets/user-date-exclusions.js
-      - tests/test_tjrj_news_search.cjs
       - tests/test_tjrj_optin.py
       - tests/test_tjrj_optin.cjs
       - tests/test_weekend_sources.cjs
@@ -58,12 +56,10 @@ jobs:
         run: |
           node --check assets/tjrj-markers.js
           node --check assets/tjrj-optin.js
-          node --check assets/tjrj-news-search.js
           node --check assets/tjrj-news.js
           node --test tests/test_tjrj_news.cjs
           node --test tests/test_user_date_exclusions.cjs
           node --check assets/user-date-exclusions.js
-          node --test tests/test_tjrj_news_search.cjs
           node --test tests/test_tjrj_optin.cjs
       - name: Diagnosticar certificados TLS da origem oficial (sem ignorar validacao)
         run: |
