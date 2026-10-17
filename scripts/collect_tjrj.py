@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse,datetime as dt,hashlib,io,json,re,sys,urllib.parse,urllib.request
 from html.parser import HTMLParser
 from extract_tjrj import extract_structured
+from pdf_table_tjrj import extract_pdf_table
 from pathlib import Path
 import ssl,urllib.error
 
@@ -126,7 +127,15 @@ def parse_source(blob,kind):
  if kind=='application/pdf' or blob.startswith(b'%PDF-'):
   from pypdf import PdfReader
   pdf=PdfReader(io.BytesIO(blob),strict=False)
-  text='\n'.join((p.extract_text() or '') for p in pdf.pages[:min(len(pdf.pages),24)])[:85000]
+  parts=[]
+  count=0
+  for page_no,page in enumerate(pdf.pages[:min(len(pdf.pages),80)],1):
+   try: page_text=page.extract_text(extraction_mode='layout') or ''
+   except (TypeError,ValueError): page_text=page.extract_text() or ''
+   value='\n[RAF_TJRJ_PAGE='+str(page_no)+']\n'+page_text
+   parts.append(value);count+=len(value)
+   if count>=320000:break
+  text='\n'.join(parts)[:320000]
   return 'Informativo de suspensão de prazos do TJRJ',text,[]
  page=Page()
  try:page.feed(blob.decode('utf-8'))
@@ -169,6 +178,14 @@ def collect(previous,fetch=fetch_source,seeds=SOURCES,max_discovered=8):
     record_id='tjrj-source-'+hashlib.sha256(destination.encode()).hexdigest()[:18]
     c=make_candidate(destination,title,body,digest,when,prior.get(record_id))
     c['structured']=extract_structured(body,destination,digest,title)
+    if kind=='application/pdf' or blob.startswith(b'%PDF-'):
+     table=extract_pdf_table(body,destination,digest,limit=100)
+     old_ids={x['id'] for x in c['structured']['occurrences']}
+     c['structured']['occurrences'].extend(x for x in table['occurrences'] if x['id'] not in old_ids)
+     c['structured']['pdf_table_rows_checked']=table['table_rows_checked']
+     c['structured']['pdf_table_year_hint']=table['year_hint']
+     c['structured']['pdf_table_truncated']=table['truncated']
+     c['structured']['truncated']=bool(c['structured']['truncated'] or table['truncated'])
     c['extracted_count']=len(c['structured']['occurrences'])
     candidates[c['id']]=c
    for href,anchor in links:
