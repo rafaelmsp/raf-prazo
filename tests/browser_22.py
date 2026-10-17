@@ -213,6 +213,8 @@ def check(browser,url,width):
     page.locator('[data-close="memoryDialog"]').click()
     page.locator("#themeToggle").click()
     assert page.locator("html").get_attribute("data-theme")=="dark"
+    # O botão tem transição CSS de .16 s; medir apenas após a cor estabilizar.
+    page.wait_for_function("getComputedStyle(document.querySelector('#rafProfileOpen')).backgroundColor==='rgb(27, 45, 65)'",timeout=4000)
     dark_palette=page.evaluate("""() => {
       const css=sel=>getComputedStyle(document.querySelector(sel)).backgroundColor;
       return {body:css('body'),result:css('.raf-22-results .result-block'),profile:css('.raf-22-profile-trigger')};
