@@ -31,20 +31,15 @@ vm.runInNewContext(code,{document:doc,window:windowStub,
 const metadata=()=>windowStub.RafPrazoLegal22.getCurrent();
 const cards=()=>nodes.rafActList.children.flatMap(group=>group.children.filter(c=>c.className==='raf-library-item'));
 const groups=()=>nodes.rafActList.children.map(g=>g.dataset.category);
-test('calendário mantém classificação com cores neutras, sem rosa nem lilás',()=>{
+test('calendário preserva a paleta original e somente a barra superior usa azul PJe',()=>{
  for(const file of ['index.html','src/template.html']){
   const html=fs.readFileSync(path.join(ROOT,file),'utf8');
-  for(const color of ['#f9e0e2','#eee3fc','#f4dadd','#542a35','#3a2f56']){
-   assert.ok(!html.includes(color),'Cor decorativa antiga ainda encontrada: '+color);
-  }
-  assert.ok(html.includes('--raf-holiday-bg:#eef3f7'));
-  assert.ok(html.includes('--raf-susp-bg:#e8f1f7'));
-  assert.ok(html.includes('--raf-recess-bg:#f3f5f7'));
-  assert.ok(html.includes('--raf-manual-bg:#edf5f2'));
-  assert.ok(html.includes('--calendar-pje-blue:#1261a0'));
-  assert.ok(html.includes('.calendar .day.due,.calendar .day.due.blocked'));
+  for(const color of ['--raf-holiday-bg:#f9e0e2','--raf-susp-bg:#ffefcc','--raf-recess-bg:#eee3fc','--raf-manual-bg:#dff2ee'])assert.ok(html.includes(color),color);
+  assert.ok(html.includes('.header{background:#1261a0'));
+  assert.ok(html.includes('.header .brand strong,.header .brand small{color:#fff}'));
+  assert.ok(html.includes('.calendar .day.due{background:var(--accent)'));
+  assert.ok(!html.includes('/* Raf-Prazo 2.3.2 — calendário sóbrio'));
   assert.ok(html.includes('id="calendar"'));
-  assert.ok(html.includes("btn.dataset.eventKind=category"));
   assert.ok(html.includes('aspect-ratio:1/1'));
  }
 });

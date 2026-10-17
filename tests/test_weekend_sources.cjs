@@ -56,3 +56,14 @@ test('fontes nacionais usam API mais leis; cobertura estadual e municipal perman
  assert.equal(base.events.filter(e=>e.type==='MUNICIPAL').length,2*base.coverage.national_years.length);
  assert.equal(base.events.filter(e=>e.type==='SUSPENSAO_TJRJ').length,0);
 });
+
+test('cor institucional apenas no cabeçalho; calendário preserva paleta original',()=>{
+ for(const html of [index,template]){
+  assert.ok(html.includes('.header{background:#1261a0'),'Cabeçalho precisa do azul PJe');
+  assert.ok(html.includes('--raf-holiday-bg:#f9e0e2'),'Feriado com a paleta original');
+  assert.ok(html.includes('--raf-susp-bg:#ffefcc'),'Suspensão na paleta original');
+  assert.ok(html.includes('--raf-recess-bg:#eee3fc'),'Recesso na paleta original');
+  assert.ok(html.includes('--raf-manual-bg:#dff2ee'),'Dia manual na paleta original');
+  assert.ok(!html.includes('/* Raf-Prazo 2.3.2 — calendário sóbrio'),'Paleta substituta não deve prevalecer');
+ }
+});
