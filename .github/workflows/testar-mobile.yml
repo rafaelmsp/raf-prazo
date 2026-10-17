@@ -1,0 +1,34 @@
+name: Raf-Prazo - Mobile Browser
+on:
+  push:
+    branches:
+      - main
+      - test/mobile-atualizacoes-20261017
+    paths:
+      - tests/test_updates_browser.py
+      - .github/workflows/testar-mobile.yml
+      - index.html
+      - src/template.html
+      - assets/tjrj-news.js
+      - assets/tjrj-optin.js
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Playwright e Chromium
+        run: |
+          python -m pip install 'playwright>=1.54,<2'
+          python -m playwright install --with-deps chromium
+      - name: Testar quatro larguras de viewport
+        run: python tests/test_updates_browser.py
