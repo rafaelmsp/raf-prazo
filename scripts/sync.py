@@ -203,6 +203,7 @@ def main(argv=None):
             'excerpt': str(item.get('excerpt',''))[:430],
             'stale': bool(item.get('stale')),
             'first_seen_at': str(item.get('first_seen_at') or '')[:35],
+            'content_changed_at': str(item.get('content_changed_at') or item.get('first_seen_at') or '')[:35],
             'last_seen_at': str(item.get('last_seen_at') or '')[:35],
             'source_hash_sha256': str(item.get('source_hash_sha256','')),
             'reason': 'Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem.'
