@@ -8,9 +8,11 @@ on:
       - scripts/collect_tjrj.py
       - scripts/extract_tjrj.py
       - scripts/pdf_table_tjrj.py
+      - scripts/scope_tjrj.py
       - scripts/sync.py
       - tests/test_extract_tjrj.py
       - tests/test_pdf_table_tjrj.py
+      - tests/test_scope_tjrj.py
       - tests/test_tjrj_markers.py
       - assets/tjrj-markers.js
       - .github/workflows/atualizar.yml
