@@ -9,7 +9,7 @@ const code=fs.readFileSync(path.join(ROOT,'assets/raf-prazo-22.js'),'utf8');
 class Node {
  constructor(id){this.id=id;this.value='';this.textContent='';this.href='';this.hidden=false;this.children=[];this.listeners={};this.className='';this.open=false;this.focused=false;this.dataset={};this.attributes={};this.type='';}
  replaceChildren(...items){this.children=[...items]}
- append(item){this.children.push(item)}
+ append(...items){this.children.push(...items)}
  addEventListener(type,callback){this.listeners[type]=callback}
  setAttribute(k,v){this.attributes[k]=String(v)}
  getAttribute(k){return this.attributes[k]??null}
