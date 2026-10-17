@@ -84,21 +84,83 @@
   const saved=safeRead();
   regime.value=validRegime(saved.regime);
   origin.value=Object.hasOwn(communications,saved.origin)?saved.origin:'conferido';
+  const search=$('rafActSearch'),categoryBox=$('rafActFilters'),list=$('rafActList'),count=$('rafActCount'),alertBox=$('rafActAlert');
+  if(!search||!categoryBox||!list||!count||!alertBox)return;
+  let activeCategory='Todos';
+  const normalize=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+  const presetStatus=item=>item.kind==='hours'?'48 horas · não calculável':item.days===null?'Conferir prazo':item.days+' dias úteis';
+  const create=(tag,className,value)=>{
+   const node=document.createElement(tag);
+   if(className)node.className=className;
+   if(value!==undefined)node.textContent=value;
+   return node;
+  };
   const buildActs=(requested)=>{
    const data=configurations[validRegime(regime.value)];
    act.replaceChildren();
    for(const item of data.presets){
     const option=document.createElement('option');option.value=item.id;
-    option.textContent=item.days===null?item.label:item.label+' · '+item.days+' dias';
+    option.textContent=item.label;
     act.append(option);
    }
    act.value=data.presets.some(x=>x.id===requested)?requested:'custom';
+   activeCategory='Todos';
+   search.value='';
+  };
+  const renderCategories=()=>{
+   categoryBox.replaceChildren();
+   const data=configurations[validRegime(regime.value)];
+   const categories=['Todos',...new Set(data.presets.map(item=>item.category||'Outros'))];
+   for(const name of categories){
+    const button=create('button','raf-library-filter',name);
+    button.type='button';button.dataset.category=name;
+    button.setAttribute('aria-pressed',String(activeCategory===name));
+    button.addEventListener('click',()=>{
+     activeCategory=name;
+     renderCategories();
+     renderList();
+    });
+    categoryBox.append(button);
+   }
+  };
+  const renderList=()=>{
+   const data=configurations[validRegime(regime.value)];
+   const q=normalize(search.value);
+   const matches=data.presets.filter(item=>(activeCategory==='Todos'||(item.category||'Outros')===activeCategory)&&
+    (!q||normalize([item.label,item.category,item.basis,item.description].join(' ')).includes(q)));
+   list.replaceChildren();
+   count.textContent=data.presets.length+' atos · '+matches.length+' exibidos';
+   for(const item of matches){
+    const button=create('button','raf-library-item');
+    button.type='button';button.dataset.preset=item.id;
+    const active=item.id===act.value;
+    button.setAttribute('aria-pressed',String(active));
+    const copy=create('span','raf-library-item-copy');
+    copy.append(create('strong','',item.label),create('small','',item.basis));
+    const label=create('span','raf-library-item-time',presetStatus(item));
+    if(item.days===null)label.dataset.unknown='true';
+    button.append(copy,label);
+    button.addEventListener('click',()=>{
+     act.value=item.id;
+     const previous=days.value;
+     if(item.days!==null){
+      days.value=String(item.days);
+     }else if(item.id!=='custom'||previous.trim()===''){
+      days.value='';
+     }
+     days.dispatchEvent(new Event('input',{bubbles:true}));
+     refresh();
+     renderList();
+    });
+    list.append(button);
+   }
+   if(!matches.length)list.append(create('p','raf-library-empty','Nenhum ato encontrado. Tente outro termo ou escolha a categoria Todos.'));
   };
   const updateView=()=>{
    const r=configurations[validRegime(regime.value)],selected=byId(regime.value,act.value);
    const summary=$('rafRuleSummary'),description=$('rafActDescription'),link=$('rafRuleLink');
    $('rafRegimeCaption').textContent=r.hint;
-   summary.textContent=r.short+' · '+(selected.days===null?'prazo definido pelo usuário':selected.days+' dias úteis');
+   summary.textContent=r.short+' · '+(selected.kind==='hours'?'prazo especial em horas — não calculado':selected.kind==='manual'?'prazo a conferir na decisão':selected.days===null?'prazo definido pelo usuário':selected.days+' dias úteis');
    description.textContent=selected.description;
    $('rafActBasis').textContent=selected.basis;
    link.href=selected.url;
@@ -107,13 +169,26 @@
    $('rafSourceGuidance').textContent=origin.value==='djen'||origin.value==='pessoal'?'Consultar normas do CNJ ↗':'Consultar fundamento legal ↗';
    $('rafContextResult').textContent=(regime.value==='jec'?'JEC':'CPC')+' · '+(selected.id==='custom'?'Prazo informado':selected.label);
    $('rafProfileShort').textContent=(regime.value==='jec'?'JEC':'CPC')+' · '+(selected.id==='custom'?'Prazo personalizado':selected.label);
-   $('rafProfileSub').textContent=selected.id==='custom'?'Personalizar procedimento e ato':selected.days+' dias úteis · '+selected.basis;
+   $('rafProfileSub').textContent=selected.id==='custom'?'Personalizar procedimento e ato':presetStatus(selected)+' · '+selected.basis;
+   if(selected.kind==='hours'){
+    alertBox.hidden=false;
+    alertBox.textContent='Atenção: este prazo é expresso em horas e não pode ser calculado pelo motor de dias úteis. Verifique a interposição e as regras de preparo.';
+   }else if(selected.kind==='manual'){
+    alertBox.hidden=false;
+    alertBox.textContent='Este ato depende da decisão, intimação ou modalidade processual. Preencha manualmente a duração no campo Prazo após conferir os autos.';
+   }else{
+    alertBox.hidden=true;
+    alertBox.textContent='';
+   }
    const inactiveHours=$('rafSpecialDeadline');
-   inactiveHours.hidden=selected.id!=='jec_recurso';
+   inactiveHours.hidden=selected.id!=='jec_recurso'&&selected.kind!=='hours';
    $('sourceFoot').textContent=regime.value==='jec'?'Fonte legal: Lei 9.099/95, art. 12-A · normas subsidiárias quando aplicáveis':'Fonte legal: CPC, arts. 219, 220 e 224';
    window.RafPrazo22Current=Object.freeze({
     regime:regime.value,regime_label:r.label,preset:selected.id,act_label:selected.label,
-    days:Number(days.value),basis:selected.basis,source:selected.url,
+    days:days.value.trim()===''?null:Number(days.value),basis:selected.basis,source:selected.url,
+    preset_kind:selected.kind||'fixed',category:selected.category||'Outros',
+    duration_hours:selected.kind==='hours'?selected.duration:null,
+    requires_manual_review:!!(selected.kind==='manual'||selected.kind==='hours'),
     communication:origin.value,communication_label:communications[origin.value].label,
     communication_date:$('rafCommunicationDate').value||null,description:selected.description,
     count_mode:'business_days',validated_start:start.value||null
@@ -121,6 +196,7 @@
   };
   const refresh=()=>{updateView();safeWrite()};
   buildActs(saved.preset);
+  search.addEventListener('input',renderList);
   if(act.value!=='custom'){
    days.value=byId(regime.value,act.value).days;
    days.dispatchEvent(new Event('input',{bubbles:true}));
@@ -128,15 +204,16 @@
   regime.addEventListener('change',()=>{
    buildActs('custom');
    refresh();
+   renderCategories();
+   renderList();
    days.dispatchEvent(new Event('input',{bubbles:true}));
   });
   act.addEventListener('change',()=>{
    const selected=byId(regime.value,act.value);
-   if(selected.days!==null){
-    days.value=selected.days;
-    days.dispatchEvent(new Event('input',{bubbles:true}));
-   }
+   days.value=selected.days!==null?String(selected.days):'';
+   days.dispatchEvent(new Event('input',{bubbles:true}));
    refresh();
+   renderList();
   });
   origin.addEventListener('change',refresh);
   $('rafCommunicationDate').addEventListener('change',refresh);
@@ -144,16 +221,20 @@
    const selected=byId(regime.value,act.value);
    if(selected.days!==null&&Number(days.value)!==selected.days)act.value='custom';
    refresh();
+   renderList();
   });
   // Os botões de dias do motor legado não emitem input; sincronizar o catálogo ao final do clique.
   $('quick')?.addEventListener('click',event=>{
    if(!event.target.closest('[data-days]'))return;
    act.value='custom';
    refresh();
+   renderList();
   });
   start.addEventListener('change',refresh);
   window.addEventListener('raf-prazo:sync',updateView);
   refresh();
+  renderCategories();
+  renderList();
  };
  window.RafPrazoLegal22=Object.freeze({configurations,communications,getCurrent:()=>window.RafPrazo22Current||null});
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
