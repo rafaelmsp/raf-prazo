@@ -19,7 +19,7 @@ class CalendarVisualTest(unittest.TestCase):
     def test_calculation_reason_is_unchanged(self):
         text = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("let block=reason(n);if(!block)num++;", text)
-        self.assertIn("if(block)return", text)
+        self.assertIn("const event=baseEvent(n);", text)
 
 if __name__ == "__main__":
     unittest.main()
