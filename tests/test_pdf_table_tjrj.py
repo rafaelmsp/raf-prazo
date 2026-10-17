@@ -37,6 +37,9 @@ class TableTests(unittest.TestCase):
  def test_no_year_context_no_fabrication(self):
   r=m.extract_pdf_table('Período Ato Publicação Ementa\n13/02  ATO EXECUTIVO Nº 20/2026 suspender os prazos processuais',URL,SHA)
   self.assertEqual(r['occurrences'],[])
+ def test_law_number_must_not_be_a_publication_date(self):
+  line='05/06/2026 Art. 83, Inc. II, da DORJ-I, p. 1. Lei Estadual nº 19/12/2024 Art. ponto facultativo.'
+  self.assertEqual(self.report(line)['occurrences'],[])
  def test_truncated_results_never_auto_apply(self):
   body=''.join(f'{day:02d}/01/2026 ATO EXECUTIVO Nº {day}/2026 suspender os prazos processuais.\n' for day in range(1,20))
   r=m.extract_pdf_table(HEAD+body,URL,SHA,limit=5);self.assertTrue(r['truncated']);self.assertEqual(len(r['occurrences']),5);self.assertTrue(all(x['status']=='pending_review' and x['applies_to_deadlines'] is False for x in r['occurrences']))
