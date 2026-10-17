@@ -38,13 +38,16 @@ test('indícios listados são os mesmos que saíram da coleta oficial',()=>{
  assert.equal(new Set(records.map(x=>x.id)).size,records.length,'Mesmo texto não deve duplicar duas URLs');
 });
 test('clicar em buscar consulta somente sincronização publicada',()=>{
- assert.ok(nodes.rafTjrjSearchButton);
- nodes.rafTjrjSearchButton.click();
+ const section=parent.children.find(x=>x.id==='rafTjrjNewsSearch');assert.ok(section);
+ const button=section.children.find(x=>x.id==='rafTjrjSearchButton');
+ const status=section.children.find(x=>x.id==='rafTjrjSearchStatus');
+ assert.ok(button);assert.ok(status);
+ button.click();
  assert.equal(syncCalls,1,'Deve solicitar apenas atualização da base publicada');
- assert.match(nodes.rafTjrjSearchStatus.textContent,/Buscando/);
+ assert.match(status.textContent,/Buscando/);
  listeners['raf-prazo:sync']();
- assert.match(nodes.rafTjrjSearchStatus.textContent,/Última coleta TJRJ/);
- assert.equal(nodes.rafTjrjSearchButton.disabled,false);
+ assert.match(status.textContent,/Última coleta TJRJ/);
+ assert.equal(button.disabled,false);
 });
 test('o módulo não transforma indícios em eventos ativos',()=>{
  assert.equal(base.events.some(e=>e.type==='SUSPENSAO_TJRJ'),false);
