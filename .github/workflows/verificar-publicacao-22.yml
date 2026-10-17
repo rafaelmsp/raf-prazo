@@ -22,11 +22,14 @@ jobs:
             echo "Conferindo publicação do Raf-Prazo 2.2 — tentativa $attempt"
             if curl --retry 2 -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/?v=2.2-$GITHUB_RUN_ID-$attempt" -o /tmp/site.html && \
                curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/assets/raf-prazo-22.js?v=2.2-$GITHUB_RUN_ID-$attempt" -o /tmp/legal22.js && \
+               curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$BASE/assets/tjrj-news.js?v=tjrj-ordem-$GITHUB_RUN_ID-$attempt" -o /tmp/tjrj-news.js && \
                grep -Fq 'id="rafRegime"' /tmp/site.html && \
                grep -Fq 'id="rafAct"' /tmp/site.html && \
                grep -Fq 'assets/raf-prazo-22.js' /tmp/site.html && \
                grep -Fq 'id="rafTabPending"' /tmp/site.html && \
                grep -Fq 'RafPrazoLegal22' /tmp/legal22.js && \
+               grep -Fq 'Recebido/atualizado no Raf-Prazo' /tmp/tjrj-news.js && \
+               grep -Fq 'content_changed_at' /tmp/tjrj-news.js && \
                grep -Fq 'id="rafProfileDialog"' /tmp/site.html && \
                grep -Fq 'id="rafProfileOpen"' /tmp/site.html && \
                grep -Fq 'id="rafCalendarSettings"' /tmp/site.html && \
