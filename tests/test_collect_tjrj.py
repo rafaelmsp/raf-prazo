@@ -52,6 +52,21 @@ class TestCollector(unittest.TestCase):
   self.assertTrue(report["candidates"][0]["stale"])
   self.assertFalse(report["candidates"][0]["applies_to_deadlines"])
 
+ def test_content_changed_at_only_advances_when_source_changes(self):
+  url="https://www.tjrj.jus.br/documents/d/portal-conhecimento/2026"
+  first=c.make_candidate(url,"Noticia","Suspensao dos prazos em 29/06/2026","a"*64,"2026-10-17T08:00:00+00:00")
+  self.assertEqual(first["first_seen_at"],first["content_changed_at"])
+  same=c.make_candidate(url,"Noticia","Suspensao dos prazos em 29/06/2026","a"*64,"2026-10-18T09:00:00+00:00",first)
+  self.assertEqual(same["content_changed_at"],first["content_changed_at"])
+  self.assertEqual(same["last_seen_at"],"2026-10-18T09:00:00+00:00")
+  changed=c.make_candidate(url,"Noticia","Suspensao dos prazos em 30/10/2026","b"*64,"2026-10-19T10:00:00+00:00",same)
+  self.assertEqual(changed["first_seen_at"],first["first_seen_at"])
+  self.assertEqual(changed["content_changed_at"],"2026-10-19T10:00:00+00:00")
+  unchanged=c.make_candidate(url,"Noticia","Suspensao dos prazos em 30/10/2026","b"*64,"2026-10-20T11:00:00+00:00",changed)
+  self.assertEqual(unchanged["content_changed_at"],"2026-10-19T10:00:00+00:00")
+  self.assertFalse(changed["applies_to_deadlines"])
+  self.assertFalse(changed["verified"])
+
  def test_dates_are_mentions_only(self):
   self.assertEqual(c.mentioned_dates("Em 30/10/2026 e dia 2 de novembro de 2026; 31/02/2026 invalida"),
                    ["2026-10-30","2026-11-02"])

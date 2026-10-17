@@ -153,7 +153,11 @@ def make_candidate(url,title,body,digest,when,previous=None):
   'status':'pending_review','verified':False,'applies_to_deadlines':False,
   'date_mentions':mentioned_dates(body),'source_url':url,
   'source_hash_sha256':digest,'excerpt':excerpt,
-  'first_seen_at':previous.get('first_seen_at') or when,'last_seen_at':when,'stale':False
+  'first_seen_at':previous.get('first_seen_at') or when,
+  # Reconsultar a mesma versão NÃO produz nova atualização. Alteração de hash, sim.
+  'content_changed_at':(when if not previous or previous.get('source_hash_sha256') != digest
+                        else previous.get('content_changed_at') or previous.get('first_seen_at') or when),
+  'last_seen_at':when,'stale':False
  }
 
 def collect(previous,fetch=fetch_source,seeds=SOURCES,max_discovered=8):
