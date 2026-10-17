@@ -47,9 +47,11 @@ test('ativação local do TJRJ não pode excluir finais de semana duas vezes',()
 
 test('fontes nacionais usam API mais leis; cobertura estadual e municipal permanece ausente',()=>{
  assert.ok(base.sync.brasilapi_years_checked.every(y=>base.coverage.national_years.includes(y)));
- assert.equal(base.coverage.state,'not_applied');
- assert.equal(base.coverage.municipal,'not_applied');
+ assert.equal(base.coverage.state,'RJ_legal_opt_in');
+ assert.equal(base.coverage.municipal,'Duque_de_Caxias_3301702_legal_opt_in');
  assert.equal(base.coverage.tjrj,'discovery_only');
  assert.equal(base.events.filter(e=>e.type==='NACIONAL').length,9*base.coverage.national_years.length);
+ assert.equal(base.events.filter(e=>e.type==='ESTADUAL').length,3*base.coverage.national_years.length);
+ assert.equal(base.events.filter(e=>e.type==='MUNICIPAL').length,2*base.coverage.national_years.length);
  assert.equal(base.events.filter(e=>e.type==='SUSPENSAO_TJRJ').length,0);
 });
