@@ -15,6 +15,7 @@ on:
       - assets/prazos-library-shell.js
       - assets/prazos-library-shell.css
       - tests/browser_library_shell.py
+      - tests/browser_library_accordion.py
       - assets/raf-prazo-22.js
       - tests/browser_22.py
       - assets/tjrj-news.js
@@ -43,6 +44,7 @@ jobs:
           python tests/test_updates_browser.py
           python tests/browser_22.py
           python tests/browser_library_shell.py
+          python tests/browser_library_accordion.py
       - name: Guardar screenshots para revisão visual
         if: always()
         uses: actions/upload-artifact@v4
