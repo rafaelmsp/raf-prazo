@@ -64,13 +64,17 @@ def check(browser,url,width):
     assert page.locator("#rafAct").input_value()=="custom"
     assert page.locator("#rafContextResult").inner_text().startswith("JEC")
     assert page.locator(".raf-22-parameters #rafRegime").count()==0, "O seletor deve estar fora do painel esquerdo"
-    # Fluxo evidente: resultado primeiro e parâmetros imediatamente abaixo.
+    # Fluxo responsivo: 2.4 prioriza formulário no celular, sem reordenar tablet/desktop.
     due_panel=page.locator(".raf-22-results").bounding_box()
     params=page.locator(".raf-22-parameters").bounding_box()
     date_input=page.locator("#start").bounding_box()
     calendar_panel=page.locator(".raf-22-calendar").bounding_box()
     assert due_panel and params and date_input and calendar_panel
-    assert params["y"]>=due_panel["y"]+due_panel["height"]-3, f"Parâmetros devem ficar abaixo do vencimento em {width}px"
+    if width<=650:
+        # Decisão 2.4: campos da calculadora devem aparecer ANTES do resultado no celular.
+        assert due_panel["y"]>=params["y"]+params["height"]-3, f"Vencimento deve aparecer após parâmetros em {width}px"
+    else:
+        assert params["y"]>=due_panel["y"]+due_panel["height"]-3, f"Parâmetros devem ficar abaixo do vencimento em {width}px"
     if width>=1061:
         assert due_panel["x"]<calendar_panel["x"], f"Vencimento deve ficar à esquerda em desktop {width}px"
         assert params["x"]<calendar_panel["x"], f"Parâmetros devem ficar à esquerda em desktop {width}px"
@@ -79,7 +83,8 @@ def check(browser,url,width):
     elif width>740:
         assert calendar_panel["x"]<due_panel["x"], f"Tablet deve preservar o layout em {width}px"
     else:
-        assert calendar_panel["y"]>=params["y"]+params["height"]-3, f"Celular deve manter calendário após parâmetros em {width}px"
+        prev=due_panel if width<=650 else params
+        assert calendar_panel["y"]>=prev["y"]+prev["height"]-3, f"Calendário deve estar após calculadora e resultado em {width}px"
     # UX 2.3 — resultado único e conferência contextual sem alongar o calendário.
     assert page.locator("#calendarDue").count()==0,"Vencimento não deve estar duplicado no calendário"
     assert page.locator(".raf-23-calendar-main #calendar").count()==1
