@@ -1,0 +1,33 @@
+/* Raf-Prazo 2.4: apenas acesso inclusivo e ordem mobile da calculadora. */
+.sidebar a.nav-link {
+  text-decoration: none;
+  color: inherit;
+}
+.raf-24-help-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #1261A0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 7px 2px;
+}
+.raf-24-help-link:focus-visible {
+  outline: 3px solid #1261A0;
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+html[data-theme="dark"] .raf-24-help-link { color: #9bd0ff; }
+@media (max-width: 650px) {
+  /* Formulario primeiro, resultado logo em seguida, calendario abaixo. */
+  .workspace > .raf-22-parameters { order: 1; }
+  .workspace > .raf-22-results { order: 2; }
+  .workspace > .raf-22-calendar { order: 3; }
+  .workspace > .raf-22-verification { order: 4; }
+  .raf-22-intro { margin-bottom: 8px; }
+  .raf-22-parameters .panel-head { margin-bottom: 6px; }
+  .raf-24-help-link { width: 100%; }
+}
