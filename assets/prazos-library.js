@@ -1,4 +1,96 @@
-(()=>{'use strict';const $=s=>document.querySelector(s),all=s=>[...document.querySelectorAll(s)],catalog=()=>window.RafPrazoLegal22?.configurations||{};let selected=null;const memory={};const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(_){return memory[k]||null}},write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(_){memory[k]=v}};const kind=i=>i.kind==='hours'?'48 horas · motor não calcula':i.kind==='conditional'?`${i.referenceDays} dias · condicionado`:i.kind==='procedural'?'Conferir rito/audiência':i.kind==='manual'?'Prazo nos autos':i.days==null?'Informar duração':`${i.days} dias úteis`;const safe=t=>String(t||'').toLocaleLowerCase('pt-BR');const items=()=>Object.entries(catalog()).flatMap(([regime,c])=>c.presets.filter(i=>i.kind!=='custom').map(i=>({...i,regime,regimeLabel:c.short})));function favoriteKey(i){return `${i.regime}:${i.id}`}function favs(){return read('raf-prazo:library:favorites')||[]}function render(){renderCategories();const q=safe($('#search').value),regime=$('#regime').value,category=$('#category').value,showFav=$('#favorites').checked,showRecent=$('#recent').checked,recent=read('raf-prazo:library:recent')||[];const found=items().filter(i=>(regime==='all'||i.regime===regime)&&(category==='all'||i.category===category)&&(!showFav||favs().includes(favoriteKey(i)))&&(!showRecent||recent.includes(favoriteKey(i)))&&safe(`${i.label} ${i.description} ${i.basis}`).includes(q)).sort((a,b)=>showRecent?recent.indexOf(favoriteKey(a))-recent.indexOf(favoriteKey(b)):0);$('#count').textContent=`${found.length} ato(s) encontrado(s)`;const root=$('#groups');root.replaceChildren();if(!found.length){root.innerHTML='<p class="empty">Nenhum ato encontrado. Ajuste a busca ou os filtros.</p>';return}for(const [name,rows] of Object.entries(found.reduce((a,i)=>((a[`${i.regimeLabel} · ${i.category}`]??=[]).push(i),a),{}))){const group=document.createElement('section');group.className='group';const h=document.createElement('h2');h.textContent=name;const n=document.createElement('span');n.textContent=rows.length;h.append(n);const cards=document.createElement('div');cards.className='cards';rows.forEach(i=>{const b=document.createElement('button');b.className='card';b.type='button';const copy=document.createElement('span'),title=document.createElement('strong'),basis=document.createElement('small');title.textContent=i.label;basis.textContent=i.basis;copy.append(title,basis);const tag=document.createElement('span');tag.className='tag';tag.textContent=kind(i);b.append(copy,tag);b.onclick=()=>detail(i);cards.append(b)});group.append(h,cards);root.append(group)}}
+(()=>{'use strict';const $=s=>document.querySelector(s),all=s=>[...document.querySelectorAll(s)],catalog=()=>window.RafPrazoLegal22?.configurations||{};let selected=null;const memory={};const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(_){return memory[k]||null}},write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(_){memory[k]=v}};const kind=i=>i.kind==='hours'?'48 horas · motor não calcula':i.kind==='conditional'?`${i.referenceDays} dias · condicionado`:i.kind==='procedural'?'Conferir rito/audiência':i.kind==='manual'?'Prazo nos autos':i.days==null?'Informar duração':`${i.days} dias úteis`;const safe=t=>String(t||'').toLocaleLowerCase('pt-BR');const items=()=>Object.entries(catalog()).flatMap(([regime,c])=>c.presets.filter(i=>i.kind!=='custom').map(i=>({...i,regime,regimeLabel:c.short})));function favoriteKey(i){return `${i.regime}:${i.id}`}function favs(){return read('raf-prazo:library:favorites')||[]}// Memoriza quais categorias o usuario abriu ou fechou nesta visita.
+const expandedGroups=new Map();
+function render(){
+ renderCategories();
+ const q=safe($('#search').value);
+ const regime=$('#regime').value, category=$('#category').value;
+ const showFav=$('#favorites').checked,showRecent=$('#recent').checked;
+ const recent=read('raf-prazo:library:recent')||[];
+ const favorites=showFav?favs():[];
+ const found=items().filter(i=>
+   (regime==='all'||i.regime===regime)&&
+   (category==='all'||i.category===category)&&
+   (!showFav||favorites.includes(favoriteKey(i)))&&
+   (!showRecent||recent.includes(favoriteKey(i)))&&
+   safe(`${i.label} ${i.description} ${i.basis}`).includes(q)
+ ).sort((a,b)=>showRecent?recent.indexOf(favoriteKey(a))-recent.indexOf(favoriteKey(b)):0);
+ $('#count').textContent=`${found.length} ato(s) encontrado(s)`;
+ const root=$('#groups');
+ root.replaceChildren();
+ if(!found.length){
+  const empty=document.createElement('p');
+  empty.className='empty';
+  empty.textContent='Nenhum ato encontrado. Ajuste a busca ou os filtros.';
+  root.append(empty);
+  return;
+ }
+ const grouped=Object.entries(found.reduce((groups,i)=>{
+   const key=`${i.regimeLabel} · ${i.category}`;
+   (groups[key]??=[]).push(i);
+   return groups;
+ },{}));
+ const mobile=window.matchMedia('(max-width:760px)').matches;
+ // Resultados filtrados ficam abertos para que o leigo veja os atos encontrados.
+ const isFiltering=!!q||regime!=='all'||category!=='all'||showFav||showRecent;
+ for(const [index,[name,rows]] of grouped.entries()){
+  const group=document.createElement('details');
+  group.className='group';
+  group.dataset.groupKey=name;
+  const remembered=expandedGroups.get(name);
+  group.open=isFiltering||(remembered===undefined?(!mobile||index===0):remembered);
+  const heading=document.createElement('summary');
+  heading.className='group-header';
+  heading.title='Toque para abrir ou fechar esta categoria';
+  const label=document.createElement('span');
+  label.className='group-label';
+  label.textContent=name;
+  const actions=document.createElement('span');
+  actions.className='group-header-actions';
+  const count=document.createElement('span');
+  count.className='group-count';
+  count.textContent=String(rows.length);
+  count.setAttribute('aria-label',`${rows.length} atos`);
+  const chevron=document.createElement('span');
+  chevron.className='group-chevron';
+  chevron.textContent='⌄';
+  chevron.setAttribute('aria-hidden','true');
+  actions.append(count,chevron);
+  heading.append(label,actions);
+  const cards=document.createElement('div');
+  cards.className='cards';
+  for(const i of rows){
+   const button=document.createElement('button');
+   button.className='card';
+   button.type='button';
+   const copy=document.createElement('span');
+   const title=document.createElement('strong');
+   const basis=document.createElement('small');
+   title.textContent=i.label;
+   basis.textContent=i.basis;
+   copy.append(title,basis);
+   const tag=document.createElement('span');
+   tag.className='tag';
+   tag.textContent=kind(i);
+   button.append(copy,tag);
+   button.onclick=()=>detail(i);
+   cards.append(button);
+  }
+  group.append(heading,cards);
+  root.append(group);
+  group.addEventListener('toggle',()=>{
+   if(!group.isConnected)return;
+   expandedGroups.set(name,group.open);
+   // No celular, somente uma categoria aberta por vez: menos rolagem.
+   if(mobile&&!isFiltering&&group.open){
+    root.querySelectorAll('details.group[open]').forEach(other=>{
+     if(other===group)return;
+     other.open=false;
+     expandedGroups.set(other.dataset.groupKey,false);
+    });
+   }
+  });
+ }
+}
 function renderCategories(){
  const root=$('#categoryNav');if(!root)return;
  const regime=$('#regime').value,chosen=$('#category').value;
