@@ -68,6 +68,16 @@ test('UX Premium 2.3 elimina o vencimento duplicado e mantém conferência do di
   assert.ok(html.includes('id="rafTabTjrj"'));
  }
 });
+test('barra azul PJe, fim de semana vermelho e precedência de feriado',()=>{
+ for(const file of ['index.html','src/template.html']){
+  const html=fs.readFileSync(path.join(ROOT,file),'utf8');
+  assert.ok(html.includes('--raf-pje-header:#1261A0'));
+  assert.ok(html.includes('.header{background:var(--raf-pje-header)'));
+  assert.ok(html.includes('--raf-weekend-bg:#9c4149'));
+  assert.ok(html.includes('.raf-weekend:not(.due):not(.raf-holiday):not(.raf-suspension):not(.raf-recess):not(.raf-manual)'));
+  for(const cls of ['raf-holiday','raf-suspension','raf-recess','raf-manual'])assert.ok(html.includes('.calendar .day.blocked.'+cls));
+ }
+});
 test('desktop usa vencimento/parâmetros à esquerda e calendário à direita',()=>{
  for(const file of ['index.html','src/template.html']){
   const html=fs.readFileSync(path.join(ROOT,file),'utf8');
