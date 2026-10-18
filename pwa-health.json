@@ -1,0 +1,6 @@
+{
+  "service": "raf-prazo",
+  "online": true,
+  "release": "2.5",
+  "description": "Resposta do site para confirmar conectividade; não valida o calendário judicial."
+}

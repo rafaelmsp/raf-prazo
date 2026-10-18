@@ -16,6 +16,16 @@ on:
       - assets/prazos-library-shell.css
       - tests/browser_library_shell.py
       - tests/browser_library_accordion.py
+      - tests/browser_pwa_online.py
+      - tests/test_pwa_online.cjs
+      - manifest.webmanifest
+      - pwa-health.json
+      - sw.js
+      - assets/raf-pwa.css
+      - assets/raf-pwa.js
+      - assets/pwa-icon-192.png
+      - assets/pwa-icon-512.png
+      - assets/pwa-icon-maskable-512.png
       - assets/raf-prazo-22.js
       - tests/browser_22.py
       - assets/tjrj-news.js
@@ -45,6 +55,7 @@ jobs:
           python tests/browser_22.py
           python tests/browser_library_shell.py
           python tests/browser_library_accordion.py
+          python tests/browser_pwa_online.py
       - name: Guardar screenshots para revisão visual
         if: always()
         uses: actions/upload-artifact@v4

@@ -1,4 +1,17 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1261A0"><title>Biblioteca de prazos | Raf-Prazo</title><script>try{document.documentElement.dataset.theme=localStorage.getItem('raf-prazo:theme')==='dark'?'dark':'light'}catch(_){}</script><link rel="stylesheet" href="../assets/prazos-library.css?v=2.4.2"><link rel="stylesheet" href="../assets/prazos-library-shell.css?v=2.4.1"></head><body><div class="raf-app-shell" id="rafAppShell">
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1261A0"><title>Biblioteca de prazos | Raf-Prazo</title><script>try{document.documentElement.dataset.theme=localStorage.getItem('raf-prazo:theme')==='dark'?'dark':'light'}catch(_){}</script><link rel="stylesheet" href="../assets/prazos-library.css?v=2.4.2"><link rel="stylesheet" href="../assets/prazos-library-shell.css?v=2.4.1"><link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../assets/pwa-icon-192.png">
+<link rel="stylesheet" href="../assets/raf-pwa.css?v=2.5">
+<script src="../assets/raf-pwa.js?v=2.5" defer></script>
+</head><body>
+<dialog id="rafPwaGate" open role="alertdialog" aria-modal="true" aria-labelledby="rafPwaStatusTitle" aria-describedby="rafPwaStatusText">
+  <div class="raf-pwa-gate-card">
+    <span class="raf-pwa-gate-icon" aria-hidden="true">⚖</span>
+    <h2 id="rafPwaStatusTitle">Conectando ao Raf-Prazo</h2>
+    <p id="rafPwaStatusText">Verificando o acesso ao site oficial. Aguarde um instante.</p>
+    <button id="rafPwaRetry" type="button">Tentar novamente</button>
+  </div>
+</dialog>
+<div class="raf-app-shell" id="rafAppShell">
 <header class="raf-header">
   <div class="raf-brand">
     <button type="button" class="raf-menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mainSidebar" title="Abrir menu">☰</button>

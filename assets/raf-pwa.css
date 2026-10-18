@@ -1,0 +1,64 @@
+/* Raf-Prazo 2.5 — instalação e bloqueio quando o site oficial está indisponível. */
+.raf-pwa-install {
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:40px;min-width:44px;
+  border:1px solid #ffffff85;
+  border-radius:10px;padding:7px 11px;
+  background:#ffffff24;color:#fff;
+  font:inherit;font-size:12px;font-weight:750;cursor:pointer;
+  white-space:nowrap;
+}
+.raf-pwa-install[hidden] {display:none!important}
+.raf-pwa-install:focus-visible {outline:3px solid #fff;outline-offset:2px}
+.raf-pwa-install:hover {background:#ffffff36}
+#rafPwaGate {
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  max-width:none;max-height:none;
+  padding:18px;margin:0;border:0;
+  z-index:2147483646;
+  display:flex;align-items:center;justify-content:center;
+  background:#0b1c30f2;
+  color:#fff;
+}
+#rafPwaGate[hidden] {display:none!important}
+.raf-pwa-gate-card {
+  max-width:430px;width:100%;
+  border:1px solid #7597b7;
+  border-radius:18px;
+  background:#142d48;
+  box-shadow:0 16px 60px #0008;
+  padding:28px 24px;
+  text-align:center;
+  font-family:Inter,system-ui,Arial,sans-serif;
+}
+.raf-pwa-gate-icon {
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:31px;
+  width:58px;height:58px;border-radius:15px;
+  color:#fff;background:#1261A0;
+  margin-bottom:12px;
+}
+.raf-pwa-gate-card h2 {font-size:23px;font-weight:800;line-height:1.2;margin:6px 0 12px;color:#fff}
+.raf-pwa-gate-card p {font-size:15px;line-height:1.5;margin:0 0 20px;color:#d6e6f8}
+.raf-pwa-gate-card button {
+  display:inline-flex;justify-content:center;align-items:center;
+  min-height:48px;width:100%;
+  border-radius:10px;
+  background:#fff;color:#12548a;
+  border:0;font-weight:800;font-size:15px;cursor:pointer;
+}
+.raf-pwa-gate-card button:focus-visible {outline:3px solid #81caff;outline-offset:3px}
+@media(max-width:650px) {
+  /* Evita apertar a barra superior; instalação aparece como CTA discreto no rodapé. */
+  .raf-pwa-install {
+    position:fixed;right:16px;bottom:18px;z-index:70;
+    min-height:48px;font-size:13px;padding:10px 15px;
+    border-radius:12px;border-color:#fff;
+    background:#1261A0;color:#fff;
+    box-shadow:0 8px 28px #0c233e70;
+  }
+  .raf-pwa-gate-card {padding:24px 20px}
+}
+
+#rafPwaGate::backdrop{background:#0b1c30f2}
