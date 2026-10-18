@@ -1,0 +1,146 @@
+/* Raf-Prazo 2.4.1 | Identidade e menu compartilhados com a calculadora.
+ * Apenas shell da Biblioteca: não modifica motor, catálogo ou calendário. */
+.raf-app-shell {
+  display: grid;
+  grid-template-columns: 60px minmax(0,1fr);
+  grid-template-rows: 68px minmax(0,1fr);
+  min-height: 100dvh;
+  transition: grid-template-columns .2s ease;
+}
+.raf-app-shell.menu-open { grid-template-columns: 195px minmax(0,1fr); }
+.raf-header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 0 24px;
+  gap: 12px;
+  background: #1261A0;
+  color: #fff;
+  border-bottom: 1px solid #0d4c7d;
+}
+.raf-brand { display:flex; align-items:center; min-width:0; gap:12px; }
+.raf-menu-toggle {
+  display:grid; place-items:center;
+  flex:none; width:36px; height:36px;
+  padding:0; border-radius:9px;
+  border:1px solid #ffffff63;
+  background:#ffffff16; color:#fff;
+  font-size:21px; cursor:pointer;
+}
+.raf-logo {
+  display:grid;place-items:center;
+  width:37px;height:37px;flex:none;border-radius:10px;
+  border:1px solid #ffffff65;background:#ffffff1b;
+  color:#fff;font-size:20px;
+}
+.raf-brand-link {
+  display:flex;flex-direction:column;gap:1px;
+  min-width:0;color:#fff!important;text-decoration:none;
+}
+.raf-brand-link strong {font-size:21px;line-height:1.07;font-weight:800;letter-spacing:-.045em}
+.raf-brand-link small {font-size:11px;line-height:1.2;color:#e0edf9}
+.raf-header-actions {display:flex;align-items:center;gap:11px;min-width:0}
+.raf-top-link {font-size:12px;font-weight:650;text-decoration:none;white-space:nowrap}
+.raf-header a {color:#fff}
+.raf-news-trigger {
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-width:44px;min-height:44px;padding:8px;
+  background:#ffffff12;border:1px solid #ffffff56;border-radius:10px;
+  text-decoration:none;font-size:12px;font-weight:700;
+}
+.raf-news-trigger svg {width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.raf-theme {
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  min-height:40px;padding:6px 9px;border-radius:11px;
+  border:1px solid #ffffff70;background:#ffffff19;
+  color:#fff;font-size:12px;font-weight:700;cursor:pointer;
+}
+.raf-switch {width:30px;height:17px;border-radius:12px;padding:2px;background:#0b426f;border:1px solid #ffffff65}
+.raf-knob {display:block;height:11px;width:11px;border-radius:50%;background:#fff;transition:transform .2s ease}
+:root[data-theme="dark"] .raf-knob {transform:translateX(13px)}
+.raf-menu-toggle:hover,.raf-theme:hover,.raf-news-trigger:hover {background:#ffffff35}
+.raf-menu-toggle:focus-visible,.raf-theme:focus-visible,.raf-header a:focus-visible {
+  outline:3px solid #fff;outline-offset:3px;
+}
+.raf-sidebar {
+  grid-column:1;grid-row:2;
+  position:sticky;top:68px;
+  align-self:start;height:calc(100dvh - 68px);
+  background:var(--paper);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;gap:6px;padding:17px 10px;
+  overflow:auto;
+  z-index:85;
+}
+.raf-nav-label {font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--muted);padding:12px 12px 5px}
+.raf-nav-link {
+  display:flex;align-items:center;justify-content:center;gap:11px;
+  width:100%;min-height:44px;padding:11px 7px;
+  border-radius:9px;color:var(--muted);font-size:12px;
+  font-weight:700;text-decoration:none;white-space:nowrap;
+}
+.raf-nav-link:hover {background:var(--soft);color:var(--text)}
+.raf-nav-link.active {background:#1261A0;color:#fff}
+.raf-nav-icon {font-size:18px;width:20px;text-align:center;flex:none}
+.raf-sidebar .raf-nav-label,.raf-sidebar .raf-nav-text,.raf-sidebar .raf-sidebar-bottom {display:none}
+.raf-app-shell.menu-open .raf-nav-label,.raf-app-shell.menu-open .raf-nav-text,.raf-app-shell.menu-open .raf-sidebar-bottom {display:block}
+.raf-app-shell.menu-open .raf-nav-link {justify-content:flex-start;padding:11px 12px}
+.raf-sidebar-bottom {margin-top:auto;padding:12px 8px;font-size:10px;color:var(--muted);line-height:1.6}
+.raf-sidebar-bottom strong {display:block;color:var(--text)}
+.raf-nav-backdrop {display:none}
+.raf-app-shell > .wrap {grid-column:2;grid-row:2;width:100%;min-width:0}
+@media (max-width:1060px) {
+  .raf-app-shell,.raf-app-shell.menu-open {grid-template-columns:minmax(0,1fr)}
+  .raf-sidebar {
+    position:fixed;top:62px;bottom:0;left:0;
+    width:252px;height:auto;
+    background:var(--paper);
+    box-shadow:0 12px 30px #0003;
+    transform:translateX(-105%);
+    transition:transform .2s ease;
+  }
+  .raf-app-shell.menu-open .raf-sidebar {transform:translateX(0)}
+  .raf-sidebar .raf-nav-label,.raf-sidebar .raf-nav-text,.raf-sidebar .raf-sidebar-bottom {display:block}
+  .raf-nav-link {justify-content:flex-start;padding:11px 12px}
+  .raf-app-shell.menu-open .raf-nav-backdrop {
+    display:block;position:fixed;inset:62px 0 0;
+    background:#07152397;border:0;
+    z-index:80;cursor:pointer;
+  }
+  .raf-app-shell > .wrap {grid-column:1}
+}
+@media (max-width:800px) {
+  .raf-top-link {display:none}
+  .raf-header {padding:0 15px}
+}
+@media (max-width:650px) {
+  .raf-app-shell {grid-template-rows:62px minmax(0,1fr)}
+  .raf-header {min-height:62px;padding:0 12px;gap:8px}
+  .raf-brand {gap:9px}
+  .raf-logo {width:34px;height:34px}
+  .raf-brand-link strong {font-size:19px}
+  .raf-brand-link small {font-size:9px}
+  .raf-header-actions {gap:7px}
+  .raf-news-label,.raf-theme-text {display:none}
+  .raf-news-trigger {width:40px;min-width:40px}
+  .raf-theme {min-width:58px;min-height:39px;padding:5px 7px}
+}
+@media (max-width:360px) {
+  .raf-logo {width:31px;height:31px;font-size:18px}
+  .raf-brand-link strong {font-size:17px}
+  .raf-brand-link small {font-size:8px}
+  .raf-theme {min-width:52px}
+}
+@media (prefers-reduced-motion:reduce) {
+  .raf-app-shell,.raf-sidebar,.raf-knob {transition:none}
+}
+@media print {
+  .raf-header,.raf-sidebar,.raf-nav-backdrop {display:none!important}
+  .raf-app-shell {display:block}
+  .raf-app-shell > .wrap {width:100%}
+}

@@ -9,6 +9,12 @@ on:
       - .github/workflows/testar-mobile.yml
       - index.html
       - src/template.html
+      - prazos/index.html
+      - assets/prazos-home.js
+      - assets/prazos-library.js
+      - assets/prazos-library-shell.js
+      - assets/prazos-library-shell.css
+      - tests/browser_library_shell.py
       - assets/raf-prazo-22.js
       - tests/browser_22.py
       - assets/tjrj-news.js
@@ -36,11 +42,14 @@ jobs:
         run: |
           python tests/test_updates_browser.py
           python tests/browser_22.py
+          python tests/browser_library_shell.py
       - name: Guardar screenshots para revisão visual
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: premium-raf-prazo-22
-          path: tests/screenshots-22/*.png
+          path: |
+            tests/screenshots-22/*.png
+            tests/screenshots-library/*.png
           if-no-files-found: ignore
           retention-days: 5

@@ -81,6 +81,27 @@
     }
   }
 
+  // Menu da Biblioteca: abre o destino escolhido na pagina principal.
+  // Somente nomes de hash autorizados; nenhum dado de prazo vem pela URL.
+  function applyNavigationHash() {
+    const targets=Object.freeze({
+      '#calendario':'navCalendar',
+      '#atualizacoes':'rafNewsOpen',
+      '#historico':'navHistory',
+      '#fontes':'sourcesTop',
+      '#configuracoes':'navSettings',
+      '#tutorial':'navTutorial',
+      '#sobre':'navAbout',
+      '#termos':'navTerms'
+    });
+    const target=targets[window.location.hash.toLowerCase()];
+    if(!target)return;
+    const button=$(target);
+    if(!button)return;
+    try{history.replaceState(history.state,'',location.pathname+location.search)}catch(_){}
+    window.requestAnimationFrame(()=>button.click());
+  }
+
   function init() {
     const nav = $('navCalc');
     if (nav && !$('rafLibraryNavLink')) {
@@ -111,6 +132,7 @@
       link.addEventListener('click', preserve));
     restore();
     consumeIntent();
+    applyNavigationHash();
   }
   // O modulo de perfil juridico registra seu listener de DOMContentLoaded ANTES
   // deste arquivo; por isso a aplicacao ocorre quando o catalogo ja esta pronto.
