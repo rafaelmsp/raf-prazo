@@ -22,9 +22,9 @@
 }
 html[data-theme="dark"] .raf-24-help-link { color: #9bd0ff; }
 @media (max-width: 650px) {
-  /* Formulario primeiro, resultado logo em seguida, calendario abaixo. */
-  .workspace > .raf-22-parameters { order: 1; }
-  .workspace > .raf-22-results { order: 2; }
+  /* Resultado imediatamente visivel: vencimento acima dos campos, como na versao anterior. */
+  .workspace > .raf-22-results { order: 1; }
+  .workspace > .raf-22-parameters { order: 2; }
   .workspace > .raf-22-calendar { order: 3; }
   .workspace > .raf-22-verification { order: 4; }
   .raf-22-intro { margin-bottom: 8px; }

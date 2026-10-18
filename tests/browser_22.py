@@ -70,11 +70,13 @@ def check(browser,url,width):
     date_input=page.locator("#start").bounding_box()
     calendar_panel=page.locator(".raf-22-calendar").bounding_box()
     assert due_panel and params and date_input and calendar_panel
-    if width<=650:
-        # Decisão 2.4: campos da calculadora devem aparecer ANTES do resultado no celular.
-        assert due_panel["y"]>=params["y"]+params["height"]-3, f"Vencimento deve aparecer após parâmetros em {width}px"
-    else:
-        assert params["y"]>=due_panel["y"]+due_panel["height"]-3, f"Parâmetros devem ficar abaixo do vencimento em {width}px"
+    # Regra de usabilidade confirmada: vencimento visível na primeira tela.
+    assert params["y"]>=due_panel["y"]+due_panel["height"]-3, f"Resultado deve aparecer antes dos campos em {width}px"
+    if width<=740:
+        assert due_panel["y"] < 250, f"Vencimento ficou longe do topo em {width}px"
+        due_box=page.locator("#due").bounding_box()
+        assert due_box and due_box["y"]+due_box["height"] < 820, f"Vencimento exige rolar a tela em {width}px"
+        assert date_input["y"] < 820, f"Campo do marco inicial não está visível na primeira tela em {width}px"
     if width>=1061:
         assert due_panel["x"]<calendar_panel["x"], f"Vencimento deve ficar à esquerda em desktop {width}px"
         assert params["x"]<calendar_panel["x"], f"Parâmetros devem ficar à esquerda em desktop {width}px"
@@ -83,8 +85,7 @@ def check(browser,url,width):
     elif width>740:
         assert calendar_panel["x"]<due_panel["x"], f"Tablet deve preservar o layout em {width}px"
     else:
-        prev=due_panel if width<=650 else params
-        assert calendar_panel["y"]>=prev["y"]+prev["height"]-3, f"Calendário deve estar após calculadora e resultado em {width}px"
+        assert calendar_panel["y"]>=params["y"]+params["height"]-3, f"Calendário deve estar após resultado e parâmetros em {width}px"
     # UX 2.3 — resultado único e conferência contextual sem alongar o calendário.
     assert page.locator("#calendarDue").count()==0,"Vencimento não deve estar duplicado no calendário"
     assert page.locator(".raf-23-calendar-main #calendar").count()==1
