@@ -44,8 +44,8 @@ test('calendário preserva semântica de fim de semana, feriado e vencimento',()
 
 test('Raf-Prazo 2.4 prioriza parâmetros móveis sem interferir na grade',()=>{
  assert.match(homeCss, /@media\s*\(max-width:\s*650px\)/);
- assert.match(homeCss, /\.workspace\s*>\s*\.raf-22-parameters\s*\{\s*order:\s*1/);
- assert.match(homeCss, /\.workspace\s*>\s*\.raf-22-results\s*\{\s*order:\s*2/);
+ assert.match(homeCss, /\.workspace\s*>\s*\.raf-22-results\s*\{\s*order:\s*1/);
+ assert.match(homeCss, /\.workspace\s*>\s*\.raf-22-parameters\s*\{\s*order:\s*2/);
  assert.match(homeCss, /\.workspace\s*>\s*\.raf-22-calendar\s*\{\s*order:\s*3/);
  assert.doesNotMatch(homeCss,/\.day\.(?:blocked|due)|\.calendar\s+\.day/);
 });

@@ -48,8 +48,8 @@ test('calculadora tem acesso contextual, restauração de dados e prioridade mob
   assert.match(homeScript, /raf-prazo:library:return:v1/);
   assert.match(homeScript, /start\.dispatchEvent/);
   assert.match(homeScript, /days\.dispatchEvent/);
-  assert.match(homeCss, /raf-22-parameters\s*\{\s*order:\s*1/);
-  assert.match(homeCss, /raf-22-results\s*\{\s*order:\s*2/);
+  assert.match(homeCss, /raf-22-results\s*\{\s*order:\s*1/);
+  assert.match(homeCss, /raf-22-parameters\s*\{\s*order:\s*2/);
 });
 
 test('biblioteca contém busca, filtros, favoritos e confirmação explícita', () => {
