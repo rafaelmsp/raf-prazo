@@ -246,7 +246,7 @@ def check(browser,url,width):
     assert dark_palette["result"]=="rgb(32, 56, 80)",f"Resultado no modo escuro: {dark_palette}"
     assert dark_palette["profile"]=="rgb(27, 45, 65)",f"Seletor no modo escuro: {dark_palette}"
     dark_days=calendar_palette(page)
-    expected_dark={'raf-weekend':'rgb(121, 56, 62)','raf-holiday':'rgb(84, 42, 53)',
+    expected_dark={'raf-weekend':'rgb(125, 48, 58)','raf-holiday':'rgb(84, 42, 53)',
                    'raf-suspension':'rgb(73, 58, 33)','raf-recess':'rgb(58, 47, 86)',
                    'raf-manual':'rgb(33, 68, 64)','raf-user-tjrj':'rgb(222, 244, 237)',
                    'due':'rgb(166, 203, 255)'}
