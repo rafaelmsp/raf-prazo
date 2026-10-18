@@ -18,7 +18,7 @@
 - `node --check assets/prazos-home.js`: **PASS**
 - `node --check assets/prazos-library.js`: **PASS**
 - `node --test tests/test_library_prazos.cjs`: **4/4 PASS**
-- `node --test tests/*.cjs`: **53 PASS / 4 FAIL**, total 57. As quatro falhas são anteriores à biblioteca.
+- `node --test tests/*.cjs`: **61/61 PASS na revisão seguinte**, após atualização dos contratos de teste desatualizados; na implementação inicial houve 53 PASS / 4 FAIL.
 - Baseline `bd9af17` isolada: `node --test tests/*.cjs` = **49 PASS / 4 FAIL**, total 53. Mesmos quatro contratos falhos em ambas as versões: arquivo de tema institucional; duas expectativas sobre abas de atualizações; e uma expectativa de ficha de fim de semana. Não foram alterados para mascarar as falhas.
 - `python -m unittest discover -s tests -p 'test_*.py'`: **66/66 PASS**
 - `python scripts/build_html.py`: **PASS** (base `20022b1f5a80`)
@@ -36,7 +36,7 @@
 
 - Esta entrega não comprova que todos os atos e fundamentos estão juridicamente atualizados: reusa os presets existentes e ressalta a conferência dos autos, do marco, do rito e das normas oficiais.
 - Aceite inicial dos Termos de Uso continua obrigatório; após o aceite, a calculadora é a primeira função visível do aplicativo no celular.
-- Os quatro testes Node preexistentes permanecem documentados e deverão ser tratados em tarefa própria, sem editar o motor ou o calendário por causa desta biblioteca.
+- As quatro falhas Node preexistentes foram regularizadas em seguida, ajustando testes à identidade visual aprovada e usando verificações tolerantes a espaços em dois contratos. O motor e o calendário continuaram intocados.
 - Testes de navegador foram executados em Chrome headless com viewport emulado, não em um aparelho Android físico.
 - Não houve validação de workflow remoto nem do GitHub Pages atualizado, pois **publicação não foi autorizada**. Logo, não marcar 100% nem afirmar que a URL pública apresenta o 2.4.
 - A implantação, criação de PR ou push exige nova autorização expressa do proprietário.
@@ -56,3 +56,15 @@ Abrir `http://127.0.0.1:8766/` e `http://127.0.0.1:8766/prazos/`. Não usar URL 
 ## Validação adicional do modo escuro
 
 O Chrome headless confirmou o tema escuro na largura móvel de 390 px, com 32 atos, sem exceções de JavaScript. Foi ajustado o contraste dos rótulos informativos azuis para #9bd0ff no modo escuro, preservando o cabeçalho institucional. Verificados também os tamanhos de 360 e 430 px e a prévia da ficha jurídica em três colunas no desktop.
+
+## Continuidade — regularização de testes preexistentes
+
+- `tests/test_institutional_theme.cjs` foi atualizado para verificar o azul PJe, fins de semana em vermelho sóbrio e feriados em cores semânticas, sem exigir a paleta neutra intermediária rejeitada. Preserva testes da separação da camada do calendário, tema escuro e hierarquia mobile.
+- `tests/test_update_tabs.cjs`: mantém a exigência de TJRJ como aba inicial, sem depender de uma quebra de linha literal.
+- `tests/test_weekend_sources.cjs`: mantém a exigência de atualizar o contexto na ficha, sem depender de indentação literal.
+- `node --test tests/*.cjs`: **61/61 PASS**, nenhuma falha remanescente.
+- `python -m unittest discover -s tests -p test_*.py`: **66/66 PASS**.
+- `python scripts/build_html.py`: **PASS**; `index.html` idêntico a `src/template.html`.
+- Arquivos JSON de calendário e coleta válidos. Há **24 candidatos TJRJ**, nenhum com aplicação de prazo ativada; **zero** eventos automáticos de suspensão TJRJ e **zero** ocorrências estruturadas ativadas.
+- Workflow: testes locais equivalentes aos comandos estáticos foram executados. **Coleta TJRJ, sincronização remota, execução do GitHub Actions e publicação não foram executadas** nesta etapa por alterarem dados/conectarem fontes externas. O workflow existente contém rotina automática de publicação quando executado em `main`; não acioná-lo para validar esta branch sem autorização.
+- **Não foi realizado push, PR, merge ou deploy**; testes só na branch local.
