@@ -24,7 +24,7 @@ for(const page of ['index.html','src/template.html']){
   assert.ok(modal.includes('id="rafPanelNews" role="tabpanel" aria-labelledby="rafTabNews" hidden'),'Calendário inicialmente oculto');
   assert.ok(modal.includes('id="rafPanelTjrj" role="tabpanel" aria-labelledby="rafTabTjrj">'),'Conteúdo do TJRJ visível inicialmente');
   assert.ok(html.includes("chooseTab('tjrj');render();open(news);markSeen()"),'Reabrir Atualizações deve selecionar TJRJ');
-  assert.match(html,/chooseTab\('tjrj'\);\s*window\.addEventListener/,'Foco inicial deve estar em TJRJ');
+  assert.ok(html.includes("chooseTab('tjrj');\n window.addEventListener"),'Foco inicial deve estar em TJRJ');
 
   const calendar=modal.slice(modal.indexOf('id="rafPanelNews" role="tabpanel"'),modal.indexOf('id="rafPanelTjrj" role="tabpanel"'));
   const tjrj=modal.slice(modal.indexOf('id="rafPanelTjrj" role="tabpanel"'),modal.indexOf('id="rafPanelPending" role="tabpanel"'));

@@ -50,7 +50,7 @@ test('cálculo, escolha no calendário e campo de data recusam finais de semana'
   assert.ok(html.includes("initial.getDay()===0||initial.getDay()===6"),'Data inicial sugerida deve ser útil na semana');
   assert.ok(html.includes('id="rafStartRule"'),'Instrução visível obrigatória');
   assert.ok(html.includes("btn.addEventListener('click',()=>openDayDetails(n))"),'Ainda deve ser possível consultar o dia');
-  assert.match(html,/function openDayDetails\(n\)\s*\{\s*updateRafDayFocus\(n\);/,'A ficha de data deve atualizar o resumo contextual');
+  assert.ok(html.includes('function openDayDetails(n){\n updateRafDayFocus(n);'),'A ficha de data deve atualizar o resumo contextual');
  }
 });
 
