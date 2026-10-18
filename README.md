@@ -535,3 +535,29 @@ Monitoramento oficial de atos com revisão humana, escopo por comarca/vara, impo
 ---
 
 > **Aviso final:** o Raf-Prazo é uma **ferramenta de apoio à conferência**, não um serviço oficial nem garantia de tempestividade. A documentação e o Termo de Uso aumentam a transparência, mas **não afastam responsabilidades previstas em lei**. A conferência do caso concreto e das fontes oficiais permanece indispensável.
+
+## Raf-Prazo 2.5 — PWA dependente do site
+
+O Raf-Prazo pode ser instalado no Android a partir do site oficial, pelo Chrome,
+como aplicativo em janela própria. Não há aplicação separada nem necessidade de
+publicação na Play Store.
+
+- **Requer internet:** todo início de sessão confirma acesso ao próprio site
+  por meio de `pwa-health.json`, com `cache: no-store`. A verificação se repete
+  periodicamente e ao retornar ao aplicativo.
+- **Sem uso offline:** o Service Worker **não armazena** HTML, JavaScript, CSS,
+  calendário ou biblioteca em CacheStorage. Requisições sob o escopo do app usam
+  a rede e falham se o site estiver indisponível.
+- **Bloqueio visível:** diante da ausência de resposta válida do site, a
+  calculadora e a biblioteca ficam inacessíveis, com a mensagem
+  "Sem conexão com o Raf-Prazo" e um botão "Tentar novamente".
+- **Atualizações:** vêm do site GitHub Pages; não há outro backend. A atualização
+  depende da rede, da publicação e da política de cache dos intermediários.
+- **Preferências locais:** favoritos e histórico já existentes no navegador
+  continuam locais e não constituem uma cópia offline executável do sistema.
+- **Limite jurídico:** o teste de conectividade confirma acesso ao servidor,
+  **não** certifica atualização de feriados, suspensões nem contagens.
+
+Para validar: `node --test tests/*.cjs`,
+`python -m unittest discover -s tests -p 'test_*.py'` e
+`python tests/browser_pwa_online.py` (com Playwright e Chromium instalados).
