@@ -169,7 +169,7 @@ def national_events(years, previous, offline):
         for day, item in observed.items():
             if not date_valid(day) or not day.startswith(f'{year}-'):
                 continue
-            if day[5:] not in FIXED and day != passion if year == 2026 else day[5:] not in FIXED:
+            if day[5:] not in FIXED and not (year == 2026 and day == passion):
                 candidates.append({
                     'id': f'api-candidato-{day}', 'date': day,
                     'name': str(item.get('name', 'Data adicional'))[:140],
