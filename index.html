@@ -943,6 +943,9 @@ let baseData=JSON.parse($('rafEmbeddedBase').textContent), syncMode='incorporada
 const BASE_CACHE_KEY='raf-prazo:base:verified:v1';
 function baseEvent(n){
   const date=iso(n),place=sel();
+  // Um feriado nacional deve prevalecer sobre um registro local do mesmo dia.
+  const national=(baseData.events||[]).find(e=>e.date===date&&e.status==='confirmed'&&e.applies_to_deadlines===true&&e.scope?.kind==='national');
+  if(national)return national;
   for(const e of baseData.events||[]){
     if(e.date!==date||e.status!=='confirmed'||e.applies_to_deadlines!==true)continue;
     const scope=e.scope||{};
