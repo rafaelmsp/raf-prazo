@@ -29,19 +29,24 @@ test('feriados legais RJ/Caxias somente se habilitados',()=>{
  assert.equal(eventDate('2026-02-17',{useLocal:true}),'ESTADUAL');
  assert.equal(eventDate('2026-04-23',{useLocal:true}),'ESTADUAL');
  assert.equal(eventDate('2026-06-04',{useLocal:true}),'ESTADUAL');
- assert.equal(eventDate('2026-04-03',{useLocal:true}),'MUNICIPAL');
+ assert.equal(eventDate('2026-04-03',{useLocal:true}),'NACIONAL');
  assert.equal(eventDate('2026-06-13',{useLocal:true}),'MUNICIPAL');
 });
 test('feriados estaduais valem no RJ mas municipais somente Caxias',()=>{
  assert.equal(eventDate('2026-02-17',{uf:'RJ',city:'3304557',useLocal:true}),'ESTADUAL');
- assert.equal(eventDate('2026-04-03',{uf:'RJ',city:'3304557',useLocal:true}),null);
+ assert.equal(eventDate('2026-04-03',{uf:'RJ',city:'3304557',useLocal:true}),'NACIONAL');
  assert.equal(eventDate('2026-02-17',{uf:'SP',city:'3550308',useLocal:true}),null);
- assert.equal(eventDate('2026-04-03',{uf:'SP',city:'3550308',useLocal:true}),null);
+ assert.equal(eventDate('2026-04-03',{uf:'SP',city:'3550308',useLocal:true}),'NACIONAL');
  assert.equal(eventDate('2026-05-01',{uf:'SP',city:'3550308',useLocal:false}),'NACIONAL');
 });
 test('25 agosto e 28 outubro não são feriados automáticos',()=>{
  for(const date of ['2026-08-25','2026-10-28','2026-12-31'])
   assert.equal(eventDate(date,{useLocal:true}),null,date);
+});
+test('2026 Sexta da Paixão federal é única e não depende do checkbox local',()=>{
+ assert.equal(eventDate('2026-04-03',{useLocal:false}),'NACIONAL');
+ assert.equal(data.events.filter(e=>e.date==='2026-04-03'&&e.type==='NACIONAL').length,1);
+ assert.equal(eventDate('2027-03-26',{uf:'SP',city:'3550308',useLocal:true}),null,'Não projetar automaticamente uma portaria federal de 2027');
 });
 test('2027 e 2028 calculados pela Páscoa, sem data fixa inventada',()=>{
  const settings={useLocal:true};
