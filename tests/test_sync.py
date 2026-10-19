@@ -81,7 +81,7 @@ class TestRafPrazoSync(unittest.TestCase):
         holy=[e for e in data['events'] if e['type']=='NACIONAL' and e['date']=='2026-04-03']
         self.assertEqual(len(holy),1)
         self.assertEqual(holy[0]['authority_scope'],'administracao_publica_federal_2026')
-        self.assertFalse(any(c['type']=='CANDIDATO' and c.get('date')=='2026-04-03' for c in data['candidates'])
+        self.assertFalse(any(c['type']=='CANDIDATO' and c.get('date')=='2026-04-03' for c in data['candidates']))
 
     def test_html_has_embedded_base(self):
         html=(ROOT/'index.html').read_text(encoding='utf-8')
