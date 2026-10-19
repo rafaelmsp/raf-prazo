@@ -75,6 +75,13 @@ class TestRafPrazoSync(unittest.TestCase):
         self.assertTrue(all(e['scope']['uf']=='RJ' for e in data['events'] if e['type'] in ('ESTADUAL','MUNICIPAL')))
         self.assertTrue(all(e['scope']['ibge']=='3301702' for e in data['events'] if e['type']=='MUNICIPAL'))
         self.assertEqual(data['coverage']['tjrj'],'discovery_only')
+        annual={year:sum(e['type']=='NACIONAL' and e['date'].startswith(str(year)) for e in data['events'])
+                for year in (2026,2027,2028)}
+        self.assertEqual(annual,{2026:10,2027:9,2028:9})
+        holy=[e for e in data['events'] if e['type']=='NACIONAL' and e['date']=='2026-04-03']
+        self.assertEqual(len(holy),1)
+        self.assertEqual(holy[0]['authority_scope'],'administracao_publica_federal_2026')
+        self.assertFalse(any(c['type']=='CANDIDATO' and c.get('date')=='2026-04-03' for c in data['candidates'])
 
     def test_html_has_embedded_base(self):
         html=(ROOT/'index.html').read_text(encoding='utf-8')
