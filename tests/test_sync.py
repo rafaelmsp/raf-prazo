@@ -44,9 +44,21 @@ class TestRafPrazoSync(unittest.TestCase):
         from urllib.error import URLError
         with patch.object(sync,'fetch_national',side_effect=URLError('sem conexão')):
             events,candidates,checked,failed=sync.national_events([2026],{},False)
-        self.assertEqual(len(events),9)
+        self.assertEqual(len(events),10)
         self.assertEqual(checked,[])
         self.assertEqual(failed[0]['year'],2026)
+
+    def test_federal_calendar_2026_includes_passion_but_not_future_unconfirmed(self):
+        events,candidates,checked,failed=sync.national_events([2026,2027,2028],{},True)
+        by_year={y:[x for x in events if x['type']=='NACIONAL' and x['date'].startswith(str(y))] for y in (2026,2027,2028)}
+        self.assertEqual([len(by_year[y]) for y in (2026,2027,2028)],[10,9,9])
+        passion=next(x for x in by_year[2026] if x['date']=='2026-04-03')
+        self.assertEqual(passion['name'],'Paixão de Cristo')
+        self.assertEqual(passion['authority_scope'],'administracao_publica_federal_2026')
+        self.assertEqual(passion['source']['act'].split(',')[0],'Portaria MGI nº 11.460/2025')
+        self.assertTrue(passion['source']['url'].startswith('https://www.in.gov.br/'))
+        self.assertFalse(any(x['date']=='2026-04-03' for x in candidates))
+        self.assertFalse(any(x['date'] in ('2027-03-26','2028-04-14') for x in events))
 
     def test_2020_does_not_apply_november_20_nationally(self):
         events,_,_,_=sync.national_events([2020],{},True)
