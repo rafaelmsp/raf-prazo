@@ -15,7 +15,7 @@ import urllib.error
 import urllib.request
 import urllib.parse
 from pathlib import Path
-from local_holidays import legal_local_events, OFFICIAL_ALERJ_CARNAVAL, OFFICIAL_CAMARA_CAXIAS
+from local_holidays import legal_local_events, easter, OFFICIAL_ALERJ_CARNAVAL, OFFICIAL_CAMARA_CAXIAS
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'feriados.json'
@@ -36,6 +36,14 @@ NATIONAL_SOURCE = {
     'title': 'Legislação federal sobre feriados nacionais',
     'act': 'Lei nº 10.607/2002 (alterações da Lei nº 662/1949)',
     'url': 'https://www.planalto.gov.br/ccivil_03/leis/2002/l10607.htm',
+}
+# Paixao de Cristo consta do calendario nacional publicado para 2026 pela Portaria MGI
+# 11.460/2025. Lei 9.093/1995, art. 2o, exige lei municipal para feriados
+# religiosos locais. Nao estender a portaria de 2026 a 2027/2028.
+FEDERAL_CALENDAR_2026 = {
+    'title':'Portaria MGI nº 11.460/2025 — feriados da Administração Pública Federal em 2026',
+    'act':'Portaria MGI nº 11.460/2025, art. 1º, V; Lei nº 9.093/1995, art. 2º',
+    'url':'https://www.in.gov.br/web/dou/-/portaria-mgi-n-11.460-de-29-de-dezembro-de-2025-678388627',
 }
 API_ROOT = 'https://brasilapi.com.br/api/feriados/v1/'
 URL_RE = re.compile(r'^https://[^\s<>"\']+$')
@@ -141,10 +149,27 @@ def national_events(years, previous, offline):
             }
             verify_event(event)
             events.append(event)
+        # Unica data movel expressamente classificada como feriado nacional
+        # pelo calendario federal ja publicado: Sexta-feira da Paixao, 2026.
+        # O calendario MGI nao certifica suspensao no TJRJ.
+        passion = (easter(year) - dt.timedelta(days=2)).isoformat()
+        if year == 2026:
+            event = {
+                'id':f'nacional-{passion}', 'date':passion, 'name':'Paixão de Cristo',
+                'type':'NACIONAL', 'scope':{'kind':'national'},
+                'status':'confirmed', 'applies_to_deadlines':True,
+                'source':FEDERAL_CALENDAR_2026,
+                'verified_at':previous_by_date.get(passion,{}).get('verified_at','2026-10-19'),
+                'origin':'calendario_federal_2026',
+                'review_note':'Feriado relacionado pela Portaria MGI 11.460/2025 ao calendario federal de 2026; verificar aplicabilidade ao TJRJ e lei municipal em cada localidade.',
+                'authority_scope':'administracao_publica_federal_2026',
+            }
+            verify_event(event)
+            events.append(event)
         for day, item in observed.items():
             if not date_valid(day) or not day.startswith(f'{year}-'):
                 continue
-            if day[5:] not in FIXED:
+            if day[5:] not in FIXED and day != passion if year == 2026 else day[5:] not in FIXED:
                 candidates.append({
                     'id': f'api-candidato-{day}', 'date': day,
                     'name': str(item.get('name', 'Data adicional'))[:140],
@@ -252,7 +277,7 @@ def main(argv=None):
     digest = hashlib.sha256(json.dumps([fingerprint(e) for e in events], sort_keys=True).encode()).hexdigest()[:12]
     status = 'offline_seed' if args.offline or args.check else ('ok' if not failed else 'partial')
     sources = [
-        {'id':'federal','label':'Legislação federal — feriados nacionais','url':NATIONAL_SOURCE['url'], 'kind':'official','status':'curated', 'checked_at':None,'note':'Datas fixas previstas em lei; não cobre feriados forenses locais.'},
+        {'id':'federal','label':'Legislação federal — feriados nacionais','url':NATIONAL_SOURCE['url'], 'kind':'official','status':'curated', 'checked_at':None,'note':'Nove datas civis fixas em lei; em 2026 inclui também a Paixão de Cristo, classificada como feriado nacional pela Portaria MGI nº 11.460/2025. Não certifica o expediente forense.'},
         {'id':'brasilapi','label':'BrasilAPI — feriados nacionais','url':'https://brasilapi.com.br/docs','kind':'community','status':'ok' if checked and not failed else 'unavailable','checked_at': TODAY.isoformat() if checked else None,'note':'Somente feriados fixos legalmente reconhecidos são promovidos; outros registros ficam pendentes.'},
         {'id':'tjrj','label':'TJRJ — documentos oficiais consultados','url':'https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc','kind':'official','status': collected.get('status','not_run'),'checked_at': collected.get('collected_at') if collected.get('source_success',0) else None,'note':'Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica.'},
         {'id':'rj-feriados','label':'RJ — feriados estaduais previstos em lei','url':OFFICIAL_ALERJ_CARNAVAL,'kind':'official','status':'curated','checked_at':None,'note':'Leis estaduais nº 5.243/2008, 5.198/2008 e 11.002/2025; habilitar feriados locais no cálculo.'},
@@ -262,7 +287,7 @@ def main(argv=None):
     output = {
         'schema': 1, 'version': digest, 'generated_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'),
         'last_checked_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds') if not args.offline and not args.check else None,
-        'coverage': {'national_years':years, 'national':'fixed_law', 'state':'RJ_legal_opt_in', 'municipal':'Duque_de_Caxias_3301702_legal_opt_in', 'tjrj':'discovery_only'},
+        'coverage': {'national_years':years, 'national':'fixed_law_plus_federal_calendar_2026', 'state':'RJ_legal_opt_in', 'municipal':'Duque_de_Caxias_3301702_legal_opt_in', 'tjrj':'discovery_only'},
         'sync': {'status':status, 'brasilapi_years_checked':checked, 'failed':failed,
                  'tjrj':'discovery_only', 'tjrj_collector_status':collected.get('status','not_run'),
                  'tjrj_collector_at':collected.get('collected_at') if collected.get('source_success',0) else None,
