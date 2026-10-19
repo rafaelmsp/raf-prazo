@@ -67,7 +67,8 @@ test('fontes nacionais usam API mais leis; cobertura estadual e municipal perman
  assert.equal(base.coverage.state,'RJ_legal_opt_in');
  assert.equal(base.coverage.municipal,'Duque_de_Caxias_3301702_legal_opt_in');
  assert.equal(base.coverage.tjrj,'discovery_only');
- assert.equal(base.events.filter(e=>e.type==='NACIONAL').length,9*base.coverage.national_years.length);
+ assert.equal(base.events.filter(e=>e.type==='NACIONAL').length,9*base.coverage.national_years.length+(base.coverage.national_years.includes(2026)?1:0));
+ assert.equal(base.events.filter(e=>e.type==='NACIONAL'&&e.date==='2026-04-03').length,1);
  assert.equal(base.events.filter(e=>e.type==='ESTADUAL').length,3*base.coverage.national_years.length);
  assert.equal(base.events.filter(e=>e.type==='MUNICIPAL').length,2*base.coverage.national_years.length);
  assert.equal(base.events.filter(e=>e.type==='SUSPENSAO_TJRJ').length,0);
