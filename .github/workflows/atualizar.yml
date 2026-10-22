@@ -23,6 +23,9 @@ on:
       - assets/tjrj-optin.js
       - assets/tjrj-news.js
       - assets/raf-prazo-22.js
+      - assets/balcao-virtual.js
+      - assets/balcao-virtual.css
+      - tests/test_balcao_virtual.cjs
       - tests/test_raf_prazo_22.cjs
       - tests/test_tjrj_news.cjs
       - tests/test_update_tabs.cjs
@@ -61,6 +64,8 @@ jobs:
           node --check assets/tjrj-optin.js
           node --check assets/tjrj-news.js
           node --check assets/raf-prazo-22.js
+          node --check assets/balcao-virtual.js
+          node --test tests/test_balcao_virtual.cjs
           node --test tests/test_raf_prazo_22.cjs
           node --test tests/test_tjrj_news.cjs
           node --test tests/test_update_tabs.cjs
