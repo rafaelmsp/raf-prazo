@@ -34,7 +34,7 @@ test('Pages retain main calculator and load Balcao page',()=>{
  assert.ok(css.includes('@media(max-width:650px)'));
 });
 test('Copy button receives correct text, without sending data',()=>{
- for(const part of ["navigator.clipboard.writeText(text)","document.execCommand('copy')","button.setAttribute('aria-label'","copy(interpolated(p[2]),btn)","id='rafBvSearch'","id='rafBvProcess'","id='rafBvReturn'"])assert.ok(js.includes(part),part);
+ for(const part of ["navigator.clipboard.writeText(text)","document.execCommand('copy')","btn.setAttribute('aria-label'","copy(interpolated(p[2]),btn)","id='rafBvSearch'","id='rafBvProcess'","id='rafBvReturn'"])assert.ok(js.includes(part),part);
  assert.ok(!/fetch\(|XMLHttpRequest|WebSocket/.test(js),'Clipboard module must not transmit user data');
  assert.ok(!/innerHTML\s*=\s*.*phrase/i.test(js),'Phrase text should use textContent, not HTML');
 });
