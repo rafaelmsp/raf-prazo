@@ -5,7 +5,7 @@
 **Branch:** auditoria/central-atualizacoes-20261022
 **SHA inicial da main:** 85dcc68642aa848de56e8d674b5cbc429d9bf437
 **Commit funcional:** 6e47b16 — fix: limpar atualizacoes completas e preservar estados locais
-**Estado da publicação:** depende da integração da branch e da verificação do GitHub Pages.
+**Estado da publicação:** publicada e verificada em 22/10/2026. Merge do PR #44: 6d44bac72d3d88977cb098064fa762f0482d280c.
 
 ## 1. Entrega já existente e preservada
 
@@ -68,8 +68,19 @@ A coleta de fontes oficiais é agendada pelo GitHub Actions, sujeita a falhas ou
 
 A presente auditoria não comprova cobertura integral do TJRJ, nem substitui análise jurídica de prazo. O Raf-Prazo permanece gratuito, estático e sem login/perfis.
 
-## 7. GitHub Actions e publicação
+## 7. GitHub Actions e publicação — validação final
 
-O primeiro commit deste ciclo contém alterações funcionais, testes de regressão e quatro capturas. A conclusão a 100% exige verificar o pipeline no GitHub, integrar a branch na main sem perder mudanças concorrentes, conferir GitHub Pages após o deploy e executar verificação do conteúdo público. O código local não equivale à versão publicada.
+O Pull Request #44 foi integrado na main sem conflito, no commit 6d44bac72d3d88977cb098064fa762f0482d280c. A automação de atualização de calendário gerou depois o commit e7cd7a3a112c0425cf6e88d759520f30b386b94a, também publicado com sucesso.
 
-**Status verificável no momento desta redação: 75% — implementação e testes locais aprovados; publicação ainda não certificada.**
+Todos os workflows disparados pelo merge foram aprovados em 22/10/2026:
+- Raf-Prazo 2.2 - Site Publicado: execução 39830405480.
+- Raf-Prazo - Testar Atualizacoes: execução 39830405491.
+- Raf-Prazo - Mobile Browser: execução 39830405509.
+- Raf-Prazo - Atualizar calendario: execução 39830405570.
+- Pages build and deployment: execução 39830404711 e publicação posterior 39830591303.
+
+O endereço público https://rafaelmsp.github.io/raf-prazo/ foi consultado após o deploy. O HTML publicado contém o tratamento integral dos resultados filtrados; o script TJRJ publicado contém a pesquisa/limpeza compartilhada e o rótulo «Atualizar base publicada». O teste de navegação em Chrome (390 px) no **site público**, incluindo cinco abas, teclado, limpar, cancelar, restaurar, recarregar e tema, concluiu com sucesso.
+
+**Status final verificado: 100% — implementação, regressão, merge, GitHub Actions e publicação pública aprovados.**
+
+O SHA da branch main pode evoluir com coletas automáticas ou manutenção posterior; o merge acima identifica de modo permanente o ciclo funcional auditado.
