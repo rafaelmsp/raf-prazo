@@ -3,15 +3,15 @@
 'use strict';
 const KEY='raf-prazo:tjrj-news-seen:v1';
 const HIDDEN='raf-prazo:tjrj-news-hidden:v1';
-const getHidden=()=>{try{const items=JSON.parse(localStorage.getItem(HIDDEN)||'[]');return new Set(Array.isArray(items)?items.slice(-600):[])}catch(_){return new Set()}};
-const saveHidden=items=>{try{localStorage.setItem(HIDDEN,JSON.stringify([...items].slice(-600)));return true}catch(_){if(typeof alert==='function')alert('Não foi possível salvar a limpeza neste navegador.');return false}};
+const getHidden=()=>{try{const items=JSON.parse(localStorage.getItem(HIDDEN)||'[]');return new Set(Array.isArray(items)?items:[])}catch(_){return new Set()}};
+const saveHidden=items=>{try{localStorage.setItem(HIDDEN,JSON.stringify([...items]));return true}catch(_){if(typeof alert==='function')alert('Não foi possível salvar a limpeza neste navegador.');return false}};
 const $=id=>document.getElementById(id);
 const official=url=>{try{const u=new URL(url);return u.protocol==='https:'&&['www.tjrj.jus.br','portaltj.tjrj.jus.br'].includes(u.hostname)&&!u.username&&!u.password&&(u.pathname.startsWith('/documents/')||u.pathname.startsWith('/web/portal-conhecimento/'))}catch(_){return false}};
 const effects={possible_deadline_suspension:'Possível suspensão de prazos',possible_deadline_extension:'Possível prorrogação',
  service_interruption:'Expediente alterado',system_unavailability:'Indisponibilidade de sistema',
  holiday_mention:'Feriado mencionado',optional_workday:'Ponto facultativo informado'};
 const el=(tag,txt)=>{const n=document.createElement(tag);if(txt!==undefined)n.textContent=txt;return n};
-const readSeen=()=>{try{const o=JSON.parse(localStorage.getItem(KEY)||'[]');return new Set(Array.isArray(o)?o.slice(-600):[])}catch(_){return new Set()}};
+const readSeen=()=>{try{const o=JSON.parse(localStorage.getItem(KEY)||'[]');return new Set(Array.isArray(o)?o:[])}catch(_){return new Set()}};
 let search='',lastScan='',searchInProgress=false;
 function feed(){
  const docs=window.RafPrazoData?.base?.candidates||[],map=new Map();
@@ -36,7 +36,7 @@ function feed(){
  }
  return [...map.values()].map(row=>({...row,id:row.id+'|'+[...new Set(row.sources.map(s=>s.hash))].sort().join(',')}))
   // Ordem de chegada da notícia/versão ao sistema; NUNCA ordenar pela data do evento jurídico.
-  .sort((a,b)=>(b.receivedAt||'').localeCompare(a.receivedAt||'')).slice(0,150);
+  .sort((a,b)=>(b.receivedAt||'').localeCompare(a.receivedAt||''));
 }
 function ensure(){
  let root=$('rafTjrjNewsFeed');if(root)return root;
@@ -47,7 +47,7 @@ function ensure(){
  note.className='raf-tjrj-note';
  const controls=el('div');controls.className='raf-tjrj-controls';
  const field=el('input');field.type='search';field.id='rafTjrjNewsQuery';field.placeholder='Comarca, data, ato ou suspensão';field.setAttribute('aria-label','Pesquisar indícios do TJRJ');
- const button=el('button','Buscar atualizações agora');button.type='button';button.id='rafTjrjSearchNow';button.className='btn';
+ const button=el('button','Atualizar base publicada');button.type='button';button.id='rafTjrjSearchNow';button.className='btn';
  const clear=el('button','Marcar como vistas');clear.type='button';clear.id='rafTjrjMarkSeen';clear.className='btn';
  const hide=el('button','Limpar lista');hide.type='button';hide.id='rafTjrjClearList';hide.className='btn';
  const restore=el('button','Restaurar');restore.type='button';restore.id='rafTjrjRestoreList';restore.className='btn';
@@ -69,22 +69,21 @@ function ensure(){
  });
  clear.addEventListener('click',()=>{
   const seen=readSeen();for(const item of feed())seen.add(item.id);
-  try{localStorage.setItem(KEY,JSON.stringify([...seen].slice(-600)))}catch(_){}
+  try{localStorage.setItem(KEY,JSON.stringify([...seen]))}catch(_){if(typeof alert==='function')alert('Não foi possível salvar os registros vistos neste navegador.');return}
   render();
  });
  hide.addEventListener('click',()=>{
-  const items=getHidden();let visible=0;
-  for(const entry of feed()){
-   const terms=[entry.date,entry.effect,entry.excerpt,...(entry.scope.date_linked_comarcas||[])].join(' ').toLocaleLowerCase('pt-BR');
-   if(!items.has(entry.id)&&(!search||terms.includes(search))){items.add(entry.id);visible++;if(visible>=40)break}
-  }
-  if(!visible)return;
-  if(typeof confirm==='function'&&!confirm('Ocultar os até 40 itens exibidos nesta aba somente neste navegador? Os documentos oficiais continuarão na base e poderão ser restaurados.'))return;
+  const items=getHidden();
+  const eligible=feed().filter(row=>!items.has(row.id)&&matchesSearch(row));
+  if(!eligible.length)return;
+  const scope=search?'resultados da pesquisa atual':'indícios da aba TJRJ';
+  if(typeof confirm==='function'&&!confirm('Ocultar todos os '+eligible.length+' '+scope+', inclusive os não exibidos na tela? Apenas a visualização local será alterada.'))return;
+  for(const row of eligible)items.add(row.id);
   if(saveHidden(items))render();
  });
  restore.addEventListener('click',()=>{if(saveHidden(new Set()))render()});
  const style=el('style');
- style.textContent='.raf-tjrj-arrival{font-size:11px!important;font-weight:780;color:var(--accent)!important}.raf-tjrj-detail summary{cursor:pointer;min-height:36px;font-size:11px;color:var(--accent);font-weight:700;padding:8px 0}.raf-tjrj-feed{padding:12px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}.raf-tjrj-feed h3{font-size:14px;margin:0 0 6px}.raf-tjrj-note{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0}.raf-tjrj-controls{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}.raf-tjrj-controls input{flex:2 1 170px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--text)}.raf-tjrj-controls button{flex:1 1 125px;white-space:normal;font-size:11px}.raf-tjrj-item{padding:10px;margin:7px 0;border:1px solid var(--line);border-radius:9px}.raf-tjrj-item strong{font-size:12px}.raf-tjrj-item small{display:block;font-size:10px;color:var(--muted);margin:5px 0}.raf-tjrj-item p{font-size:11px;line-height:1.5;overflow-wrap:anywhere;margin:6px 0}.raf-tjrj-item a{font-size:11px;color:var(--accent);text-decoration:underline}.raf-tjrj-new{font-weight:800;color:#946006}.raf-tjrj-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}.raf-tjrj-dismiss{margin-top:8px;font-size:11px;min-height:35px;padding:7px 10px}.raf-tjrj-controls button{flex:1 1 112px}';
+ style.textContent='.raf-tjrj-arrival{font-size:11px!important;font-weight:780;color:var(--accent)!important}.raf-tjrj-detail summary{cursor:pointer;min-height:36px;font-size:11px;color:var(--accent);font-weight:700;padding:8px 0}.raf-tjrj-feed{padding:12px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}.raf-tjrj-feed h3{font-size:14px;margin:0 0 6px}.raf-tjrj-note{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0}.raf-tjrj-controls{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}.raf-tjrj-controls input{flex:2 1 170px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--text)}.raf-tjrj-controls button{flex:1 1 125px;white-space:normal;font-size:11px}.raf-tjrj-item{padding:10px;margin:7px 0;border:1px solid var(--line);border-radius:9px}.raf-tjrj-item strong{font-size:12px}.raf-tjrj-item small{display:block;font-size:10px;color:var(--muted);margin:5px 0}.raf-tjrj-item p{font-size:11px;line-height:1.5;overflow-wrap:anywhere;margin:6px 0}.raf-tjrj-item a{font-size:11px;color:var(--accent);text-decoration:underline}.raf-tjrj-new{font-weight:800;color:#946006}.raf-tjrj-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}.raf-tjrj-dismiss{margin-top:8px;font-size:11px;min-height:35px;padding:7px 10px}.raf-tjrj-controls button{flex:1 1 112px;min-height:44px}';
  document.head.append(style);
  return root;
 }
@@ -94,6 +93,13 @@ function refreshBadge(unread){
  dot.textContent=unread>99?'99+':String(unread);dot.hidden=!unread;
 }
 window.RafPrazoTjrjNewsUnread=()=>feed().filter(row=>!readSeen().has(row.id)&&!getHidden().has(row.id)).length;
+function matchesSearch(row){
+ if(!search)return true;
+ const text=[row.date,row.effect,row.excerpt,...row.sources.map(s=>s.url),
+   ...(row.scope.date_linked_comarcas||[]),...(row.scope.comarcas_mentioned||[])]
+   .join(' ').toLocaleLowerCase('pt-BR');
+ return text.includes(search);
+}
 function render(){
  if(!ensure())return;
  const all=feed(),seen=readSeen(),hidden=getHidden(),unread=all.filter(x=>!seen.has(x.id)&&!hidden.has(x.id)).length;
@@ -108,8 +114,7 @@ function render(){
  const list=$('rafTjrjNewsList');list.replaceChildren();
  let shown=0;
  for(const row of all){
-  const haystack=[row.date,row.effect,row.excerpt,...row.sources.map(s=>s.url),...(row.scope.date_linked_comarcas||[]),...(row.scope.comarcas_mentioned||[])].join(' ').toLocaleLowerCase('pt-BR');
-  if(hidden.has(row.id)||search&&!haystack.includes(search))continue;
+  if(hidden.has(row.id)||!matchesSearch(row))continue;
   const card=el('article');card.className='raf-tjrj-item';
   const heading=el('strong',effects[row.effect]);card.append(heading);
   const arrived=el('small',row.receivedAt?'Recebido/atualizado no Raf-Prazo: '+new Date(row.receivedAt).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}):'Chegada sem horário registrado');
@@ -129,6 +134,8 @@ function render(){
   const dismiss=el('button','Ocultar item');dismiss.type='button';dismiss.className='btn raf-tjrj-dismiss';dismiss.addEventListener('click',()=>{const items=getHidden();items.add(row.id);if(saveHidden(items))render()});card.append(dismiss,links);list.append(card);
   shown++;if(shown>=40)break;
  }
+ const available=all.filter(row=>!hidden.has(row.id)&&matchesSearch(row)).length;
+ if(available>shown)list.append(el('p','raf-tjrj-note','Exibindo '+shown+' de '+available+' resultados. Limpar lista abrange todos os itens filtrados.'));
  if(!shown)list.append(el('p',all.length?'Nenhum item visível. Use Restaurar para rever os registros ocultos ou altere a busca.':search?'Nenhum resultado para esta pesquisa na base coletada.':'Nenhum indício disponível na base atual.'));
 }
 function finishSync(){

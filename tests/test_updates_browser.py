@@ -111,7 +111,7 @@ def main():
         with sync_playwright() as play:
             browser=play.chromium.launch(headless=True)
             try:
-                for width in (360,390,430,1366):
+                for width in (320,360,390,412,430,1366):
                     check_width(browser,url,width)
             finally:
                 browser.close()

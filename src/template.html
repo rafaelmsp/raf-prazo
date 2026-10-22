@@ -177,7 +177,7 @@
 .raf-sync-led{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none}
 @media(max-width:650px){.raf-source-card{padding:11px}.raf-source-detail{grid-template-columns:66px minmax(0,1fr)}}
 
-.raf-event-details summary{padding:10px 14px;cursor:pointer;font-size:11px;font-weight:700;color:var(--accent);min-height:40px}.raf-event-details .raf-event-body{border-top:1px solid var(--line)}.raf-item-dismiss{min-height:39px;margin:0 12px 12px}.raf-update-modal .raf-event{overflow-wrap:anywhere}.raf-list-actions button{min-height:40px}.raf-tabs .raf-tab:focus-visible{outline-offset:-3px}.raf-pending-heading{margin:0 0 6px;font-size:12px}.raf-pending-count{margin:6px 0 10px}.raf-event-details a{overflow-wrap:anywhere}.raf-update-modal .raf-tab-panel{min-width:0}
+.raf-event-details summary{padding:10px 14px;cursor:pointer;font-size:11px;font-weight:700;color:var(--accent);min-height:40px}.raf-event-details .raf-event-body{border-top:1px solid var(--line)}.raf-item-dismiss{min-height:39px;margin:0 12px 12px}.raf-update-modal .raf-event{overflow-wrap:anywhere}.raf-list-actions button{min-height:44px}.raf-tabs .raf-tab:focus-visible{outline-offset:-3px}.raf-pending-heading{margin:0 0 6px;font-size:12px}.raf-pending-count{margin:6px 0 10px}.raf-event-details a{overflow-wrap:anywhere}.raf-update-modal .raf-tab-panel{min-width:0}
 .raf-event .raf-small-note{margin:9px 0 0}.raf-event .raf-small-note a{font-weight:750}.raf-update-modal .raf-modal-content{scrollbar-width:thin}.raf-update-modal .raf-event{margin-bottom:9px}.raf-update-modal .raf-sync-row{gap:12px}.raf-update-modal .raf-sync-row strong{text-align:right;max-width:57%;overflow-wrap:anywhere}
 
 /* Raf-Prazo 2.1 / Etapa 2 — detalhes acessiveis do dia; sem alterar motor de prazos. */
@@ -1243,10 +1243,11 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  const seenKey='raf-prazo:updates-seen:v1';
  const HIDE_KEY='raf-prazo:updates-holidays-hidden:v1';
  const HIDE_PENDING_KEY='raf-prazo:updates-pending-hidden:v1';
- const hiddenIds=()=>{try{const v=JSON.parse(localStorage.getItem(HIDE_KEY)||'[]');return new Set(Array.isArray(v)?v.slice(-1200):[])}catch(_){return new Set()}};
- const persistHidden=s=>{try{localStorage.setItem(HIDE_KEY,JSON.stringify([...s].slice(-1200)));return true}catch(_){alert('Não foi possível salvar os itens ocultos neste navegador.');return false}};
- const hiddenPendingIds=()=>{try{const v=JSON.parse(localStorage.getItem(HIDE_PENDING_KEY)||'[]');return new Set(Array.isArray(v)?v.slice(-1200):[])}catch(_){return new Set()}};
- const persistPending=s=>{try{localStorage.setItem(HIDE_PENDING_KEY,JSON.stringify([...s].slice(-1200)));return true}catch(_){alert('Não foi possível salvar a limpeza de pendências.');return false}};
+ const hiddenIds=()=>{try{const v=JSON.parse(localStorage.getItem(HIDE_KEY)||'[]');return new Set(Array.isArray(v)?v:[])}catch(_){return new Set()}};
+ const persistHidden=s=>{try{localStorage.setItem(HIDE_KEY,JSON.stringify([...s]));return true}catch(_){alert('Não foi possível salvar os itens ocultos neste navegador.');return false}};
+ const hiddenPendingIds=()=>{try{const v=JSON.parse(localStorage.getItem(HIDE_PENDING_KEY)||'[]');return new Set(Array.isArray(v)?v:[])}catch(_){return new Set()}};
+ const persistPending=s=>{try{localStorage.setItem(HIDE_PENDING_KEY,JSON.stringify([...s]));return true}catch(_){alert('Não foi possível salvar a limpeza de pendências.');return false}};
+ const displayStatus=v=>({confirmed:'Confirmado',pending_review:'Pendente de validação',verified:'Verificado',unavailable:'Indisponível'}[v]||v||'A conferir');
  const candidateId=c=>[c.id||[c.date,c.name,c.type].join(':'),c.status||'',c.source_hash_sha256||'',c.source_url||c.source?.url||'',c.reason||''].join('|');
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=String(text);return n};
  const safeUrl=url=>{try{const u=new URL(url);return u.protocol==='https:'?u.href:null}catch(_){return null}};
@@ -1287,12 +1288,13 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  function renderChanges(){const b=window.RafPrazoData?.base;if(!b)return;const root=$('rafUpdatesList');root.replaceChildren();
   const chosen=$('rafHolidayYear')?.value||'all', hidden=hiddenIds();
   const source=changeRows().filter(c=>chosen==='all'||String(c.date||'').startsWith(chosen));
-  const changes=source.filter(c=>!hidden.has(changeId(c))).slice(0,40);
+  const visible=source.filter(c=>!hidden.has(changeId(c)));const changes=visible.slice(0,40);
   if(!changes.length)root.append(el('p','raf-small-note',source.length?'Lista limpa neste navegador. Use Restaurar para rever os cartões.':'Nenhuma alteração de feriados para o ano selecionado.'));
+   if(visible.length>40)root.append(el('p','raf-small-note','Exibindo 40 de '+visible.length+' resultados. Limpar lista oculta todos os itens do filtro.'));
   for(const c of changes){const card=el('div','raf-event'),top=el('div','raf-event-top'),body=el('div','raf-event-body'),meta=el('div','raf-event-meta');
    top.append(el('b','',c.name||'Alteração de calendário'),el('span','raf-state',c.kind==='added'?'Incluído':c.kind==='modified'?'Alterado':'Removido'));
    const scope=c.scope||{},territory=scope.kind==='national'?'Brasil':scope.kind==='tjrj'?'TJRJ · RJ':scope.kind==='state'?scope.uf||'Estado':scope.kind==='municipal'?(scope.uf||'Município')+' · IBGE '+(scope.ibge||''):'A conferir';
-   for(const [k,v] of [['Data afetada',c.date||'—'],['Abrangência',territory],['Situação',c.status||'—'],['Aplicação ao cálculo',c.applied?'Conforme opções e abrangência':'Não']]){meta.append(el('span','',k),el('strong','',v));}
+   for(const [k,v] of [['Data afetada',c.date||'—'],['Abrangência',territory],['Situação',displayStatus(c.status)],['Aplicação ao cálculo',c.applied?'Conforme opções e abrangência':'Não']]){meta.append(el('span','',k),el('strong','',v));}
    body.append(meta);const sourceLink=el('p','raf-small-note');sourceLink.append(link(c.source_url,'Ver fonte do evento ↗'));body.append(sourceLink);
    const dismiss=el('button','raf-item-dismiss btn','Ocultar item');dismiss.type='button';dismiss.addEventListener('click',()=>{const ids=hiddenIds();ids.add(changeId(c));if(persistHidden(ids)){renderChanges();updateBadge()}});
    const disclosure=el('details','raf-event-details');disclosure.append(el('summary','','Fundamento, aplicação e fonte'),body);
@@ -1308,7 +1310,7 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
   if(!visible.length){root.append(el('p','raf-small-note',pending.length?'Não há itens visíveis. Use Restaurar itens ocultos para rever as pendências.':'Nenhum candidato pendente nesta base.'));return;}
   for(const c of visible.slice(0,60)){
    const isTJRJ=c.type==='CANDIDATO_TJRJ',card=el('article','raf-event'),top=el('div','raf-event-top'),details=el('details','raf-event-details'),body=el('div','raf-event-body');
-   top.append(el('b','',c.name||'Candidato sem identificação'),el('span','raf-state',c.status||'pendente'));
+   top.append(el('b','',c.name||'Candidato sem identificação'),el('span','raf-state',displayStatus(c.status)));
    body.append(el('p','raf-small-note',isTJRJ?'Documento TJRJ coletado, não homologado.':(c.date||'Data a conferir')+' · Candidato de fonte externa, não homologado.'));
    body.append(el('p','raf-small-note','Motivo: '+(c.reason||'Abrangência, vigência ou fundamento ainda não validados.')));
    const refs=isTJRJ&&Array.isArray(c.structured?.occurrences)?c.structured.occurrences:[];
@@ -1333,7 +1335,7 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  }
  function render(){updateYears();renderChanges();renderPending();renderSources();renderSync();updateBadge()}
  const open=d=>{if(d&&!d.open)d.showModal()};
- $('rafNewsOpen').addEventListener('click',()=>{chooseTab('tjrj');render();open(news);markSeen()});
+ $('rafNewsOpen').addEventListener('click',()=>{chooseTab('tjrj');render();open(news)});
  $('navAbout').addEventListener('click',()=>open(about));
  $('navTutorial').addEventListener('click',()=>open($('rafTutorialDialog')));
  $('rafSyncRefresh').addEventListener('click',()=>$('sync').click());
@@ -1345,20 +1347,26 @@ updateTheme();setUfs();updateLocalAvailability();$('tjrj').disabled=selectedCity
  about.addEventListener('click',event=>{if(event.target===about)about.close()});
  $('rafHolidayYear').addEventListener('change',renderChanges);
  $('rafClearHolidays').addEventListener('click',()=>{
-  const ids=hiddenIds();const year=$('rafHolidayYear').value;
-  for(const item of changeRows().filter(c=>(year==='all'||String(c.date||'').startsWith(year))&&!ids.has(changeId(c))).slice(0,40))ids.add(changeId(item));
-  if(!confirm('Ocultar os até 40 itens exibidos '+(year==='all'?'nesta aba':'do ano '+year)+' somente neste navegador? Os dados oficiais permanecerão na base e poderão ser restaurados.'))return;
-  if(persistHidden(ids)){renderChanges();updateBadge()}
- });
+   const ids=hiddenIds(),year=$('rafHolidayYear').value;
+   const eligible=changeRows().filter(c=>year==='all'||String(c.date||'').startsWith(year))
+     .filter(c=>!ids.has(changeId(c)));
+   if(!eligible.length)return;
+   const scope=year==='all'?'de todos os anos':'do ano '+year;
+   if(!confirm('Ocultar os '+eligible.length+' itens ainda visíveis '+scope+' no Calendário, incluindo páginas não exibidas? Somente esta visualização local será alterada.'))return;
+   for(const item of eligible)ids.add(changeId(item));
+   if(persistHidden(ids)){renderChanges();updateBadge()}
+  });
  $('rafRestoreHolidays').addEventListener('click',()=>{if(persistHidden(new Set())){renderChanges();updateBadge()}});
  $('rafClearPending').addEventListener('click',()=>{
-  const items=hiddenPendingIds();for(const entry of pendingRows().filter(c=>!items.has(candidateId(c))).slice(0,60))items.add(candidateId(entry));
-  if(!confirm('Ocultar os até 60 candidatos exibidos nesta aba, somente neste navegador? A base e a contagem permanecerão inalteradas.'))return;
-  if(persistPending(items))renderPending();
- });
+   const ids=hiddenPendingIds(),eligible=pendingRows().filter(c=>!ids.has(candidateId(c)));
+   if(!eligible.length)return;
+   if(!confirm('Ocultar os '+eligible.length+' candidatos ainda visíveis nesta aba, inclusive os não carregados na tela? A base oficial e as escolhas de prazo permanecerão intactas.'))return;
+   for(const entry of eligible)ids.add(candidateId(entry));
+   if(persistPending(ids))renderPending();
+  });
  $('rafRestorePending').addEventListener('click',()=>{if(persistPending(new Set()))renderPending()});
  const tabs=[...document.querySelectorAll('[data-raf-tab]')],panels={news:$('rafPanelNews'),tjrj:$('rafPanelTjrj'),pending:$('rafPanelPending'),sources:$('rafPanelSources'),sync:$('rafPanelSync')};
- function chooseTab(key){for(const t of tabs){const on=t.dataset.rafTab===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;}for(const [k,p] of Object.entries(panels))p.hidden=k!==key;}
+ function chooseTab(key){for(const t of tabs){const on=t.dataset.rafTab===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;}for(const [k,p] of Object.entries(panels))p.hidden=k!==key;if(news.open){tabs.find(t=>t.dataset.rafTab===key)?.scrollIntoView({block:'nearest',inline:'nearest'});if(key==='news')markSeen();}}
  tabs.forEach(t=>t.addEventListener('click',()=>chooseTab(t.dataset.rafTab)));
  tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;chooseTab(tabs[n].dataset.rafTab);tabs[n].focus()}));
  chooseTab('tjrj');
