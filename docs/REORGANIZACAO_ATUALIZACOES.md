@@ -1,43 +1,50 @@
-# Central de Atualizações — Raf-Prazo 2.1
+# Central de Atualizações — Raf-Prazo
 
-Data: 17/10/2026. Escopo: interface local, sem modificação do motor de contagem.
+**Revisão:** 22/10/2026. **Escopo:** organização e UX, sem mudança no motor jurídico de contagem de prazos.
 
 ## Estrutura
-- **Calendário**: mudanças oficialmente cadastradas, com filtro de ano e cartões expansíveis.
-- **TJRJ**: indícios documentais extraídos de fontes oficiais; busca, links para fontes, marcação de vistos e simulações individuais explicitamente não homologadas.
-- **Pendências**: documentos TJRJ sem validação, candidatos de APIs e outras entradas não promovidas à base de eventos; mostram razão, fonte e evidência.
-- **Fontes**: informações e limites das origens de dados.
-- **Sincronização**: versão da base, origem online/cache/incorporada, última consulta, status e contagem de fontes.
 
-A navegação horizontal é responsiva para telas Android de 360–430 px e mantém os cinco painéis isolados. A interface usa cartões recolhíveis para apresentar detalhes sob demanda.
+As cinco abas têm responsabilidades independentes:
 
-## Segurança da função de limpeza
+| Aba | Responsabilidade |
+| --- | --- |
+| **TJRJ** (inicial) | Notícias e indícios documentais coletados, pesquisa, fonte oficial, hora de chegada/coleta e simulações locais separadas |
+| **Calendário** | Eventos incluídos, alterados ou removidos, filtro por ano, âmbito, fundamento e aplicação |
+| **Pendências** | Candidatos de fontes TJRJ/API não homologados, evidências e motivos de pendência |
+| **Fontes** | Origem, status e cobertura de leis, bases externas e documentos judiciais |
+| **Sincronização** | Versão publicada, data/hora, status de coleta, fonte online/cache e atualização da base |
 
-A limpeza usa exclusivamente as chaves locais:
-- `raf-prazo:updates-holidays-hidden:v1`
-- `raf-prazo:tjrj-news-hidden:v1`
-- `raf-prazo:updates-pending-hidden:v1`
+A navegação horizontal foi conferida no Chrome nas larguras de 320, 360, 390, 412 e 430 px e em 1366 px. A aba ativa deve continuar visível e os dados extensos estão em cards recolhíveis.
 
-**Ocultar item** remove somente da lista visível. **Limpar lista** solicita confirmação e oculta no máximo os cartões atualmente renderizados por vez (Calendário: 40; TJRJ: 40; Pendências: 60). **Restaurar** remove só as preferências de ocultação daquela aba. A chave independente de leitura TJRJ é `raf-prazo:tjrj-news-seen:v1`.
+## Limpar, ocultar, marcar como visto e restaurar
 
-Mudanças na origem, estado, nome ou aplicação do evento do calendário, ou no hash documental de um indício TJRJ, geram uma versão de identidade diferente e podem reaparecer mesmo após ocultação antiga. Os candidatos usam ID, status, referência de origem e motivo.
+**Ocultar item** esconde apenas o cartão selecionado na aba correspondente. **Limpar lista** pede confirmação e oculta todos os resultados elegíveis da aba, ou todos os resultados do filtro de ano/pesquisa aplicado, mesmo quando a interface exibe somente os primeiros 40/60 cartões. A confirmação informa quantidade e abrangência; cancelar não altera os itens.
 
-Nenhuma dessas ações deve escrever em `feriados.json`, `dados/coleta-tjrj.json`, nos dados de coleta ou nas seleções de exclusão do usuário (`raf-prazo:tjrj-exclusions-user:v1` e `raf-prazo:exclusoes-individuais:v1`).
+**Restaurar** reexibe os cartões ocultos daquela aba, sem mudar outras listas nem decisões individuais de cálculo. **Marcar como visto** altera somente o indicador de leitura, não remove cartões. Abrir a Central em TJRJ não marca o Calendário como visto.
 
-Se `localStorage` estiver indisponível ou cheio, o aplicativo informa o erro, em vez de prometer persistência.
+Preferências de ocultação usam chaves exclusivas no localStorage:
+- raf-prazo:updates-holidays-hidden:v1
+- raf-prazo:tjrj-news-hidden:v1
+- raf-prazo:updates-pending-hidden:v1
 
-## Regras jurídicas preservadas
+A leitura do TJRJ usa raf-prazo:tjrj-news-seen:v1. Registros de seleção/exclusão de datas pelo usuário são independentes: raf-prazo:tjrj-exclusions-user:v1 e raf-prazo:exclusoes-individuais:v1.
 
-A coleta TJRJ é informativa; `pending_review` não é suspensão homologada, nem implica aplicação automática ao vencimento. A simulação individual do usuário é apresentada em área independente e marcada como não homologada.
+**A limpeza não modifica feriados.json, dados/coleta-tjrj.json, eventos oficiais nem cálculos.** Falha de localStorage precisa gerar aviso real, sem fingir persistência. Versões novas podem aparecer após ocultação antiga por terem identidade/hash diferente.
 
-O modo conservador, o tratamento de fins de semana, o marco inicial e a contagem processual não foram alterados por esta reorganização. O aplicativo é um apoio de conferência, nunca uma certificação de prazo.
+## Validade das fontes e efeitos jurídicos
+
+Um registro pending_review é indício, não homologação. Datas de avisos de indisponibilidade, alteração de expediente, suspensão mencionada ou ponto facultativo não entram automaticamente na contagem. Qualquer exclusão individual permanece escolha local, com aviso de que não constitui efeito oficialmente reconhecido.
+
+A coleta TJRJ ocorre por automação GitHub Actions, com limites de cobertura. **Atualizar base publicada** solicita a versão disponível de feriados.json e não pesquisa o tribunal em tempo real. A ordenação de notícias considera chegada ou mudança de conteúdo, não a data da suspensão possivelmente mencionada.
 
 ## Validação
 
-A suíte `tests/test_update_tabs.cjs` verifica a estrutura das cinco abas, isolamento das listas, armazenamento e sintaxe de scripts embutidos. `tests/test_tjrj_news.cjs` verifica versão dos indícios, notificações, limpeza reversível e confirmação. `tests/test_tjrj_optin.cjs` verifica que a simulação continua independente da nova aba Pendências.
+- Testes Node completos: 79 aprovados; Python: 67 aprovados.
+- Testes reais em Chrome/Playwright, 320/360/390/412/430/1366 px.
+- Regressão test_updates_bulk_browser.py: oito verificações para listas acima do limite de renderização, pesquisa, nova versão, notificação, falha de armazenamento e isolamento.
+- Capturas comparativas antes/depois em docs/evidencias/.
+- Geração do HTML pelo script de build reproduzível, com JSON e scripts sintaticamente válidos.
 
-O workflow `.github/workflows/testar-atualizacoes.yml` executa os testes Node e Python em branches e PRs, sem escrita em repositório. A publicação só deve ser considerada concluída após testes e deploy do GitHub Pages verificados.
+Consultar o relatório docs/CONTINUIDADE_CENTRAL_ATUALIZACOES.md para SHA inicial, defeitos reproduzidos, capturas, arquivos modificados e situação da publicação.
 
-## Limitações
-
-A consulta manual busca somente a **última base publicada**; não pesquisa o portal TJRJ em tempo real. Nem todos os atos e comarcas estão necessariamente cobertos. A identificação automática de notícias não constitui validação jurídica dos efeitos sobre o processo.
+**Limitação:** os testes automatizados em Chrome não substituem uma sessão manual num Android físico; a aprovação do CI por si só não significa que a versão nova já esteja publicada no GitHub Pages.
