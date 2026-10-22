@@ -2,89 +2,89 @@
   "schema": 1,
   "service": "TJRJ",
   "status": "ok",
-  "collected_at": "2026-10-22T15:15:02+00:00",
+  "collected_at": "2026-10-22T17:01:38+00:00",
   "source_count": 9,
   "source_success": 9,
   "source_statuses": [
     {
       "id": "consulta_2026_portaltj",
       "url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "application/pdf",
-      "sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+      "sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
       "title": "Informativo de suspensão de prazos do TJRJ"
     },
     {
       "id": "central_portaltj",
       "url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "text/html",
-      "sha256": "834d100dca1877fd20f184bc61193fd0f5545a65ba2b3e25b90c3f34ea3d887c",
+      "sha256": "b39e5f3dad2ec90fb5c94a3fbe8df61a3d0fce521b928b8811c7f72d4aa0d7f3",
       "title": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro"
     },
     {
       "id": "aviso_290_portaltj",
       "url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "text/html",
-      "sha256": "6a76a955d25bf29773b70f20ab83fc05e5667c9062114df53965e00f255f9459",
+      "sha256": "fd594effc5ea21d1c83b0c94467b05f0c7b7d7015f807f4c9cf1fa19632f052d",
       "title": "TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro"
     },
     {
       "id": "consulta_2026_www",
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "application/pdf",
-      "sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+      "sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
       "title": "Informativo de suspensão de prazos do TJRJ"
     },
     {
       "id": "central_www",
       "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "text/html",
-      "sha256": "b9721de30a20a069cc7e976372d06fb15f698eafd446dfdee3632f71552c771b",
+      "sha256": "ff86aee2ad1dc18f8d0456d05440cda91748dd3dcd4ea3dcb66bd5fd9f0da4d5",
       "title": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro"
     },
     {
       "id": "aviso_290_www",
       "url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "text/html",
-      "sha256": "1894b7e87fba2793b9c9865c5f090c5f9093f202cf0d023ebd61c53bd763166c",
+      "sha256": "ed53b10d8993b22bd71bd5025f7e5f6c3a5298226fe9de578da578cee9737575",
       "title": "TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro"
     },
     {
       "id": "capital_2inst_2026_www",
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-comarca-capital-e-2a-inst_2026_seesc",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "application/pdf",
-      "sha256": "21b1fbed1f171fb1514bba637b16660c4ca600f18a955f667e82f507c2267e7d",
+      "sha256": "e01f0c5c54236c28a09645d2dc1e2e6d6ee746dcff7cf13d7bda3434d28f63f7",
       "title": "Informativo de suspensão de prazos do TJRJ"
     },
     {
       "id": "link_descoberto",
       "url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "text/html",
-      "sha256": "7ec0c7617e392b23be1c9ddcbde172e37e64bc4f1d7f2185c6b818528f66b9d3",
+      "sha256": "16c2c8818c87a5d4eeb6495915c041131caea37d4001cc625aba25bc91972c84",
       "title": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro"
     },
     {
       "id": "link_descoberto",
       "url": "https://www.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos",
-      "checked_at": "2026-10-22T15:15:02+00:00",
+      "checked_at": "2026-10-22T17:01:38+00:00",
       "result": "ok",
       "content_type": "text/html",
-      "sha256": "04bc642da39ddf546f5e8c382fe63f84b3c2af837b0bbd10bec91a9d4b6afff3",
+      "sha256": "b97e6056be49c1ce1dd972a97a06db3d1c5bae82e5d48e947cf44dd89ab9e5ff",
       "title": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro"
     }
   ],
@@ -135,16 +135,16 @@
         "2026-02-05"
       ],
       "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-      "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
-      "excerpt": "[RAF_TJRJ_PAGE=1] SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS Data da atualização: 20.10.2026 2026 ▪ Consulta por Assunto ▪ Con",
+      "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+      "excerpt": "[RAF_TJRJ_PAGE=1] SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS Data da atualização: 22.10.2026 2026 ▪ Consulta por Assunto ▪ Con",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-20T21:34:49+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-        "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+        "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
         "source_title": "Informativo de suspensão de prazos do TJRJ",
         "document_year_hint": null,
         "act_references": [
@@ -162,7 +162,7 @@
         ],
         "occurrences": [
           {
-            "id": "tjrj-extract-e2aa2b79c12b24961c",
+            "id": "tjrj-extract-b53b7fcc55ac2befb1",
             "date": "2026-04-02",
             "date_expression": "02/04 e 03/04",
             "year_inferred": true,
@@ -179,8 +179,8 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 DA LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
-            "document_page": 5,
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 6,
             "extraction_method": "pdf_table_row",
             "act_references": [
               "LEI nº 10.633"
@@ -194,7 +194,7 @@
             ]
           },
           {
-            "id": "tjrj-extract-b1b23cd2439a453106",
+            "id": "tjrj-extract-c16f6617291aad1186",
             "date": "2026-04-03",
             "date_expression": "02/04 e 03/04",
             "year_inferred": true,
@@ -211,8 +211,8 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 DA LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
-            "document_page": 5,
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 6,
             "extraction_method": "pdf_table_row",
             "act_references": [
               "LEI nº 10.633"
@@ -223,6 +223,38 @@
             "review_reasons": [
               "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
               "Ano inferido de título e URL do informativo anual."
+            ]
+          },
+          {
+            "id": "tjrj-extract-650f154f35316bdc60",
+            "date": "2026-06-29",
+            "date_expression": "29/06/2026",
+            "year_inferred": false,
+            "effect_hint": "optional_workday",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": [],
+              "date_linked_comarcas": [],
+              "scope_evidence": [],
+              "assessment": "unresolved",
+              "verified": false,
+              "applies_to_deadlines": false
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "29/06/2026 103, DE 25/06/2026 26/06/2026 unidades do Poder Judiciário do Estado do Rio de Janeiro, no dia 29 de junho de 2026. Estabelece ponto facultativo nas DECRETO Nº 50.346, repartições públicas estaduais no dia",
+            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 14,
+            "extraction_method": "pdf_table_row",
+            "act_references": [
+              "DECRETO nº 50.346"
+            ],
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
+              "Conferir data, abrangência e ato."
             ]
           },
           {
@@ -243,7 +275,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "24/06/2026 DJERJ, ADM, n. 183, p. 8. unidades do Poder Judiciário do 96, DE 09/06/2026 11/06/2026 Estado do Rio de Janeiro, em 24 de junho de 2026, terá início às 11h e encerramento às 15h, ficando suspensos os prazos processuais. Dispõe sobre o expediente nas DECRETO Nº 50.321, repartições públicas estaduais no dia",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 14,
             "extraction_method": "pdf_table_row",
             "act_references": [
@@ -275,7 +307,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
@@ -307,7 +339,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
@@ -352,11 +384,55 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "31/07/2026 03/08/2026 Mesquita, no dia 31 de julho de 2026 e na Comarca de Duque de Caxias, nos dias 30 e 31 de julho de 2026. Resolve suspender o expediente e os prazos processuais nos Fóruns das ATO EXECUTIVO Nº 117, DE DJERJ, ADM, n. 218, p. 2. Comarcas de Nova Iguaçu,",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 34,
             "extraction_method": "pdf_table_row",
             "act_references": [
               "ATO EXECUTIVO nº 117"
+            ],
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
+              "Conferir data, abrangência e ato."
+            ]
+          },
+          {
+            "id": "tjrj-extract-ec5c638e6d697e1551",
+            "date": "2026-07-31",
+            "date_expression": "31/07/2026",
+            "year_inferred": false,
+            "effect_hint": "possible_deadline_suspension",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": [
+                "Paraty"
+              ],
+              "date_linked_comarcas": [
+                "Paraty"
+              ],
+              "scope_evidence": [
+                {
+                  "comarca": "Paraty",
+                  "date": "2026-07-31",
+                  "literal_excerpt": "na Comarca de Paraty, no dia 31 de julho de 2026",
+                  "relation": "explicit_comarca_date_mention",
+                  "verified": false
+                }
+              ],
+              "assessment": "textual_date_link_pending",
+              "verified": false,
+              "applies_to_deadlines": false
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "31/07/2026 03/08/2026 processuais na Comarca de Paraty, no dia 31 de julho de 2026. Resolve suspender o expediente e os prazos ATO EXECUTIVO Nº 119, DE DJERJ, ADM, n. 218, p. 3. processuais nos Fóruns de",
+            "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 35,
+            "extraction_method": "pdf_table_row",
+            "act_references": [
+              "ATO EXECUTIVO nº 119"
             ],
             "status": "pending_review",
             "verified": false,
@@ -371,11 +447,11 @@
         "status": "pending_review",
         "automatically_applies_events": false,
         "warning": "Extração mecânica informativa; dados não conferidos e nunca aplicados automaticamente.",
-        "pdf_table_rows_checked": 256,
+        "pdf_table_rows_checked": 259,
         "pdf_table_year_hint": 2026,
         "pdf_table_truncated": false
       },
-      "extracted_count": 6
+      "extracted_count": 8
     },
     {
       "id": "tjrj-source-159c3b21a3499a68f1",
@@ -390,16 +466,16 @@
         "2026-10-28"
       ],
       "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-      "source_hash_sha256": "6a76a955d25bf29773b70f20ab83fc05e5667c9062114df53965e00f255f9459",
+      "source_hash_sha256": "fd594effc5ea21d1c83b0c94467b05f0c7b7d7015f807f4c9cf1fa19632f052d",
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-22T15:15:02+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-        "source_hash_sha256": "6a76a955d25bf29773b70f20ab83fc05e5667c9062114df53965e00f255f9459",
+        "source_hash_sha256": "fd594effc5ea21d1c83b0c94467b05f0c7b7d7015f807f4c9cf1fa19632f052d",
         "source_title": "TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro",
         "document_year_hint": 2026,
         "act_references": [
@@ -420,7 +496,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "6a76a955d25bf29773b70f20ab83fc05e5667c9062114df53965e00f255f9459",
+            "source_hash_sha256": "fd594effc5ea21d1c83b0c94467b05f0c7b7d7015f807f4c9cf1fa19632f052d",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -483,16 +559,16 @@
         "2026-08-11"
       ],
       "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-comarca-capital-e-2a-inst_2026_seesc",
-      "source_hash_sha256": "21b1fbed1f171fb1514bba637b16660c4ca600f18a955f667e82f507c2267e7d",
+      "source_hash_sha256": "e01f0c5c54236c28a09645d2dc1e2e6d6ee746dcff7cf13d7bda3434d28f63f7",
       "excerpt": "[RAF_TJRJ_PAGE=1] SUSPENSÃO DE PRAZOS PROCESSUAIS E EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS (2026) JANEIRO Data da atualização:",
       "first_seen_at": "2026-10-17T08:11:27+00:00",
-      "content_changed_at": "2026-10-17T08:11:27+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-comarca-capital-e-2a-inst_2026_seesc",
-        "source_hash_sha256": "21b1fbed1f171fb1514bba637b16660c4ca600f18a955f667e82f507c2267e7d",
+        "source_hash_sha256": "e01f0c5c54236c28a09645d2dc1e2e6d6ee746dcff7cf13d7bda3434d28f63f7",
         "source_title": "Informativo de suspensão de prazos do TJRJ",
         "document_year_hint": null,
         "act_references": [
@@ -507,7 +583,8 @@
           "ato executivo nº 159",
           "ato  executivo nº 162",
           "decreto nº 505",
-          "aviso nº 290"
+          "aviso nº 290",
+          "ato executivo nº 177"
         ],
         "occurrences": [
           {
@@ -523,7 +600,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "50.133, de 02 de fevereiro de 2026 - Estabelece ponto facultativo nas",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-comarca-capital-e-2a-inst_2026_seesc",
-            "source_hash_sha256": "21b1fbed1f171fb1514bba637b16660c4ca600f18a955f667e82f507c2267e7d",
+            "source_hash_sha256": "e01f0c5c54236c28a09645d2dc1e2e6d6ee746dcff7cf13d7bda3434d28f63f7",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -545,7 +622,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "ponto facultativo nas repartições públicas estaduais no dia 29 de junho de 2026,",
             "source_url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-comarca-capital-e-2a-inst_2026_seesc",
-            "source_hash_sha256": "21b1fbed1f171fb1514bba637b16660c4ca600f18a955f667e82f507c2267e7d",
+            "source_hash_sha256": "e01f0c5c54236c28a09645d2dc1e2e6d6ee746dcff7cf13d7bda3434d28f63f7",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -575,16 +652,16 @@
       "applies_to_deadlines": false,
       "date_mentions": [],
       "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos",
-      "source_hash_sha256": "04bc642da39ddf546f5e8c382fe63f84b3c2af837b0bbd10bec91a9d4b6afff3",
+      "source_hash_sha256": "b97e6056be49c1ce1dd972a97a06db3d1c5bae82e5d48e947cf44dd89ab9e5ff",
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-22T15:15:02+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos",
-        "source_hash_sha256": "04bc642da39ddf546f5e8c382fe63f84b3c2af837b0bbd10bec91a9d4b6afff3",
+        "source_hash_sha256": "b97e6056be49c1ce1dd972a97a06db3d1c5bae82e5d48e947cf44dd89ab9e5ff",
         "source_title": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro",
         "document_year_hint": null,
         "act_references": [],
@@ -606,16 +683,16 @@
       "applies_to_deadlines": false,
       "date_mentions": [],
       "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos",
-      "source_hash_sha256": "7ec0c7617e392b23be1c9ddcbde172e37e64bc4f1d7f2185c6b818528f66b9d3",
+      "source_hash_sha256": "16c2c8818c87a5d4eeb6495915c041131caea37d4001cc625aba25bc91972c84",
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-22T15:15:02+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento//feriados-locais-e-suspensao-de-prazos",
-        "source_hash_sha256": "7ec0c7617e392b23be1c9ddcbde172e37e64bc4f1d7f2185c6b818528f66b9d3",
+        "source_hash_sha256": "16c2c8818c87a5d4eeb6495915c041131caea37d4001cc625aba25bc91972c84",
         "source_title": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro",
         "document_year_hint": null,
         "act_references": [],
@@ -640,16 +717,16 @@
         "2026-10-28"
       ],
       "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-      "source_hash_sha256": "1894b7e87fba2793b9c9865c5f090c5f9093f202cf0d023ebd61c53bd763166c",
+      "source_hash_sha256": "ed53b10d8993b22bd71bd5025f7e5f6c3a5298226fe9de578da578cee9737575",
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-22T15:15:02+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-        "source_hash_sha256": "1894b7e87fba2793b9c9865c5f090c5f9093f202cf0d023ebd61c53bd763166c",
+        "source_hash_sha256": "ed53b10d8993b22bd71bd5025f7e5f6c3a5298226fe9de578da578cee9737575",
         "source_title": "TJRJ transfere comemoração do Dia do Servidor Público para 30 de outubro - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro",
         "document_year_hint": 2026,
         "act_references": [
@@ -670,7 +747,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "1894b7e87fba2793b9c9865c5f090c5f9093f202cf0d023ebd61c53bd763166c",
+            "source_hash_sha256": "ed53b10d8993b22bd71bd5025f7e5f6c3a5298226fe9de578da578cee9737575",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -733,16 +810,16 @@
         "2026-02-05"
       ],
       "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-      "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
-      "excerpt": "[RAF_TJRJ_PAGE=1] SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS Data da atualização: 20.10.2026 2026 ▪ Consulta por Assunto ▪ Con",
+      "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+      "excerpt": "[RAF_TJRJ_PAGE=1] SUSPENSÃO DE PRAZOS E DE EXPEDIENTE FORENSE CALENDÁRIO DE FERIADOS Data da atualização: 22.10.2026 2026 ▪ Consulta por Assunto ▪ Con",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-21T00:36:23+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-        "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+        "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
         "source_title": "Informativo de suspensão de prazos do TJRJ",
         "document_year_hint": null,
         "act_references": [
@@ -760,7 +837,7 @@
         ],
         "occurrences": [
           {
-            "id": "tjrj-extract-bd81c6e063c2579b6d",
+            "id": "tjrj-extract-f1679b49914d9f16e2",
             "date": "2026-04-02",
             "date_expression": "02/04 e 03/04",
             "year_inferred": true,
@@ -777,8 +854,8 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 DA LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
-            "document_page": 5,
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 6,
             "extraction_method": "pdf_table_row",
             "act_references": [
               "LEI nº 10.633"
@@ -792,7 +869,7 @@
             ]
           },
           {
-            "id": "tjrj-extract-504dc49c8ce0cfcee4",
+            "id": "tjrj-extract-9a51138d844f70d214",
             "date": "2026-04-03",
             "date_expression": "02/04 e 03/04",
             "year_inferred": true,
@@ -809,8 +886,8 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 DA LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
-            "document_page": 5,
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 6,
             "extraction_method": "pdf_table_row",
             "act_references": [
               "LEI nº 10.633"
@@ -821,6 +898,38 @@
             "review_reasons": [
               "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
               "Ano inferido de título e URL do informativo anual."
+            ]
+          },
+          {
+            "id": "tjrj-extract-3ea7f7dc532cc8a5d2",
+            "date": "2026-06-29",
+            "date_expression": "29/06/2026",
+            "year_inferred": false,
+            "effect_hint": "optional_workday",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": [],
+              "date_linked_comarcas": [],
+              "scope_evidence": [],
+              "assessment": "unresolved",
+              "verified": false,
+              "applies_to_deadlines": false
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "29/06/2026 103, DE 25/06/2026 26/06/2026 unidades do Poder Judiciário do Estado do Rio de Janeiro, no dia 29 de junho de 2026. Estabelece ponto facultativo nas DECRETO Nº 50.346, repartições públicas estaduais no dia",
+            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 14,
+            "extraction_method": "pdf_table_row",
+            "act_references": [
+              "DECRETO nº 50.346"
+            ],
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
+              "Conferir data, abrangência e ato."
             ]
           },
           {
@@ -841,7 +950,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "24/06/2026 DJERJ, ADM, n. 183, p. 8. unidades do Poder Judiciário do 96, DE 09/06/2026 11/06/2026 Estado do Rio de Janeiro, em 24 de junho de 2026, terá início às 11h e encerramento às 15h, ficando suspensos os prazos processuais. Dispõe sobre o expediente nas DECRETO Nº 50.321, repartições públicas estaduais no dia",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 14,
             "extraction_method": "pdf_table_row",
             "act_references": [
@@ -873,7 +982,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
@@ -905,7 +1014,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "02/04 e 03/04 LEI Nº 10.633, DE 19.12.2024 Semana Santa",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 20,
             "extraction_method": "pdf_table_row",
             "act_references": [
@@ -950,11 +1059,55 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "31/07/2026 03/08/2026 Mesquita, no dia 31 de julho de 2026 e na Comarca de Duque de Caxias, nos dias 30 e 31 de julho de 2026. Resolve suspender o expediente e os prazos processuais nos Fóruns das ATO EXECUTIVO Nº 117, DE DJERJ, ADM, n. 218, p. 2. Comarcas de Nova Iguaçu,",
             "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
-            "source_hash_sha256": "8fb97a2d83e9c6a4986816611bf447c3761d6fc71e4600b6bc12ed5ea7d68512",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
             "document_page": 34,
             "extraction_method": "pdf_table_row",
             "act_references": [
               "ATO EXECUTIVO nº 117"
+            ],
+            "status": "pending_review",
+            "verified": false,
+            "applies_to_deadlines": false,
+            "review_reasons": [
+              "Linha de tabela extraída mecanicamente; verificar ato, publicação, vigência, abrangência, exceções e efeito jurídico.",
+              "Conferir data, abrangência e ato."
+            ]
+          },
+          {
+            "id": "tjrj-extract-2e11195a67d2f39f33",
+            "date": "2026-07-31",
+            "date_expression": "31/07/2026",
+            "year_inferred": false,
+            "effect_hint": "possible_deadline_suspension",
+            "scope_hint": {
+              "kind": "unresolved",
+              "comarcas_mentioned": [
+                "Paraty"
+              ],
+              "date_linked_comarcas": [
+                "Paraty"
+              ],
+              "scope_evidence": [
+                {
+                  "comarca": "Paraty",
+                  "date": "2026-07-31",
+                  "literal_excerpt": "na Comarca de Paraty, no dia 31 de julho de 2026",
+                  "relation": "explicit_comarca_date_mention",
+                  "verified": false
+                }
+              ],
+              "assessment": "textual_date_link_pending",
+              "verified": false,
+              "applies_to_deadlines": false
+            },
+            "has_possible_exceptions": false,
+            "evidence_excerpt": "31/07/2026 03/08/2026 processuais na Comarca de Paraty, no dia 31 de julho de 2026. Resolve suspender o expediente e os prazos ATO EXECUTIVO Nº 119, DE DJERJ, ADM, n. 218, p. 3. processuais nos Fóruns de",
+            "source_url": "https://portaltj.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
+            "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
+            "document_page": 35,
+            "extraction_method": "pdf_table_row",
+            "act_references": [
+              "ATO EXECUTIVO nº 119"
             ],
             "status": "pending_review",
             "verified": false,
@@ -969,11 +1122,11 @@
         "status": "pending_review",
         "automatically_applies_events": false,
         "warning": "Extração mecânica informativa; dados não conferidos e nunca aplicados automaticamente.",
-        "pdf_table_rows_checked": 256,
+        "pdf_table_rows_checked": 259,
         "pdf_table_year_hint": 2026,
         "pdf_table_truncated": false
       },
-      "extracted_count": 6
+      "extracted_count": 8
     },
     {
       "id": "tjrj-source-e05b9f75ec54192fcc",
@@ -987,16 +1140,16 @@
         "2023-04-17"
       ],
       "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-      "source_hash_sha256": "b9721de30a20a069cc7e976372d06fb15f698eafd446dfdee3632f71552c771b",
+      "source_hash_sha256": "ff86aee2ad1dc18f8d0456d05440cda91748dd3dcd4ea3dcb66bd5fd9f0da4d5",
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-22T15:15:02+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-        "source_hash_sha256": "b9721de30a20a069cc7e976372d06fb15f698eafd446dfdee3632f71552c771b",
+        "source_hash_sha256": "ff86aee2ad1dc18f8d0456d05440cda91748dd3dcd4ea3dcb66bd5fd9f0da4d5",
         "source_title": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro",
         "document_year_hint": null,
         "act_references": [],
@@ -1020,16 +1173,16 @@
         "2023-04-17"
       ],
       "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-      "source_hash_sha256": "834d100dca1877fd20f184bc61193fd0f5545a65ba2b3e25b90c3f34ea3d887c",
+      "source_hash_sha256": "b39e5f3dad2ec90fb5c94a3fbe8df61a3d0fce521b928b8811c7f72d4aa0d7f3",
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-22T15:15:02+00:00",
-      "last_seen_at": "2026-10-22T15:15:02+00:00",
+      "content_changed_at": "2026-10-22T17:01:38+00:00",
+      "last_seen_at": "2026-10-22T17:01:38+00:00",
       "stale": false,
       "structured": {
         "schema": 1,
         "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/177451389",
-        "source_hash_sha256": "834d100dca1877fd20f184bc61193fd0f5545a65ba2b3e25b90c3f34ea3d887c",
+        "source_hash_sha256": "b39e5f3dad2ec90fb5c94a3fbe8df61a3d0fce521b928b8811c7f72d4aa0d7f3",
         "source_title": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro",
         "document_year_hint": null,
         "act_references": [],
