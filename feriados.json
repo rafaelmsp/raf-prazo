@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "version": "b3bacd94314f",
-  "generated_at": "2026-10-26T00:20:30+00:00",
-  "last_checked_at": "2026-10-26T00:20:30+00:00",
+  "generated_at": "2026-10-26T07:46:01+00:00",
+  "last_checked_at": "2026-10-26T07:46:01+00:00",
   "coverage": {
     "national_years": [
       2026,
@@ -23,10 +23,10 @@
     ],
     "failed": [],
     "tjrj": "discovery_only",
-    "tjrj_collector_status": "partial",
-    "tjrj_collector_at": "2026-10-26T00:19:26+00:00",
+    "tjrj_collector_status": "ok",
+    "tjrj_collector_at": "2026-10-26T07:45:36+00:00",
     "tjrj_sources_checked": 9,
-    "tjrj_sources_success": 8,
+    "tjrj_sources_success": 9,
     "tjrj_pending": 9,
     "local": "legal_holidays_opt_in"
   },
@@ -1428,7 +1428,7 @@
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
       "content_changed_at": "2026-10-22T17:01:38+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
       "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
@@ -1472,7 +1472,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://portaltj.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "fa5efde528b5e0f59845af962d3f704b5ac2b06355b97fb1c2dd23268f7ebd00",
+            "source_hash_sha256": "50431e77acb586f4375212c91c950f03b833a3523fddf682c38d9a4188ca67cf",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1489,9 +1489,9 @@
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-26T00:19:26+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
-      "source_hash_sha256": "fa5efde528b5e0f59845af962d3f704b5ac2b06355b97fb1c2dd23268f7ebd00",
+      "content_changed_at": "2026-10-26T07:45:36+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
+      "source_hash_sha256": "50431e77acb586f4375212c91c950f03b833a3523fddf682c38d9a4188ca67cf",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1618,7 +1618,7 @@
       "stale": false,
       "first_seen_at": "2026-10-17T08:11:27+00:00",
       "content_changed_at": "2026-10-22T17:01:38+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
       "source_hash_sha256": "e01f0c5c54236c28a09645d2dc1e2e6d6ee746dcff7cf13d7bda3434d28f63f7",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
@@ -1650,9 +1650,9 @@
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-26T00:19:26+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
-      "source_hash_sha256": "f63d91df244ca286d37afcffc8ab647173fd7fbc7edc0ea539adb52ab9dabbee",
+      "content_changed_at": "2026-10-26T07:45:36+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
+      "source_hash_sha256": "5af98e1dc563af50b87712d0fad0b6c8f502b625b9b6e1925f5138763978b6ae",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1681,11 +1681,11 @@
         "automatically_applies_events": false
       },
       "excerpt": "Feriados locais e suspensão de prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
-      "stale": true,
+      "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-25T14:21:11+00:00",
-      "last_seen_at": "2026-10-25T14:21:11+00:00",
-      "source_hash_sha256": "0051c0985451c50f85468ef86e861c74452888c4334c6d6bd333e6ad9f7eca54",
+      "content_changed_at": "2026-10-26T07:45:36+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
+      "source_hash_sha256": "202cfe8d175589faaab20466daa8cf21cfc8f0065863c3e63b5664c9152e10ba",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -1728,7 +1728,7 @@
             "has_possible_exceptions": false,
             "evidence_excerpt": "Neste ano, a comemoração do Dia do Servidor Público foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais.",
             "source_url": "https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/406979295",
-            "source_hash_sha256": "a62cce1d6db202137cf90a2baede5f7c398fad69f185d65945b8ff4764149825",
+            "source_hash_sha256": "bb5feaef98dfd0e0e3fc8e82a20b7f62f2fd7635cc4d1b83bf738876f3c6195e",
             "status": "pending_review",
             "verified": false,
             "applies_to_deadlines": false,
@@ -1745,9 +1745,9 @@
       "excerpt": "úblico foi transferida para 30 de outubro, sexta-feira, quando haverá ponto facultativo, com suspensão das atividades e dos prazos processuais. A mudança, prevista no Aviso nº 290/2026 , ocorre em razão do Decreto nº 50.525, de 13 de outubro de 2026 . MCR Voltar Oculto Tribunal de Justiça do Estado do Rio de Janeiro Secretaria-Geral de Gestão do Conhecimento | SGCON Dom Manuel, nº 29 | Centro | CEP 20010",
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-26T00:19:26+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
-      "source_hash_sha256": "a62cce1d6db202137cf90a2baede5f7c398fad69f185d65945b8ff4764149825",
+      "content_changed_at": "2026-10-26T07:45:36+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
+      "source_hash_sha256": "bb5feaef98dfd0e0e3fc8e82a20b7f62f2fd7635cc4d1b83bf738876f3c6195e",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -2109,7 +2109,7 @@
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
       "content_changed_at": "2026-10-22T17:01:38+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
       "source_hash_sha256": "45fa6264824e9aa86b36d256df1aee0707f20e6729a85cb1f590adccdc13c414",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
@@ -2143,9 +2143,9 @@
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-26T00:19:26+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
-      "source_hash_sha256": "cd2bae2a782cfb19e3bfb0046b2f500c838d450fadfe9341881993357c7d61ce",
+      "content_changed_at": "2026-10-26T07:45:36+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
+      "source_hash_sha256": "0ea5578ce32e845d541dbbc21596d7f6f06c1b6303110604c96fd48e9ad1e5fc",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     },
     {
@@ -2178,9 +2178,9 @@
       "excerpt": "Feriados Locais e Suspensão de Prazos - Portal do Conhecimento - Tribunal de Justiça do Estado do Rio de Janeiro Pular para o Conteúdo principal skip-to-content Autofit Section Close button Busca no site Icone de Login Intranet Webmail Abrir menu mobile Autofit Section Topo Conteudo do titulo Consulta Processual Busca Avançada Num.",
       "stale": false,
       "first_seen_at": "2026-10-17T05:48:49+00:00",
-      "content_changed_at": "2026-10-26T00:19:26+00:00",
-      "last_seen_at": "2026-10-26T00:19:26+00:00",
-      "source_hash_sha256": "a50b41b0798174eedd851864c317efdc2961090fdb706ef81778d2479f7e2e8b",
+      "content_changed_at": "2026-10-26T07:45:36+00:00",
+      "last_seen_at": "2026-10-26T07:45:36+00:00",
+      "source_hash_sha256": "6b9e91cdc99556422f6e57eb33b4cd742f83dc6ac5c5144c3ca325a2bb1e857d",
       "reason": "Documento encontrado, nao interpretado juridicamente; NAO interfere na contagem."
     }
   ],
@@ -2470,8 +2470,8 @@
       "label": "TJRJ — documentos oficiais consultados",
       "url": "https://www.tjrj.jus.br/documents/d/portal-conhecimento/suspensao-prazos-1a-e-2a-instancia_2026_seesc",
       "kind": "official",
-      "status": "partial",
-      "checked_at": "2026-10-26T00:19:26+00:00",
+      "status": "ok",
+      "checked_at": "2026-10-26T07:45:36+00:00",
       "note": "Coleta automatizada apenas para descoberta; nenhum ato do tribunal e aplicado sem revisao juridica."
     },
     {
