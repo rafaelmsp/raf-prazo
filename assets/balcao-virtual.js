@@ -28,6 +28,7 @@ const phrases=[
  ['Andamentos','Multa não paga — pedido de conclusão','Dr.(a), vou conferir a decisão, o prazo para pagamento da multa e as movimentações processuais para verificar o encaminhamento do pedido de conclusão.','modelo'],
  ['Andamentos','Petição juntada','Dr.(a), vou verificar se a petição foi juntada aos autos e qual encaminhamento é cabível no andamento atual.','modelo'],
  ['Andamentos','Contestação apresentada','Dr.(a), vou conferir a contestação e a fase processual antes de informar a movimentação ou encaminhamento pertinente.','modelo'],
+ ['Andamentos','Certificação do trânsito em julgado','Dr.(a), vamos repassar sua solicitação ao processante responsável para que verifique a certificação do trânsito em julgado. Pedimos, por gentileza, que acompanhe o andamento do processo pelo sistema.','modelo'],
  ['Andamentos','Certidão pendente','Dr.(a), vou verificar os documentos e os registros necessários à certidão. A conclusão dessa providência depende da conferência dos autos.','modelo'],
  ['Andamentos','Encaminhamento ao setor','Sua solicitação será submetida à conferência da serventia ou do setor responsável. Pedimos que acompanhe as movimentações do processo.','modelo'],
  ['Andamentos','Sem previsão de decisão','Dr.(a), não é possível informar uma data para apreciação judicial. Pedimos que acompanhe as movimentações oficiais do processo.','modelo'],
