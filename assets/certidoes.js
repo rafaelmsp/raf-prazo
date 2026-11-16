@@ -3,16 +3,16 @@
 (() => {
   'use strict';
   const models = [
-    { id:'arquivamento-indevido', group:'Arquivamento', title:'Autos arquivados indevidamente', verified:true,
+    { id:'arquivamento-indevido', group:'Arquivamento', title:'* Autos arquivados indevidamente', verified:true,
       text:'Certifico que os autos foram arquivados indevidamente',
       note:'Confira o histórico do processo e os registros do arquivamento antes de afirmar que ocorreu indevidamente. Não presuma a causa do erro.' },
-    { id:'aud-conciliacao', group:'Audiências', title:'Aguardando audiência de conciliação', verified:true,
+    { id:'aud-conciliacao', group:'Audiências', title:'* Aguardando audiência de conciliação', verified:true,
       text:'Certifico que os presentes autos encontram-se aguardando audiência de conciliação designada.',
       note:'Confirme que a audiência está efetivamente designada e permanece na pauta.' },
-    { id:'acordo-pauta', group:'Acordos', title:'Acordo juntado — retirada de pauta e remessa ao Juiz Titular', verified:true,
+    { id:'acordo-pauta', group:'Acordos', title:'* Acordo juntado — retirada de pauta e remessa ao Juiz Titular', verified:true,
       text:'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao MM. Juiz Titular.',
       note:'Confirme a juntada do acordo, a retirada da pauta e a efetiva remessa ao MM. Juiz Titular conforme o fluxo da unidade.' },
-    { id:'acordo-pauta-juiz-leigo', group:'Acordos', title:'Acordo juntado — retirada de pauta e remessa ao Juiz Leigo', verified:true,
+    { id:'acordo-pauta-juiz-leigo', group:'Acordos', title:'* Acordo juntado — retirada de pauta e remessa ao Juiz Leigo', verified:true,
       text:'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao Juiz Leigo responsável.',
       note:'Confirme a juntada do acordo, a retirada da pauta e a efetiva remessa ao Juiz Leigo responsável conforme o fluxo da unidade.' }
   ];
