@@ -19,15 +19,28 @@ const ctx = { document: {readyState:'loading',addEventListener(){}}, Set, Array,
 vm.runInNewContext(instrumented,ctx,{timeout:1500});
 const models = ctx.__certModels;
 
-test('Quatro modelos iniciais fornecidos, todos com asterisco no título', () => {
-  assert.equal(models.length,4);
-  assert.equal(new Set(models.map(model=>model.id)).size,4);
-  for(const model of models){
-    assert.ok(model.verified);
+test('Catálogo completo: 17 certidões, quatro fornecidas e 13 sugestões preservadas', () => {
+  assert.equal(models.length,17);
+  assert.equal(new Set(models.map(model=>model.id)).size,17);
+  const fornecidas = models.filter(model=>model.verified);
+  const complementares = models.filter(model=>!model.verified);
+  assert.equal(fornecidas.length,4);
+  assert.equal(complementares.length,13);
+  for(const model of fornecidas){
     assert.ok(model.title.startsWith('* '),model.title);
-    assert.ok(model.id && model.group && model.note && model.text);
-    assert.ok(model.text.startsWith('Certifico que'));
+    assert.ok(model.text.startsWith('Certifico que'), model.id);
   }
+  for(const model of complementares){
+    assert.ok(!model.title.startsWith('* '),model.title);
+    assert.ok(model.text.startsWith('Certifico que'), model.id);
+    assert.ok(model.note.length>10, model.id);
+  }
+  const oldIds = [
+    'aud-instrucao','aud-ata','acordo-juntado','peticao-juntada','procuracao-juntada',
+    'adv-cadastro','doc-nao-localizado','ar-devolvido','ar-negativo','mandado-juntado',
+    'decurso-prazo','manifestacao-juntada','conclusao-efetivada'
+  ];
+  assert.deepEqual(Array.from(complementares,model=>model.id),oldIds);
 });
 
 test('Redação literal preservada e repetição da audiência eliminada', () => {
@@ -37,18 +50,20 @@ test('Redação literal preservada e repetição da audiência eliminada', () =>
     'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao MM. Juiz Titular.',
     'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao Juiz Leigo responsável.'
   ];
-  assert.deepEqual(Array.from(models,model=>model.text),expected);
+  assert.deepEqual(Array.from(models.filter(x=>x.verified),model=>model.text),expected);
 });
 
 test('Pauta é uma categoria dentro de Certidões, com três modelos', () => {
   assert.deepEqual(Array.from(models.filter(x=>x.group==='Arquivamento'),x=>x.id),['arquivamento-indevido']);
   assert.deepEqual(Array.from(models.filter(x=>x.group==='Pauta'),x=>x.id),
     ['aud-conciliacao','acordo-pauta','acordo-pauta-juiz-leigo']);
-  assert.deepEqual(Array.from(new Set(models.map(x=>x.group))),['Arquivamento','Pauta']);
+  assert.deepEqual(Array.from(new Set(models.map(x=>x.group))),
+    ['Arquivamento','Pauta','Audiências','Acordos','Juntadas','Habilitação','Comunicação processual','Prazos','Encaminhamentos']);
   assert.ok(models.find(x=>x.id==='arquivamento-indevido').note.includes('Confira'));
   assert.ok(js.includes("const categories = ['Todas', ...new Set(models.map(item => item.group))]"));
   assert.ok(js.includes("category === 'Todas' || item.group === category"));
   assert.ok(js.includes("show(true,true,'Pauta')"), 'Link legado #pauta abre o filtro Pauta');
+  assert.ok(js.includes('os demais são sugestões complementares'),'Aviso diferencia textos fornecidos das sugestões');
 });
 
 test('Página principal, template e módulos permanecem sincronizados',() => {
