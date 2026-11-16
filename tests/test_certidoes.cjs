@@ -41,8 +41,8 @@ test('Redação literal preservada e repetição da audiência eliminada', () =>
 });
 
 test('Seções separadas: Certidões recebe arquivamento e Pauta recebe três certidões', () => {
-  assert.deepEqual(models.filter(x=>x.section==='certidoes').map(x=>x.id),['arquivamento-indevido']);
-  assert.deepEqual(models.filter(x=>x.section==='pauta').map(x=>x.id),
+  assert.deepEqual(Array.from(models.filter(x=>x.section==='certidoes'),x=>x.id),['arquivamento-indevido']);
+  assert.deepEqual(Array.from(models.filter(x=>x.section==='pauta'),x=>x.id),
     ['aud-conciliacao','acordo-pauta','acordo-pauta-juiz-leigo']);
   assert.ok(models.find(x=>x.id==='arquivamento-indevido').note.includes('Confira'));
   assert.ok(js.includes('item.section === mode'));
