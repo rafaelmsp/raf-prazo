@@ -19,38 +19,46 @@ const ctx = { document: {readyState:'loading',addEventListener(){}}, Set, Array,
 vm.runInNewContext(instrumented,ctx,{timeout:1500});
 const models = ctx.__certModels;
 
-test('15 modelos bem identificados, com 2 textos fornecidos',() => {
-  assert.equal(models.length,15);
-  assert.equal(new Set(models.map(x=>x.id)).size,models.length);
-  assert.equal(models.filter(x=>x.verified).length,2);
+test('Quatro modelos iniciais fornecidos, todos com asterisco no título', () => {
+  assert.equal(models.length,4);
+  assert.equal(new Set(models.map(model=>model.id)).size,4);
   for(const model of models){
-    assert.ok(model.id && model.group && model.title && model.note && model.text);
-    assert.ok(model.text.startsWith('Certifico que'), model.title);
-    assert.ok(model.verified || /\[[^\]]+\]/.test(model.text),model.title);
+    assert.ok(model.verified);
+    assert.ok(model.title.startsWith('* '),model.title);
+    assert.ok(model.id && model.group && model.note && model.text);
+    assert.ok(model.text.startsWith('Certifico que'));
   }
 });
 
-test('Redação literal dos dois modelos fornecidos preservada',() => {
-  assert.equal(models.find(x=>x.id==='aud-conciliacao').text,
-    'Certifico que os presentes autos encontram-se aguardando audiência de conciliação designada.');
-  assert.equal(models.find(x=>x.id==='acordo-pauta').text,
-    'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao MM. Juiz Titular.');
+test('Redação literal preservada e repetição da audiência eliminada', () => {
+  const expected=[
+    'Certifico que os autos foram arquivados indevidamente',
+    'Certifico que os presentes autos encontram-se aguardando audiência de conciliação designada.',
+    'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao MM. Juiz Titular.',
+    'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao Juiz Leigo responsável.'
+  ];
+  assert.deepEqual(Array.from(models,model=>model.text),expected);
 });
 
-test('Categorias de apoio às rotinas cartorárias',() => {
-  const groups = new Set(models.map(x=>x.group));
-  for(const name of ['Audiências','Acordos','Juntadas','Habilitação','Comunicação processual','Prazos','Encaminhamentos'])assert.ok(groups.has(name),name);
-  assert.ok(models.find(x=>x.id==='decurso-prazo').note.includes('Exige checagem'));
-  assert.ok(models.find(x=>x.id==='ar-devolvido').note.includes('terceiro'));
+test('Seções separadas: Certidões recebe arquivamento e Pauta recebe três certidões', () => {
+  assert.deepEqual(Array.from(models.filter(x=>x.section==='certidoes'),x=>x.id),['arquivamento-indevido']);
+  assert.deepEqual(Array.from(models.filter(x=>x.section==='pauta'),x=>x.id),
+    ['aud-conciliacao','acordo-pauta','acordo-pauta-juiz-leigo']);
+  assert.ok(models.find(x=>x.id==='arquivamento-indevido').note.includes('Confira'));
+  assert.ok(js.includes('item.section === mode'));
 });
 
 test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.equal(html,template);
-  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=1','assets/certidoes.js?v=1',
+  for(const part of ['id="navCertidoes"','id="navPauta"','assets/certidoes.css?v=1','assets/certidoes.js?v=1',
     'id="navBalcaoVirtual"','id="mainContent"']) assert.ok(html.includes(part),part);
   assert.ok(css.includes('.raf-cert-active #mainContent > :not(#rafCertView)'));
   assert.ok(css.includes('@media(max-width:650px)'));
   assert.ok(js.includes("window.addEventListener('raf-prazo:section'"));
+  assert.ok(js.includes("navPauta.addEventListener('click', () => show('pauta'))"));
+  assert.ok(js.includes("nav.addEventListener('click', () => show('certidoes'))"));
+  assert.ok(js.includes("location.hash === '#pauta'"));
+  assert.ok(js.includes("location.hash === '#certidoes'"));
   assert.ok(balcao.includes("name:'balcao'"));
   assert.ok(balcao.includes("name==='certidoes'"));
 });
@@ -60,7 +68,7 @@ test('Revisão antes da cópia, sem persistência nem transmissão',() => {
   assert.ok(js.includes('window.confirm('));
   assert.ok(js.includes('navigator.clipboard?.writeText'));
   assert.ok(js.includes("document.execCommand('copy')"));
-  assert.ok(js.includes("section.hidden = !on;"));
+  assert.ok(js.includes('section.hidden = !on;'));
   assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|localStorage\.setItem|sessionStorage\.setItem/.test(js));
   assert.ok(!/innerHTML\s*=\s*.*selected\.text/.test(js));
 });
