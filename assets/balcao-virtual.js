@@ -98,7 +98,6 @@ function init(){
  const app=$('app');
  function show(on,updateUrl){
   if(on)window.dispatchEvent(new CustomEvent('raf-prazo:section',{detail:{name:'balcao'}}));
-  app.classList.toggle('raf-bv-active',on); function show(on,updateUrl){
   app.classList.toggle('raf-bv-active',on);section.hidden=!on;
   nav.classList.toggle('active',on);$('navCalc')?.classList.toggle('active',!on);
   if(on){render();window.scrollTo(0,0)}
