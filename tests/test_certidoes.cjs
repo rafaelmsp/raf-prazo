@@ -53,7 +53,7 @@ test('Pauta é uma categoria dentro de Certidões, com três modelos', () => {
 
 test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.equal(html,template);
-  for(const part of ['id="navCertidoes",'assets/certidoes.css?v=1','assets/certidoes.js?v=1',
+  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=1','assets/certidoes.js?v=1',
     'id="navBalcaoVirtual"','id="mainContent"']) assert.ok(html.includes(part),part);
   assert.ok(!html.includes('id="navPauta"'),'Pauta não deve ocupar o menu principal');
   assert.ok(css.includes('.raf-cert-active #mainContent > :not(#rafCertView)'));
