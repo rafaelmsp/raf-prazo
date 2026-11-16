@@ -29,6 +29,8 @@ jobs:
           node --check assets/tjrj-optin.js
           node --check assets/tjrj-markers.js
           node --check assets/user-date-exclusions.js
+          node --check assets/balcao-virtual.js
+          node --check assets/certidoes.js
       - name: Testes Node
         run: |
           node --test tests/test_raf_prazo_22.cjs
@@ -38,6 +40,8 @@ jobs:
           node --test tests/test_user_date_exclusions.cjs
           node --test tests/test_local_holidays_browser.cjs
           node --test tests/test_weekend_sources.cjs
+          node --test tests/test_balcao_virtual.cjs
+          node --test tests/test_certidoes.cjs
       - name: Testes Python
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validação conservadora dos dados

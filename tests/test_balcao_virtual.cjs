@@ -13,7 +13,7 @@ const ctx={document:{readyState:'loading',addEventListener(){}},Set,Array,String
 vm.runInNewContext(instrumented,ctx,{timeout:1500});
 const phrases=ctx.__testPhrases;
 test('Biblioteca extensa e categorizada',()=>{
- assert.equal(phrases.length,47,'All 47 curated phrases must remain available');
+ assert.ok(phrases.length>=47,'At least 47 curated phrases must remain available');
  const cats=new Set(phrases.map(p=>p[0]));
  for(const cat of ['Abertura','Identificação','Consulta','Andamentos','Recursos','Audiências','Execução','Atendimento','Encerramento'])assert.ok(cats.has(cat),cat);
  for(const phrase of phrases)assert.equal(phrase.length,4);

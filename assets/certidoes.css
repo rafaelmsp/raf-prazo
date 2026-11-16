@@ -1,0 +1,41 @@
+/* RAF-PRAZO | Certidões do Dia a Dia — interface própria, compatível com modo claro/escuro. */
+.raf-cert-view[hidden]{display:none!important}
+.raf-cert-active #mainContent > :not(#rafCertView){display:none!important}
+.raf-cert-active #mainContent{display:block;overflow-y:auto;padding:18px 20px 28px}
+.raf-cert-view{width:100%;max-width:1250px;margin:0 auto}
+.raf-cert-hero{display:flex;align-items:center;justify-content:space-between;gap:22px;background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow)}
+.raf-cert-eyebrow{font-size:10px;font-weight:800;letter-spacing:.1em;color:var(--accent)}
+.raf-cert-hero h1{font-size:clamp(21px,2.6vw,30px);letter-spacing:-.04em;margin:7px 0 8px}
+.raf-cert-hero p{font-size:12px;color:var(--muted);margin:0;line-height:1.6}
+.raf-cert-return{flex:none;border:1px solid var(--line2);background:var(--paper2);color:var(--text);border-radius:9px;padding:11px 13px;font-weight:720}
+.raf-cert-return:hover{color:var(--accent);border-color:var(--accent)}
+.raf-cert-warning{font-size:12px;line-height:1.6;background:var(--accentbg);border:1px solid var(--accentline);border-radius:12px;padding:13px 16px;margin:0 0 14px;color:var(--text)}
+.raf-cert-layout{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(300px,1.12fr);gap:14px;align-items:start}
+.raf-cert-browser,.raf-cert-editor-panel{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:19px;box-shadow:var(--shadow)}
+.raf-cert-editor-panel{position:sticky;top:12px}
+.raf-cert-search-label{font-size:11px;font-weight:760;color:var(--text);display:block;margin:0 0 7px}
+.raf-cert-search,.raf-cert-editor{width:100%;min-width:0;background:var(--paper2);border:1px solid var(--line2);color:var(--text);border-radius:10px;padding:12px;font-size:12px}
+.raf-cert-search{min-height:42px}
+.raf-cert-editor{min-height:220px;line-height:1.72;resize:vertical;font-size:13px}
+.raf-cert-categories{display:flex;flex-wrap:wrap;gap:6px;margin:13px 0}
+.raf-cert-category{background:var(--paper2);border:1px solid var(--line2);border-radius:999px;color:var(--muted);font-size:11px;font-weight:730;padding:8px 11px}
+.raf-cert-category[aria-pressed="true"]{color:#fff;background:var(--accent);border-color:var(--accent)}
+.raf-cert-count{font-size:11px;color:var(--muted);margin:0 0 11px}
+.raf-cert-list{display:grid;gap:7px;max-height:min(58dvh,640px);overflow-y:auto}
+.raf-cert-item{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;padding:13px;color:var(--text);line-height:1.4}
+.raf-cert-item:hover{border-color:var(--accentline)}
+.raf-cert-item[aria-pressed="true"]{background:var(--accentbg);border-color:var(--accent)}
+.raf-cert-item strong{font-size:12px}
+.raf-cert-item-meta{font-size:10px;color:var(--muted)}
+.raf-cert-editor-heading{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:15px}
+.raf-cert-type{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.02em;color:var(--warn);background:var(--warnbg);padding:5px 8px;border-radius:7px;margin-bottom:9px}
+.raf-cert-type[data-verified="true"]{color:var(--ok);background:var(--okbg)}
+.raf-cert-editor-heading h2{font-size:17px;letter-spacing:-.015em;line-height:1.35;margin:0}
+.raf-cert-note{font-size:11px;line-height:1.55;color:var(--muted);margin:11px 0}
+.raf-cert-actions{display:flex;gap:8px;flex-wrap:wrap}
+.raf-cert-actions .btn{flex:1;min-width:155px}
+.raf-cert-privacy{font-size:10px;line-height:1.55;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin:15px 0 0}
+.raf-cert-feedback{font-size:11px;color:var(--ok);line-height:1.5;margin:11px 0 0}
+.raf-cert-empty{font-size:12px;line-height:1.6;color:var(--muted);padding:16px;border:1px dashed var(--line2);border-radius:9px}
+@media(max-width:850px){.raf-cert-layout{grid-template-columns:1fr}.raf-cert-editor-panel{position:static}.raf-cert-list{max-height:340px}}
+@media(max-width:650px){.raf-cert-active #mainContent{padding:12px}.raf-cert-hero{padding:17px;flex-direction:column;align-items:stretch;gap:12px}.raf-cert-return{align-self:flex-start}.raf-cert-browser,.raf-cert-editor-panel{padding:14px}.raf-cert-categories{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:5px}.raf-cert-category{white-space:nowrap;flex:none}.raf-cert-search{font-size:16px}.raf-cert-list{max-height:300px}.raf-cert-editor{font-size:14px;min-height:200px}}
