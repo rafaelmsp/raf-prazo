@@ -40,23 +40,27 @@ test('Redação literal preservada e repetição da audiência eliminada', () =>
   assert.deepEqual(Array.from(models,model=>model.text),expected);
 });
 
-test('Seções separadas: Certidões recebe arquivamento e Pauta recebe três certidões', () => {
-  assert.deepEqual(Array.from(models.filter(x=>x.section==='certidoes'),x=>x.id),['arquivamento-indevido']);
-  assert.deepEqual(Array.from(models.filter(x=>x.section==='pauta'),x=>x.id),
+test('Pauta é uma categoria dentro de Certidões, com três modelos', () => {
+  assert.deepEqual(Array.from(models.filter(x=>x.group==='Arquivamento'),x=>x.id),['arquivamento-indevido']);
+  assert.deepEqual(Array.from(models.filter(x=>x.group==='Pauta'),x=>x.id),
     ['aud-conciliacao','acordo-pauta','acordo-pauta-juiz-leigo']);
+  assert.deepEqual(Array.from(new Set(models.map(x=>x.group))),['Arquivamento','Pauta']);
   assert.ok(models.find(x=>x.id==='arquivamento-indevido').note.includes('Confira'));
-  assert.ok(js.includes('item.section === mode'));
+  assert.ok(js.includes("const categories = ['Todas', ...new Set(models.map(item => item.group))]"));
+  assert.ok(js.includes("category === 'Todas' || item.group === category"));
+  assert.ok(js.includes("show(true,true,'Pauta')"), 'Link legado #pauta abre o filtro Pauta');
 });
 
 test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.equal(html,template);
-  for(const part of ['id="navCertidoes"','id="navPauta"','assets/certidoes.css?v=1','assets/certidoes.js?v=1',
+  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=1','assets/certidoes.js?v=1',
     'id="navBalcaoVirtual"','id="mainContent"']) assert.ok(html.includes(part),part);
+  assert.ok(!html.includes('id="navPauta"'),'Pauta não deve ocupar o menu principal');
   assert.ok(css.includes('.raf-cert-active #mainContent > :not(#rafCertView)'));
   assert.ok(css.includes('@media(max-width:650px)'));
   assert.ok(js.includes("window.addEventListener('raf-prazo:section'"));
-  assert.ok(js.includes("navPauta.addEventListener('click', () => show('pauta'))"));
-  assert.ok(js.includes("nav.addEventListener('click', () => show('certidoes'))"));
+  assert.ok(!js.includes('navPauta.addEventListener'),'Sem navegação independente de Pauta');
+  assert.ok(js.includes("nav.addEventListener('click', () => show(true))"));
   assert.ok(js.includes("location.hash === '#pauta'"));
   assert.ok(js.includes("location.hash === '#certidoes'"));
   assert.ok(balcao.includes("name:'balcao'"));
