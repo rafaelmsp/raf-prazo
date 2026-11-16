@@ -97,11 +97,16 @@ function init(){
  }
  const app=$('app');
  function show(on,updateUrl){
+  if(on)window.dispatchEvent(new CustomEvent('raf-prazo:section',{detail:{name:'balcao'}}));
+  app.classList.toggle('raf-bv-active',on); function show(on,updateUrl){
   app.classList.toggle('raf-bv-active',on);section.hidden=!on;
   nav.classList.toggle('active',on);$('navCalc')?.classList.toggle('active',!on);
   if(on){render();window.scrollTo(0,0)}
   if(updateUrl){const newUrl=on?'#balcao-virtual':location.pathname+location.search;history.replaceState(null,'',newUrl)}
  }
+ window.addEventListener('raf-prazo:section',event=>{
+  if(event.detail?.name==='certidoes'&&!section.hidden)show(false,false);
+ });
  nav.addEventListener('click',()=>show(true,true));
  $('rafBvReturn').addEventListener('click',()=>show(false,true));
  for(const id of ['navCalc','navCalendar'])$(id)?.addEventListener('click',()=>{if(!section.hidden)show(false,true)},true);
