@@ -21,7 +21,7 @@ const models = ctx.__certModels;
 
 test('Catálogo completo: 18 certidões, cinco fornecidas e 13 sugestões preservadas', () => {
   assert.equal(models.length,18);
-  assert.equal(new Set(models.map(model=>model.id)).size,17);
+  assert.equal(new Set(models.map(model=>model.id)).size,18);
   const fornecidas = models.filter(model=>model.verified);
   const complementares = models.filter(model=>!model.verified);
   assert.equal(fornecidas.length,5);
