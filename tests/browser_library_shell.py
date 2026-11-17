@@ -37,9 +37,11 @@ def verify(browser, base: str, width: int) -> None:
     page.locator("#groups .card").first.wait_for()
 
     assert page.locator("#groups .card").count() == 32
+    assert page.locator('.raf-nav-link[href="../index.html#certidoes"]').count()==1
+    assert page.locator('.raf-nav-link[href="../index.html#inicio"]').count()==1
     assert page.locator(".raf-header").evaluate(
         "(element) => getComputedStyle(element).backgroundColor"
-    ) == "rgb(18, 97, 160)"
+    ) == "rgb(255, 255, 255)"
     assert page.locator(".raf-brand-link strong").inner_text() == "Raf-Prazo"
     assert page.locator(".raf-nav-link.active").get_attribute("aria-current") == "page"
     assert page.locator("#menuToggle").get_attribute("aria-expanded") == "false"
