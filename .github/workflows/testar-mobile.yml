@@ -12,6 +12,13 @@ on:
       - prazos/index.html
       - assets/prazos-home.js
       - assets/prazos-library.js
+      - assets/ux-premium.css
+      - assets/ux-premium-art.css
+      - assets/ux-premium.js
+      - assets/ux-premium-library.css
+      - assets/ux-premium-library.js
+      - assets/certidoes.js
+      - tests/browser_ux_premium.py
       - assets/prazos-library-shell.js
       - assets/prazos-library-shell.css
       - tests/browser_library_shell.py
@@ -55,6 +62,7 @@ jobs:
           python tests/browser_22.py
           python tests/browser_library_shell.py
           python tests/browser_library_accordion.py
+          python tests/browser_ux_premium.py
           python tests/browser_pwa_online.py
       - name: Guardar screenshots para revisão visual
         if: always()
@@ -64,5 +72,6 @@ jobs:
           path: |
             tests/screenshots-22/*.png
             tests/screenshots-library/*.png
+            tests/screenshots-premium/*.png
           if-no-files-found: ignore
           retention-days: 5

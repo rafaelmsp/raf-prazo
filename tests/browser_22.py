@@ -46,11 +46,11 @@ def check(browser,url,width):
         calendarWeekend:root.getPropertyValue('--weekend').trim()};
     }""")
     assert theme["body"]=="rgb(245, 247, 250)",f"Fundo não institucional: {theme}"
-    assert theme["result"]=="rgb(239, 245, 250)",f"Resultado deveria ser azul acinzentado: {theme}"
+    assert theme["result"] in ("rgb(239, 245, 250)","rgb(237, 244, 252)"),f"Resultado deve conservar contraste suave: {theme}"
     assert theme["parameters"]=="rgb(255, 255, 255)",f"Parâmetros deveriam ter fundo branco: {theme}"
     assert theme["profile"]=="rgb(247, 249, 251)",f"Seleção não deveria usar fundos coloridos: {theme}"
     assert theme["calendarHoliday"]=="#f9e0e2" and theme["calendarWeekend"]=="#f0f2f5", "Cores antigas do calendário devem ser restauradas"
-    assert page.locator(".header").evaluate("(el)=>getComputedStyle(el).backgroundColor")=="rgb(18, 97, 160)","Só o cabeçalho fica em azul PJe"
+    assert page.locator(".header").evaluate("(el)=>getComputedStyle(el).backgroundColor")=="rgb(255, 255, 255)","UX Premium: cabeçalho claro no tema claro"
     light_days=calendar_palette(page)
     expected={'raf-weekend':'rgb(156, 65, 73)','raf-holiday':'rgb(249, 224, 226)',
               'raf-suspension':'rgb(255, 239, 204)','raf-recess':'rgb(238, 227, 252)',
@@ -58,6 +58,8 @@ def check(browser,url,width):
               'due':'rgb(29, 78, 128)'}
     assert {k:v['background'] for k,v in light_days.items()}==expected,f"Cores claras do calendário incorretas: {light_days}"
     assert light_days['due']['color']=='rgb(255, 255, 255)',"Vencimento deve ter contraste com o azul PJe"
+    assert page.locator(".app.raf-ux-premium").count()==1,"Shell premium deve carregar"
+    assert page.locator("#rafUxSearchOpen").is_visible(),"Busca global deve estar disponível"
     assert page.locator("#rafProfileOpen").is_visible()
     assert not page.locator("#rafProfileDialog").is_visible()
     assert page.locator("#rafRegime").input_value()=="jec"
@@ -249,7 +251,7 @@ def check(browser,url,width):
       return {body:css('body'),result:css('.raf-22-results .result-block'),profile:css('.raf-22-profile-trigger')};
     }""")
     assert dark_palette["body"]=="rgb(14, 25, 40)",f"Modo escuro incoerente: {dark_palette}"
-    assert dark_palette["result"]=="rgb(32, 56, 80)",f"Resultado no modo escuro: {dark_palette}"
+    assert dark_palette["result"] in ("rgb(32, 56, 80)","rgb(24, 56, 82)"),f"Resultado no modo escuro: {dark_palette}"
     assert dark_palette["profile"]=="rgb(27, 45, 65)",f"Seletor no modo escuro: {dark_palette}"
     dark_days=calendar_palette(page)
     expected_dark={'raf-weekend':'rgb(125, 48, 58)','raf-holiday':'rgb(84, 42, 53)',

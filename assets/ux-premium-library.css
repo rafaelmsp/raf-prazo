@@ -1,0 +1,50 @@
+/* RAF-PRAZO UX Premium | Biblioteca jurídica — somente aparência */
+:root{--ux-library-canvas:#f2f6fa;--ux-library-nav:#10273d;--ux-library-nav2:#0b1d30;--ux-library-line:#dce5ef;--ux-library-shadow:0 8px 26px rgba(16,49,81,.07)}
+:root[data-theme="dark"]{--ux-library-canvas:#0b1725;--ux-library-nav:#081827;--ux-library-nav2:#061320;--ux-library-line:#2d455e;--ux-library-shadow:0 10px 28px rgba(0,0,0,.18)}
+body{background:var(--ux-library-canvas)}
+.raf-app-shell{grid-template-columns:248px minmax(0,1fr);grid-template-rows:78px minmax(0,1fr)}
+.raf-app-shell.menu-open{grid-template-columns:248px minmax(0,1fr)}
+.raf-header{min-height:78px;position:relative;top:auto;background:var(--paper);color:var(--text);border-color:var(--ux-library-line);padding:0 25px}
+.raf-header a,.raf-brand-link{color:var(--text)!important}
+.raf-brand-link strong{font-size:22px;text-transform:uppercase;letter-spacing:-.05em}
+.raf-brand-link small{color:var(--muted)}
+.raf-logo{background:#102e4c;border:1px solid #34516b;color:#e9ca91;font-size:23px;width:46px;height:46px;border-radius:13px}
+.raf-menu-toggle{background:var(--soft);border:1px solid var(--ux-library-line);color:var(--text);border-radius:10px}
+.raf-theme,.raf-news-trigger{background:var(--soft);border-color:var(--ux-library-line);color:var(--text);min-height:44px}
+.raf-header a:focus-visible,.raf-menu-toggle:focus-visible{outline-color:var(--pje)}
+.raf-switch{background:#d1dce8}
+.raf-knob{background:#1e6699}
+.raf-sidebar{top:0;position:relative;height:auto;min-height:calc(100dvh - 78px);background:linear-gradient(180deg,var(--ux-library-nav),var(--ux-library-nav2));border:0;padding:19px 13px;gap:5px}
+.raf-nav-link,.raf-sidebar .raf-nav-label,.raf-sidebar-bottom{color:#cedfeb}
+.raf-sidebar .raf-nav-label{color:#8da7bd;font-size:10px;letter-spacing:.12em}
+.raf-nav-link{justify-content:flex-start;font-size:13px;min-height:47px;padding:11px 12px;border-radius:11px}
+.raf-nav-link:hover{background:rgba(255,255,255,.1);color:#fff}
+.raf-nav-link.active{background:linear-gradient(95deg,#216eac,#15507e)}
+.raf-sidebar .raf-nav-label,.raf-sidebar .raf-nav-text,.raf-sidebar .raf-sidebar-bottom{display:block}
+.raf-sidebar-bottom{border-top:1px solid #c0d6e124;font-size:11px;margin-top:auto;padding-top:17px}
+.raf-sidebar-bottom strong{color:#eed29a}
+.raf-app-shell > .wrap{max-width:none;min-width:0;padding:29px 33px 52px}
+.wrap > .eyebrow{font-size:11px;letter-spacing:.12em;color:var(--pje)}
+.wrap h1{font-size:clamp(28px,3vw,38px);font-weight:800;letter-spacing:-.055em;margin:8px 0 9px}
+.wrap > .intro{font-size:14px;line-height:1.55}
+.wrap > .notice{border:1px solid var(--ux-library-line);border-radius:14px;margin:22px 0 18px;padding:16px 19px;line-height:1.65;background:var(--soft)}
+.tools{gap:12px;margin:20px 0}
+.search,.filter{min-height:45px;border-radius:11px;font-size:13px}
+.library-layout .side-cats,.library-layout .side-preview,.group{border:1px solid var(--ux-library-line);border-radius:16px;box-shadow:var(--ux-library-shadow);background:var(--paper)}
+.group{overflow:hidden}
+.group-header{padding:16px 19px}
+.card{min-height:76px;padding:16px 19px}
+.card strong{font-size:14px}
+.card small,.tag{font-size:12px}
+.card:hover{background:var(--soft)}
+.dialog{border-radius:18px}
+@media(max-width:1060px){
+  .raf-app-shell,.raf-app-shell.menu-open{grid-template-columns:1fr;grid-template-rows:68px minmax(0,1fr)}
+  .raf-header{padding:0 14px;min-height:68px}
+  .raf-sidebar{position:fixed;top:68px;height:calc(100dvh - 68px);width:270px;min-height:0;z-index:99;box-shadow:10px 0 30px #09152655}
+  .raf-app-shell:not(.menu-open) .raf-sidebar{transform:translateX(-110%);visibility:hidden}
+  .raf-app-shell.menu-open .raf-sidebar{transform:none;visibility:visible}
+  .raf-app-shell > .wrap{grid-column:1;grid-row:2;padding:21px 17px 45px}
+}
+@media(max-width:650px){.raf-brand-link strong{font-size:18px}.raf-logo{width:36px;height:36px}.raf-app-shell>.wrap{padding:16px 13px 35px}.wrap h1{font-size:27px}.raf-sidebar{width:min(290px,88vw)}}
+@media(prefers-reduced-motion:reduce){.raf-app-shell{transition:none}}
