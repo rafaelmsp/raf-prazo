@@ -72,10 +72,10 @@ test('Pauta é uma categoria dentro de Certidões, com quatro modelos', () => {
 
 test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.equal(html,template);
-  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=1','assets/certidoes.js?v=3.0',
+  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=3.1','assets/certidoes.js?v=3.1',
     'id="navBalcaoVirtual"','id="mainContent"']) assert.ok(html.includes(part),part);
   assert.ok(!html.includes('id="navPauta"'),'Pauta não deve ocupar o menu principal');
-  for (const asset of ['assets/ux-premium.css?v=3.0','assets/ux-premium-art.css?v=3.0','assets/ux-premium.js?v=3.0']) assert.ok(html.includes(asset),asset);
+  for (const asset of ['assets/ux-premium.css?v=3.1','assets/ux-premium-art.css?v=3.0','assets/ux-premium.js?v=3.1']) assert.ok(html.includes(asset),asset);
   assert.ok(css.includes('.raf-cert-active #mainContent > :not(#rafCertView)'));
   assert.ok(css.includes('@media(max-width:650px)'));
   assert.ok(js.includes("window.addEventListener('raf-prazo:section'"));
@@ -87,12 +87,21 @@ test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.ok(balcao.includes("name==='certidoes'"));
 });
 
-test('Revisão antes da cópia, sem persistência nem transmissão',() => {
+test('Revisão antes da cópia, sem transmissão e com persistência somente de IDs de modelos',() => {
   assert.ok(js.includes("const text = $('rafCertEditor').value.trim()"));
   assert.ok(js.includes('window.confirm('));
   assert.ok(js.includes('navigator.clipboard?.writeText'));
   assert.ok(js.includes("document.execCommand('copy')"));
   assert.ok(js.includes('section.hidden = !on;'));
-  assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|localStorage\.setItem|sessionStorage\.setItem/.test(js));
+  assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket/.test(js));
   assert.ok(!/innerHTML\s*=\s*.*selected\.text/.test(js));
+  assert.ok(js.includes("const knownIds = new Set(models.map(item => item.id))"));
+  assert.ok(js.includes("knownIds.has(id)"),'Somente IDs estáticos conhecidos devem ser aceitos');
+  assert.ok(js.includes("storage.setItem(key, JSON.stringify(ids))"),'Persistência limitada a array de IDs');
+  assert.ok(!js.includes("storage.setItem(key, JSON.stringify(models))"));
+  for(const id of ['rafCertTabAll','rafCertTabFavorites','rafCertTabRecent','rafCertFavorite'])
+    assert.ok(js.includes(id),id);
+  assert.ok(js.includes('window.RafPrazoCertidoes = Object.freeze('));
+  assert.ok(js.includes("fireChange('favorites')"));
+  assert.ok(js.includes("fireChange('recent')"));
 });

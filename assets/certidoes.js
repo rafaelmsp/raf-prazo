@@ -66,6 +66,33 @@
     return element;
   };
   const norm = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  // Privacidade: favoritos e recentes persistem apenas IDs de modelos estáticos.
+  // Nenhum texto digitado, index processual editado ou dado de processo é armazenado.
+  const FAVORITES_KEY = 'raf-prazo:certidoes:favorites:v1';
+  const RECENTS_KEY = 'raf-prazo:certidoes:recent:v1';
+  const knownIds = new Set(models.map(item => item.id));
+  function getStorage(kind) {
+    try { return kind === 'local' ? window.localStorage : window.sessionStorage; }
+    catch (_) { return null; }
+  }
+  function readIds(kind, key) {
+    try {
+      const raw = getStorage(kind)?.getItem(key);
+      if (!raw || raw.length > 2048) return [];
+      const value = JSON.parse(raw);
+      return Array.isArray(value)
+        ? [...new Set(value.filter(id => typeof id === 'string' && knownIds.has(id)))].slice(0, 18)
+        : [];
+    } catch (_) { return []; }
+  }
+  function writeIds(kind, key, ids) {
+    try {
+      const storage = getStorage(kind);
+      if (!storage) return false;
+      storage.setItem(key, JSON.stringify(ids));
+      return true;
+    } catch (_) { return false; }
+  }
   function init() {
     const app = $('app'), main = $('mainContent'), nav = $('navCertidoes');
     if (!app || !main || !nav) return;
@@ -83,6 +110,11 @@
       '<div class="raf-cert-layout"><div class="raf-cert-browser">',
       '<label class="raf-cert-search-label" for="rafCertSearch">Buscar certidão</label>',
       '<input id="rafCertSearch" class="raf-cert-search" type="search" placeholder="Pesquisar modelos" autocomplete="off">',
+      '<div class="raf-cert-smart-toolbar" role="group" aria-label="Acesso aos modelos">',
+      '<button id="rafCertTabAll" class="raf-cert-smart-tab" type="button">Todos <span id="rafCertAllNumber">18</span></button>',
+      '<button id="rafCertTabFavorites" class="raf-cert-smart-tab" type="button">☆ Favoritos <span id="rafCertFavoriteNumber">0</span></button>',
+      '<button id="rafCertTabRecent" class="raf-cert-smart-tab" type="button">↶ Recentes <span id="rafCertRecentNumber">0</span></button>',
+      '</div>',
       '<div id="rafCertCategories" class="raf-cert-categories" aria-label="Filtrar modelos por assunto"></div>',
       '<p id="rafCertCount" class="raf-cert-count" aria-live="polite"></p>',
       '<div id="rafCertList" class="raf-cert-list" aria-label="Modelos de certidão"></div></div>',
@@ -93,19 +125,60 @@
       '<textarea id="rafCertEditor" class="raf-cert-editor" rows="9" spellcheck="true" aria-describedby="rafCertNotice"></textarea>',
       '<p id="rafCertNotice" class="raf-cert-note"></p>',
       '<div class="raf-cert-actions"><button class="btn primary" type="button" id="rafCertCopy">⧉ Copiar texto revisado</button>',
-      '<button class="btn" type="button" id="rafCertReset">Restaurar modelo</button></div>',
+      '<button class="btn" type="button" id="rafCertReset">Restaurar modelo</button>',
+      '<button class="btn raf-cert-favorite-action" type="button" id="rafCertFavorite" aria-pressed="false">☆ Favoritar modelo</button></div>',
       '<p class="raf-cert-privacy">Dados digitados não são salvos nem transmitidos pelo módulo. ',
-      'A cópia vai para a área de transferência do dispositivo; evite usar dados pessoais em computadores compartilhados.</p>',
+      'Somente os IDs dos modelos favoritos são guardados neste navegador; os IDs recentes duram apenas a sessão. A cópia vai para a área de transferência do dispositivo; evite computadores compartilhados.</p>',
       '<p id="rafCertFeedback" class="raf-cert-feedback" aria-live="polite" role="status"></p>',
       '</div></div>'
     ].join('');
     main.append(section);
-    let category = 'Todas', query = '', selected = models[0];
+    let category = 'Todas', query = '', selected = models[0], mode = 'all';
+    let favorites = readIds('local', FAVORITES_KEY);
+    let recents = readIds('session', RECENTS_KEY);
     const categories = ['Todas', ...new Set(models.map(item => item.group))];
     const visible = () => models.filter(item =>
       (category === 'Todas' || item.group === category) &&
+      (mode === 'all' || (mode === 'favorites' && favorites.includes(item.id)) ||
+        (mode === 'recent' && recents.includes(item.id))) &&
       (!query || norm(item.title + ' ' + item.group + ' ' + item.text + ' ' + item.note).includes(query))
-    );
+    ).sort((a,b) => mode === 'recent' ? recents.indexOf(a.id) - recents.indexOf(b.id) : 0);
+    function syncFavoriteButton() {
+      const isFavorite = favorites.includes(selected.id);
+      const button = $('rafCertFavorite');
+      button.setAttribute('aria-pressed', String(isFavorite));
+      button.textContent = isFavorite ? '★ Remover favorito' : '☆ Favoritar modelo';
+    }
+    function renderModes() {
+      const buttons = {all:'rafCertTabAll', favorites:'rafCertTabFavorites', recent:'rafCertTabRecent'};
+      for (const [key,id] of Object.entries(buttons))
+        $(id).setAttribute('aria-pressed',String(key === mode));
+      $('rafCertAllNumber').textContent = String(models.length);
+      $('rafCertFavoriteNumber').textContent = String(favorites.length);
+      $('rafCertRecentNumber').textContent = String(recents.length);
+    }
+    function fireChange(type) {
+      window.dispatchEvent(new CustomEvent('raf-prazo:certidoes-change',{detail:{type}}));
+    }
+    function toggleFavorite(item) {
+      const enabled = favorites.includes(item.id);
+      favorites = enabled ? favorites.filter(id => id !== item.id) : [...favorites,item.id];
+      const persisted = writeIds('local',FAVORITES_KEY,favorites);
+      renderModes();
+      syncFavoriteButton();
+      renderList();
+      $('rafCertFeedback').textContent = persisted
+        ? (enabled ? 'Modelo removido dos favoritos.' : 'Modelo adicionado aos favoritos neste navegador.')
+        : 'Favorito alterado nesta visita; o navegador não permitiu salvar a preferência.';
+      fireChange('favorites');
+    }
+    function markRecent(item) {
+      recents = [item.id,...recents.filter(id=>id!==item.id)].slice(0,8);
+      writeIds('session',RECENTS_KEY,recents);
+      renderModes();
+      renderList();
+      fireChange('recent');
+    }
     function select(item) {
       selected = item;
       $('rafCertEditor').value = item.text;
@@ -114,6 +187,7 @@
       $('rafCertTitle').textContent = item.title;
       $('rafCertNotice').textContent = item.note;
       $('rafCertFeedback').textContent = '';
+      syncFavoriteButton();
       renderList();
     }
     function renderCategories() {
@@ -140,18 +214,38 @@
       root.replaceChildren();
       $('rafCertCount').textContent = filtered.length + ' modelo(s) encontrado(s) · ' + models.length + ' cadastrado(s)';
       if (!filtered.length) {
-        root.append(make('p','raf-cert-empty','Nenhum modelo encontrado para a busca ou categoria selecionada.'));
+        const message = mode === 'favorites'
+          ? 'Nenhum favorito nesta categoria. Marque um modelo com ☆ para encontrá-lo aqui.'
+          : mode === 'recent'
+          ? 'Nenhum modelo copiado nesta sessão.'
+          : 'Nenhum modelo encontrado para a busca ou categoria selecionada.';
+        root.append(make('p','raf-cert-empty',message));
         return;
       }
       for (const item of filtered) {
+        const row = make('div','raf-cert-row');
         const button = make('button','raf-cert-item');
         button.type = 'button';
         button.setAttribute('aria-pressed', String(selected.id === item.id));
         button.append(make('strong','',item.title),
           make('span','raf-cert-item-meta',item.group + ' · ' + (item.verified ? 'Modelo fornecido' : 'Sugestão a conferir')));
         button.addEventListener('click', () => select(item));
-        root.append(button);
+        const favorite = make('button','raf-cert-pin',favorites.includes(item.id) ? '★' : '☆');
+        favorite.type = 'button';
+        favorite.setAttribute('aria-pressed',String(favorites.includes(item.id)));
+        favorite.setAttribute('aria-label',(favorites.includes(item.id) ? 'Remover dos favoritos: ' : 'Adicionar aos favoritos: ') + item.title);
+        favorite.title = favorites.includes(item.id) ? 'Remover dos favoritos' : 'Favoritar modelo';
+        favorite.addEventListener('click',()=>toggleFavorite(item));
+        row.append(button,favorite);
+        root.append(row);
       }
+    }
+    function chooseMode(next) {
+      mode = next;
+      renderModes();
+      const first = visible()[0];
+      if (first) select(first);
+      else renderList();
     }
     function show(on, updateUrl = true, preferredCategory = 'Todas') {
       if (on) window.dispatchEvent(new CustomEvent('raf-prazo:section',{detail:{name:'certidoes'}}));
@@ -162,6 +256,8 @@
         category = categories.includes(preferredCategory) ? preferredCategory : 'Todas';
         query = '';
         $('rafCertSearch').value = '';
+        mode = 'all';
+        renderModes();
         renderCategories();
         select(visible()[0] || models[0]);
         $('navCalc')?.classList.remove('active');
@@ -192,6 +288,7 @@
         try { copied = document.execCommand('copy'); } catch (_) {}
         temp.remove();
       }
+      if (copied) markRecent(selected);
       $('rafCertFeedback').textContent = copied
         ? 'Texto copiado. Confira a situação dos autos e a adequação do modelo antes de utilizar.'
         : 'Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.';
@@ -201,6 +298,9 @@
     $('rafCertSearch').addEventListener('input', e => { query = norm(e.target.value.trim()); renderList(); });
     $('rafCertReset').addEventListener('click', () => { if (selected) select(selected); });
     $('rafCertCopy').addEventListener('click', copyEdited);
+    $('rafCertFavorite').addEventListener('click',() => toggleFavorite(selected));
+    for (const [key,id] of Object.entries({all:'rafCertTabAll',favorites:'rafCertTabFavorites',recent:'rafCertTabRecent'}))
+      $(id).addEventListener('click',() => chooseMode(key));
     for (const id of ['navCalc','navCalendar'])
       $(id)?.addEventListener('click', () => { if (!section.hidden) show(false); }, true);
     window.addEventListener('raf-prazo:section', e => {
@@ -216,6 +316,26 @@
         show(false,false);
       }
     }
+    // Interface de navegação sem exposição de conteúdo editado ou dados processuais.
+    window.RafPrazoCertidoes = Object.freeze({
+      models: () => models.map(item=>({id:item.id,title:item.title,group:item.group,verified:item.verified})),
+      summary: () => ({total:models.length,favorites:[...favorites],recent:[...recents]}),
+      open: (options={}) => {
+        const item = typeof options.id === 'string' ? models.find(m=>m.id===options.id) : null;
+        const requestedMode = ['all','favorites','recent'].includes(options.mode) ? options.mode : 'all';
+        const requestedCategory = item?.group || (categories.includes(options.category) ? options.category : 'Todas');
+        show(true,true,requestedCategory);
+        mode = requestedMode;
+        renderModes();
+        if (item) select(item);
+        else {
+          const first = visible()[0];
+          if (first) select(first);
+          else renderList();
+        }
+        return true;
+      }
+    });
     window.addEventListener('hashchange', syncLocation);
     syncLocation();
   }

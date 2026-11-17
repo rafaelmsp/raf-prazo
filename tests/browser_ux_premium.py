@@ -61,6 +61,35 @@ def visit(browser,base,width):
     page.locator("#rafCertCopy").click()
     page.wait_for_function("document.querySelector('#rafCertFeedback').textContent.length>0")
     assert "copiado" in page.locator("#rafCertFeedback").inner_text().lower()
+    # Favoritar guarda exclusivamente o ID do modelo, nunca a redação digitada.
+    page.locator("#rafCertFavorite").click()
+    assert page.locator("#rafCertFavorite").get_attribute("aria-pressed")=="true"
+    model_id="pauta-diligencia-negativa-oja"
+    stored=page.evaluate("""() => ({
+      favorite:localStorage.getItem('raf-prazo:certidoes:favorites:v1'),
+      recent:sessionStorage.getItem('raf-prazo:certidoes:recent:v1')
+    })""")
+    assert stored["favorite"] and model_id in stored["favorite"]
+    assert stored["recent"] and model_id in stored["recent"]
+    assert "317752646" not in stored["favorite"]+stored["recent"],"Index processual jamais deve persistir"
+    page.locator("#rafCertTabFavorites").click()
+    assert page.locator("#rafCertTabFavorites").get_attribute("aria-pressed")=="true"
+    assert page.locator("#rafCertList .raf-cert-item").count()==1
+    page.locator("#rafCertTabRecent").click()
+    assert page.locator("#rafCertTabRecent").get_attribute("aria-pressed")=="true"
+    assert page.locator("#rafCertList .raf-cert-item").count()==1
+    if width<=1060:page.locator("#menuToggle").click()
+    page.locator("#rafUxHomeNav").click()
+    assert page.locator("#rafUxHome").is_visible()
+    assert page.locator("#rafUxFavoritesList .raf-ux-model-shortcut").count()==1
+    assert page.locator("#rafUxRecentsList .raf-ux-model-shortcut").count()==1
+    assert page.locator("#rafUxTotalModels").inner_text()=="18"
+    assert page.locator("#rafUxPautaModels").inner_text()=="4"
+    page.locator("#rafUxAllFavorites").click()
+    assert page.locator("#rafCertView").is_visible()
+    assert page.locator("#rafCertTabFavorites").get_attribute("aria-pressed")=="true"
+    assert page.locator("#rafCertList .raf-cert-item").count()==1
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+2"),"Favoritos overflow"
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+2"),"Certidões overflow"
     if width in (390,1366):page.screenshot(path=str(SHOTS/f"certidoes-{width}.png"),full_page=True)
     # Nenhum estado jurídico da calculadora foi substituído.
