@@ -77,9 +77,22 @@
     home.innerHTML = [
       '<div class="raf-ux-hero"><span class="raf-ux-overline">RAF-PRAZO · FERRAMENTAS JURÍDICAS</span>',
       '<h1>Seu espaço de trabalho jurídico, mais simples.</h1>',
-      '<p>Calcule prazos, consulte modelos de certidões e encontre as ferramentas de apoio à rotina em um único lugar.</p></div>',
+      '<p>Calcule prazos, consulte modelos de certidões e encontre as ferramentas de apoio à rotina em um único lugar.</p>',
+      '<div class="raf-ux-hero-stats"><span><strong id="rafUxTotalModels">18</strong> modelos de certidões</span>',
+      '<span><strong id="rafUxPautaModels">4</strong> modelos em Pauta</span></div></div>',
       '<div class="raf-ux-section-head"><div><h2>Ferramentas de trabalho</h2><p>Selecione a atividade que deseja realizar.</p></div></div>',
       '<div class="raf-ux-home-grid" id="rafUxHomeGrid"></div>',
+      '<div class="raf-ux-activity-grid">',
+      '<section class="raf-ux-activity-card" aria-labelledby="rafUxFavoritesTitle">',
+      '<div class="raf-ux-activity-head"><div><h2 id="rafUxFavoritesTitle">★ Certidões favoritas</h2>',
+      '<p>Seus modelos preferidos, sem armazenar textos editados.</p></div>',
+      '<button type="button" id="rafUxAllFavorites">Ver favoritos</button></div>',
+      '<div id="rafUxFavoritesList" class="raf-ux-shortcut-list"></div></section>',
+      '<section class="raf-ux-activity-card" aria-labelledby="rafUxRecentsTitle">',
+      '<div class="raf-ux-activity-head"><div><h2 id="rafUxRecentsTitle">↶ Usadas nesta sessão</h2>',
+      '<p>Modelos que você copiou recentemente.</p></div>',
+      '<button type="button" id="rafUxAllRecent">Ver recentes</button></div>',
+      '<div id="rafUxRecentsList" class="raf-ux-shortcut-list"></div></section></div>',
       '<div class="raf-ux-guidance" id="rafUxGuidance"><div id="rafUxShield"></div><div>',
       '<strong>Ferramenta independente de apoio</strong>',
       '<p>O RAF-PRAZO não é um sistema oficial do Judiciário. Prazos, fontes e minutas exigem conferência conforme o caso concreto. Nenhum texto digitado no editor de certidões é enviado pelo módulo.</p>',
@@ -88,12 +101,56 @@
     main.append(home);
     const destinations = [
       {label:'Calculadora de prazos',detail:'Informe o marco e confira o vencimento estimado.',icon:'calculator',action:'calc',keys:'contagem prazo dias úteis jec cpc'},
-      {label:'Certidões do Dia a Dia',detail:'18 modelos, incluindo a categoria Pauta.',icon:'file',action:'certidoes',keys:'ar negativo oja pauta diligencia certidao'},
+      {label:'Certidões do Dia a Dia',detail:'18 modelos, incluindo a categoria Pauta.',icon:'file',action:'certidoes',keys:'certidões modelos favoritos cartório pauta'},
       {label:'Balcão Virtual',detail:'Mensagens de atendimento para conferir e copiar.',icon:'messages',action:'balcao',keys:'atendimento frases teams'},
       {label:'Biblioteca de prazos',detail:'Consulte atos e fundamentos antes de calcular.',icon:'book',action:'library',keys:'atos fundamentos jec cpc'},
       {label:'Calendário judicial',detail:'Visualize dias contados e excluídos do cálculo.',icon:'calendar',action:'calendar',keys:'feriados datas recesso'},
       {label:'Fontes e atualizações',detail:'Confira origens, abrangência e avisos pendentes.',icon:'shield',action:'sources',keys:'tjrj informacoes fontes pendentes'}
     ];
+    const certidoes = window.RafPrazoCertidoes;
+    function catalog() { return certidoes?.models?.() || []; }
+    function openModel(id) {
+      certidoes?.open({id});
+    }
+    function openModelFilter(mode) {
+      certidoes?.open({mode});
+    }
+    function renderCollections() {
+      if (!certidoes) return;
+      const summary = certidoes.summary();
+      const models = catalog(), byId = new Map(models.map(model=>[model.id,model]));
+      $('rafUxTotalModels').textContent = String(summary.total);
+      $('rafUxPautaModels').textContent = String(models.filter(item=>item.group==='Pauta').length);
+      function renderInto(rootId, ids, empty) {
+        const root = $(rootId);
+        root.replaceChildren();
+        const found = ids.map(id=>byId.get(id)).filter(Boolean).slice(0,4);
+        if (!found.length) {
+          const message = document.createElement('p');
+          message.className='raf-ux-activity-empty';
+          message.textContent=empty;
+          root.append(message);
+          return;
+        }
+        for (const model of found) {
+          const btn=document.createElement('button');
+          btn.type='button';btn.className='raf-ux-model-shortcut';
+          const label=document.createElement('span');
+          label.className='raf-ux-shortcut-title';
+          label.textContent=model.title;
+          const group=document.createElement('small');
+          group.textContent=model.group;
+          const arrow=svg('arrow');
+          btn.append(label,group,arrow);
+          btn.addEventListener('click',()=>openModel(model.id));
+          root.append(btn);
+        }
+      }
+      renderInto('rafUxFavoritesList',summary.favorites,
+        'Nenhum favorito ainda. Abra Certidões e marque ☆ nos modelos que usa com frequência.');
+      renderInto('rafUxRecentsList',summary.recent,
+        'Sua lista aparecerá aqui quando você copiar uma certidão nesta sessão.');
+    }
     function action(key) {
       if (key === 'library') { window.location.assign('prazos/'); return; }
       const target = {
@@ -139,6 +196,10 @@
       $('rafUxHomeGrid').append(button);
     }
     $('rafUxShield')?.append(svg('shield'));
+    $('rafUxAllFavorites').addEventListener('click',()=>openModelFilter('favorites'));
+    $('rafUxAllRecent').addEventListener('click',()=>openModelFilter('recent'));
+    window.addEventListener('raf-prazo:certidoes-change',renderCollections);
+    renderCollections();
     const dialog=document.createElement('dialog');
     dialog.id='rafUxSearchDialog';dialog.className='raf-ux-modal';
     dialog.setAttribute('aria-label','Pesquisa de ferramentas');
@@ -151,16 +212,27 @@
     const field=$('rafUxSearchInput'),result=$('rafUxSearchResults');
     function renderSearch() {
       const q=normalize(field.value.trim());
-      const found=destinations.filter(d=>normalize(d.label+' '+d.detail+' '+d.keys).includes(q));
+      const entries = catalog().map(model=>({
+        label:model.title,
+        detail:'Certidões · ' + model.group,
+        keys:model.group + ' ' + model.id + (model.id==='pauta-diligencia-negativa-oja' ? ' AR negativo OJA diligência negativa' : ''),
+        icon:'file',
+        modelId:model.id
+      }));
+      const found=[...destinations,...entries].filter(d=>normalize(d.label+' '+d.detail+' '+d.keys).includes(q));
       result.replaceChildren();
-      if(!found.length){const p=document.createElement('p');p.className='raf-ux-shortcut-note';p.textContent='Nenhuma ferramenta encontrada.';result.append(p);return;}
-      for(const item of found){
+      if(!found.length){const p=document.createElement('p');p.className='raf-ux-shortcut-note';p.textContent='Nenhuma ferramenta ou certidão encontrada.';result.append(p);return;}
+      for(const item of found.slice(0,35)){
         const b=document.createElement('button');b.type='button';b.append(svg(item.icon));
         const caption=document.createElement('span');
         const label=document.createElement('strong');label.textContent=item.label;
         const descr=document.createElement('small');descr.textContent=item.detail;
         caption.append(label,descr);b.append(caption);
-        b.addEventListener('click',()=>{dialog.close();action(item.action)});
+        b.addEventListener('click',()=>{
+          dialog.close();
+          if(item.modelId) openModel(item.modelId);
+          else action(item.action);
+        });
         result.append(b);
       }
     }
