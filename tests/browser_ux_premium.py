@@ -46,15 +46,18 @@ def visit(browser,base,width):
     if width>=1450:
         assert page.locator("#app").evaluate("e => e.classList.contains('menu-open')")
         assert page.locator("#rafUxHomeNav .nav-text").is_visible(), "Legendas visíveis no desktop amplo"
+        page.wait_for_function("document.querySelector('#mainSidebar').getBoundingClientRect().width >= 239")
         sidebar_w=page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().width")
         assert 236<=sidebar_w<=253,f"Sidebar do desktop deve ter ~246 px, não um painel vazio: {sidebar_w}"
         page.locator("#menuToggle").click()
         assert page.locator("#menuToggle").get_attribute("aria-expanded")=="false"
         assert page.locator("#rafUxHomeNav .nav-text").is_hidden()
+        page.wait_for_function("document.querySelector('#mainSidebar').getBoundingClientRect().width <= 80")
         assert page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().width")<=80
         page.locator("#menuToggle").click()
         assert page.locator("#rafUxHomeNav .nav-text").is_visible()
     elif width>1060:
+        page.wait_for_function("document.querySelector('#mainSidebar').getBoundingClientRect().width <= 80")
         assert page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().width")<=80
         page.locator("#menuToggle").click()
         assert page.locator("#menuToggle").get_attribute("aria-expanded")=="true"
