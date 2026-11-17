@@ -130,3 +130,83 @@ html{scroll-behavior:smooth}
 .raf-ux-activity-empty{margin:22px 0 0;padding:14px;border-radius:11px;background:var(--paper2);border:1px dashed var(--ux-stroke);color:var(--ux-muted);font-size:12px;line-height:1.6}
 @media(max-width:1050px){.raf-ux-activity-grid{grid-template-columns:1fr}}
 @media(max-width:650px){.raf-ux-hero-stats{margin-top:18px}.raf-ux-hero-stats span{padding:7px 10px;font-size:11px}.raf-ux-activity-card{padding:17px}.raf-ux-activity-head{flex-direction:column;gap:10px}.raf-ux-model-shortcut{grid-template-columns:minmax(0,1fr) 18px}.raf-ux-model-shortcut small{display:none}}
+
+
+/* RAF-PRAZO UX Premium 3.2 — correção estrutural da navegação.
+ * O CSS original implementa um menu retrátil de 60 px. A camada Premium precisa
+ * acompanhar esse estado; não deve ocupar 248 px enquanto esconde as legendas. */
+.app.raf-ux-premium .header{background:var(--ux-surface)!important;color:var(--ux-ink)!important;border-bottom-color:var(--ux-stroke)!important;min-width:0}
+.app.raf-ux-premium .header .brand strong{color:var(--ux-ink)!important}
+.app.raf-ux-premium .header .brand small{color:var(--ux-muted)!important;opacity:1!important}
+.app.raf-ux-premium .header .logo{background:#102e4c!important;color:#ecd299!important;border:1px solid #365471!important;box-shadow:0 5px 15px rgba(15,38,65,.15)}
+.app.raf-ux-premium .header .logo svg{display:block;width:27px;height:27px;stroke:currentColor}
+.app.raf-ux-premium .header .menu-toggle{background:var(--paper2)!important;color:var(--ux-ink)!important;border:1px solid var(--ux-stroke)!important;border-radius:11px}
+.app.raf-ux-premium .header .menu-toggle:hover{background:var(--accentbg)!important}
+.app.raf-ux-premium .header .raf-ux-search-trigger{color:var(--ux-ink)!important;background:var(--paper2)!important;border:1px solid var(--ux-stroke)!important;box-shadow:none}
+.app.raf-ux-premium .header .raf-ux-search-trigger span{color:var(--ux-muted)!important}
+.app.raf-ux-premium .header .raf-ux-search-trigger svg{color:var(--ux-blue)!important}
+.app.raf-ux-premium .header .raf-ux-search-trigger kbd{color:var(--ux-muted)!important;background:var(--ux-surface);border-color:var(--ux-stroke)}
+.app.raf-ux-premium .header .tiny-action,
+.app.raf-ux-premium .header .news-trigger,
+.app.raf-ux-premium .header .theme{color:var(--ux-ink)!important;border-color:var(--ux-stroke)!important}
+.app.raf-ux-premium .header .news-trigger,
+.app.raf-ux-premium .header .theme{background:var(--paper2)!important;border:1px solid var(--ux-stroke)!important;border-radius:11px}
+.app.raf-ux-premium .header .news-trigger:hover,
+.app.raf-ux-premium .header .theme:hover{background:var(--accentbg)!important}
+.app.raf-ux-premium .header .theme .theme-text{color:var(--ux-ink)!important}
+.app.raf-ux-premium .header .news-trigger .news-label{color:var(--ux-ink)!important}
+.app.raf-ux-premium .header .news-trigger svg{stroke:var(--ux-blue)}
+.app.raf-ux-premium .header .theme .switch{background:var(--ux-stroke);border-color:var(--ux-muted)}
+.app.raf-ux-premium .header .theme .knob{background:var(--ux-blue)}
+.app.raf-ux-premium .header .news-dot{color:#fff}
+.app.raf-ux-premium .header :is(button,a):focus-visible{outline:2px solid var(--ux-blue);outline-offset:3px}
+.app.raf-ux-premium .sidebar{min-width:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#486886 transparent}
+.app.raf-ux-premium .sidebar .nav-link{width:100%;min-width:0;white-space:normal}
+.app.raf-ux-premium .sidebar .nav-icon{flex:none;display:grid;place-items:center;width:22px;height:24px}
+.app.raf-ux-premium .sidebar .nav-icon svg{width:21px;height:21px}
+.app.raf-ux-premium .sidebar .nav-text{line-height:1.28;overflow-wrap:break-word}
+.app.raf-ux-premium .sidebar .nav-link:focus-visible{outline:2px solid #98cfff;outline-offset:-2px}
+.raf-ux-premium .raf-ux-hero{min-height:222px;padding:30px 36px;margin-bottom:21px}
+.raf-ux-premium .raf-ux-hero h1{font-size:clamp(29px,2.65vw,38px);line-height:1.16}
+.raf-ux-premium .raf-ux-hero-stats{margin-top:19px}
+.raf-ux-premium .raf-ux-tile{min-height:149px}
+.raf-ux-premium .raf-ux-tile strong{font-size:14px}
+.raf-ux-premium .raf-ux-tile small{font-size:12px;line-height:1.55}
+@media(min-width:1061px){
+  .app.raf-ux-premium{grid-template-columns:74px minmax(0,1fr);grid-template-rows:78px minmax(0,1fr) 38px}
+  .app.raf-ux-premium.menu-open{grid-template-columns:246px minmax(0,1fr)}
+  .app.raf-ux-premium .sidebar .nav-label,
+  .app.raf-ux-premium .sidebar .sidebar-bottom,
+  .app.raf-ux-premium .sidebar .nav-text{display:none}
+  .app.raf-ux-premium.menu-open .sidebar .nav-label,
+  .app.raf-ux-premium.menu-open .sidebar .sidebar-bottom,
+  .app.raf-ux-premium.menu-open .sidebar .nav-text{display:block}
+  .app.raf-ux-premium .sidebar .nav-link{justify-content:center;padding:11px 8px}
+  .app.raf-ux-premium.menu-open .sidebar .nav-link{justify-content:flex-start;padding:11px 12px;gap:12px}
+  .app.raf-ux-premium .sidebar{padding:16px 11px}
+  .app.raf-ux-premium.menu-open .sidebar{padding:16px 13px}
+  .app.raf-ux-premium .sidebar .nav-label{padding:12px 11px 7px}
+  .app.raf-ux-premium .menu-toggle{display:grid}
+  .app.raf-ux-premium .header{min-height:78px}
+}
+@media(max-width:1060px){
+  .app.raf-ux-premium,
+  .app.raf-ux-premium.menu-open{grid-template-columns:minmax(0,1fr);grid-template-rows:66px minmax(0,1fr) auto}
+  .app.raf-ux-premium .sidebar{display:flex;position:fixed;top:66px;bottom:0;left:0;width:min(280px,88vw);max-width:none;min-height:0;z-index:70;transform:translateX(-108%);padding:15px 13px}
+  .app.raf-ux-premium.menu-open .sidebar{transform:translateX(0)}
+  .app.raf-ux-premium .sidebar .nav-label,
+  .app.raf-ux-premium .sidebar .sidebar-bottom,
+  .app.raf-ux-premium .sidebar .nav-text{display:block}
+  .app.raf-ux-premium .sidebar .nav-link{justify-content:flex-start;padding:11px 12px}
+  .app.raf-ux-premium .header{min-height:66px}
+  .raf-ux-premium .raf-ux-hero{padding:26px 27px}
+}
+@media(max-width:650px){
+  .app.raf-ux-premium .header{min-height:66px;padding:0 11px}
+  .app.raf-ux-premium .header .logo{width:36px;height:36px;border-radius:10px}
+  .app.raf-ux-premium .header .logo svg{width:23px;height:23px}
+  .app.raf-ux-premium .sidebar{top:66px}
+  .raf-ux-premium .raf-ux-hero{min-height:200px;padding:25px 21px}
+  .raf-ux-premium .raf-ux-hero h1{font-size:29px}
+  .raf-ux-premium .raf-ux-tile{min-height:122px}
+}

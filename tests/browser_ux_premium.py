@@ -31,13 +31,50 @@ def visit(browser,base,width):
         page.locator("#rafTermsAccept").click()
     assert page.locator(".app.raf-ux-premium").count()==1
     assert page.locator("#calendar .day").count()==42,"Calendário original preservado"
-    if width<=1060:page.locator("#menuToggle").click()
+    # Identidade visual: o menu não pode ocupar 246 px sem mostrar as legendas.
+    assert page.locator("#rafUxHomeNav .nav-icon svg").count()==1, "Ícone Início não pode estar duplicado"
+    header=page.evaluate("""() => {
+      const color = selector => getComputedStyle(document.querySelector(selector)).color;
+      const bg = selector => getComputedStyle(document.querySelector(selector)).backgroundColor;
+      return {logo:bg('.header .logo'),search:color('#rafUxSearchOpen'),
+        theme:color('#themeToggle'),news:color('#rafNewsOpen')};
+    }""")
+    assert header["logo"]=="rgb(16, 46, 76)",f"Logotipo precisa ser contrastante: {header}"
+    assert header["search"]!="rgb(255, 255, 255)",f"Busca ilegível: {header}"
+    assert header["theme"]!="rgb(255, 255, 255)",f"Tema ilegível: {header}"
+    assert header["news"]!="rgb(255, 255, 255)",f"Atualizações ilegíveis: {header}"
+    if width>=1450:
+        assert page.locator("#app").evaluate("e => e.classList.contains('menu-open')")
+        assert page.locator("#rafUxHomeNav .nav-text").is_visible(), "Legendas visíveis no desktop amplo"
+        page.wait_for_function("document.querySelector('#mainSidebar').getBoundingClientRect().width >= 239")
+        sidebar_w=page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().width")
+        assert 236<=sidebar_w<=253,f"Sidebar do desktop deve ter ~246 px, não um painel vazio: {sidebar_w}"
+        page.locator("#menuToggle").click()
+        assert page.locator("#menuToggle").get_attribute("aria-expanded")=="false"
+        assert page.locator("#rafUxHomeNav .nav-text").is_hidden()
+        page.wait_for_function("document.querySelector('#mainSidebar').getBoundingClientRect().width <= 80")
+        assert page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().width")<=80
+        page.locator("#menuToggle").click()
+        assert page.locator("#rafUxHomeNav .nav-text").is_visible()
+    elif width>1060:
+        page.wait_for_function("document.querySelector('#mainSidebar').getBoundingClientRect().width <= 80")
+        assert page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().width")<=80
+        page.locator("#menuToggle").click()
+        assert page.locator("#menuToggle").get_attribute("aria-expanded")=="true"
+        assert page.locator("#rafUxHomeNav .nav-text").is_visible()
+        page.locator("#menuToggle").click()
+        assert page.locator("#rafUxHomeNav .nav-text").is_hidden()
+    else:
+        assert page.locator("#menuToggle").is_visible()
+        assert page.locator("#mainSidebar").evaluate("e => e.getBoundingClientRect().right <= 1")
+        page.locator("#menuToggle").click()
+        assert page.locator("#rafUxHomeNav .nav-text").is_visible()
     page.locator("#rafUxHomeNav").click()
     assert page.locator("#rafUxHome").is_visible()
     assert page.locator(".raf-ux-tile").count()==6
     assert page.locator("#rafUxHomeNav").get_attribute("aria-current")=="page"
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+2"),"Home overflow"
-    if width in (390,1366):
+    if width in (390,1366,1752):
         SHOTS.mkdir(exist_ok=True)
         page.screenshot(path=str(SHOTS/f"home-{width}.png"),full_page=True)
     page.locator("#rafUxSearchOpen").click()
@@ -107,7 +144,7 @@ def main():
         with sync_playwright() as p:
             browser=p.chromium.launch(headless=True)
             try:
-                for width in (360,390,430,1024,1366):visit(browser,base,width)
+                for width in (360,390,430,1024,1366,1752):visit(browser,base,width)
             finally:browser.close()
         server.shutdown()
 

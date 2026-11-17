@@ -183,7 +183,6 @@
       if (updateUrl) history.replaceState(history.state,'','#inicio');
       window.scrollTo(0,0);
     }
-    navHome.querySelector('.nav-icon').append(svg('home'));
     navHome.addEventListener('click',()=>showHome());
     for (const d of destinations) {
       const button=document.createElement('button');
@@ -259,6 +258,36 @@
     function syncHash(){
       if(location.hash==='#inicio')showHome(false);
       else if(!home.hidden)closeHome(false);
+    }
+    // O menu da calculadora usa a classe "menu-open". A UX Premium mantém o
+    // mesmo estado no grid e nas legendas, tanto no desktop como no celular.
+    const menuToggle = $('menuToggle');
+    function syncMenuButton() {
+      if (!menuToggle) return;
+      const expanded = app.classList.contains('menu-open');
+      const mobile = window.innerWidth <= 1060;
+      menuToggle.setAttribute('aria-expanded',String(expanded));
+      menuToggle.setAttribute('aria-label',expanded
+        ? (mobile ? 'Fechar menu de navegação' : 'Recolher menu de navegação')
+        : (mobile ? 'Abrir menu de navegação' : 'Expandir menu de navegação'));
+      menuToggle.title = expanded ? (mobile ? 'Fechar menu' : 'Recolher menu') : (mobile ? 'Abrir menu' : 'Expandir menu');
+      menuToggle.textContent = expanded ? '✕' : '☰';
+    }
+    if (menuToggle) {
+      const observer = new MutationObserver(syncMenuButton);
+      observer.observe(app,{attributes:true,attributeFilter:['class']});
+      // Em telas largas, legendas visíveis por padrão. Em telas médias,
+      // o menu inicia como trilho compacto e abre pelo botão existente.
+      if (window.innerWidth >= 1450 && !app.classList.contains('menu-open'))
+        menuToggle.click();
+      syncMenuButton();
+      const desktop = window.matchMedia('(min-width: 1061px)');
+      desktop.addEventListener?.('change', e => {
+        if (!e.matches && app.classList.contains('menu-open')) menuToggle.click();
+        else if (e.matches && window.innerWidth >= 1450 && !app.classList.contains('menu-open'))
+          menuToggle.click();
+        syncMenuButton();
+      });
     }
     window.addEventListener('hashchange',syncHash);
     syncHash();
