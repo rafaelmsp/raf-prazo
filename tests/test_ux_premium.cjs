@@ -17,8 +17,8 @@ test('Código JavaScript premium é sintaticamente válido',()=>{
 
 test('A interface nova está integrada ao aplicativo real e à biblioteca, sem duplicar template',()=>{
   assert.equal(html,template);
-  for(const asset of ['assets/ux-premium.css?v=3.1','assets/ux-premium-art.css?v=3.0',
-                       'assets/ux-premium.js?v=3.1','assets/certidoes.js?v=3.1'])
+  for(const asset of ['assets/ux-premium.css?v=3.2','assets/ux-premium-art.css?v=3.0',
+                       'assets/ux-premium.js?v=3.2','assets/certidoes.js?v=3.1'])
     assert.ok(html.includes(asset),asset);
   for(const asset of ['../assets/ux-premium-library.css?v=3.0','../assets/ux-premium-library.js?v=3.0'])
     assert.ok(lib.includes(asset),asset);
@@ -64,4 +64,20 @@ test('Visão geral apresenta modelos favoritos e recentes reais, sem conteúdo e
   assert.ok(ux.includes("const entries = catalog().map(model=>("));
   assert.ok(ux.includes("AR negativo OJA diligência negativa"));
   assert.ok(!ux.includes("model.text"),'Visão geral não recebe textos editáveis');
+});
+
+
+test('Menu Premium mantém legendas, largura correta e ícones sem duplicação',()=>{
+  for(const needle of [
+    '.app.raf-ux-premium.menu-open{grid-template-columns:246px',
+    '.app.raf-ux-premium{grid-template-columns:74px',
+    '.app.raf-ux-premium.menu-open .sidebar .nav-text',
+    '.app.raf-ux-premium .header .logo',
+    '.app.raf-ux-premium .header .raf-ux-search-trigger',
+    'color:var(--ux-ink)!important'
+  ]) assert.ok(css.includes(needle),needle);
+  assert.ok(ux.includes("observer.observe(app,{attributes:true,attributeFilter:['class']})"));
+  assert.ok(ux.includes("if (window.innerWidth >= 1450"));
+  assert.ok(!ux.includes("navHome.querySelector('.nav-icon').append(svg('home'))"),
+    'Home não deve ter dois ícones');
 });
