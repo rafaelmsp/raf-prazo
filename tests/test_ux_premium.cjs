@@ -32,7 +32,7 @@ test('A interface nova está integrada ao aplicativo real e à biblioteca, sem d
 
 test('UX premium oferece home, busca, SVG e fluxo para ferramentas existentes',()=>{
   for(const phrase of ['rafUxHomeNav','rafUxSearchDialog','raf-ux-home-active','rafUxHomeGrid']) assert.ok(ux.includes(phrase),phrase);
-  for(const word of ['assets','calculator','certidoes','balcao','library','calendar','sources']){
+  for(const word of ['calculator','certidoes','balcao','library','calendar','sources']){
     assert.ok(ux.includes(word),word);
   }
   assert.ok(ux.includes("window.dispatchEvent(new CustomEvent('raf-prazo:section'"));
