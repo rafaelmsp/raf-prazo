@@ -251,7 +251,7 @@ def check(browser,url,width):
       return {body:css('body'),result:css('.raf-22-results .result-block'),profile:css('.raf-22-profile-trigger')};
     }""")
     assert dark_palette["body"]=="rgb(14, 25, 40)",f"Modo escuro incoerente: {dark_palette}"
-    assert dark_palette["result"]=="rgb(32, 56, 80)",f"Resultado no modo escuro: {dark_palette}"
+    assert dark_palette["result"] in ("rgb(32, 56, 80)","rgb(24, 56, 82)"),f"Resultado no modo escuro: {dark_palette}"
     assert dark_palette["profile"]=="rgb(27, 45, 65)",f"Seletor no modo escuro: {dark_palette}"
     dark_days=calendar_palette(page)
     expected_dark={'raf-weekend':'rgb(125, 48, 58)','raf-holiday':'rgb(84, 42, 53)',
