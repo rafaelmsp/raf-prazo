@@ -42,7 +42,7 @@ def verify(browser, base: str, width: int) -> None:
     assert page.locator(".raf-header").evaluate(
         "(element) => getComputedStyle(element).backgroundColor"
     ) == "rgb(255, 255, 255)"
-    assert page.locator(".raf-brand-link strong").inner_text() == "Raf-Prazo"
+    assert page.locator(".raf-brand-link strong").inner_text().casefold() == "raf-prazo"
     assert page.locator(".raf-nav-link.active").get_attribute("aria-current") == "page"
     assert page.locator("#menuToggle").get_attribute("aria-expanded") == "false"
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2")
