@@ -18,6 +18,9 @@
 { id:'aud-instrucao', group:'Audiências', title:'Aguardando audiência de instrução', verified:false,
       text:'Certifico que os presentes autos encontram-se aguardando audiência de instrução e julgamento designada para [DATA], às [HORÁRIO], conforme registro no sistema.',
       note:'Confira a pauta atual e a modalidade da audiência.' },
+    { id:'pauta-diligencia-negativa-oja', group:'Pauta', title:'* Retirada de pauta — diligência negativa do OJA', verified:true,
+      text:'Certifico que o feito foi retirado da pauta de audiências em face de devolução de Diligência negativa de index 317752646. Fica a parte autora intimada a se manifestar sobre certidão do OJA.',
+      note:'Modelo fornecido. Confira se a diligência foi negativa, se o feito foi efetivamente retirado da pauta, o index do documento e a regularidade da intimação. O index 317752646 é específico do caso e deve ser substituído nos demais processos. Certidão do OJA não se confunde com AR postal negativo. Palavra-chave de busca: AR negativo.' },
     { id:'aud-ata', group:'Audiências', title:'Registro de ausência em audiência', verified:false,
       text:'Certifico que, conforme ata de audiência juntada sob o ID [ID DA ATA], foi registrada a ausência de [PARTE OU REPRESENTANTE] na audiência realizada em [DATA].',
       note:'Transcreva apenas o que constar expressamente da ata. Não presuma consequências processuais.' },
@@ -76,7 +79,7 @@
       '<p id="rafCertIntro">Modelos pesquisáveis para adaptação e cópia, sem acesso ao PJe e sem emissão automática de certidões.</p></div>',
       '<button id="rafCertReturn" class="raf-cert-return" type="button">← Calculadora</button></div>',
       '<p class="raf-cert-warning" id="rafCertWarning"><strong>Uso responsável:</strong> confirme cada fato nos autos e observe os modelos e orientações da unidade antes de certificar. ',
-      'Os quatro modelos fornecidos estão marcados com *; os demais são sugestões complementares que exigem revisão. Confira os autos antes de utilizar.</p>',
+      'Os cinco modelos fornecidos estão marcados com *; os demais são sugestões complementares que exigem revisão. Confira os autos antes de utilizar.</p>',
       '<div class="raf-cert-layout"><div class="raf-cert-browser">',
       '<label class="raf-cert-search-label" for="rafCertSearch">Buscar certidão</label>',
       '<input id="rafCertSearch" class="raf-cert-search" type="search" placeholder="Pesquisar modelos" autocomplete="off">',
@@ -101,7 +104,7 @@
     const categories = ['Todas', ...new Set(models.map(item => item.group))];
     const visible = () => models.filter(item =>
       (category === 'Todas' || item.group === category) &&
-      (!query || norm(item.title + ' ' + item.group + ' ' + item.text).includes(query))
+      (!query || norm(item.title + ' ' + item.group + ' ' + item.text + ' ' + item.note).includes(query))
     );
     function select(item) {
       selected = item;
