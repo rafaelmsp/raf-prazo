@@ -17,8 +17,8 @@ test('Código JavaScript premium é sintaticamente válido',()=>{
 
 test('A interface nova está integrada ao aplicativo real e à biblioteca, sem duplicar template',()=>{
   assert.equal(html,template);
-  for(const asset of ['assets/ux-premium.css?v=3.0','assets/ux-premium-art.css?v=3.0',
-                       'assets/ux-premium.js?v=3.0','assets/certidoes.js?v=3.0'])
+  for(const asset of ['assets/ux-premium.css?v=3.1','assets/ux-premium-art.css?v=3.0',
+                       'assets/ux-premium.js?v=3.1','assets/certidoes.js?v=3.1'])
     assert.ok(html.includes(asset),asset);
   for(const asset of ['../assets/ux-premium-library.css?v=3.0','../assets/ux-premium-library.js?v=3.0'])
     assert.ok(lib.includes(asset),asset);
@@ -52,4 +52,16 @@ test('Identidade visual inclui fotografia gerada, versões responsivas e tema no
   assert.ok(art.length>1500);
   assert.ok(libJs.includes('#certidoes'));
   assert.ok(libJs.includes('#balcao-virtual'));
+});
+
+test('Visão geral apresenta modelos favoritos e recentes reais, sem conteúdo editado',()=>{
+  for(const id of ['rafUxFavoritesList','rafUxRecentsList','rafUxTotalModels',
+    'rafUxPautaModels','rafUxAllFavorites','rafUxAllRecent']) assert.ok(ux.includes(id),id);
+  assert.ok(ux.includes("certidoes.summary()"));
+  assert.ok(ux.includes("certidoes?.open({id})"));
+  assert.ok(ux.includes("certidoes?.open({mode})"));
+  assert.ok(ux.includes("window.addEventListener('raf-prazo:certidoes-change',renderCollections)"));
+  assert.ok(ux.includes("const entries = catalog().map(model=>("));
+  assert.ok(ux.includes("AR negativo OJA diligência negativa"));
+  assert.ok(!ux.includes("model.text"),'Visão geral não recebe textos editáveis');
 });
