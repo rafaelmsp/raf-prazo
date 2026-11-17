@@ -75,7 +75,7 @@ test('Página principal, template e módulos permanecem sincronizados',() => {
   for(const part of ['id="navCertidoes"','assets/certidoes.css?v=3.1','assets/certidoes.js?v=3.1',
     'id="navBalcaoVirtual"','id="mainContent"']) assert.ok(html.includes(part),part);
   assert.ok(!html.includes('id="navPauta"'),'Pauta não deve ocupar o menu principal');
-  for (const asset of ['assets/ux-premium.css?v=3.0','assets/ux-premium-art.css?v=3.0','assets/ux-premium.js?v=3.0']) assert.ok(html.includes(asset),asset);
+  for (const asset of ['assets/ux-premium.css?v=3.1','assets/ux-premium-art.css?v=3.0','assets/ux-premium.js?v=3.1']) assert.ok(html.includes(asset),asset);
   assert.ok(css.includes('.raf-cert-active #mainContent > :not(#rafCertView)'));
   assert.ok(css.includes('@media(max-width:650px)'));
   assert.ok(js.includes("window.addEventListener('raf-prazo:section'"));
