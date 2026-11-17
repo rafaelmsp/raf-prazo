@@ -107,3 +107,26 @@ html{scroll-behavior:smooth}
 @media(max-width:1060px){.app.raf-ux-premium{grid-template-columns:minmax(0,1fr);grid-template-rows:66px minmax(0,1fr) auto}.raf-ux-premium .sidebar{z-index:70;max-width:280px;box-shadow:12px 0 28px rgba(0,0,0,.25)}.raf-ux-premium .header{padding:0 14px}.raf-ux-search-trigger{min-width:0;width:42px;height:42px;justify-content:center;padding:0}.raf-ux-search-trigger span,.raf-ux-search-trigger kbd{display:none}}
 @media(max-width:650px){.raf-ux-premium .brand strong{font-size:18px}.raf-ux-premium .brand small{font-size:10px}.raf-ux-premium .logo{width:37px;height:37px;border-radius:10px}.raf-ux-premium .logo svg{width:23px;height:23px}.raf-ux-premium .header-actions{gap:5px}.raf-ux-premium #mainContent{padding:14px 12px}.raf-ux-premium .panel{padding:16px}.raf-ux-premium.raf-cert-active #mainContent{padding:12px}.raf-ux-premium .raf-cert-hero{padding:22px 20px}.raf-ux-premium .raf-cert-hero h1{font-size:24px}.raf-ux-home-grid{grid-template-columns:1fr;gap:10px}.raf-ux-tile{min-height:122px;padding:17px 19px}.raf-ux-hero{padding:27px 24px;min-height:200px}.raf-ux-hero:before{background-image:linear-gradient(90deg,rgba(9,30,51,.96),rgba(14,46,77,.75)),var(--ux-hero-photo,linear-gradient(120deg,#0e304c,#416784))}.raf-ux-section-head h2{font-size:18px}.raf-ux-guidance{padding:16px}.raf-ux-search-trigger{width:40px;height:40px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.raf-ux-tile,.raf-ux-premium .sidebar .nav-link{transition:none}}
+
+
+/* RAF-PRAZO UX Premium 3.1 | Dashboard de uso real, sem dados processuais */
+.raf-ux-hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.raf-ux-hero-stats span{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(213,234,246,.28);background:rgba(255,255,255,.1);border-radius:10px;padding:10px 13px;font-size:12px;color:#dcecf5;backdrop-filter:blur(4px)}
+.raf-ux-hero-stats strong{font-size:19px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums}
+.raf-ux-activity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}
+.raf-ux-activity-card{min-width:0;min-height:214px;border-radius:18px;border:1px solid var(--ux-stroke);background:var(--ux-surface);box-shadow:var(--ux-shadow);padding:22px}
+.raf-ux-activity-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--ux-stroke)}
+.raf-ux-activity-head h2{margin:0;font-size:17px;color:var(--ux-ink);letter-spacing:-.025em}
+.raf-ux-activity-head p{margin:5px 0 0;color:var(--ux-muted);font-size:11px;line-height:1.5}
+.raf-ux-activity-head button{flex:none;min-height:37px;padding:8px 11px;border-radius:10px;border:1px solid var(--ux-stroke);background:var(--paper2);color:var(--accent);font-size:11px;font-weight:750}
+.raf-ux-activity-head button:hover{border-color:var(--accent)}
+.raf-ux-shortcut-list{display:grid;gap:2px;margin-top:10px}
+.raf-ux-model-shortcut{display:grid;grid-template-columns:minmax(0,1fr) auto 18px;align-items:center;gap:11px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--ux-stroke);background:transparent;color:var(--ux-ink);padding:11px 5px;font-size:12px;min-height:44px}
+.raf-ux-model-shortcut:last-child{border-bottom:0}
+.raf-ux-model-shortcut:hover,.raf-ux-model-shortcut:focus-visible{background:var(--accentbg);border-radius:9px}
+.raf-ux-shortcut-title{font-weight:680;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.raf-ux-model-shortcut small{white-space:nowrap;color:var(--ux-muted);font-size:10px}
+.raf-ux-model-shortcut svg{width:17px;height:17px;color:var(--accent)}
+.raf-ux-activity-empty{margin:22px 0 0;padding:14px;border-radius:11px;background:var(--paper2);border:1px dashed var(--ux-stroke);color:var(--ux-muted);font-size:12px;line-height:1.6}
+@media(max-width:1050px){.raf-ux-activity-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.raf-ux-hero-stats{margin-top:18px}.raf-ux-hero-stats span{padding:7px 10px;font-size:11px}.raf-ux-activity-card{padding:17px}.raf-ux-activity-head{flex-direction:column;gap:10px}.raf-ux-model-shortcut{grid-template-columns:minmax(0,1fr) 18px}.raf-ux-model-shortcut small{display:none}}
