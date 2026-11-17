@@ -19,12 +19,12 @@ const ctx = { document: {readyState:'loading',addEventListener(){}}, Set, Array,
 vm.runInNewContext(instrumented,ctx,{timeout:1500});
 const models = ctx.__certModels;
 
-test('Catálogo completo: 17 certidões, quatro fornecidas e 13 sugestões preservadas', () => {
-  assert.equal(models.length,17);
+test('Catálogo completo: 18 certidões, cinco fornecidas e 13 sugestões preservadas', () => {
+  assert.equal(models.length,18);
   assert.equal(new Set(models.map(model=>model.id)).size,17);
   const fornecidas = models.filter(model=>model.verified);
   const complementares = models.filter(model=>!model.verified);
-  assert.equal(fornecidas.length,4);
+  assert.equal(fornecidas.length,5);
   assert.equal(complementares.length,13);
   for(const model of fornecidas){
     assert.ok(model.title.startsWith('* '),model.title);
@@ -48,18 +48,22 @@ test('Redação literal preservada e repetição da audiência eliminada', () =>
     'Certifico que os autos foram arquivados indevidamente',
     'Certifico que os presentes autos encontram-se aguardando audiência de conciliação designada.',
     'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao MM. Juiz Titular.',
-    'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao Juiz Leigo responsável.'
+    'Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto ao Juiz Leigo responsável.',
+    'Certifico que o feito foi retirado da pauta de audiências em face de devolução de Diligência negativa de index 317752646. Fica a parte autora intimada a se manifestar sobre certidão do OJA.'
   ];
   assert.deepEqual(Array.from(models.filter(x=>x.verified),model=>model.text),expected);
 });
 
-test('Pauta é uma categoria dentro de Certidões, com três modelos', () => {
+test('Pauta é uma categoria dentro de Certidões, com quatro modelos', () => {
   assert.deepEqual(Array.from(models.filter(x=>x.group==='Arquivamento'),x=>x.id),['arquivamento-indevido']);
   assert.deepEqual(Array.from(models.filter(x=>x.group==='Pauta'),x=>x.id),
-    ['aud-conciliacao','acordo-pauta','acordo-pauta-juiz-leigo']);
+    ['aud-conciliacao','acordo-pauta','acordo-pauta-juiz-leigo','pauta-diligencia-negativa-oja']);
   assert.deepEqual(Array.from(new Set(models.map(x=>x.group))),
     ['Arquivamento','Pauta','Audiências','Acordos','Juntadas','Habilitação','Comunicação processual','Prazos','Encaminhamentos']);
   assert.ok(models.find(x=>x.id==='arquivamento-indevido').note.includes('Confira'));
+  assert.ok(models.find(x=>x.id==='pauta-diligencia-negativa-oja').note.includes('AR negativo'));
+  assert.ok(models.find(x=>x.id==='pauta-diligencia-negativa-oja').note.includes('substituído'));
+  assert.ok(js.includes("item.text + ' ' + item.note"),'Busca deve alcançar AR negativo');
   assert.ok(js.includes("const categories = ['Todas', ...new Set(models.map(item => item.group))]"));
   assert.ok(js.includes("category === 'Todas' || item.group === category"));
   assert.ok(js.includes("show(true,true,'Pauta')"), 'Link legado #pauta abre o filtro Pauta');
@@ -68,9 +72,10 @@ test('Pauta é uma categoria dentro de Certidões, com três modelos', () => {
 
 test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.equal(html,template);
-  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=1','assets/certidoes.js?v=1',
+  for(const part of ['id="navCertidoes"','assets/certidoes.css?v=1','assets/certidoes.js?v=3.0',
     'id="navBalcaoVirtual"','id="mainContent"']) assert.ok(html.includes(part),part);
   assert.ok(!html.includes('id="navPauta"'),'Pauta não deve ocupar o menu principal');
+  for (const asset of ['assets/ux-premium.css?v=3.0','assets/ux-premium-art.css?v=3.0','assets/ux-premium.js?v=3.0']) assert.ok(html.includes(asset),asset);
   assert.ok(css.includes('.raf-cert-active #mainContent > :not(#rafCertView)'));
   assert.ok(css.includes('@media(max-width:650px)'));
   assert.ok(js.includes("window.addEventListener('raf-prazo:section'"));
