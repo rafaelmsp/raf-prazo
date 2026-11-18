@@ -81,6 +81,7 @@ def check(browser,base,width):
     page.locator("#rafManualFileInput").set_input_files({
         "name":"nao_e_pdf.pdf","mimeType":"application/pdf","buffer":b"hello world"
     })
+    page.wait_for_function("document.querySelector('#rafManualFeedback').textContent.includes('não foi identificado como PDF')")
     assert "não foi identificado como PDF" in page.locator("#rafManualFeedback").inner_text()
     assert page.locator("#rafManualDownload").is_hidden()
     assert page.evaluate("""() => !Object.keys(localStorage).some(k=>k.includes('manual'))""")
