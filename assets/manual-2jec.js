@@ -1,6 +1,7 @@
 /* RAF-PRAZO | Manual operacional 2º JEC
- * Documento identificado como USO RESTRITO: apenas leitura local.
- * Nenhum PDF, texto, nome ou número de processo é enviado ou armazenado. */
+ * Cópia publicada: PDF criptografado AES-256. O arquivo é publicamente baixável,
+ * mas a senha de leitura não é revelada no site.
+ * O visualizador opcional de arquivo local não realiza upload/armazenamento. */
 (() => {
   'use strict';
   const $=id=>document.getElementById(id);
@@ -11,7 +12,7 @@
     nav.type='button';
     nav.id='navManual';
     nav.className='nav-link';
-    nav.title='Manual do 2º JEC — leitura de PDF local';
+    nav.title='Manual do 2º JEC — abrir e baixar PDF protegido';
     nav.setAttribute('aria-label','Manual do 2º JEC');
     nav.innerHTML='<span class="nav-icon" aria-hidden="true">▤</span><span class="nav-text">Manual do 2º JEC</span>';
     cert.after(nav);
@@ -20,7 +21,7 @@
     section.id='rafManualView';
     section.className='raf-manual-view';
     section.hidden=true;
-    section.setAttribute('aria-label','Leitor local do Manual Operacional do 2º JEC');
+    section.setAttribute('aria-label','Manual Operacional do 2º JEC — PDF protegido para abrir e baixar');
     section.innerHTML=[
       '<div class="raf-manual-hero"><div>',
       '<p class="raf-manual-kicker">DOCUMENTAÇÃO · 2º JEC</p>',
@@ -29,10 +30,25 @@
       '<span class="raf-manual-badge">Uso restrito · controle individual</span>',
       '</div><button type="button" class="raf-manual-back" id="rafManualBack">← Voltar à calculadora</button></div>',
       '<div class="raf-manual-intro"><div class="raf-manual-notice-icon" aria-hidden="true">ⓘ</div><div>',
-      '<strong>Leitura privada no seu dispositivo</strong>',
-      '<p>O documento foi identificado como material de uso restrito. Por isso, não está publicado neste site.',
-      'Selecione o PDF no seu dispositivo para visualizá-lo ou baixar uma cópia local.',
-      'O RAF-PRAZO não faz upload, sincroniza ou armazena o arquivo.</p></div></div>',
+      '<strong>PDF criptografado · acesso mediante senha</strong>',
+      '<p>Esta edição pode ser baixada publicamente, mas exige uma senha para abrir o conteúdo.',
+      'A senha foi fornecida separadamente ao responsável e não está gravada no site.',
+      'O GitHub Pages não oferece login nem controle de usuários para este arquivo.</p></div></div>',
+      '<section class="raf-manual-published" aria-labelledby="rafManualPublishedTitle">',
+      '<div class="raf-manual-published-head">',
+      '<div class="raf-manual-published-symbol" aria-hidden="true">🔒</div>',
+      '<div><h2 id="rafManualPublishedTitle">Manual protegido por senha</h2>',
+      '<p>113 páginas · edição 10/11/2026 · PDF AES-256 · aproximadamente 69 MB</p></div></div>',
+      '<div class="raf-manual-published-actions">',
+      '<a id="rafManualHostedOpen" class="raf-manual-button raf-manual-primary"',
+      ' href="docs/Manual_Operacional_2JEC_113p_Protegido_por_Senha.pdf"',
+      ' target="_blank" rel="noopener noreferrer">↗ Abrir PDF protegido</a>',
+      '<a id="rafManualHostedDownload" class="raf-manual-button raf-manual-download"',
+      ' href="docs/Manual_Operacional_2JEC_113p_Protegido_por_Senha.pdf"',
+      ' download="Manual_Operacional_2JEC_113p_Protegido_por_Senha.pdf">↓ Baixar PDF protegido</a>',
+      '</div></section>',
+      '<div class="raf-manual-local-heading"><div><h2>Visualização de uma cópia local</h2>',
+      '<p>Opcional: selecione um PDF já salvo no dispositivo para visualizá-lo aqui, sem upload.</p></div></div>',
       '<div class="raf-manual-toolbar">',
       '<input id="rafManualFileInput" type="file" accept=".pdf,application/pdf" hidden>',
       '<button id="rafManualChoose" type="button" class="raf-manual-button raf-manual-primary">',
@@ -46,9 +62,9 @@
       'Selecione o arquivo PDF para ativar a visualização e o download.</p>',
       '<div id="rafManualEmpty" class="raf-manual-empty">',
       '<div class="raf-manual-document-icon" aria-hidden="true">▤</div>',
-      '<h2>Seu manual, sem publicação na internet</h2>',
-      '<p>Depois de selecionar o documento, os botões de abrir e baixar estarão disponíveis.',
-      'Nenhum dado do PDF será transmitido pelo RAF-PRAZO.</p>',
+      '<h2>Leitor local opcional</h2>',
+      '<p>Para consultar o arquivo dentro desta página, selecione a cópia salva no seu dispositivo.',
+      'O PDF protegido também está disponível pelos botões de acesso direto acima.</p>',
       '</div>',
       '<div id="rafManualFrameBox" class="raf-manual-frame-box" hidden>',
       '<iframe id="rafManualFrame" title="Visualização local do Manual Operacional em PDF" loading="lazy"></iframe>',
