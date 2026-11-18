@@ -31,6 +31,7 @@ jobs:
           node --check assets/user-date-exclusions.js
           node --check assets/balcao-virtual.js
           node --check assets/certidoes.js
+          node --check assets/manual-2jec.js
           node --check assets/ux-premium.js
           node --check assets/ux-premium-library.js
       - name: Testes Node
@@ -45,6 +46,7 @@ jobs:
           node --test tests/test_balcao_virtual.cjs
           node --test tests/test_certidoes.cjs
           node --test tests/test_ux_premium.cjs
+          node --test tests/test_manual_2jec.cjs
       - name: Testes Python
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validação conservadora dos dados
