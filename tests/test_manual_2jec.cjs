@@ -38,8 +38,8 @@ test('Manual restrito: PDF local e nenhuma transmissão',()=>{
 });
 
 test('Manual aparece na navegação e na pesquisa UX Premium',()=>{
-  for(const term of ["id='navManual'","id='rafManualView'","id='rafManualDownload'",
-    "id='rafManualFileInput'","name:'manual'","raf-manual-active"])
+  for(const term of ["id='navManual'","id='rafManualView'","id=\"rafManualDownload\"",
+    "id=\"rafManualFileInput\"","name:'manual'","raf-manual-active"])
     assert.ok(code.includes(term),term);
   for(const term of ["[$('navManual'),'book']","manual:'navManual'",
     "label:'Manual do 2º JEC'"])
