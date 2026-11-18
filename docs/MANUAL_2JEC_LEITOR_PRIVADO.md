@@ -1,40 +1,35 @@
-# RAF-PRAZO — Manual Operacional 2º JEC (leitor de PDF)
+# RAF-PRAZO — Manual Operacional do 2º JEC | edição protegida
 
-## Documento fornecido
+## Documento e classificação
 
-- Título: Manual Operacional do Estagiário na Serventia — 2º Juizado Especial Cível de Duque de Caxias/RJ.
-- Edição: 10/11/2026.
-- Extensão: 113 páginas.
-- Autoria declarada: Rafael MS Passos.
-- Classificação na página 2: **USO RESTRITO · CONTROLE INDIVIDUAL**.
-- Abrange rotinas do PJe, pautas de audiência, controle, balcão físico e balcão virtual.
+- Manual Operacional do Estagiário na Serventia — 2º Juizado Especial Cível de Duque de Caxias/RJ.
+- Edição 10/11/2026, 113 páginas, autoria declarada Rafael MS Passos.
+- Na página 2 consta **USO RESTRITO · CONTROLE INDIVIDUAL**.
 
-## Decisão de privacidade
+## Distribuição solicitada — PDF criptografado
 
-O PDF entregue pelo autor é identificado como material restrito. Sua inclusão direta em um repositório GitHub **público** ou em arquivos servidos por GitHub Pages permitiria acesso e download por qualquer pessoa, sem controle de autorização. Portanto, esta implementação **não publica o PDF** e não cria um link público de download. Uma versão pública somente deve ser hospedada após conferência do conteúdo e autorização adequada.
+Atendendo à solicitação explícita do responsável, o repositório **público** distribui **somente o arquivo PDF criptografado com AES-256** em:
 
-## Funcionalidade implementada
+`docs/Manual_Operacional_2JEC_113p_Protegido_por_Senha.pdf`
 
-1. Abra o RAF-PRAZO e escolha **Manual do 2º JEC** no menu lateral ou na Visão geral. Acesso direto via `#manual`.
-2. Clique **Selecionar PDF no dispositivo** e selecione o PDF fornecido.
-3. Visualize no leitor integrado, abra em nova aba ou clique **Baixar PDF**.
-4. Clique **Remover arquivo** para revogar a URL local e limpar a visualização.
+A área **Manual do 2º JEC** do RAF-PRAZO (`#manual`) oferece dois botões: **Abrir PDF protegido** e **Baixar PDF protegido**. O botão Abrir carrega o arquivo em uma nova aba, onde o leitor do navegador normalmente solicitará a senha. O botão Baixar oferece a cópia criptografada.
 
-O navegador utiliza uma URL local `blob:` criada a partir do arquivo selecionado. O leitor não utiliza rede para transmitir o PDF, não guarda texto, não usa armazenamento do navegador e revoga a URL ao remover o documento ou deixar a página. Somente valida a assinatura inicial `%PDF-`, sem fazer auditoria de segurança ou autenticação.
+**Atenção:** qualquer pessoa pode baixar o PDF criptografado pela URL pública e tentar adivinhar sua senha. A proteção não é equivalente a autenticação de usuário, controle de acesso, revogação, expiração nem registro de acessos. Arquivos PDF não oferecem um campo separado de login; a senha de leitura **não fica no código** nem em um teste público. A distribuição pública de documentos operacionais restritos exige autorização e avaliação do conteúdo pelo responsável antes de divulgar a senha.
 
-## Módulos não afetados
+## Leitor local opcional
 
-- Motor de cálculo de prazos e regras JEC/CPC.
-- 18 certidões e a categoria Pauta.
-- Biblioteca de prazos e feriados.
-- Balcão Virtual, pesquisa global e favoritos.
+Além dos links diretos, o RAF-PRAZO mantém a opção de selecionar um PDF já salvo no dispositivo para visualizá-lo em um `iframe` por meio de URL `blob:`. Essa opção não envia o arquivo ao servidor, não o armazena e permite remover a visualização.
 
-## Requisitos de testes
+O PDF hospedado é outra coisa: seu arquivo criptografado é transferido ao navegador somente quando o usuário escolhe abrir ou baixar.
 
-- `tests/test_manual_2jec.cjs`: integração, privacidade, ausência de PDF restrito no repositório.
-- `tests/browser_manual_2jec.py`: seletor local, PDF de teste sintético, visualização, link download, remoção e celular.
-- Demais testes do RAF-PRAZO continuam obrigatórios antes da publicação.
+## Verificação e regressão
 
-## Publicação pública futura
+- O repositório deve conter apenas a **versão criptografada** do manual, não a versão original sem senha.
+- `tests/test_manual_2jec.cjs` verifica assinatura PDF, tamanho e parâmetros de criptografia AES-256 (/V 5 e /R 6) sem armazenar a senha.
+- `tests/browser_manual_2jec.py` verifica os links públicos por requisição HEAD e mantém testes de leitura local e de download do PDF sintético.
+- A calculadora, os feriados, as 18 certidões, a categoria Pauta e o Balcão Virtual permanecem inalterados.
+- O PDF possui aproximadamente 69 MB: pode consumir dados móveis; não o carregar automaticamente.
 
-Se o órgão autorizar uma edição pública após revisão, é possível criar uma edição específica que não tenha classificação restrita, hospedá-la no repositório e habilitar links diretos para abrir e baixar. Isso exige uma decisão separada e revisão jurídica e de privacidade; não deve ser presumido.
+## Reversão
+
+Para interromper a distribuição, remova o PDF publicado do repositório e dos links da aplicação. **Excluir somente o arquivo do branch atual não apaga cópias já baixadas nem o histórico de commits**; consulte o procedimento do GitHub para remoção de objetos sensíveis do histórico, quando aplicável.
