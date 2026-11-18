@@ -12,6 +12,9 @@ on:
       - prazos/index.html
       - assets/prazos-home.js
       - assets/prazos-library.js
+      - assets/manual-2jec.js
+      - assets/manual-2jec.css
+      - tests/browser_manual_2jec.py
       - assets/ux-premium.css
       - assets/ux-premium-art.css
       - assets/ux-premium.js
@@ -63,6 +66,7 @@ jobs:
           python tests/browser_library_shell.py
           python tests/browser_library_accordion.py
           python tests/browser_ux_premium.py
+          python tests/browser_manual_2jec.py
           python tests/browser_pwa_online.py
       - name: Guardar screenshots para revisão visual
         if: always()

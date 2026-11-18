@@ -84,7 +84,7 @@ test('Página principal, template e módulos permanecem sincronizados',() => {
   assert.ok(js.includes("location.hash === '#pauta'"));
   assert.ok(js.includes("location.hash === '#certidoes'"));
   assert.ok(balcao.includes("name:'balcao'"));
-  assert.ok(balcao.includes("name==='certidoes'"));
+  assert.ok(balcao.includes("name!=='balcao'"),'Balcão deve fechar ao navegar para outras seções');
 });
 
 test('Revisão antes da cópia, sem transmissão e com persistência somente de IDs de modelos',() => {

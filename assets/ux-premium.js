@@ -49,7 +49,7 @@
     const navIcons = [
       [navHome,'home'],[calc,'calculator'],[$('navCalendar'),'calendar'],
       [$('rafLibraryNavLink'),'book'],[$('navBalcaoVirtual'),'messages'],
-      [$('navCertidoes'),'file'],[$('navHistory'),'history'],
+      [$('navCertidoes'),'file'],[$('navManual'),'book'],[$('navHistory'),'history'],
       [$('navSettings'),'settings'],[$('navTutorial'),'help'],
       [$('navAbout'),'info'],[$('navTerms'),'shield']
     ];
@@ -102,6 +102,7 @@
     const destinations = [
       {label:'Calculadora de prazos',detail:'Informe o marco e confira o vencimento estimado.',icon:'calculator',action:'calc',keys:'contagem prazo dias úteis jec cpc'},
       {label:'Certidões do Dia a Dia',detail:'18 modelos, incluindo a categoria Pauta.',icon:'file',action:'certidoes',keys:'certidões modelos favoritos cartório pauta'},
+      {label:'Manual do 2º JEC',detail:'Consultar e baixar seu PDF local, sem envio pela internet.',icon:'book',action:'manual',keys:'manual operacional pdf estagiário serventia 2jec restrito download baixar'},
       {label:'Balcão Virtual',detail:'Mensagens de atendimento para conferir e copiar.',icon:'messages',action:'balcao',keys:'atendimento frases teams'},
       {label:'Biblioteca de prazos',detail:'Consulte atos e fundamentos antes de calcular.',icon:'book',action:'library',keys:'atos fundamentos jec cpc'},
       {label:'Calendário judicial',detail:'Visualize dias contados e excluídos do cálculo.',icon:'calendar',action:'calendar',keys:'feriados datas recesso'},
@@ -154,7 +155,7 @@
     function action(key) {
       if (key === 'library') { window.location.assign('prazos/'); return; }
       const target = {
-        calc:'navCalc',certidoes:'navCertidoes',balcao:'navBalcaoVirtual',
+        calc:'navCalc',certidoes:'navCertidoes',balcao:'navBalcaoVirtual',manual:'navManual',
         calendar:'navCalendar',sources:'rafNewsOpen'
       }[key];
       const item = target && $(target);

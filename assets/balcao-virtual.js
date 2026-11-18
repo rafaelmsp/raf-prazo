@@ -104,7 +104,7 @@ function init(){
   if(updateUrl){const newUrl=on?'#balcao-virtual':location.pathname+location.search;history.replaceState(null,'',newUrl)}
  }
  window.addEventListener('raf-prazo:section',event=>{
-  if(event.detail?.name==='certidoes'&&!section.hidden)show(false,false);
+  if(event.detail?.name!=='balcao'&&!section.hidden)show(false,false);
  });
  nav.addEventListener('click',()=>show(true,true));
  $('rafBvReturn').addEventListener('click',()=>show(false,true));

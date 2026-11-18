@@ -71,7 +71,8 @@ def visit(browser,base,width):
         assert page.locator("#rafUxHomeNav .nav-text").is_visible()
     page.locator("#rafUxHomeNav").click()
     assert page.locator("#rafUxHome").is_visible()
-    assert page.locator(".raf-ux-tile").count()==6
+    assert page.locator(".raf-ux-tile").count()==7
+    assert page.locator('[data-ux-action="manual"]').count()==1
     assert page.locator("#rafUxHomeNav").get_attribute("aria-current")=="page"
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+2"),"Home overflow"
     if width in (390,1366,1752):
