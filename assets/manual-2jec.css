@@ -1,0 +1,47 @@
+/* RAF-PRAZO · Manual Operacional 2º JEC: leitor privado de PDF.
+ * Sem incorporação do documento restrito ao repositório público. */
+.app.raf-manual-active #mainContent>:not(#rafManualView){display:none!important}
+.app.raf-manual-active #mainContent{display:block;overflow-y:auto}
+.raf-manual-view{width:100%;max-width:1450px;margin:0 auto;color:var(--ux-ink,var(--text))}
+.raf-manual-view[hidden],.raf-manual-view [hidden]{display:none!important}
+.raf-manual-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:29px 32px;border-radius:19px;background:linear-gradient(110deg,#102b46,#1d5578);border:1px solid #315c7e;color:#fff;box-shadow:0 12px 34px rgba(12,42,71,.13);margin:0 0 20px}
+.raf-manual-hero h1{font-size:clamp(24px,2.45vw,34px);letter-spacing:-.045em;line-height:1.18;color:#fff;margin:8px 0 10px}
+.raf-manual-hero p{color:#dbebf6;font-size:13px;line-height:1.6;margin:0}
+.raf-manual-hero .raf-manual-kicker{font-size:10px;font-weight:800;letter-spacing:.17em;color:#f2cf86}
+.raf-manual-badge{display:inline-flex;gap:6px;margin-top:15px;border:1px solid #d7c08a77;background:#d2ad5c21;color:#f8e2ae;font-size:11px;font-weight:750;padding:8px 11px;border-radius:9px}
+.raf-manual-back{border:1px solid #88a5ba66;background:#ffffff15;color:#fff;border-radius:11px;min-height:40px;padding:9px 13px;font-weight:700;font-size:12px;white-space:nowrap}
+.raf-manual-back:hover{background:#ffffff23}
+.raf-manual-intro{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border:1px solid #dfc692;background:var(--ux-surface,#fff);border-radius:15px;color:var(--ux-ink,var(--text));box-shadow:var(--ux-shadow);margin:0 0 17px}
+.raf-manual-notice-icon{flex:0 0 auto;color:#98701f;background:#fbefcf;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:19px}
+.raf-manual-intro strong{font-size:14px;font-weight:780}
+.raf-manual-intro p{font-size:12px;color:var(--ux-muted,var(--muted));line-height:1.65;margin:6px 0 0}
+.raf-manual-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:17px 18px;background:var(--ux-surface,#fff);border:1px solid var(--ux-stroke,var(--line));border-radius:15px;box-shadow:var(--ux-shadow)}
+.raf-manual-button{display:inline-flex;gap:9px;align-items:center;justify-content:center;min-height:43px;border:1px solid var(--ux-stroke,var(--line));border-radius:11px;padding:11px 15px;background:var(--paper2);color:var(--ux-ink,var(--text));font-weight:700;font-size:12px;text-decoration:none;cursor:pointer}
+.raf-manual-button:hover,.raf-manual-button:focus-visible{border-color:var(--ux-blue,#146da4);background:var(--accentbg);outline-offset:3px}
+.raf-manual-primary{border-color:#17679c;background:#17679c;color:#fff}
+.raf-manual-primary:hover,.raf-manual-primary:focus-visible{background:#135580;color:#fff}
+.raf-manual-clear{color:#8e4345}
+.raf-manual-feedback{margin:13px 2px 17px;color:var(--ux-muted,var(--muted));font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.raf-manual-empty{min-height:340px;border:2px dashed var(--ux-stroke,var(--line));background:var(--ux-surface,#fff);border-radius:18px;padding:46px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--ux-shadow)}
+.raf-manual-document-icon{background:var(--ux-blue-soft,var(--accentbg));color:var(--ux-blue,#146da4);width:72px;height:72px;border-radius:21px;display:grid;place-items:center;font-size:37px;margin-bottom:16px}
+.raf-manual-empty h2{font-size:19px;line-height:1.35;margin:0 0 9px;color:var(--ux-ink,var(--text))}
+.raf-manual-empty p{font-size:13px;color:var(--ux-muted,var(--muted));line-height:1.65;max-width:520px;margin:0}
+.raf-manual-frame-box{height:min(76vh,1040px);min-height:500px;border:1px solid var(--ux-stroke,var(--line));background:var(--ux-surface,#fff);border-radius:15px;overflow:hidden;box-shadow:var(--ux-shadow)}
+.raf-manual-frame-box iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.raf-manual-footnote{margin:15px 0 0;padding:13px 4px;color:var(--ux-muted,var(--muted));font-size:11px;line-height:1.65}
+@media(max-width:750px){
+ .raf-manual-hero{flex-direction:column;padding:23px 22px;gap:16px}
+ .raf-manual-back{white-space:normal}
+ .raf-manual-intro{padding:15px;gap:10px}
+ .raf-manual-toolbar{padding:13px}
+ .raf-manual-button{flex:1 1 auto}
+ .raf-manual-frame-box{min-height:460px;height:70vh}
+ .raf-manual-empty{min-height:310px;padding:30px 17px}
+}
+@media(max-width:430px){
+ .raf-manual-hero{padding:20px 18px}
+ .raf-manual-hero h1{font-size:24px}
+ .raf-manual-toolbar{display:grid;grid-template-columns:1fr}
+ .raf-manual-button{width:100%}
+}
+@media print{.raf-manual-toolbar,.raf-manual-back{display:none!important}}
