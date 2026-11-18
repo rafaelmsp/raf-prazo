@@ -56,6 +56,18 @@ def check(browser,base,width):
     assert page.locator("#rafManualDownload").is_hidden()
     assert page.locator("#rafManualOpen").is_hidden()
     assert "Uso restrito" in page.locator("#rafManualView").inner_text()
+    assert page.locator("#rafManualHostedOpen").is_visible()
+    assert page.locator("#rafManualHostedDownload").is_visible()
+    uri="docs/Manual_Operacional_2JEC_113p_Protegido_por_Senha.pdf"
+    assert page.locator("#rafManualHostedOpen").get_attribute("href")==uri
+    assert page.locator("#rafManualHostedDownload").get_attribute("href")==uri
+    assert page.locator("#rafManualHostedDownload").get_attribute("download").endswith(".pdf")
+    assert "jec@123" not in page.content(), "Senha do PDF não deve estar na página pública"
+    head=page.request.head(base+"/"+uri)
+    assert head.status==200, "Documento criptografado publicado deve existir"
+    assert int(head.headers.get("content-length","0"))>20_000_000, "Arquivo PDF incompleto"
+    assert "application/pdf" in head.headers.get("content-type",""), "MIME PDF incorreto"
+
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+2"),"Manual deve ser responsivo"
 
     page.locator("#rafManualFileInput").set_input_files({
