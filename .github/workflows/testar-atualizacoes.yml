@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Dependencias para testes documentais
-        run: python -m pip install 'pypdf>=5,<7'
+        run: python -m pip install 'pypdf>=5,<7' 'cryptography>=43,<48'
       - name: Verificar JavaScript
         run: |
           node --check assets/raf-prazo-22.js
