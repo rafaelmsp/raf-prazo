@@ -95,10 +95,10 @@ def visit(browser,base,width):
     assert len(ids)==12 and len(set(ids))==12
     assert page.evaluate("window.RafPrazoCertidoes.open({id:'pauta-ar-assinado-terceiro'})")
     assert page.locator("#rafCertEditor").input_value()=="Certifico que o AR de id.XXXXX foi assinado por terceiros."
-    with page.expect_event("dialog") as pending:
-        page.locator("#rafCertCopy").click()
-    assert "campos" in pending.value.message
-    pending.value.dismiss()
+    dialogs=[]
+    page.once("dialog",lambda dialog:(dialogs.append(dialog.message),dialog.dismiss()))
+    page.locator("#rafCertCopy").click()
+    assert dialogs and "campos" in dialogs[0]
     assert "copiado" not in page.locator("#rafCertFeedback").inner_text().lower()
     assert page.evaluate("window.RafPrazoCertidoes.open({id:'pauta-desentranhamento-cumprido'})")
     assert page.locator("#rafCertEditor").input_value().endswith("conforme despacho de index")
