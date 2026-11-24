@@ -87,12 +87,15 @@ def visit(browser,base,width):
     cat=page.locator("#rafCertCategories button.raf-cert-category",has_text="Pauta")
     cat.click()
     assert cat.get_attribute("aria-pressed")=="true"
-    assert page.locator("#rafCertList .raf-cert-item").count()==12
-    assert page.locator("#rafCertCount").inner_text().startswith("12 modelo")
-    assert page.evaluate("window.RafPrazoCertidoes.models().length")==26
+    assert page.locator("#rafCertList .raf-cert-item").count()==13
+    assert page.locator("#rafCertCount").inner_text().startswith("13 modelo")
+    assert page.evaluate("window.RafPrazoCertidoes.models().length")==27
     ids=page.evaluate("""() => window.RafPrazoCertidoes.models()
       .filter(m=>m.group==='Pauta'&&m.title.startsWith('* ')).map(m=>m.id)""")
-    assert len(ids)==12 and len(set(ids))==12
+    assert len(ids)==13 and len(set(ids))==13
+    assert page.evaluate("window.RafPrazoCertidoes.open({id:'acordo-pauta-juiza-leiga'})")
+    assert page.locator("#rafCertTitle").inner_text().startswith("* ")
+    assert page.locator("#rafCertEditor").input_value()=="Certifico que, considerando o acordo juntado, retiro o feito da pauta de audiências e remeto à Juíza Leiga responsável"
     assert page.evaluate("window.RafPrazoCertidoes.open({id:'pauta-ar-assinado-terceiro'})")
     assert page.locator("#rafCertEditor").input_value()=="Certifico que o AR de id.XXXXX foi assinado por terceiros."
     dialogs=[]
@@ -135,8 +138,8 @@ def visit(browser,base,width):
     assert page.locator("#rafUxHome").is_visible()
     assert page.locator("#rafUxFavoritesList .raf-ux-model-shortcut").count()==1
     assert page.locator("#rafUxRecentsList .raf-ux-model-shortcut").count()==1
-    assert page.locator("#rafUxTotalModels").inner_text()=="26"
-    assert page.locator("#rafUxPautaModels").inner_text()=="12"
+    assert page.locator("#rafUxTotalModels").inner_text()=="27"
+    assert page.locator("#rafUxPautaModels").inner_text()=="13"
     page.locator("#rafUxAllFavorites").click()
     assert page.locator("#rafCertView").is_visible()
     assert page.locator("#rafCertTabFavorites").get_attribute("aria-pressed")=="true"
@@ -148,7 +151,7 @@ def visit(browser,base,width):
     assert page.locator("#due").count()==1
     assert page.locator("#calendar .day").count()==42
     assert not exceptions,f"Exceções JavaScript: {exceptions}"
-    print(f"UX_PREMIUM_OK {width}px · home, busca, Pauta(12), OJA e cálculo preservado",flush=True)
+    print(f"UX_PREMIUM_OK {width}px · home, busca, Pauta(13), OJA e cálculo preservado",flush=True)
     context.close()
 
 def main():
