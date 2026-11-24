@@ -114,11 +114,7 @@ test('Revisão antes da cópia, sem transmissão e com persistência somente de 
     assert.ok(js.includes(id),id);
   assert.ok(js.includes('window.RafPrazoCertidoes = Object.freeze('));
   assert.ok(js.includes('\\bX{3,}\\b'),'Aviso para índices XXXXX');
-  assert.ok(js.includes('index\\s*
-  assert.ok(js.includes("fireChange('favorites')"));
-  assert.ok(js.includes("fireChange('recent')"));
-});
-),'Aviso para index incompleto');
+  assert.ok(js.includes('index\\s*$'),'Aviso para index incompleto');
   assert.ok(js.includes("fireChange('favorites')"));
   assert.ok(js.includes("fireChange('recent')"));
 });
