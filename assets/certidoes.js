@@ -105,7 +105,7 @@
       if (!raw || raw.length > 2048) return [];
       const value = JSON.parse(raw);
       return Array.isArray(value)
-        ? [...new Set(value.filter(id => typeof id === 'string' && knownIds.has(id)))].slice(0, 18)
+        ? [...new Set(value.filter(id => typeof id === 'string' && knownIds.has(id)))].slice(0, models.length)
         : [];
     } catch (_) { return []; }
   }
