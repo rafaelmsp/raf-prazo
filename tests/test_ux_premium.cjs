@@ -18,7 +18,7 @@ test('Código JavaScript premium é sintaticamente válido',()=>{
 test('A interface nova está integrada ao aplicativo real e à biblioteca, sem duplicar template',()=>{
   assert.equal(html,template);
   for(const asset of ['assets/ux-premium.css?v=3.2','assets/ux-premium-art.css?v=3.0',
-                       'assets/ux-premium.js?v=3.2','assets/certidoes.js?v=3.1'])
+                       'assets/ux-premium.js?v=3.2','assets/certidoes.js?v=3.2'])
     assert.ok(html.includes(asset),asset);
   for(const asset of ['../assets/ux-premium-library.css?v=3.0','../assets/ux-premium-library.js?v=3.0'])
     assert.ok(lib.includes(asset),asset);
@@ -80,4 +80,12 @@ test('Menu Premium mantém legendas, largura correta e ícones sem duplicação'
   assert.ok(ux.includes("if (window.innerWidth >= 1450"));
   assert.ok(!ux.includes("navHome.querySelector('.nav-icon').append(svg('home'))"),
     'Home não deve ter dois ícones');
+});
+
+test('Contadores da home refletem o catálogo Pauta atualizado',()=>{
+  assert.ok(ux.includes('id="rafUxTotalModels">26</strong>'));
+  assert.ok(ux.includes('id="rafUxPautaModels">12</strong>'));
+  assert.ok(ux.includes("models.filter(item=>item.group==='Pauta').length"));
+  assert.ok(ux.includes("summary.total"));
+  assert.ok(!ux.includes("detail:'18 modelos"));
 });

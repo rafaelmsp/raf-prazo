@@ -78,8 +78,8 @@
       '<div class="raf-ux-hero"><span class="raf-ux-overline">RAF-PRAZO · FERRAMENTAS JURÍDICAS</span>',
       '<h1>Seu espaço de trabalho jurídico, mais simples.</h1>',
       '<p>Calcule prazos, consulte modelos de certidões e encontre as ferramentas de apoio à rotina em um único lugar.</p>',
-      '<div class="raf-ux-hero-stats"><span><strong id="rafUxTotalModels">18</strong> modelos de certidões</span>',
-      '<span><strong id="rafUxPautaModels">4</strong> modelos em Pauta</span></div></div>',
+      '<div class="raf-ux-hero-stats"><span><strong id="rafUxTotalModels">26</strong> modelos de certidões</span>',
+      '<span><strong id="rafUxPautaModels">12</strong> modelos em Pauta</span></div></div>',
       '<div class="raf-ux-section-head"><div><h2>Ferramentas de trabalho</h2><p>Selecione a atividade que deseja realizar.</p></div></div>',
       '<div class="raf-ux-home-grid" id="rafUxHomeGrid"></div>',
       '<div class="raf-ux-activity-grid">',
@@ -101,7 +101,7 @@
     main.append(home);
     const destinations = [
       {label:'Calculadora de prazos',detail:'Informe o marco e confira o vencimento estimado.',icon:'calculator',action:'calc',keys:'contagem prazo dias úteis jec cpc'},
-      {label:'Certidões do Dia a Dia',detail:'18 modelos, incluindo a categoria Pauta.',icon:'file',action:'certidoes',keys:'certidões modelos favoritos cartório pauta'},
+      {label:'Certidões do Dia a Dia',detail:'Modelos organizados por categoria, incluindo Pauta.',icon:'file',action:'certidoes',keys:'certidões modelos favoritos cartório pauta'},
       {label:'Manual do 2º JEC',detail:'Consultar e baixar seu PDF local, sem envio pela internet.',icon:'book',action:'manual',keys:'manual operacional pdf estagiário serventia 2jec restrito download baixar'},
       {label:'Balcão Virtual',detail:'Mensagens de atendimento para conferir e copiar.',icon:'messages',action:'balcao',keys:'atendimento frases teams'},
       {label:'Biblioteca de prazos',detail:'Consulte atos e fundamentos antes de calcular.',icon:'book',action:'library',keys:'atos fundamentos jec cpc'},

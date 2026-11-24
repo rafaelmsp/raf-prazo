@@ -81,17 +81,31 @@ def visit(browser,base,width):
     page.locator("#rafUxSearchOpen").click()
     assert page.locator("#rafUxSearchDialog").is_visible()
     page.locator("#rafUxSearchInput").fill("AR negativo")
-    assert page.locator("#rafUxSearchResults button").count()==1
-    page.locator("#rafUxSearchResults button").first.click()
+    assert page.locator("#rafUxSearchResults button").count()>=2
+    page.locator("#rafUxSearchResults button").filter(has_text="Retirada de pauta — diligência negativa do OJA").click()
     assert page.locator("#rafCertView").is_visible()
     cat=page.locator("#rafCertCategories button.raf-cert-category",has_text="Pauta")
     cat.click()
     assert cat.get_attribute("aria-pressed")=="true"
-    assert page.locator("#rafCertList .raf-cert-item").count()==4
-    assert page.locator("#rafCertCount").inner_text().startswith("4 modelo")
+    assert page.locator("#rafCertList .raf-cert-item").count()==12
+    assert page.locator("#rafCertCount").inner_text().startswith("12 modelo")
+    assert page.evaluate("window.RafPrazoCertidoes.models().length")==26
+    ids=page.evaluate("""() => window.RafPrazoCertidoes.models()
+      .filter(m=>m.group==='Pauta'&&m.title.startsWith('* ')).map(m=>m.id)""")
+    assert len(ids)==12 and len(set(ids))==12
+    assert page.evaluate("window.RafPrazoCertidoes.open({id:'pauta-ar-assinado-terceiro'})")
+    assert page.locator("#rafCertEditor").input_value()=="Certifico que o AR de id.XXXXX foi assinado por terceiros."
+    dialogs=[]
+    page.once("dialog",lambda dialog:(dialogs.append(dialog.message),dialog.dismiss()))
+    page.locator("#rafCertCopy").click()
+    assert dialogs and "campos" in dialogs[0]
+    assert "copiado" not in page.locator("#rafCertFeedback").inner_text().lower()
+    assert page.evaluate("window.RafPrazoCertidoes.open({id:'pauta-desentranhamento-cumprido'})")
+    assert page.locator("#rafCertEditor").input_value().endswith("conforme despacho de index")
+    assert page.evaluate("window.RafPrazoCertidoes.open({category:'Pauta'})")
     page.locator("#rafCertSearch").fill("AR negativo")
-    assert page.locator("#rafCertList .raf-cert-item").count()==1
-    page.locator("#rafCertList .raf-cert-item").first.click()
+    assert page.locator("#rafCertList .raf-cert-item").count()>=2
+    page.locator("#rafCertList .raf-cert-item").filter(has_text="Retirada de pauta — diligência negativa do OJA").click()
     text=page.locator("#rafCertEditor").input_value()
     assert "317752646" in text and "certidão do OJA" in text
     assert page.locator("#rafCertTitle").inner_text().startswith("* ")
@@ -121,8 +135,8 @@ def visit(browser,base,width):
     assert page.locator("#rafUxHome").is_visible()
     assert page.locator("#rafUxFavoritesList .raf-ux-model-shortcut").count()==1
     assert page.locator("#rafUxRecentsList .raf-ux-model-shortcut").count()==1
-    assert page.locator("#rafUxTotalModels").inner_text()=="18"
-    assert page.locator("#rafUxPautaModels").inner_text()=="4"
+    assert page.locator("#rafUxTotalModels").inner_text()=="26"
+    assert page.locator("#rafUxPautaModels").inner_text()=="12"
     page.locator("#rafUxAllFavorites").click()
     assert page.locator("#rafCertView").is_visible()
     assert page.locator("#rafCertTabFavorites").get_attribute("aria-pressed")=="true"
@@ -134,7 +148,7 @@ def visit(browser,base,width):
     assert page.locator("#due").count()==1
     assert page.locator("#calendar .day").count()==42
     assert not exceptions,f"Exceções JavaScript: {exceptions}"
-    print(f"UX_PREMIUM_OK {width}px · home, busca, Pauta(4), OJA e cálculo preservado",flush=True)
+    print(f"UX_PREMIUM_OK {width}px · home, busca, Pauta(12), OJA e cálculo preservado",flush=True)
     context.close()
 
 def main():

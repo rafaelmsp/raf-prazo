@@ -21,6 +21,30 @@
     { id:'pauta-diligencia-negativa-oja', group:'Pauta', title:'* Retirada de pauta — diligência negativa do OJA', verified:true,
       text:'Certifico que o feito foi retirado da pauta de audiências em face de devolução de Diligência negativa de index 317752646. Fica a parte autora intimada a se manifestar sobre certidão do OJA.',
       note:'Modelo fornecido. Confira se a diligência foi negativa, se o feito foi efetivamente retirado da pauta, o index do documento e a regularidade da intimação. O index 317752646 é específico do caso e deve ser substituído nos demais processos. Certidão do OJA não se confunde com AR postal negativo. Palavra-chave de busca: AR negativo.' },
+    { id:'pauta-oja-negativa-modelo', group:'Pauta', title:'* Diligência negativa do OJA — index editável', verified:true,
+      text:'Certifico que o feito foi retirado da pauta de audiências em face de devolução de Diligência negativa de index XXXXX. Fica a parte autora intimada a se manifestar sobre certidão do OJA.',
+      note:'Modelo fornecido. Substitua XXXXX pelo index correto; confira a certidão do OJA, a retirada efetiva da pauta e a intimação da parte autora. A diligência do OJA não é o AR postal.' },
+    { id:'pauta-ar-assinado-terceiro', group:'Pauta', title:'* AR assinado por terceiros', verified:true,
+      text:'Certifico que o AR de id.XXXXX foi assinado por terceiros.',
+      note:'Modelo fornecido. Substitua XXXXX pelo ID do AR e confira a assinatura no documento. A assinatura de terceiro não determina, por si só, a validade ou invalidade da citação.' },
+    { id:'pauta-pedido-desentranhamento', group:'Pauta', title:'* Petição com pedido de desentranhamento', verified:true,
+      text:'Certifico que, na petição de index XXXXXXX consta pedido de desentranhamento da petição de index XXXXXXX',
+      note:'Modelo fornecido. Preencha os dois indexes conforme as peças dos autos. Trata-se de pedido, não de desentranhamento já cumprido.' },
+    { id:'pauta-sem-tempo-despacho', group:'Pauta', title:'* Sem tempo hábil para cumprimento do despacho', verified:true,
+      text:'Certifico que, não há tempo hábil para cumprimento do despacho de id.XXXXX, tendo em vista que a audiência está designada para o dia XX/XX/XXXX',
+      note:'Modelo fornecido. Substitua o ID e a data; confira a pauta, os prazos e o despacho antes de afirmar impossibilidade de cumprimento.' },
+    { id:'pauta-ar-negativo-retirada', group:'Pauta', title:'* AR negativo — retirada da pauta', verified:true,
+      text:'Certifico que o feito foi retirado da pauta de audiências em face do AR negativo de index XXXX. Fica a parte autora intimada a se manifestar sobre o AR negativo.',
+      note:'Modelo fornecido. Substitua XXXX pelo index do AR; confira o resultado negativo, a retirada da pauta e a regularidade da intimação.' },
+    { id:'pauta-siscor-erro-ar', group:'Pauta', title:'* SISCOR — erro na expedição do AR', verified:true,
+      text:'Certifico que compulsando o sistema SISCOR, verifiquei que houve erro na expedição da citação por AR. Sendo assim, remeto o processo para conclusão.',
+      note:'Modelo fornecido. Confira o erro no SISCOR e utilize somente após a efetiva remessa à conclusão, de acordo com o fluxo da unidade.' },
+    { id:'pauta-desentranhamento-cumprido', group:'Pauta', title:'* Determinação de desentranhamento cumprida', verified:true,
+      text:'Certifico que foi cumprida a determinação de desentranhamento, conforme despacho de index',
+      note:'Modelo fornecido com a referência incompleta ao final. Preencha o index do despacho antes da cópia; confira se o desentranhamento foi efetivamente cumprido.' },
+    { id:'pauta-mandado-erro-material', group:'Pauta', title:'* Erro material na digitação do mandado', verified:true,
+      text:'Certifico que houve erro material na digitação do mandado de id.XXXXX. Dessa forma, não haverá tempo hábil para a devida citação da parte ré.',
+      note:'Modelo fornecido. Substitua XXXXX pelo ID; confirme o erro material, a data da audiência e a inexistência de tempo hábil para a citação.' },
     { id:'aud-ata', group:'Audiências', title:'Registro de ausência em audiência', verified:false,
       text:'Certifico que, conforme ata de audiência juntada sob o ID [ID DA ATA], foi registrada a ausência de [PARTE OU REPRESENTANTE] na audiência realizada em [DATA].',
       note:'Transcreva apenas o que constar expressamente da ata. Não presuma consequências processuais.' },
@@ -81,7 +105,7 @@
       if (!raw || raw.length > 2048) return [];
       const value = JSON.parse(raw);
       return Array.isArray(value)
-        ? [...new Set(value.filter(id => typeof id === 'string' && knownIds.has(id)))].slice(0, 18)
+        ? [...new Set(value.filter(id => typeof id === 'string' && knownIds.has(id)))].slice(0, models.length)
         : [];
     } catch (_) { return []; }
   }
@@ -106,12 +130,12 @@
       '<p id="rafCertIntro">Modelos pesquisáveis para adaptação e cópia, sem acesso ao PJe e sem emissão automática de certidões.</p></div>',
       '<button id="rafCertReturn" class="raf-cert-return" type="button">← Calculadora</button></div>',
       '<p class="raf-cert-warning" id="rafCertWarning"><strong>Uso responsável:</strong> confirme cada fato nos autos e observe os modelos e orientações da unidade antes de certificar. ',
-      'Os cinco modelos fornecidos estão marcados com *; os demais são sugestões complementares que exigem revisão. Confira os autos antes de utilizar.</p>',
+      'Os treze modelos fornecidos estão marcados com *; os demais são sugestões complementares que exigem revisão. Confira os autos antes de utilizar.</p>',
       '<div class="raf-cert-layout"><div class="raf-cert-browser">',
       '<label class="raf-cert-search-label" for="rafCertSearch">Buscar certidão</label>',
       '<input id="rafCertSearch" class="raf-cert-search" type="search" placeholder="Pesquisar modelos" autocomplete="off">',
       '<div class="raf-cert-smart-toolbar" role="group" aria-label="Acesso aos modelos">',
-      '<button id="rafCertTabAll" class="raf-cert-smart-tab" type="button">Todos <span id="rafCertAllNumber">18</span></button>',
+      '<button id="rafCertTabAll" class="raf-cert-smart-tab" type="button">Todos <span id="rafCertAllNumber">26</span></button>',
       '<button id="rafCertTabFavorites" class="raf-cert-smart-tab" type="button">☆ Favoritos <span id="rafCertFavoriteNumber">0</span></button>',
       '<button id="rafCertTabRecent" class="raf-cert-smart-tab" type="button">↶ Recentes <span id="rafCertRecentNumber">0</span></button>',
       '</div>',
@@ -274,7 +298,7 @@
     async function copyEdited() {
       const text = $('rafCertEditor').value.trim();
       if (!text) { $('rafCertFeedback').textContent = 'O texto está vazio.'; return; }
-      if (/\[[^\]]+\]/.test(text) && !window.confirm('Há campos entre colchetes que ainda não foram preenchidos. Deseja copiar mesmo assim?')) return;
+      if ((/\[[^\]]+\]|\bX{3,}\b|\bXX\/XX\/XXXX\b|\bindex\s*$/i.test(text)) && !window.confirm('Há campos, referências ou índices que podem não estar preenchidos. Revise o modelo. Deseja copiar mesmo assim?')) return;
       let copied = false;
       try {
         if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); copied = true; }
