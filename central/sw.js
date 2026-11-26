@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='raf-central-2026-11-26-v1.7.1';
+const CACHE='raf-central-2026-11-26-v1.8';
 self.addEventListener('install',event=>event.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(['./','./index.html','./manifest.webmanifest','./icon.svg']);await self.skipWaiting()})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('raf-central-')&&k!==CACHE)await caches.delete(k);await self.clients.claim()})()));
 self.addEventListener('fetch',event=>{const u=new URL(event.request.url),scope=new URL(self.registration.scope);if(event.request.method!=='GET'||u.origin!==scope.origin||!u.pathname.startsWith(scope.pathname))return;event.respondWith((async()=>{try{let r=await fetch(event.request);if(r.ok){let c=await caches.open(CACHE);await c.put(event.request,r.clone())}return r}catch(e){let r=await caches.match(event.request);if(r)return r;if(event.request.mode==='navigate'){let home=await caches.match(new URL('./index.html',scope).href);if(home)return home}throw e}})())});
